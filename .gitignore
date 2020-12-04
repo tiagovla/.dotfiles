@@ -1,0 +1,10 @@
+/*
+!.gitignore
+!nvim/
+!nvim/*
+nvim/coc-settings.json
+nvim/.netrwhist
+nvim/autoload/plugged/
+!zathura
+!zathura/
+!.tmux.conf
