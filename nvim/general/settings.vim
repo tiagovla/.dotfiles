@@ -9,6 +9,9 @@ set smartcase
 set noswapfile
 set nu rnu
 set incsearch
+set ignorecase
+set smartcase
+set mouse=a
 
 set colorcolumn=80
 " highlight ColorColumn ctermbg=0 guibg=lightgrey

@@ -6,6 +6,7 @@
 " 	autocmd VimEnter * PlugInstall | source $MYVIMRC
 " endif
 
+
 call plug#begin('~/.config/nvim/autoload/plugged')
 
 	" Auto pairs for '(' '[' '{'
@@ -29,8 +30,11 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'https://github.com/joshdick/onedark.vim.git'
     Plug 'morhetz/gruvbox'
     Plug 'ghifarit53/tokyonight-vim'
+    Plug 'arcticicestudio/nord-vim'
     "Others
     Plug 'tpope/vim-fugitive'
+    " matlab
+    Plug 'daeyun/vim-matlab'
     " Plug 'https://github.com/Valloric/YouCompleteMe.git'
     Plug 'mbbill/undotree'
     Plug 'dense-analysis/ale'
@@ -38,7 +42,13 @@ call plug#begin('~/.config/nvim/autoload/plugged')
     Plug 'sheerun/vim-polyglot'
     Plug 'liuchengxu/vim-which-key'
     Plug 'tpope/vim-commentary'
-    Plug 'plasticboy/vim-markdown'
+    " Latex
+    Plug 'lervag/vimtex'
+    Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for VimPlug
+    " Snippets
+    Plug 'SirVer/ultisnips'
+    " markdown
+    Plug 'gabrielelana/vim-markdown'
     Plug 'iamcco/mathjax-support-for-mkdp'
     Plug 'iamcco/markdown-preview.vim'
 call plug#end()

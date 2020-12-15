@@ -1,5 +1,3 @@
 " Basic Key Mappings
-let mapleader=" "
-nnoremap <Space> <Nop>
-
-
+let mapleader="\\"
+nnoremap <\> <Nop>

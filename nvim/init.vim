@@ -8,8 +8,12 @@ source $HOME/.config/nvim/plug-config/fzf.vim
 source $HOME/.config/nvim/themes/tokyonight.vim
 source $HOME/.config/nvim/themes/airline.vim
 source $HOME/.config/nvim/plug-config/coc.vim
+source $HOME/.config/nvim/plug-config/vim-matlab.vim
 source $HOME/.config/nvim/plug-config/ale.vim
+source $HOME/.config/nvim/plug-config/vimtex.vim
+source $HOME/.config/nvim/plug-config/tex-conceal.vim
 source $HOME/.config/nvim/plug-config/colorizer.vim
+source $HOME/.config/nvim/plug-config/ultisnips.vim
 source $HOME/.config/nvim/keys/mappings.vim
 source $HOME/.config/nvim/keys/which-key.vim
 
