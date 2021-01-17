@@ -1,54 +1,25 @@
-
-priority -50
-
 extends texmath
 
 global !p
 
-def create_table(snip):
-	rows = snip.buffer[snip.line].split('x')[0]
-	cols = snip.buffer[snip.line].split('x')[1]
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 
-	int_val = lambda string: int(''.join(s for s in string if s.isdigit()))
+def comment(): 
+	return vim.eval('vimtex#syntax#in_comment()') == '1'
 
-	rows = int_val(rows)
-	cols = int_val(cols)
-
-	offset = cols + 1
-	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
-
-	snip.buffer[snip.line] = ''
-
-	final_str = old_spacing + "\\begin{tabular}{|" + "|".join(['$' + str(i + 1) for i in range(cols)]) + "|}\n"
-
-	for i in range(rows):
-		final_str += old_spacing + '\t'
-		final_str += " & ".join(['$' + str(i * cols + j + offset) for j in range(cols)])
-
-		final_str += " \\\\\\\n"
-
-	final_str += old_spacing + "\\end{tabular}\n$0"
-
-	snip.expand_anon(final_str)
-
-def add_row(snip):
-	row_len = int(''.join(s for s in snip.buffer[snip.line] if s.isdigit()))
-	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
-
-	snip.buffer[snip.line] = ''
-
-	final_str = old_spacing
-	final_str += " & ".join(['$' + str(j + 1) for j in range(row_len)])
-	final_str += " \\\\\\"
-
-	snip.expand_anon(final_str)
+def env(name):
+	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+	return x != '0' and x != '0'
 
 endglobal
 
-snippet "\\?b(egin)?" "begin{} / end{}" br
-\begin{${1:something}}
-	${0:${VISUAL}}
-\end{$1}
+
+
+snippet  begin "begin{} / end{}" b
+\\begin{$1}
+	$0
+\\end{$1}
 endsnippet
 
 snippet abs "abstract environment" b
@@ -122,7 +93,7 @@ endsnippet
 
 snippet cha "Chapter" b
 \chapter{${1:chapter name}}%
-\label{cha:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
+\label{sec:${2:${1/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 
 $0
 endsnippet
@@ -223,21 +194,21 @@ endsnippet
 snippet gln "New glossary item" b
 \newglossaryentry{${1:identifier}}
 {
-  name={${2:name}},
-  first={${3:first occurrence}},
-  sort={${4:sort value}},
-  description={${0:description}},
+    name={${2:name}},
+    first={${3:first occurrence}},
+    sort={${4:sort value}},
+    description={${0:description}},
 }
 endsnippet
 snippet glnl "New long glossary item" b
 \longnewglossaryentry{${1:identifier}}
 {
-  name={${2:name}},
-  first={${3:first occurrence}},
-  sort={${4:sort value}},
+    name={${2:name}},
+    first={${3:first occurrence}},
+    sort={${4:sort value}},
 }
 {
-  ${0:description}
+    ${0:description}
 }
 endsnippet
 
@@ -256,4 +227,107 @@ snippet und "Underline"
 \underline{$1} $0
 endsnippet
 
+# Equation
+snippet eq "equation" b
+\begin{equation}
+	$0
+\end{equation}
+endsnippet
+
+# Labed Equation
+snippet eql "equation with label" b
+\begin{equation}
+\label{eq:$1}
+	$0
+\end{equation}
+endsnippet
+
+
+
+context "math()"
+snippet _ "Subscript" iA
+_`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
+endsnippet
+
+context "math()"
+snippet ^ "Superscript" iA
+^`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
+endsnippet
+
+context "math()"
+snippet // "Fraction" iA
+\\frac{$1}{$2}$0
+endsnippet
+
+snippet frac "Fraction" i
+\\frac{${VISUAL}}{$1}$0
+endsnippet
+
+
+context "math()"
+snippet \bm "\bm{}" iA
+\\bm{$1}$0
+endsnippet
+
+context "math()"
+snippet \vec "\vec{}" iA
+\\vec{$1}$0
+endsnippet
+
+context "math()"
+snippet \hat "\hat{}" iA
+\\hat{$1}$0
+endsnippet
+
+# math
+snippet mk "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+	snip.rv = ' '
+else:
+	snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Math" wA
+\[
+${1:${VISUAL}}
+.\] $0
+endsnippet
+
+snippet align "Align" bA
+\begin{align*}
+	$1
+.\end{align*}
+endsnippet
+
+
+# context "math()"
+# snippet ^^ "^{ }" iA
+# ^{$1}$0
+# endsnippet
+
+
+
+
 # vim:ft=snippets:
+
+# math_regions = [
+#     "A", "AS", "B", "BS", "C",
+#     "CS", "D", "DS", "E", "ES",
+#     "F", "FS", "G", "GS", "H",
+#     "HS", "I", "IS", "J", "JS",
+#     "K", "KS", "L", "LS", "DS",
+#     "V", "W", "X", "Y", "Z",
+#     "AmsA", "AmsB", "AmsC", "AmsD", "AmsE",
+#     "AmsF", "AmsG", "AmsAS", "AmsBS", "AmsCS",
+#     "AmsDS", "AmsES", "AmsFS", "AmsGS",
+# ]
+# tex_math_regions = list(map(lambda x: f"texMathRegion{x}", math_regions ))
+# tex_math_ignored_regions = ['texMathText']
+# tex_math_region_ids = set(vim.eval('map('+str(tex_math_regions)+", 'hlID(v:val)')"))
+# tex_math_ignored_region_ids = set(vim.eval('map('+str(tex_math_ignored_regions)+", 'hlID(v:val)')"))
+
+# def math():
+#     syn_stack_ids = set(vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))"))
+#     return not tex_math_region_ids <= tex_math_ignored_region_ids and tex_math_region_ids <= tex_math_region_ids 

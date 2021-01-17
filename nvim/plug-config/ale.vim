@@ -10,7 +10,8 @@ let g:ale_linters = {
 let g:ale_fixers = {'*': [],
       \'cpp':['clang-format', 'clangtidy'],
       \'tex':['latexindent'],
-      \'python': ['isort', 'yapf', 'black'],
+      \'python': ['isort', 'black', 'yapf'],
       \'matlab': ['matlabf'],
       \'cmake': ['cmakeformat']}
 
+" let g:ale_tex_latexindent_options = "-y=\"defaultIndent: \'    \'\""
