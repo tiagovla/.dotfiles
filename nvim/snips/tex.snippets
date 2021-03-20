@@ -2,6 +2,28 @@ extends texmath
 
 global !p
 
+
+# math_regions = [
+#     "A", "AS", "B", "BS", "C",
+#     "CS", "D", "DS", "E", "ES",
+#     "F", "FS", "G", "GS", "H",
+#     "HS", "I", "IS", "J", "JS",
+#     "K", "KS", "L", "LS", "DS",
+#     "V", "W", "X", "Y", "Z",
+#     "AmsA", "AmsB", "AmsC", "AmsD", "AmsE",
+#     "AmsF", "AmsG", "AmsAS", "AmsBS", "AmsCS",
+#     "AmsDS", "AmsES", "AmsFS", "AmsGS",
+# ]
+# tex_math_regions = list(map(lambda x: f"texMathRegion{x}", math_regions ))
+# tex_math_ignored_regions = ['texMathText']
+# tex_math_region_ids = set(vim.eval('map('+str(tex_math_regions)+", 'hlID(v:val)')"))
+# tex_math_ignored_region_ids = set(vim.eval('map('+str(tex_math_ignored_regions)+", 'hlID(v:val)')"))
+
+# def math():
+#     syn_stack_ids = set(vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))"))
+#     return not tex_math_region_ids <= tex_math_ignored_region_ids and tex_math_region_ids <= tex_math_region_ids 
+
+
 def math():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 
@@ -244,90 +266,80 @@ endsnippet
 
 
 
-context "math()"
-snippet _ "Subscript" iA
-_`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
-endsnippet
+# context "math()"
+# snippet _ "Subscript" iA
+# _`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
+# endsnippet
 
-context "math()"
-snippet ^ "Superscript" iA
-^`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
-endsnippet
+# context "math()"
+# snippet ^ "Superscript" iA
+# ^`!p snip.rv='{' if t[1] else ""`${1}`!p snip.rv = '}' if t[1] else ""`$0
+# endsnippet
 
-context "math()"
-snippet // "Fraction" iA
-\\frac{$1}{$2}$0
-endsnippet
+# context "math()"
+# snippet // "Fraction" iA
+# \\frac{$1}{$2}$0
+# endsnippet
 
-snippet frac "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
-
-
-context "math()"
-snippet \bm "\bm{}" iA
-\\bm{$1}$0
-endsnippet
-
-context "math()"
-snippet \vec "\vec{}" iA
-\\vec{$1}$0
-endsnippet
-
-context "math()"
-snippet \hat "\hat{}" iA
-\\hat{$1}$0
-endsnippet
-
-# math
-snippet mk "Math" wA
-$${1}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
-	snip.rv = ' '
-else:
-	snip.rv = ''
-`$2
-endsnippet
-
-snippet dm "Math" wA
-\[
-${1:${VISUAL}}
-.\] $0
-endsnippet
-
-snippet align "Align" bA
-\begin{align*}
-	$1
-.\end{align*}
-endsnippet
+# snippet frac "Fraction" i
+# \\frac{${VISUAL}}{$1}$0
+# endsnippet
 
 
 # context "math()"
-# snippet ^^ "^{ }" iA
+# snippet \bm "\bm{}" iA
+# \\bm{$1}$0
+# endsnippet
+
+# context "math()"
+# snippet \vec "\vec{}" iA
+# \\vec{$1}$0
+# endsnippet
+
+# context "math()"
+# snippet \hat "\hat{}" iA
+# \\hat{$1}$0
+# endsnippet
+
+# # math
+# snippet mk "Math" wA
+# $${1}$`!p
+# if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+# 	snip.rv = ' '
+# else:
+# 	snip.rv = ''
+# `$2
+# endsnippet
+
+# snippet dm "Math" wA
+# \[
+# ${1:${VISUAL}}
+# .\] $0
+# endsnippet
+
+# snippet align "Align" bA
+# \begin{align*}
+# 	$1
+# .\end{align*}
+# endsnippet
+
+
+# context "math()"
+# snippet bb "^{ }" iA
 # ^{$1}$0
 # endsnippet
 
+# context "math()"
+snippet  ^^ "^^" iA
+^{$1}$0
+endsnippet
+
+# context "math()"
+snippet __ "_{ }" iA
+_{$1}$0
+endsnippet
 
 
 
 # vim:ft=snippets:
 
-# math_regions = [
-#     "A", "AS", "B", "BS", "C",
-#     "CS", "D", "DS", "E", "ES",
-#     "F", "FS", "G", "GS", "H",
-#     "HS", "I", "IS", "J", "JS",
-#     "K", "KS", "L", "LS", "DS",
-#     "V", "W", "X", "Y", "Z",
-#     "AmsA", "AmsB", "AmsC", "AmsD", "AmsE",
-#     "AmsF", "AmsG", "AmsAS", "AmsBS", "AmsCS",
-#     "AmsDS", "AmsES", "AmsFS", "AmsGS",
-# ]
-# tex_math_regions = list(map(lambda x: f"texMathRegion{x}", math_regions ))
-# tex_math_ignored_regions = ['texMathText']
-# tex_math_region_ids = set(vim.eval('map('+str(tex_math_regions)+", 'hlID(v:val)')"))
-# tex_math_ignored_region_ids = set(vim.eval('map('+str(tex_math_ignored_regions)+", 'hlID(v:val)')"))
-
-# def math():
-#     syn_stack_ids = set(vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))"))
-#     return not tex_math_region_ids <= tex_math_ignored_region_ids and tex_math_region_ids <= tex_math_region_ids 

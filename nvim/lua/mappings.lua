@@ -46,4 +46,8 @@ function M.telescope()
         "<cmd>lua require('telescope.builtin').help_tags()<cr>")
 end
 
+-- function M.nvimtree()
+--     map('n', '<Space>p', ":NvimTreeToggle<cr>", {silent = true})
+-- end
+
 return M
