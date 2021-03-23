@@ -23,8 +23,15 @@ local which_key_space = {}
 which_key_space["t"] = {
     ["name"] = "+terminal",
     ["g"] = {":FloatermNew lazygit", "git"},
+    ["d"] = {":FloatermNew lazydocker", "docker"},
     ["t"] = {":FloatermToggle", "terminal"},
     ["p"] = {":FloaterNew python", "python"}
+}
+
+which_key_space["l"] = {
+    ["name"] = "+latex",
+    ["b"] = {":TexlabBuild", "build"},
+    ["v"] = {":TexlabForward", "forward"}
 }
 
 which_key_space["b"] = {

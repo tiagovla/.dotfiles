@@ -64,6 +64,9 @@ return require('packer').startup(function()
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
 
+    -- Latex
+    use 'lervag/vimtex'
+
     -- General
     use 'liuchengxu/vim-which-key'
     use 'voldikss/vim-floaterm'
