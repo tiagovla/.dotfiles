@@ -15,7 +15,7 @@ end
 
 function M.options()
 
-    g.python3_host_prog = '~/.pyenv/versions/3.8.6/bin/python3'
+    g.python3_host_prog = '~/.pyenv/versions/3.8.9/bin/python3'
 
     o.clipboard = 'unnamedplus'
     o.cmdheight = 1

@@ -1,24 +1,12 @@
+require'lspinstall'.setup()
+
 local nvim_lsp = require('lspconfig')
 
 _G.formatting = function()
     if not vim.g[string.format("format_disabled_%s", vim.bo.filetype)] then
-        vim.lsp.buf.formatting(vim.g[string.format("format_options_%s",
-                                                   vim.bo.filetype)] or {})
+        vim.lsp.buf.formatting_sync(nil, 1000)
     end
 end
-
-vim.lsp.handlers["textDocument/formatting"] =
-    function(err, _, result, _, bufnr)
-        if err ~= nil or result == nil then return end
-        if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-            local view = vim.fn.winsaveview()
-            vim.lsp.util.apply_text_edits(result, bufnr)
-            vim.fn.winrestview(view)
-            if bufnr == vim.api.nvim_get_current_buf() then
-                vim.cmd [[noautocmd :update]]
-            end
-        end
-    end
 
 local on_attach = function(client, bufnr)
 
@@ -75,29 +63,35 @@ local on_attach = function(client, bufnr)
         vim.cmd [[autocmd BufWritePre <buffer> lua formatting()]]
         vim.cmd [[augroup END]]
     end
-    -- if client.resolved_capabilities.document_highlight then
-    --     vim.api.nvim_exec([[
-    --    hi LspReferenceRead cterm=bold ctermbg=red guibg=#464646
-    --    hi LspReferenceText cterm=bold ctermbg=red guibg=#464646
-    --    hi LspReferenceWrite cterm=bold ctermbg=red guibg=#464646
-    --    augroup lsp_document_highlight
-    --      autocmd! * <buffer>
-    --      autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-    --      autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    --    augroup END
-    --    ]], false)
-    -- end
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local lspconfig = require 'lspconfig'
-
-lspconfig.pyright.setup {on_attach = on_attach}
-lspconfig.clangd.setup {on_attach = on_attach}
-
-lspconfig.texlab.setup {
+nvim_lsp["efm"].setup {on_attach = on_attach}
+nvim_lsp["dockerfile"].setup {on_attach = on_attach}
+nvim_lsp["python"].setup {on_attach = on_attach}
+nvim_lsp["cpp"].setup {on_attach = on_attach}
+nvim_lsp["bash"].setup {on_attach = on_attach}
+nvim_lsp["cmake"].setup {on_attach = on_attach}
+nvim_lsp["yaml"].setup {on_attach = on_attach}
+nvim_lsp["html"].setup {on_attach = on_attach}
+nvim_lsp["lua"].setup {
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            diagnostics = {globals = {"vim"}},
+            workspace = {
+                library = {
+                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+                },
+                maxPreload = 10000
+            }
+        }
+    }
+}
+nvim_lsp["latex"].setup {
     capabilities = capabilities,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
@@ -116,12 +110,10 @@ lspconfig.texlab.setup {
 
 local isort = {formatCommand = "isort --quiet -", formatStdin = true}
 local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
-local luaf = {
-    formatCommand = "/usr/local/lib/luarocks/rocks-5.1/luaformatter/scm-1/bin/lua-format",
-    formatStdin = true
-}
+local luaf = {formatCommand = "lua-format", formatStdin = true}
 local latexindent = {formatCommand = "latexindent", formatStdin = true}
-
+local cmakef = {formatCommand = 'cmake-format', formatStdin = true}
+local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
 local shellcheck = {
     LintCommand = 'shellcheck -f gcc -x',
     lintFormats = {
@@ -129,14 +121,10 @@ local shellcheck = {
     }
 }
 
-local cmakef = {formatCommand = 'cmake-format', formatStdin = true}
-
-local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
-
-nvim_lsp.efm.setup {
+nvim_lsp["efm"].setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true, codeAction = false},
-    -- filetypes = {"lua", "python", "cpp", "sh", "json", "yaml"},
+    filetypes = {"lua", "python", "cpp", "sh", "json", "yaml"},
     settings = {
         rootMarkers = {".git/"},
         languages = {
@@ -145,32 +133,6 @@ nvim_lsp.efm.setup {
             tex = {latexindent},
             sh = {shellcheck, shfmt},
             cmake = {cmakef}
-        }
-    }
-}
-
-local user = vim.fn.expand('$USER')
-local sumneko_root_path = "/home/" .. user .. "/github/lua-language-server"
-local sumneko_binary = sumneko_root_path .. "/bin/" .. 'Linux' ..
-                           "/lua-language-server"
-
-nvim_lsp.bashls.setup {}
-
-nvim_lsp.cmake.setup {}
-
-nvim_lsp.sumneko_lua.setup {
-    cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
-    on_attach = on_attach,
-    settings = {
-        Lua = {
-            runtime = {version = 'LuaJIT', path = vim.split(package.path, ';')},
-            diagnostics = {globals = {'vim'}},
-            workspace = {
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-                }
-            }
         }
     }
 }

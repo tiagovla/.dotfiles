@@ -22,6 +22,7 @@ return require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     -- use 'nvim-lua/completion-nvim'
     use 'hrsh7th/nvim-compe'
+    use 'kabouzeid/nvim-lspinstall'
 
     -- Closer 
     use '9mm/vim-closer'
