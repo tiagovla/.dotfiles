@@ -1,19 +1,25 @@
 local M = {}
 
-local b = vim.bo
 local g = vim.g
-local o = vim.o
-local w = vim.wo
 local cmd = vim.cmd
 
 function M.setup()
-  M.tokyo_night()
+    M.tokyo_night()
+    -- M.gruvbox()
+    M.highlights()
 end
 
 function M.tokyo_night()
-  cmd('colorscheme tokyonight')
-  g.tokyonight_style = 'night'
-  g.tokyonight_enable_italic = 1
+    cmd('colorscheme tokyonight')
+    g.tokyonight_style = 'night'
+    g.tokyonight_enable_italic = 1
 end
 
+function M.gruvbox() cmd('colorscheme gruvbox') end
+
+function M.highlights()
+    vim.cmd [[ highlight GitSignsAdd    guifg=green]]
+    vim.cmd [[ highlight GitSignsChange guifg=blue]]
+    vim.cmd [[ highlight GitSignsDelete guifg=red]]
+end
 return M

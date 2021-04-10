@@ -2,6 +2,7 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function()
+
     -- Packer
     use {'wbthomason/packer.nvim', opt = true}
 
@@ -24,13 +25,13 @@ return require('packer').startup(function()
     use 'hrsh7th/nvim-compe'
     use 'kabouzeid/nvim-lspinstall'
 
-    -- Closer 
+    -- Closer
     use '9mm/vim-closer'
 
     -- Syntax
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
-    -- Theme 
+    -- Theme
     use {
         'akinsho/nvim-bufferline.lua',
         requires = 'kyazdani42/nvim-web-devicons'
@@ -48,6 +49,7 @@ return require('packer').startup(function()
     use 'arcticicestudio/nord-vim'
 
     -- Tools
+    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'tpope/vim-fugitive'
     use 'mbbill/undotree'
     use 'puremourning/vimspector'
