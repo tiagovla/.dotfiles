@@ -14,3 +14,5 @@ nvim/autoload/plugged/
 !bspwm/*
 !sxhkd
 !sxhkd/*
+!polybar
+!polybar/*
