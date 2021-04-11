@@ -14,9 +14,13 @@ return require('packer').startup(function()
     use 'nvim-telescope/telescope-media-files.nvim'
 
     -- Formatting
+    use 'lilydjwg/colorizer'
     use 'jiangmiao/auto-pairs'
     use 'machakann/vim-sandwich'
-    use 'norcalli/nvim-colorizer.lua'
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function() require'colorizer'.setup {'*'} end
+    }
     use 'tpope/vim-commentary'
 
     -- LSP
@@ -47,8 +51,10 @@ return require('packer').startup(function()
     use 'gruvbox-community/gruvbox'
     use 'ghifarit53/tokyonight-vim'
     use 'arcticicestudio/nord-vim'
+    use 'joshdick/onedark.vim'
 
     -- Tools
+    use 'tweekmonster/startuptime.vim'
     use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'tpope/vim-fugitive'
     use 'mbbill/undotree'
@@ -61,7 +67,7 @@ return require('packer').startup(function()
             vim.g.UltiSnipsExpandTrigger = '<nop>'
             vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
             vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
-            vim.g.UltiSnipsSnippetDirectories = {"UltiSnips", "snips"}
+            vim.g.UltiSnipsSnippetDirectories = {'UltiSnips', 'snips'}
         end
     }
     use 'hrsh7th/vim-vsnip'

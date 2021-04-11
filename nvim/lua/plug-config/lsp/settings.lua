@@ -109,6 +109,11 @@ nvim_lsp["latex"].setup {
 }
 
 local isort = {formatCommand = "isort --quiet -", formatStdin = true}
+local prettier = {
+    formatCommand = "prettier --stdin-filepath ${INPUT}",
+    formatStdin = true
+}
+local yamlfix = {formatCommand = "yamlfix ", formatStdin = true}
 local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
 local luaf = {formatCommand = "lua-format", formatStdin = true}
 local latexindent = {formatCommand = "latexindent", formatStdin = true}
@@ -132,7 +137,11 @@ nvim_lsp["efm"].setup {
             lua = {luaf},
             tex = {latexindent},
             sh = {shellcheck, shfmt},
-            cmake = {cmakef}
+            cmake = {cmakef},
+            html = {prettier},
+            css = {prettier},
+            json = {prettier},
+            yaml = {prettier}
         }
     }
 }
