@@ -10,3 +10,7 @@ nvim/autoload/plugged/
 !.tmux.conf
 !alacritty
 !alacritty/*
+!bspwm
+!bspwm/*
+!sxhkd
+!sxhkd/*
