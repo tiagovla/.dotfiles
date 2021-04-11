@@ -19,12 +19,14 @@ local tokyo_night = {
     inactive = {
         a = {fg = colors.gray, bg = colors.bg, gui = 'bold'},
         b = {fg = colors.gray, bg = colors.bg},
-        c = {fg = colors.bg, bg = colors.bg}
+        c = {fg = colors.bg, bg = colors.bg},
+        z = {fg = colors.gray, bg = colors.bg}
     },
     normal = {
         a = {fg = colors.bg, bg = colors.green, gui = 'bold'},
         b = {fg = colors.gray, bg = colors.bg},
-        c = {fg = colors.gray, bg = colors.bg}
+        c = {fg = colors.gray, bg = colors.bg},
+        z = {fg = colors.gray, bg = colors.bg}
     },
     visual = {a = {fg = colors.bg, bg = colors.purple, gui = 'bold'}},
     replace = {a = {fg = colors.bg, bg = colors.red, gui = 'bold'}},
