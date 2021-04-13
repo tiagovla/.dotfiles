@@ -1,4 +1,3 @@
-
 ;==========================================================
 ;
 ;
@@ -20,7 +19,6 @@
 [colors]
 background = ${xrdb:background}
 foreground = #adb1b9
-
 color0 = ${xrdb:color0}
 color1 = ${xrdb:color1}
 color2 = ${xrdb:color2}
@@ -45,8 +43,8 @@ tray-position = right
 monitor = eDP-1
 width =  100%
 height = 22
-padding-left =1
-padding-right =0
+padding-left = 1
+padding-right = 0
 background = ${colors.background}
 foreground = ${colors.foreground}
 bottom = false
@@ -54,14 +52,11 @@ border-top-size = 7
 border-bottom-size = 7
 border-top-color = ${colors.background}
 border-bottom-color = ${colors.background}
-
 line-size = 3
 wm-restack = bspwm
-
 modules-left = round-left bspwm round-right
 modules-center =
-modules-right =  alsa backlight temperature cpu mem  wlan round-left time round-right  powermenu
-
+modules-right =  battery alsa backlight temperature cpu mem  wlan round-left time round-right  powermenu
 font-0 = Hack Nerd Font:style=Bold:pixelsize=13;3
 font-1 = JetBrainsMono Nerd Font:size=18;5
 font-2 = Material Design Icons:style=Bold:size=13;3
@@ -80,26 +75,23 @@ content-foreground = #2b2f37
 
 [module/temperature]
 type = internal/temperature
+ramp-0 = "󰜗"
 thermal-zone = 0
 warn-temperature = 70
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
-format-padding = 2
 label = %temperature-c%
 label-warn = %temperature-c%
-ramp-0 =  "󰜗" 
 ramp-foreground = #a4ebf3
+format-padding = 1
 
 [module/bspwm]
-
 type = internal/bspwm
-
 pin-workspaces = true
 inline-mode = true
 enable-click = true
 enable-scroll = true
 reverse-scroll = false
-
 format = <label-state>
 
 ws-icon-0 = 1;%{F#ff9b93}
@@ -115,23 +107,19 @@ ws-icon-9 = 0;%{F#AE8785}
 
 label-separator = ""
 label-separator-background = #2b2f37
-
 label-focused = %icon% %name%
 label-focused-foreground = ${colors.foreground}
 label-focused-underline =  #565c64
 label-focused-padding = 1
 label-focused-background = #2b2f37
-
 label-occupied = %icon% %name%
 label-occupied-foreground = #646870
 label-occupied-background = #2b2f37
 label-occupied-padding = 1
-
 label-empty = ""
 label-empty-foreground =   ${colors.foreground}
 label-empty-padding = 1
 label-empty-background = #2b2f37
-
 label-urgent = %icon% %name%
 label-urgent-foreground = #88C0D0
 label-urgent-background = #2b2f37
@@ -140,12 +128,10 @@ label-urgent-padding = 1
 [module/alsa]
 type = internal/alsa
 format-volume = <label-volume> <bar-volume>
-label-volume = " "  
-label-volume-foreground = ${colors.foreground}
-
+label-volume = " "
+label-volume-foreground = #61afef
 format-muted-foreground = ${colors.foreground}
 label-muted = 󰚙
-
 format-muted-padding = 1
 format-muted-background = #2b2f37
 
@@ -177,16 +163,25 @@ format-background = #2b2f37
 date = %{F#888e96}󰥔 %H:%M%{F-}
 time-alt = %{F#61afef}󰃭 %a, %b %d%{F-}
 label = %date%%time%
-
+format-padding = 1
 
 [module/mem]
 type = custom/script
 exec = free -m | sed -n 's/^Mem:\s\+[0-9]\+\s\+\([0-9]\+\)\s.\+/\1/p'
 format = <label>
-format-prefix = " " 
-label = %output:4% MB
+format-prefix = " "
+label = "%output:4%MB"
 format-prefix-foreground = #d19a66
-format-padding = 2
+format-padding = 1
+
+[module/cpu]
+type = internal/cpu
+interval = 2.5
+format = <label>
+format-prefix = " CPU " 
+label = "%percentage:2%%"
+format-prefix-foreground = #989cff
+format-padding = 1
 
 # [module/updates]
 # type = custom/script
@@ -199,8 +194,8 @@ format-padding = 2
 
 [module/powermenu]
 type = custom/text 
-content =" " 
-content-padding =2
+content ="" 
+content-padding = 1
 click-left = doas zzz &
 content-foreground =  #e06c75
 
@@ -208,19 +203,19 @@ content-foreground =  #e06c75
 type = internal/network
 interface = wlp4s0
 interval = 10.0
-format-connected =  <label-connected>
-label-connected = " 󰤪  " 
-label-connected-foreground = #A3BE8C 
-label-padding = 1
+format-connected = <label-connected>
+label-connected = "󰤪 "
+label-connected-foreground = #A3BE8C
+format-padding = 1
 
 [module/battery]
 type = internal/battery
-battery = BAT0
-adapter = AC0
+battery = BAT1
+adapter = ADP1
 full-at = 98
 
-format-charging = <animation-charging> <label-charging>
-label-charging = %percentage%%
+format-charging = <ramp-capacity> <label-charging>
+label-charging = %percentage:2%%
 
 format-charging-padding = 1
 format-charging-foreground = ${colors.color4}
@@ -241,17 +236,17 @@ label-discharging-foreground = ${colors.foreground}
 ramp-capacity-foreground =  #A0E8A2  
 label-charging-foreground = ${colors.foreground}
 
-ramp-capacity-0 = "  " 
-ramp-capacity-1 = "  " 
-ramp-capacity-2 = "  " 
-ramp-capacity-3 = "  " 
-ramp-capacity-4 = "  "
+ramp-capacity-0 = " " 
+ramp-capacity-1 = " " 
+ramp-capacity-2 = " " 
+ramp-capacity-3 = " " 
+ramp-capacity-4 = " "
 
-animation-charging-0 = "  " 
-animation-charging-1 = "  " 
-animation-charging-2 = "  " 
-animation-charging-3 = "  " 
-animation-charging-4 = "  "
+animation-charging-0 = " " 
+animation-charging-1 = " " 
+animation-charging-2 = " " 
+animation-charging-3 = " " 
+animation-charging-4 = " "
 
 animation-charging-foreground = #DF8890
 animation-charging-framerate = 910 
@@ -272,23 +267,14 @@ type = internal/backlight
 card = intel_backlight
 format = <label>
 format-prefix = " "
-label = %percentage%
+label = %percentage:2%%
 format-prefix-foreground = #D4B261
-format-padding = 2
+format-padding = 1
 
-[module/cpu]
-type = internal/cpu
-interval = 2.5
-format-prefix = " CPU " 
-format = <label>
-label = "%percentage:2%%"
-format-prefix-foreground = #989cff
-format-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...
 
 
-
-
+; vim:ft=dosini

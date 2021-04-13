@@ -14,7 +14,7 @@ return require('packer').startup(function()
     use 'nvim-telescope/telescope-media-files.nvim'
 
     -- Formatting
-    use 'lilydjwg/colorizer'
+    use 'norcalli/nvim-colorizer.lua'
     use 'jiangmiao/auto-pairs'
     use 'machakann/vim-sandwich'
     use 'tpope/vim-commentary'
@@ -42,9 +42,9 @@ return require('packer').startup(function()
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use 'ghifarit53/tokyonight-vim'
-    -- use 'gruvbox-community/gruvbox'
-    -- use 'arcticicestudio/nord-vim'
-    -- use 'joshdick/onedark.vim'
+    use 'gruvbox-community/gruvbox'
+    use 'arcticicestudio/nord-vim'
+    use 'joshdick/onedark.vim'
 
     -- Geneal Tools
     use 'lambdalisue/suda.vim'

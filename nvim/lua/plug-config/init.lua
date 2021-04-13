@@ -1,6 +1,7 @@
 -- require 'plug-config.treesitter'
 require 'plug-config.telescope'
 require 'plug-config.lualine'
+require 'plug-config.treesitter'
 require 'plug-config.bufferline'
 require 'plug-config.nvimtree'
 require 'plug-config.whichkey'
