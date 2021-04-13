@@ -16,3 +16,5 @@ nvim/autoload/plugged/
 !sxhkd/*
 !polybar
 !polybar/*
+!kitty
+!kitty/*
