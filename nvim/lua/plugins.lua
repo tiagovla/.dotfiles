@@ -17,15 +17,11 @@ return require('packer').startup(function()
     use 'lilydjwg/colorizer'
     use 'jiangmiao/auto-pairs'
     use 'machakann/vim-sandwich'
-    use {
-        'norcalli/nvim-colorizer.lua',
-        config = function() require'colorizer'.setup {'*'} end
-    }
     use 'tpope/vim-commentary'
 
     -- LSP
     use 'neovim/nvim-lspconfig'
-    -- use 'nvim-lua/completion-nvim'
+    use 'glepnir/lspsaga.nvim'
     use 'hrsh7th/nvim-compe'
     use 'kabouzeid/nvim-lspinstall'
 
@@ -40,44 +36,33 @@ return require('packer').startup(function()
         'akinsho/nvim-bufferline.lua',
         requires = 'kyazdani42/nvim-web-devicons'
     }
-
     use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
-
     use {
         'hoob3rt/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
-    -- use 'morhetz/gruvbox'
-    use 'gruvbox-community/gruvbox'
     use 'ghifarit53/tokyonight-vim'
-    use 'arcticicestudio/nord-vim'
-    use 'joshdick/onedark.vim'
+    -- use 'gruvbox-community/gruvbox'
+    -- use 'arcticicestudio/nord-vim'
+    -- use 'joshdick/onedark.vim'
 
-    -- Tools
+    -- Geneal Tools
+    use 'lambdalisue/suda.vim'
     use 'tweekmonster/startuptime.vim'
-    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
     use 'tpope/vim-fugitive'
     use 'mbbill/undotree'
     use 'puremourning/vimspector'
+    use 'liuchengxu/vim-which-key'
+    use 'voldikss/vim-floaterm'
+
+    -- Git
+    use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
 
     -- Snips
-    use {
-        'SirVer/ultisnips',
-        config = function()
-            vim.g.UltiSnipsExpandTrigger = '<nop>'
-            vim.g.UltiSnipsJumpForwardTrigger = '<tab>'
-            vim.g.UltiSnipsJumpBackwardTrigger = '<s-tab>'
-            vim.g.UltiSnipsSnippetDirectories = {'UltiSnips', 'snips'}
-        end
-    }
     use 'hrsh7th/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
 
     -- Latex
     use 'lervag/vimtex'
-
-    -- General
-    use 'liuchengxu/vim-which-key'
-    use 'voldikss/vim-floaterm'
 
 end)

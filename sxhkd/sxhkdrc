@@ -4,7 +4,7 @@
 
 # terminal emulator
 alt + Return
-	alacritty
+    kitty sh -c "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
 
 # program launcher
 alt + @space
@@ -47,8 +47,8 @@ alt + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-# alt + ctrl + {m,x,y,z}
-# 	bspc node -g {marked,locked,sticky,private}
+alt + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
 
 #
 # focus/swap

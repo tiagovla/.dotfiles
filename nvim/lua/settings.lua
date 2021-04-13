@@ -7,7 +7,6 @@ local w = vim.wo
 local cmd = vim.cmd
 
 function M.setup()
-
     M.options()
     M.window_options()
     M.command()
