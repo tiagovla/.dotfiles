@@ -32,6 +32,10 @@ function M.highlights()
         au ColorScheme * hi LspDiagnosticsDefaultWarning guifg=#bb873a
         au ColorScheme * hi LspDiagnosticsDefaultInformation guifg=#487ef4
         au ColorScheme * hi LspDiagnosticsDefaultHint guifg=#5e34ad
+        au ColorScheme * hi LspDiagnosticsUnderlineError cterm=underline gui=underline guisp=#b42d46
+        au ColorScheme * hi LspDiagnosticsUnderlineWarning cterm=underline gui=underline guisp=#bb873a
+        au ColorScheme * hi LspDiagnosticsUnderlineInformation cterm=underline gui=underline guisp=#487ef4
+        au ColorScheme * hi LspDiagnosticsUnderlineHint cterm=underline gui=underline guisp=#5e34ad
         au ColorScheme * hi LineNr guifg=#42464e guibg=NONE
         au ColorScheme * hi Comment guifg=#42464e
         au ColorScheme * hi SignColumn guibg=NONE
@@ -41,7 +45,7 @@ function M.highlights()
         au ColorScheme * hi PmenuSel guibg=#98c379
         au ColorScheme * hi Pmenu  guibg=#282c34
         au ColorScheme * hi Normal guibg=NONE ctermbg=NONE
-        au ColorScheme * highlight! StatusLineNC gui=underline guibg=NONE guifg=#383c44
+        au ColorScheme * hi StatusLineNC gui=underline guibg=NONE guifg=#383c44
         augroup END
     ]], false)
 end
