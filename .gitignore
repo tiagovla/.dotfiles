@@ -18,3 +18,5 @@ nvim/autoload/plugged/
 !polybar/*
 !kitty
 !kitty/*
+!images
+!images/*
