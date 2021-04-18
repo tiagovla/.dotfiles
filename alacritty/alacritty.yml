@@ -11,18 +11,18 @@ scrolling:
   history: 10000
 font:
   normal:
-    family: Dank Mono Nerd Font
-    style: Regular
-  # bold:
-  #   family: Hack Nerd Font Mono
-  #   style: Bold
-  # italic:
-  #   family: FiraCode Nerd Font
-  #   style: Italic
-  # bold_italic:
-  #   family: Hack Nerd Font Mono
-  #   style: Bold Italic
-  size: 11
+    family: MonoLisa Nerd Font
+    style: Medium
+  bold:
+    family: MonoLisa Nerd Font
+    style: Bold
+  italic:
+    family: MonoLisa Nerd Font
+    style: Medium Italic
+  bold_italic:
+    family: MonoLisa Nerd Font
+    style: Bold Italic
+  size: 10
 
 draw_bold_text_with_bright_colors: true
 
@@ -58,7 +58,7 @@ live_config_reload: true
 
 shell:
   program: /usr/bin/zsh
-  # args:
-  #   - -l
-  #   - -c
-  #   - "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+  args:
+    - -l
+    - -c
+    - "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"

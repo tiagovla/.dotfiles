@@ -1,10 +1,11 @@
 #
 # wm independent hotkeys
 #
-
 # terminal emulator
 alt + Return
-    kitty sh -c "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+    alacritty
+    # alacritty -e "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+    # kitty sh -c "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
 
 # program launcher
 alt + @space
