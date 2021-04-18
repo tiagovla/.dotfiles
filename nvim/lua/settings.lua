@@ -66,6 +66,8 @@ function M.options()
     vim.api.nvim_command('set nohlsearch')
     vim.api.nvim_command('set mouse=a')
     vim.api.nvim_command('set listchars=tab:!·,trail:·')
+    vim.api.nvim_command('set t_ZH=^[[3m')
+    vim.api.nvim_command('set t_ZR=^[[23m')
 end
 
 function M.window_options()
