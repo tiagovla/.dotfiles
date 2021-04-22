@@ -4,23 +4,23 @@ local g = vim.g
 local cmd = vim.cmd
 
 function M.setup()
-    M.tokyo_night()
+    -- M.tokyo_night()
+    M.tokyodark()
     -- M.gruvbox()
     -- M.onedark()
     M.highlights()
 end
 
+function M.tokyodark() cmd('colorscheme tokyodark') end
+
 function M.tokyo_night()
     cmd('colorscheme tokyonight')
     g.tokyonight_transparent_background = 1
-    g.tokyonight_style = 'night'
+    -- g.tokyonight_style = 'night'
     g.tokyonight_enable_italic = 1
 end
 
-function M.gruvbox()
-    cmd('colorscheme gruvbox')
-    cmd('hi! link LspDiagnosticsDefaultWarning Error')
-end
+function M.gruvbox() cmd('colorscheme gruvbox') end
 
 function M.onedark() cmd('colorscheme onedark') end
 

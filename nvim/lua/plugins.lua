@@ -30,6 +30,7 @@ return require('packer').startup(function()
 
     -- Syntax
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+    use 'nvim-treesitter/playground'
 
     -- Theme
     use {
@@ -42,14 +43,16 @@ return require('packer').startup(function()
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }
     use 'ghifarit53/tokyonight-vim'
-    use 'gruvbox-community/gruvbox'
-    use 'arcticicestudio/nord-vim'
-    use 'joshdick/onedark.vim'
+    use 'tiagovla/tokyodark.nvim'
+    -- use 'gruvbox-community/gruvbox'
+    -- use 'arcticicestudio/nord-vim'
+    -- use 'joshdick/onedark.vim'
 
     -- Geneal Tools
+    use 'tiagovla/ezmap.nvim'
     use 'lambdalisue/suda.vim'
     use 'tweekmonster/startuptime.vim'
-    use 'tpope/vim-fugitive'
+    -- use 'tpope/vim-fugitive'
     use 'mbbill/undotree'
     use 'puremourning/vimspector'
     use 'liuchengxu/vim-which-key'
