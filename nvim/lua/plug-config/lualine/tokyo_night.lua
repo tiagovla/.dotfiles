@@ -3,16 +3,15 @@
 -- Credit: https://github.com/enkia/tokyo-night-vscode-theme
 --
 local colors = {
-    -- ! black
-    bg = "#1a1b26",
-    fg = "#4e5173",
-    red = "#F7768E",
-    green = "#9ECE6A",
-    yellow = "#E0AF68",
-    blue = "#7AA2F7",
-    purple = "#9a7ecc",
-    cyan = "#4abaaf",
-    gray = "#acb0d0"
+    bg = "#11121D",
+    fg = "#45486A",
+    red = "#EE6D85",
+    green = "#95C561",
+    yellow = "#D7A65F",
+    blue = "#7199EE",
+    purple = "#9175C3",
+    cyan = "#41B1A6",
+    gray = "#A3A7C7"
 }
 
 local tokyo_night = {
