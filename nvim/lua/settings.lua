@@ -68,6 +68,7 @@ function M.options()
     vim.api.nvim_command('set listchars=tab:!·,trail:·')
     vim.api.nvim_command('set t_ZH=^[[3m')
     vim.api.nvim_command('set t_ZR=^[[23m')
+    vim.api.nvim_command('set cursorline')
 end
 
 function M.window_options()
@@ -79,6 +80,13 @@ function M.window_options()
 end
 
 function M.command()
+    cmd([[
+        function! SynGroup()
+            let l:s = synID(line('.'), col('.'), 1)
+            echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+        endfun
+    ]])
+    cmd([[nmap <F10> :call SynGroup() <cr>]])
     cmd(
         [[ autocmd ColorScheme * :lua require('vim.lsp.diagnostic')._define_default_signs_and_highlights() ]])
     cmd(

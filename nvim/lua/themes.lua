@@ -8,14 +8,17 @@ function M.setup()
     M.tokyodark()
     -- M.gruvbox()
     -- M.onedark()
-    M.highlights()
+    -- M.highlights()
 end
 
-function M.tokyodark() cmd('colorscheme tokyodark') end
+function M.tokyodark()
+    g["tokyodark_transparent_background"] = true
+    cmd('colorscheme tokyodark')
+end
 
 function M.tokyo_night()
     cmd('colorscheme tokyonight')
-    g.tokyonight_transparent_background = 1
+    g.tokyonight_transparent_background = 0
     -- g.tokyonight_style = 'night'
     g.tokyonight_enable_italic = 1
 end

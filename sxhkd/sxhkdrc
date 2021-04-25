@@ -9,7 +9,10 @@ alt + Return
 
 # program launcher
 alt + @space
-	dmenu_run
+    rofi -show drun
+
+shift + alt + @space
+    dmenu
 
 # make sxhkd reload its configuration files:
 alt + Escape
@@ -130,4 +133,7 @@ XF86AudioMute
 
 XF86MonBrightness{Up,Down}
     brightnessctl s 100{+,-} && polybar-msg hook mbrightness 1
+
+{Print, alt + Print}
+    flameshot {gui, full} -p ~/Pictures/Screenshots
 

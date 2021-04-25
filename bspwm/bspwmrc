@@ -6,6 +6,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 "$HOME/.config/polybar/launch.sh"
 "$HOME/.config/picom/launch.sh"
+dunst &
 
 pgrep -x sxhkd >/dev/null || sxhkd &
 

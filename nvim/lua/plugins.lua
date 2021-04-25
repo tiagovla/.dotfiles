@@ -33,15 +33,9 @@ return require('packer').startup(function()
     use 'nvim-treesitter/playground'
 
     -- Theme
-    use {
-        'akinsho/nvim-bufferline.lua',
-        requires = 'kyazdani42/nvim-web-devicons'
-    }
+    use {'akinsho/nvim-bufferline.lua', requires = 'kyazdani42/nvim-web-devicons'}
     use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
-    use {
-        'hoob3rt/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    }
+    use {'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
     use 'ghifarit53/tokyonight-vim'
     use 'tiagovla/tokyodark.nvim'
     -- use 'gruvbox-community/gruvbox'
@@ -67,5 +61,6 @@ return require('packer').startup(function()
 
     -- Latex
     use 'lervag/vimtex'
+    use 'iamcco/markdown-preview.nvim'
 
 end)
