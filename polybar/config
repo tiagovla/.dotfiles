@@ -17,7 +17,6 @@
 ;==========================================================
 
 [colors]
-; background = #1a1b26
 background = #11121D
 foreground = #adb1b9
 color0 = ${xrdb:color0}
@@ -43,7 +42,7 @@ active-light = #313435
 tray-position = right
 monitor = eDP-1
 width =  100%
-height = 22
+height = 23
 padding-left = 1
 padding-right = 0
 background = ${colors.background}
@@ -57,12 +56,11 @@ line-size = 3
 wm-restack = bspwm
 modules-left = round-left bspwm round-right
 modules-center =
-modules-right =  battery alsa backlight temperature cpu mem  wlan round-left time round-right  powermenu
+modules-right =  battery backlight pulseaudio temperature cpu mem  wlan round-left time round-right  powermenu
 font-0 = Hack Nerd Font:style=Bold:pixelsize=13;3
 font-1 = JetBrainsMono Nerd Font:size=18;5
 font-2 = Material Design Icons:style=Bold:size=13;3
 font-3 = unifont:fontformat=truetype:size=13:antialias=true;
-
 
 [module/round-left]
 type = custom/text
@@ -126,13 +124,13 @@ label-urgent-foreground = #88C0D0
 label-urgent-background = #2b2f37
 label-urgent-padding = 1
 
-[module/alsa]
-type = internal/alsa
+[module/pulseaudio]
+type = internal/pulseaudio
 format-volume = <label-volume> <bar-volume>
 label-volume = " "
 label-volume-foreground = #61afef
 format-muted-foreground = ${colors.foreground}
-label-muted = 󰚙
+label-muted = "  muted"
 format-muted-padding = 1
 format-muted-background = #2b2f37
 
@@ -183,15 +181,6 @@ format-prefix = " CPU "
 label = "%percentage:2%%"
 format-prefix-foreground = #989cff
 format-padding = 1
-
-# [module/updates]
-# type = custom/script
-# exec = doas xbps-install -S > /dev/null 2>&1; xbps-updates
-# format = <label>
-# interval = 4600 
-# label =  %output%  
-# label-padding = 2
-# label-foreground = #BF616A
 
 [module/powermenu]
 type = custom/text 
@@ -253,16 +242,6 @@ animation-charging-foreground = #DF8890
 animation-charging-framerate = 910 
 format-discharging-padding = 1
 
-
-[module/volume]
-type = custom/script
-exec = amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'
-format = <label>
-internal = 5.0
-label = %output% 
-label-foreground = #BF616A
-format-padding = 2
-
 [module/backlight]
 type = internal/backlight
 card = intel_backlight
@@ -275,7 +254,11 @@ format-padding = 1
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...
-
+format = <label>
+format-padding = 1
+label = %title%
+label-maxlen = 50
+label-empty = ""
+label-empty-foreground = #707880
 
 ; vim:ft=dosini
