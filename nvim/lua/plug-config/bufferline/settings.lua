@@ -6,6 +6,8 @@ require'bufferline'.setup {
         mappings = true,
         modified_icon = '●',
         tab_size = 18,
-        diagnostics = "nvim_lsp"
+        diagnostics = "nvim_lsp",
+        separator_style = {'|', ''}
     }
 }
+

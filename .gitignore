@@ -20,3 +20,7 @@ nvim/autoload/plugged/
 !kitty/*
 !images
 !images/*
+!dunst
+!dunst/*
+!rofi
+!rofi/*

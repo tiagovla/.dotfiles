@@ -9,9 +9,7 @@ end
 
 local on_attach = function(client, bufnr)
 
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -75,21 +73,16 @@ local luaf = {formatCommand = "lua-format", formatStdin = true}
 local latexindent = {formatCommand = "latexindent", formatStdin = true}
 local cmakef = {formatCommand = 'cmake-format', formatStdin = true}
 local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
-local prettier = {
-    formatCommand = "prettier --stdin-filepath ${INPUT}",
-    formatStdin = true
-}
+local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
 local shellcheck = {
     LintCommand = 'shellcheck -f gcc -x',
-    lintFormats = {
-        '%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'
-    }
+    lintFormats = {'%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'}
 }
 
 nvim_lsp["efm"].setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true, codeAction = false},
-    filetypes = {"lua", "python", "cpp", "sh", "json", "yaml"},
+    filetypes = {"lua", "python", "cpp", "sh", "json", "yaml", "css", "html"},
     settings = {
         rootMarkers = {".git/"},
         languages = {
@@ -130,3 +123,6 @@ require'compe'.setup {
         -- ultisnips = true
     }
 }
+
+
+
