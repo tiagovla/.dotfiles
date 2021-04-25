@@ -24,3 +24,5 @@ nvim/autoload/plugged/
 !dunst/*
 !rofi
 !rofi/*
+!mpv
+!mpv/*
