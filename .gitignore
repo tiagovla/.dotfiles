@@ -26,3 +26,5 @@ nvim/autoload/plugged/
 !rofi/*
 !mpv
 !mpv/*
+!picom
+!picom/*
