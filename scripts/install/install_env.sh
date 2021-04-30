@@ -2,7 +2,7 @@
 
 if uname -a | grep -q Ubuntu; then
 	echo "Installing dependencies on ubuntu..."
-	sudo apt-get install zsh golang-go \
+	sudo apt-get install zsh golang-go nodejs npm \
 		make build-essential libssl-dev zlib1g-dev \
 		libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 

@@ -13,6 +13,16 @@ local nvim_lsp = setmetatable({}, {
     end
 })
 
+function _G.lsp_install_all()
+    local lspinstall = require 'lspinstall'
+    local all_servers = {
+        'efm', 'dockerfile', 'python', 'cpp', 'bash', 'cmake', 'yaml', 'html', 'lua', 'latex', 'css'
+    }
+    for _, server in ipairs(all_servers) do lspinstall.install_server(server) end
+end
+
+vim.cmd [[command! -nargs=0 LspInstallAll call v:lua.lsp_install_all()]]
+
 -- configurable formatting: vim.g["format_disabled_lua"] = true
 _G.formatting = function()
     if not vim.g[string.format("format_disabled_%s", vim.bo.filetype)] then
@@ -42,6 +52,7 @@ nvim_lsp["bash"].setup {on_attach = on_attach}
 nvim_lsp["cmake"].setup {on_attach = on_attach}
 nvim_lsp["yaml"].setup {on_attach = on_attach}
 nvim_lsp["html"].setup {on_attach = on_attach}
+nvim_lsp["css"].setup {on_attach = on_attach}
 
 nvim_lsp["lua"].setup {
     on_attach = on_attach,

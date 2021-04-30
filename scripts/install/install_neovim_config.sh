@@ -42,6 +42,7 @@ copy_nvim() {
 		exit
 	else
 		echo "New configuration copied to ${HOME_CONFIG_NVIM_DIR}."
+		mkdir -p "$HOME_CONFIG_DIR"
 		cp -r "$DOTFILES_TMP_DIR/nvim" "$HOME_CONFIG_NVIM_DIR"
 	fi
 }
