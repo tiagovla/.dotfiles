@@ -9,6 +9,7 @@ nvim/autoload/plugged/
 !zathura/
 !.tmux.conf
 !.zshrc
+!.bashrc
 !alacritty
 !alacritty/*
 !bspwm
