@@ -1,6 +1,19 @@
 require('lspinstall').setup()
-local nvim_lsp = require('lspconfig')
 
+-- supress error in case the server is not installed:
+local nvim_lsp = setmetatable({}, {
+    __index = function(_, key)
+        if require('lspconfig')[key] then
+            return require('lspconfig')[key]
+        else
+            local ignored = {}
+            function ignored.setup() end
+            return ignored
+        end
+    end
+})
+
+-- configurable formatting: vim.g["format_disabled_lua"] = true
 _G.formatting = function()
     if not vim.g[string.format("format_disabled_%s", vim.bo.filetype)] then
         vim.lsp.buf.formatting_sync(nil, 1000)
@@ -8,11 +21,8 @@ _G.formatting = function()
 end
 
 local on_attach = function(client, bufnr)
-
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
     buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
     if client.resolved_capabilities.document_formatting then
         vim.cmd [[augroup Format]]
         vim.cmd [[autocmd! * <buffer>]]
@@ -123,6 +133,4 @@ require'compe'.setup {
         -- ultisnips = true
     }
 }
-
-
 
