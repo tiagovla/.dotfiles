@@ -1,15 +1,15 @@
 #!/bin/bash
 
-TMPDIR=$(mktemp -d)
-if [ ! -e "$TMPDIR" ]; then
+TMP_DIR=$(mktemp -d)
+if [ ! -e "$TMP_DIR" ]; then
 	echo >&2 "Failed to create temp directory."
 	exit 1
 fi
 trap "exit 1" HUP INT PIPE QUIT TERM
-trap 'rm -rf "$TMPDIR"' EXIT
-echo "Created temporary directory $TMPDIR."
+trap 'rm -rf "$TMP_DIR"' EXIT
+echo "Created temporary directory $TMP_DIR."
 
-DOTFILES_TMP_DIR="$TMPDIR/dotfiles"
+DOTFILES_TMP_DIR="$TMP_DIR/dotfiles"
 HOME_CONFIG_DIR="$HOME/.config"
 HOME_CONFIG_NVIM_DIR="${HOME_CONFIG_DIR}/nvim"
 
@@ -69,21 +69,3 @@ else
 fi
 
 nvim -u "$HOME_CONFIG_NVIM_DIR/init.lua" "+PackerInstall"
-
-# nvim_path=$(
-# 	cd "$(dirname "${BASH_SOURCE[0]}")" || exit
-# 	pwd -P
-# )
-# cd "$nvim_path" || exit
-# echo "$nvim_path"
-
-# function install_bash_ls() {
-# 	sudo apt install shellcheck
-# 	GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
-# }
-
-# function install_go() {
-# wget https://golang.org/dl/go1.16.2.linux-amd64.tar.gz
-# rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go1.16.2.linux-amd64.tar.gz
-# rm go1.16.2.linux-amd64.tar.gz
-# }
