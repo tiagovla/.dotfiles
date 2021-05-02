@@ -105,3 +105,4 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="/usr/local/Polyspace/R2021a/bin:$PATH"
