@@ -1,34 +1,7 @@
-require('lspinstall').setup()
-
--- supress error in case the server is not installed:
-local nvim_lsp = setmetatable({}, {
-    __index = function(_, key)
-        if require('lspconfig')[key] then
-            return require('lspconfig')[key]
-        else
-            local ignored = {}
-            function ignored.setup() end
-            return ignored
-        end
-    end
-})
-
-function _G.lsp_install_all()
-    local lspinstall = require 'lspinstall'
-    local all_servers = {
-        'efm', 'dockerfile', 'python', 'cpp', 'bash', 'cmake', 'yaml', 'html', 'lua', 'latex', 'css'
-    }
-    for _, server in ipairs(all_servers) do lspinstall.install_server(server) end
-end
-
-vim.cmd [[command! -nargs=0 LspInstallAll call v:lua.lsp_install_all()]]
-
--- configurable formatting: vim.g["format_disabled_lua"] = true
-_G.formatting = function()
-    if not vim.g[string.format("format_disabled_%s", vim.bo.filetype)] then
-        vim.lsp.buf.formatting_sync(nil, 1000)
-    end
-end
+local lspconfigplus = require('lspconfigplus')
+local efm_cfg = require('lspconfigplus.extra')["efm"]
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -36,26 +9,18 @@ local on_attach = function(client, bufnr)
     if client.resolved_capabilities.document_formatting then
         vim.cmd [[augroup Format]]
         vim.cmd [[autocmd! * <buffer>]]
-        vim.cmd [[autocmd BufWritePre <buffer> lua formatting()]]
+        vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]]
         vim.cmd [[augroup END]]
     end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-nvim_lsp["efm"].setup {on_attach = on_attach}
-nvim_lsp["dockerfile"].setup {on_attach = on_attach}
-nvim_lsp["python"].setup {on_attach = on_attach}
-nvim_lsp["cpp"].setup {on_attach = on_attach}
-nvim_lsp["bash"].setup {on_attach = on_attach}
-nvim_lsp["cmake"].setup {on_attach = on_attach}
-nvim_lsp["yaml"].setup {on_attach = on_attach}
-nvim_lsp["html"].setup {on_attach = on_attach}
-nvim_lsp["css"].setup {on_attach = on_attach}
-
-nvim_lsp["lua"].setup {
-    on_attach = on_attach,
+-- TODO: add css, html, yaml, cmake, bash, cpp, dockerfile
+lspconfigplus.pyright.setup {}
+lspconfigplus.vimls.setup {}
+lspconfigplus.tsserver.setup {}
+lspconfigplus.yamlls.setup {}
+lspconfigplus.bashls.setup {}
+lspconfigplus.sumneko_lua.setup {
     settings = {
         Lua = {
             diagnostics = {globals = {"vim", "use"}},
@@ -69,8 +34,7 @@ nvim_lsp["lua"].setup {
         }
     }
 }
-
-nvim_lsp["latex"].setup {
+lspconfigplus.texlab.setup {
     capabilities = capabilities,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
@@ -86,37 +50,23 @@ nvim_lsp["latex"].setup {
         }
     }
 }
-
-local isort = {formatCommand = "isort --quiet -", formatStdin = true}
-local clangf = {formatCommand = "clang-format", formatStdin = true}
-local yapf = {formatCommand = "yapf --quiet", formatStdin = true}
-local luaf = {formatCommand = "lua-format", formatStdin = true}
-local latexindent = {formatCommand = "latexindent", formatStdin = true}
-local cmakef = {formatCommand = 'cmake-format', formatStdin = true}
-local shfmt = {formatCommand = 'shfmt -ci -s -bn', formatStdin = true}
-local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
-local shellcheck = {
-    LintCommand = 'shellcheck -f gcc -x',
-    lintFormats = {'%f:%l:%c: %trror: %m', '%f:%l:%c: %tarning: %m', '%f:%l:%c: %tote: %m'}
-}
-
-nvim_lsp["efm"].setup {
+lspconfigplus.efm.setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true, codeAction = false},
-    filetypes = {"lua", "python", "cpp", "sh", "json", "yaml", "css", "html"},
+    filetypes = {"lua", "python", "cpp", "sh", "json", "yaml", "css", "html", "vim"},
     settings = {
         rootMarkers = {".git/"},
         languages = {
-            python = {isort, yapf},
-            lua = {luaf},
-            tex = {latexindent},
-            sh = {shellcheck, shfmt},
-            cmake = {cmakef},
-            html = {prettier},
-            css = {prettier},
-            json = {prettier},
-            yaml = {prettier},
-            cpp = {clangf}
+            python = {efm_cfg.isort, efm_cfg.yapf},
+            lua = {efm_cfg.lua_format},
+            tex = {efm_cfg.latexindent},
+            sh = {efm_cfg.shellcheck, efm_cfg.shfmt},
+            cmake = {efm_cfg.cmake_format},
+            html = {efm_cfg.prettier},
+            css = {efm_cfg.prettier},
+            json = {efm_cfg.prettier},
+            yaml = {efm_cfg.prettier},
+            cpp = {efm_cfg.prettier}
         }
     }
 }
