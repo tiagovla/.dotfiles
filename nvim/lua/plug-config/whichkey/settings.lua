@@ -1,16 +1,17 @@
-local map = require('utils.functions')["map"]
+local ezmap = require('ezmap')
 local g = vim.g
 
 g.which_key_timeout = 100
 g.which_key_display_names = {["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
-map("n", "<space>", [[:silent <c-u> :silent WhichKey '<space>' <CR>]],
-    {silent = true, noremap = true})
-map("v", "<space>", [[:silent <c-u> :silent WhichKeyVisual '<space>' <CR>]],
-    {silent = true, noremap = true})
+local whichkey_mappings = {
+    {"n", "<space>", [[:silent <c-u> :silent WhichKey '<space>' <CR>]]},
+    {"v", "<space>", [[:silent <c-u> :silent WhichKeyVisual '<space>' <CR>]]}
+}
+ezmap.map(whichkey_mappings, {'noremap', 'silent'})
 
 g.which_key_map = {}
-g.which_key_sep = '→'
+g.which_key_sep = "→"
 g.which_key_use_floating_win = 0
 g.which_key_max_size = 0
 
@@ -21,7 +22,8 @@ which_key_space["t"] = {
     ["g"] = {":FloatermNew lazygit", "git"},
     ["d"] = {":FloatermNew lazydocker", "docker"},
     ["t"] = {":FloatermToggle", "terminal"},
-    ["p"] = {":FloaterNew python", "python"}
+    ["p"] = {":FloaterNew python", "python"},
+    ["r"] = {":FloaterNew ranger", "ranger"}
 }
 
 which_key_space["l"] = {
@@ -39,9 +41,7 @@ which_key_space["b"] = {
     ["?"] = {":buffers", "buffers"}
 }
 
-which_key_space["p"] = {":NvimTreeToggle", "nvim tree"}
-
-which_key_space["u"] = {":UndotreeToggle", "undo tree"}
+which_key_space["p"] = {"", "nvim tree"}
 
 g.which_key_space = which_key_space
 

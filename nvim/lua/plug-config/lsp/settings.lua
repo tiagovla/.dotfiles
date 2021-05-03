@@ -14,12 +14,10 @@ local on_attach = function(client, bufnr)
     end
 end
 
--- TODO: add css, html, yaml, cmake, bash, cpp, dockerfile
-lspconfigplus.pyright.setup {}
-lspconfigplus.vimls.setup {}
-lspconfigplus.tsserver.setup {}
-lspconfigplus.yamlls.setup {}
-lspconfigplus.bashls.setup {}
+-- servers installed: pyright, vimls, tsserver, yamlls, bashls, dockerls, cmake, clangd
+lspconfigplus.all.setup {on_attach = on_attach}
+
+local lspconfigplus = require('lspconfigplus')
 lspconfigplus.sumneko_lua.setup {
     settings = {
         Lua = {
@@ -52,7 +50,7 @@ lspconfigplus.texlab.setup {
 }
 lspconfigplus.efm.setup {
     on_attach = on_attach,
-    init_options = {documentFormatting = true, codeAction = false},
+    init_options = {documentFormatting = true},
     filetypes = {"lua", "python", "cpp", "sh", "json", "yaml", "css", "html", "vim"},
     settings = {
         rootMarkers = {".git/"},

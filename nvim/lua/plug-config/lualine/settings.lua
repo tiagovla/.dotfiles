@@ -1,10 +1,9 @@
 require('lualine').setup {
     options = {
-        theme = require 'plug-config.lualine.tokyo_night',
-        -- theme = 'tokyodark',
+        -- theme = require 'plug-config.lualine.tokyo_night',
+        theme = 'tokyodark',
         section_separators = {'', ''},
         component_separators = {'', ''},
-        -- component_separators = {'', ''},
         icons_enabled = true
     },
     sections = {
