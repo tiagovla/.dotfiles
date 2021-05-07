@@ -9,10 +9,6 @@ function _G.nvim_tree_smart_toggle()
     end
 end
 
-
-local nvimtree_mappings = {
-    {'n', '<c-P>', ':lua nvim_tree_smart_toggle()<CR>'},
-    {'n', '<space>p', ':lua nvim_tree_smart_toggle()<CR>'}
-}
+local nvimtree_mappings = {{'n', '<space>p', ':lua nvim_tree_smart_toggle()<CR>'}}
 
 ezmap.map(nvimtree_mappings, {'noremap', 'silent'})
