@@ -17,11 +17,12 @@ return require('packer').startup(function()
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
 
-    -- LSP
+    -- LSP + Git
     use 'glepnir/lspsaga.nvim'
     use 'hrsh7th/nvim-compe'
     use {'tiagovla/lspconfigplus', requires = {'neovim/nvim-lspconfig'}}
     use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
+    use 'sindrets/diffview.nvim'
 
     -- Syntax
     use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}

@@ -1,23 +1,23 @@
-local lspconfigplus = require('lspconfigplus')
-local efm_cfg = require('lspconfigplus.extra')["efm"]
+local lspconfigplus = require("lspconfigplus")
+local efm_cfg = require("lspconfigplus.extra")["efm"]
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     if client.resolved_capabilities.document_formatting then
-        vim.cmd [[augroup Format]]
-        vim.cmd [[autocmd! * <buffer>]]
-        vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]]
-        vim.cmd [[augroup END]]
+        vim.cmd([[augroup Format]])
+        vim.cmd([[autocmd! * <buffer>]])
+        vim.cmd([[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]])
+        vim.cmd([[augroup END]])
     end
 end
 
--- servers installed: pyright, vimls, tsserver, yamlls, bashls, dockerls, cmake, clangd
-lspconfigplus.all.setup {on_attach = on_attach}
+local servers = {"pyright", "vimls", "tsserver", "yamlls", "bashls", "dockerls", "cmake", "clangd"}
+lspconfigplus.bulk_setup(servers, {on_attach = on_attach})
 
-local lspconfigplus = require('lspconfigplus')
 lspconfigplus.sumneko_lua.setup {
     settings = {
         Lua = {
@@ -32,6 +32,7 @@ lspconfigplus.sumneko_lua.setup {
         }
     }
 }
+
 lspconfigplus.texlab.setup {
     capabilities = capabilities,
     log_level = vim.lsp.protocol.MessageType.Log,
@@ -40,14 +41,20 @@ lspconfigplus.texlab.setup {
         latex = {
             build = {onSave = true},
             forwardSearch = {
-                args = {'--synctex-forward', '%l:1:%f', '%p'},
-                executable = 'zathura',
+                args = {"--synctex-forward", "%l:1:%f", "%p"},
+                executable = "zathura",
                 onSave = false
             },
             lint = {onChange = true}
         }
     }
 }
+
+local isort = lspconfigplus.formatters.isort.setup {}
+local yapf = lspconfigplus.formatters.yapf.setup {}
+local lua_format = lspconfigplus.formatters.lua_format.setup {}
+-- local stylua = lspconfigplus.formatters.stylua.setup {}
+
 lspconfigplus.efm.setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true},
@@ -55,8 +62,8 @@ lspconfigplus.efm.setup {
     settings = {
         rootMarkers = {".git/"},
         languages = {
-            python = {efm_cfg.isort, efm_cfg.yapf},
-            lua = {efm_cfg.lua_format},
+            python = {isort, yapf},
+            lua = {lua_format},
             tex = {efm_cfg.latexindent},
             sh = {efm_cfg.shellcheck, efm_cfg.shfmt},
             cmake = {efm_cfg.cmake_format},
@@ -69,12 +76,12 @@ lspconfigplus.efm.setup {
     }
 }
 
-require'compe'.setup {
+require("compe").setup {
     enabled = true,
     autocomplete = true,
     debug = false,
     min_length = 1,
-    preselect = 'enable',
+    preselect = "enable",
     throttle_time = 80,
     source_timeout = 200,
     incomplete_delay = 400,
@@ -92,4 +99,3 @@ require'compe'.setup {
         -- ultisnips = true
     }
 }
-
