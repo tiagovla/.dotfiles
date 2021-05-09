@@ -1,48 +1,57 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data') .. '/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
-    execute 'packadd packer.nvim'
+    fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
+    execute "packadd packer.nvim"
 end
 
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function()
+require("packer").startup(function()
     -- Packer
-    use {'wbthomason/packer.nvim', opt = true}
+    use {"wbthomason/packer.nvim", opt = true}
+
+    -- theme
+    use "$HOME/github/tokyodark.nvim"
 
     -- FZF
     use {
         "nvim-telescope/telescope.nvim",
         cmd = {"Telescope"},
         requires = {
-            {"nvim-lua/popup.nvim", opt = true}, {'nvim-lua/plenary.nvim', opt = true},
-            {"nvim-telescope/telescope-media-files.nvim", opt = true}
+            {"nvim-lua/popup.nvim", opt = true}, {"nvim-lua/plenary.nvim", opt = true},
+            {"nvim-telescope/telescope-media-files.nvim", opt = true},
         },
-        config = function() require('plug-config.telescope') end
+        config = function()
+            require("plug-config.telescope")
+        end,
     }
 
     -- Formatting
     use {
-        'norcalli/nvim-colorizer.lua',
-        ft = {'html', 'css', 'sass', 'vim', 'lua', 'javascript', 'typescript'},
-        config = function() require('plug-config.colorizer') end
+        "norcalli/nvim-colorizer.lua",
+        ft = {"html", "css", "sass", "vim", "lua", "javascript", "typescript"},
+        config = function()
+            require("plug-config.colorizer")
+        end,
     }
-    use {'tpope/vim-commentary', event = 'BufRead'}
-    use {'tpope/vim-surround', event = 'BufRead'}
+    use {"tpope/vim-commentary", event = "BufRead"}
+    use {"tpope/vim-surround", event = "BufRead"}
 
     -- LSP + Git
     use {
-        'glepnir/lspsaga.nvim',
+        "glepnir/lspsaga.nvim",
         cmd = "Lspsaga",
-        config = function() require('plug-config.lspsaga') end
+        config = function()
+            require("plug-config.lspsaga")
+        end,
     }
     use {
-        'hrsh7th/nvim-compe',
-        event = 'InsertEnter',
+        "hrsh7th/nvim-compe",
+        event = "InsertEnter",
         config = function()
             require("compe").setup {
                 enabled = true,
@@ -63,70 +72,90 @@ return require('packer').startup(function()
                     buffer = true,
                     calc = true,
                     nvim_lsp = true,
-                    nvim_lua = true
+                    nvim_lua = true,
                     -- ultisnips = true
-                }
+                },
             }
-        end
+        end,
     }
+
     use {
-        'tiagovla/lspconfigplus',
+        "tiagovla/lspconfigplus",
         event = "BufReadPre",
-        requires = {'neovim/nvim-lspconfig', opt = true},
-        config = function() require('plug-config.lsp') end
+        requires = {"neovim/nvim-lspconfig", opt = true},
+        config = function()
+            require("plug-config.lsp")
+        end,
     }
 
     use {
-        'lewis6991/gitsigns.nvim',
-        requires = {'nvim-lua/plenary.nvim', opt = true},
-        config = function() require('plug-config.gitsigns') end
+        "lewis6991/gitsigns.nvim",
+        requires = {"nvim-lua/plenary.nvim", opt = true},
+        config = function()
+            require("plug-config.gitsigns")
+        end,
     }
 
     use {
-        'sindrets/diffview.nvim',
+        "sindrets/diffview.nvim",
         cmd = {"DiffviewOpen"},
-        config = function() require('plug-config.diffview') end
+        config = function()
+            require("plug-config.diffview")
+        end,
     }
 
     -- Syntax
     use {
-        'nvim-treesitter/nvim-treesitter',
+        "nvim-treesitter/nvim-treesitter",
         -- run = ':TSUpdate',
-        event = 'BufRead',
-        config = function() require('plug-config.treesitter') end
+        event = "BufRead",
+        config = function()
+            require("plug-config.treesitter")
+        end,
     }
     -- use 'nvim-treesitter/playground'
 
     -- Theme
-    use {'akinsho/nvim-bufferline.lua', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
+    use {"akinsho/nvim-bufferline.lua", requires = {"kyazdani42/nvim-web-devicons", opt = true}}
+
     use {
-        'kyazdani42/nvim-tree.lua',
+        "kyazdani42/nvim-tree.lua",
         cmd = {"NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile"},
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        requires = {"kyazdani42/nvim-web-devicons", opt = true},
 
     }
-    use {'hoob3rt/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
-    use 'tiagovla/tokyodark.nvim'
+
+    use {"hoob3rt/lualine.nvim", requires = {"kyazdani42/nvim-web-devicons", opt = true}}
+
 
     -- Geneal Tools
-    use {'tweekmonster/startuptime.vim', cmd = {"StartupTime"}}
+    use {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}}
+
     use {
-        'liuchengxu/vim-which-key',
+        "liuchengxu/vim-which-key",
         cmd = {"WhichKey"},
-        config = function() require('plug-config.whichkey') end
+        config = function()
+            require("plug-config.whichkey")
+        end,
     }
-    use 'tiagovla/ezmap.nvim'
+
+    use "tiagovla/ezmap.nvim"
+
     use {
-        'voldikss/vim-floaterm',
+        "voldikss/vim-floaterm",
         cmd = {"FloatermNew", "FloatermToggle"},
-        config = function() require('plug-config.floaterm') end
+        config = function()
+            require("plug-config.floaterm")
+        end,
     }
 
     -- Latex
     use {
-        'iamcco/markdown-preview.nvim',
+        "iamcco/markdown-preview.nvim",
         ft = "markdown",
-        config = function() vim.g.mkdp_auto_start = 0 end
+        config = function()
+            vim.g.mkdp_auto_start = 0
+        end,
     }
 
 end)
