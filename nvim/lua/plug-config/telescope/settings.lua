@@ -1,4 +1,4 @@
-require('telescope').load_extension('media_files')
+-- require('telescope').load_extension('media_files')
 require('telescope').setup {
     defaults = {
         vimgrep_arguments = {
@@ -35,10 +35,10 @@ require('telescope').setup {
         buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker
 
     },
-    extensions = {
-        media_files = {
-            filetypes = {"png", "webp", "jpg", "jpeg"},
-            find_cmd = "rg"
-        }
-    }
+    -- extensions = {
+        -- media_files = {
+            -- filetypes = {"png", "webp", "jpg", "jpeg"},
+            -- find_cmd = "rg"
+        -- }
+    -- }
 }

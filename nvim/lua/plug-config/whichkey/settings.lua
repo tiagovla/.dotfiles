@@ -22,8 +22,8 @@ which_key_space["t"] = {
     ["g"] = {":FloatermNew lazygit", "git"},
     ["d"] = {":FloatermNew lazydocker", "docker"},
     ["t"] = {":FloatermToggle", "terminal"},
-    ["p"] = {":FloaterNew python", "python"},
-    ["r"] = {":FloaterNew ranger", "ranger"}
+    ["p"] = {":FloatermNew python", "python"},
+    ["r"] = {":FloatermNew ranger", "ranger"}
 }
 
 which_key_space["l"] = {
