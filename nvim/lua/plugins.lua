@@ -82,7 +82,7 @@ require("packer").startup(function()
     use {
         "tiagovla/lspconfigplus",
         event = "BufReadPre",
-        requires = {"neovim/nvim-lspconfig", opt = true},
+        requires = {{"neovim/nvim-lspconfig", opt = true}},
         config = function()
             require("plug-config.lsp")
         end,
@@ -90,6 +90,7 @@ require("packer").startup(function()
 
     use {
         "lewis6991/gitsigns.nvim",
+        event = "BufReadPre",
         requires = {"nvim-lua/plenary.nvim", opt = true},
         config = function()
             require("plug-config.gitsigns")
@@ -116,17 +117,26 @@ require("packer").startup(function()
     -- use 'nvim-treesitter/playground'
 
     -- Theme
-    use {"akinsho/nvim-bufferline.lua", requires = {"kyazdani42/nvim-web-devicons", opt = true}}
+    use {
+        "akinsho/nvim-bufferline.lua",
+        requires = {"kyazdani42/nvim-web-devicons"},
+        config = function()
+            require("plug-config.bufferline")
+        end,
+    }
+    use {
+        "hoob3rt/lualine.nvim",
+        config = function()
+            require("plug-config.lualine")
+        end,
+        requires = {"kyazdani42/nvim-web-devicons"},
+    }
 
     use {
         "kyazdani42/nvim-tree.lua",
         cmd = {"NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile"},
-        requires = {"kyazdani42/nvim-web-devicons", opt = true},
-
+        requires = {"kyazdani42/nvim-web-devicons"},
     }
-
-    use {"hoob3rt/lualine.nvim", requires = {"kyazdani42/nvim-web-devicons", opt = true}}
-
 
     -- Geneal Tools
     use {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}}
