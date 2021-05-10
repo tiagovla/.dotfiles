@@ -1,171 +1,51 @@
-local execute = vim.api.nvim_command
-local fn = vim.fn
+local utils = require("utils.functions")
 
-local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-
-if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({"git", "clone", "https://github.com/wbthomason/packer.nvim", install_path})
-    execute "packadd packer.nvim"
-end
-
-vim.cmd [[packadd packer.nvim]]
-
-require("packer").startup(function()
+local function load_plugins(use)
     -- Packer
     use {"wbthomason/packer.nvim", opt = true}
+    use "tiagovla/ezmap.nvim"
 
     -- theme
-    use "$HOME/github/tokyodark.nvim"
+    use {"tiagovla/tokyodark.nvim"}
+    use {"akinsho/nvim-bufferline.lua", require("plug-config.bufferline")}
+    use {"hoob3rt/lualine.nvim", require("plug-config.lualine")}
 
     -- FZF
-    use {
-        "nvim-telescope/telescope.nvim",
-        cmd = {"Telescope"},
-        requires = {
-            {"nvim-lua/popup.nvim", opt = true}, {"nvim-lua/plenary.nvim", opt = true},
-            {"nvim-telescope/telescope-media-files.nvim", opt = true},
-        },
-        config = function()
-            require("plug-config.telescope")
-        end,
-    }
+    use {"nvim-telescope/telescope.nvim", require("plug-config.telescope")}
 
     -- Formatting
-    use {
-        "norcalli/nvim-colorizer.lua",
-        ft = {"html", "css", "sass", "vim", "lua", "javascript", "typescript"},
-        config = function()
-            require("plug-config.colorizer")
-        end,
-    }
+    use {"norcalli/nvim-colorizer.lua", require("plug-config.colorizer")}
     use {"tpope/vim-commentary", event = "BufRead"}
     use {"tpope/vim-surround", event = "BufRead"}
 
     -- LSP + Git
-    use {
-        "glepnir/lspsaga.nvim",
-        cmd = "Lspsaga",
-        config = function()
-            require("plug-config.lspsaga")
-        end,
-    }
-    use {
-        "hrsh7th/nvim-compe",
-        event = "InsertEnter",
-        config = function()
-            require("compe").setup {
-                enabled = true,
-                autocomplete = true,
-                debug = false,
-                min_length = 1,
-                preselect = "enable",
-                throttle_time = 80,
-                source_timeout = 200,
-                incomplete_delay = 400,
-                max_abbr_width = 100,
-                max_kind_width = 100,
-                max_menu_width = 100,
-                documentation = true,
-
-                source = {
-                    path = true,
-                    buffer = true,
-                    calc = true,
-                    nvim_lsp = true,
-                    nvim_lua = true,
-                    -- ultisnips = true
-                },
-            }
-        end,
-    }
-
-    use {
-        "tiagovla/lspconfigplus",
-        event = "BufReadPre",
-        requires = {{"neovim/nvim-lspconfig", opt = true}},
-        config = function()
-            require("plug-config.lsp")
-        end,
-    }
-
-    use {
-        "lewis6991/gitsigns.nvim",
-        event = "BufReadPre",
-        requires = {"nvim-lua/plenary.nvim", opt = true},
-        config = function()
-            require("plug-config.gitsigns")
-        end,
-    }
-
-    use {
-        "sindrets/diffview.nvim",
-        cmd = {"DiffviewOpen"},
-        config = function()
-            require("plug-config.diffview")
-        end,
-    }
+    use {"glepnir/lspsaga.nvim", require("plug-config.lspsaga")}
+    use {"hrsh7th/nvim-compe", require("plug-config.compe")}
+    use {"tiagovla/lspconfigplus", require("plug-config.lsp")}
+    use {"lewis6991/gitsigns.nvim", require("plug-config.gitsigns")}
+    use {"sindrets/diffview.nvim", require("plug-config.diffview")}
 
     -- Syntax
-    use {
-        "nvim-treesitter/nvim-treesitter",
-        -- run = ':TSUpdate',
-        event = "BufRead",
-        config = function()
-            require("plug-config.treesitter")
-        end,
-    }
+    use {"nvim-treesitter/nvim-treesitter", require("plug-config.treesitter")}
     -- use 'nvim-treesitter/playground'
 
-    -- Theme
-    use {
-        "akinsho/nvim-bufferline.lua",
-        requires = {"kyazdani42/nvim-web-devicons"},
-        config = function()
-            require("plug-config.bufferline")
-        end,
-    }
-    use {
-        "hoob3rt/lualine.nvim",
-        config = function()
-            require("plug-config.lualine")
-        end,
-        requires = {"kyazdani42/nvim-web-devicons"},
-    }
+    use {"kyazdani42/nvim-tree.lua", require("plug-config.nvimtree")}
 
-    use {
-        "kyazdani42/nvim-tree.lua",
-        cmd = {"NvimTreeOpen", "NvimTreeToggle", "NvimTreeFindFile"},
-        requires = {"kyazdani42/nvim-web-devicons"},
-    }
-
-    -- Geneal Tools
+    -- General Tools
     use {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}}
-
-    use {
-        "liuchengxu/vim-which-key",
-        cmd = {"WhichKey"},
-        config = function()
-            require("plug-config.whichkey")
-        end,
-    }
-
-    use "tiagovla/ezmap.nvim"
-
-    use {
-        "voldikss/vim-floaterm",
-        cmd = {"FloatermNew", "FloatermToggle"},
-        config = function()
-            require("plug-config.floaterm")
-        end,
-    }
+    use {"liuchengxu/vim-which-key", require("plug-config.whichkey")}
+    use {"voldikss/vim-floaterm", require("plug-config.floaterm")}
 
     -- Latex
-    use {
-        "iamcco/markdown-preview.nvim",
-        ft = "markdown",
-        config = function()
-            vim.g.mkdp_auto_start = 0
-        end,
-    }
+    use {"iamcco/markdown-preview.nvim", ft = "markdown"}
+end
 
+local install = utils.ensure_packer_installed()
+local packer = require("packer")
+packer.startup(function()
+    load_plugins(utils.packer_use)
 end)
+if install then
+    packer.install()
+    packer.compile()
+end

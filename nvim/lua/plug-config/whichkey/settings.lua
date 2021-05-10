@@ -1,4 +1,4 @@
-local ezmap = require('ezmap')
+local ezmap = require("ezmap")
 local g = vim.g
 
 g.which_key_timeout = 100
@@ -6,9 +6,9 @@ g.which_key_display_names = {["<CR>"] = "↵", ["<TAB>"] = "⇆"}
 
 local whichkey_mappings = {
     {"n", "<space>", [[:silent <c-u> :silent WhichKey '<space>' <CR>]]},
-    {"v", "<space>", [[:silent <c-u> :silent WhichKeyVisual '<space>' <CR>]]}
+    {"v", "<space>", [[:silent <c-u> :silent WhichKeyVisual '<space>' <CR>]]},
 }
-ezmap.map(whichkey_mappings, {'noremap', 'silent'})
+ezmap.map(whichkey_mappings, {"noremap", "silent"})
 
 g.which_key_map = {}
 g.which_key_sep = "→"
@@ -23,13 +23,13 @@ which_key_space["t"] = {
     ["d"] = {":FloatermNew lazydocker", "docker"},
     ["t"] = {":FloatermToggle", "terminal"},
     ["p"] = {":FloatermNew python", "python"},
-    ["r"] = {":FloatermNew ranger", "ranger"}
+    ["r"] = {":FloatermNew ranger", "ranger"},
 }
 
 which_key_space["l"] = {
     ["name"] = "+latex",
     ["b"] = {":TexlabBuild", "build"},
-    ["v"] = {":TexlabForward", "forward"}
+    ["v"] = {":TexlabForward", "forward"},
 }
 
 which_key_space["b"] = {
@@ -38,11 +38,11 @@ which_key_space["b"] = {
     ["l"] = {":blast", "last buffer"},
     ["n"] = {":bnext", "next buffer"},
     ["p"] = {":bprevious", "previous buffer"},
-    ["?"] = {":buffers", "buffers"}
+    ["?"] = {":buffers", "buffers"},
 }
 
 which_key_space["p"] = {"", "nvim tree"}
 
 g.which_key_space = which_key_space
 
-vim.call('which_key#register', '<Space>', "g:which_key_space")
+vim.call("which_key#register", "<Space>", "g:which_key_space")

@@ -5,7 +5,9 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    local function buf_set_option(...)
+        vim.api.nvim_buf_set_option(bufnr, ...)
+    end
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     if client.resolved_capabilities.document_formatting then
         vim.cmd([[augroup Format]])
@@ -25,12 +27,12 @@ lspconfigplus.sumneko_lua.setup {
             workspace = {
                 library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
+                    [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
                 },
-                maxPreload = 10000
-            }
-        }
-    }
+                maxPreload = 10000,
+            },
+        },
+    },
 }
 
 lspconfigplus.texlab.setup {
@@ -43,11 +45,11 @@ lspconfigplus.texlab.setup {
             forwardSearch = {
                 args = {"--synctex-forward", "%l:1:%f", "%p"},
                 executable = "zathura",
-                onSave = false
+                onSave = false,
             },
-            lint = {onChange = true}
-        }
-    }
+            lint = {onChange = true},
+        },
+    },
 }
 
 local isort = lspconfigplus.formatters.isort.setup {}
@@ -71,8 +73,8 @@ lspconfigplus.efm.setup {
             css = {efm_cfg.prettier},
             json = {efm_cfg.prettier},
             yaml = {efm_cfg.prettier},
-            cpp = {efm_cfg.prettier}
-        }
-    }
+            cpp = {efm_cfg.prettier},
+        },
+    },
 }
 

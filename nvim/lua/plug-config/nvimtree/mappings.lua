@@ -1,7 +1,7 @@
-local ezmap = require('ezmap')
+local ezmap = require("ezmap")
 
 function _G.nvim_tree_smart_toggle()
-    local buftype = vim.api.nvim_buf_get_option(0, 'filetype')
+    local buftype = vim.api.nvim_buf_get_option(0, "filetype")
     if buftype ~= "NvimTree" then
         vim.cmd("NvimTreeFindFile")
     else
@@ -9,6 +9,6 @@ function _G.nvim_tree_smart_toggle()
     end
 end
 
-local nvimtree_mappings = {{'n', '<space>p', ':lua nvim_tree_smart_toggle()<CR>'}}
+local nvimtree_mappings = {{"n", "<space>p", ":lua nvim_tree_smart_toggle()<CR>"}}
 
-ezmap.map(nvimtree_mappings, {'noremap', 'silent'})
+ezmap.map(nvimtree_mappings, {"noremap", "silent"})

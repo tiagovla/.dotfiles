@@ -1,35 +1,25 @@
-require('gitsigns').setup {
+require("gitsigns").setup {
     signs = {
-        add = {
-            hl = 'Green',
-            text = '▌',
-            numhl = 'GitSignsAddNr',
-            linehl = 'GitSignsAddLn'
-        },
+        add = {hl = "Green", text = "▌", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn"},
         change = {
-            hl = 'Blue',
-            text = '▌',
-            numhl = 'GitSignsChangeNr',
-            linehl = 'GitSignsChangeLn'
+            hl = "Blue",
+            text = "▌",
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
         },
-        delete = {
-            hl = 'Red',
-            text = '▌',
-            numhl = 'GitSignsDeleteNr',
-            linehl = 'GitSignsDeleteLn'
-        },
+        delete = {hl = "Red", text = "▌", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn"},
         topdelete = {
-            hl = 'Red',
-            text = '-',
-            numhl = 'GitSignsDeleteNr',
-            linehl = 'GitSignsDeleteLn'
+            hl = "Red",
+            text = "-",
+            numhl = "GitSignsDeleteNr",
+            linehl = "GitSignsDeleteLn",
         },
         changedelete = {
-            hl = 'Red',
-            text = '~',
-            numhl = 'GitSignsChangeNr',
-            linehl = 'GitSignsChangeLn'
-        }
+            hl = "Red",
+            text = "~",
+            numhl = "GitSignsChangeNr",
+            linehl = "GitSignsChangeLn",
+        },
     },
     numhl = false,
     linehl = false,
@@ -38,6 +28,6 @@ require('gitsigns').setup {
     sign_priority = 6,
     update_debounce = 200,
     status_formatter = nil,
-    use_decoration_api = false
+    use_decoration_api = false,
 }
 
