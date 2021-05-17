@@ -1,5 +1,4 @@
 local ezmap = require("ezmap")
-
 local M = {}
 
 function M.setup()
@@ -18,14 +17,9 @@ function M.movements()
 end
 
 function M.general()
-    -- ezmap.map({{"n", "<F1>", "<nop>"}})
 end
 
 function M.plugins()
-    -- require("plug-config.whichkey.mappings")
-    -- require("plug-config.nvimtree.mappings")
-    -- require("plug-config.telescope.mappings")
-    -- require("plug-config.lspsaga.mappings")
 end
 
 return M
