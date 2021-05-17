@@ -2,7 +2,8 @@ local utils = require("utils.functions")
 
 local function load_plugins(use)
     -- Packer
-    use {"wbthomason/packer.nvim", opt = true}
+    use {"$HOME/github/packer.nvim", opt = true}
+    -- use {"wbthomason/packer.nvim", opt = true}
     use "tiagovla/ezmap.nvim"
 
     -- theme
@@ -19,9 +20,12 @@ local function load_plugins(use)
     use {"tpope/vim-surround", event = "BufRead"}
 
     -- LSP + Git
+    use {"onsails/lspkind-nvim", require("plug-config.lspkind")}
     use {"glepnir/lspsaga.nvim", require("plug-config.lspsaga")}
     use {"hrsh7th/nvim-compe", require("plug-config.compe")}
-    use {"tiagovla/lspconfigplus", require("plug-config.lsp")}
+    use {"$HOME/github/lspconfigplus", require("plug-config.lsp")}
+    -- use {"tiagovla/lspconfigplus", require("plug-config.lsp")}
+
     use {"lewis6991/gitsigns.nvim", require("plug-config.gitsigns")}
     use {"sindrets/diffview.nvim", require("plug-config.diffview")}
 
@@ -35,9 +39,12 @@ local function load_plugins(use)
     use {"tweekmonster/startuptime.vim", cmd = {"StartupTime"}}
     use {"liuchengxu/vim-which-key", require("plug-config.whichkey")}
     use {"voldikss/vim-floaterm", require("plug-config.floaterm")}
+    use {"sirver/UltiSnips", require("plug-config.ultisnips")}
 
     -- Latex
     use {"iamcco/markdown-preview.nvim", ft = "markdown"}
+    use {"tiagovla/tex-conceal.vim", ft = "tex"}
+    -- use {"lervag/vimtex", ft="tex"}
 end
 
 local install = utils.ensure_packer_installed()
@@ -46,6 +53,7 @@ packer.startup(function()
     load_plugins(utils.packer_use)
 end)
 if install then
-    packer.install()
-    packer.compile()
+    -- TODO: call this synchronously
+    -- packer.install()
+    -- packer.compile()
 end

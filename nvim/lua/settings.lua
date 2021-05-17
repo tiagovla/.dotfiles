@@ -9,6 +9,7 @@ local cmd = vim.cmd
 function M.setup()
     M.options()
     M.window_options()
+    M.buffer_options()
     M.commands()
 end
 
@@ -39,14 +40,6 @@ function M.options()
     o.termguicolors = true
     o.wildmode = "list:longest"
 
-    b.shiftwidth = 4
-    b.tabstop = 4
-    b.softtabstop = 0
-    b.expandtab = true
-    b.smartindent = true
-    b.shiftwidth = 4
-    b.expandtab = true
-
     o.shiftwidth = 4
     o.tabstop = 4
     o.softtabstop = 0
@@ -62,6 +55,11 @@ function M.options()
     o.hlsearch = false
     o.mouse = "a"
     o.listchars = "tab:!·,trail:."
+
+    g.tex_conceal = "abdgms"
+
+    -- o.backup = true
+    o.undofile = true
 end
 
 function M.window_options()
@@ -70,9 +68,22 @@ function M.window_options()
     w.relativenumber = true
     w.wrap = false
     w.colorcolumn = "80"
+    w.conceallevel = 1
+end
+
+function M.buffer_options()
+    b.undofile = true
+    b.shiftwidth = 4
+    b.tabstop = 4
+    b.softtabstop = 0
+    b.expandtab = true
+    b.smartindent = true
+    b.shiftwidth = 4
+    b.expandtab = true
 end
 
 function M.commands()
+    cmd("syntax on")
     cmd("set cursorline")
     cmd("set t_ZH=^[[3m")
     cmd("set t_ZR=^[[23m")
