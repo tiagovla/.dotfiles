@@ -6,6 +6,7 @@ local config = {
         {"nvim-lua/popup.nvim", opt = true}, {"nvim-lua/plenary.nvim", opt = true},
         {"nvim-telescope/telescope-media-files.nvim", opt = true},
     },
+    after = {"nvim-treesitter/nvim-treesitter"},
     config = function()
         if not _G.packer_plugins["plenary.nvim"].loaded then
             vim.cmd [[packadd plenary.nvim]]

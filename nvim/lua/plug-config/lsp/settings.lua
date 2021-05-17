@@ -1,6 +1,5 @@
 local lspconfigplus = require("lspconfigplus")
 local efm_cfg = require("lspconfigplus.extra")["efm"]
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -16,10 +15,10 @@ local on_attach = function(client, bufnr)
         vim.cmd([[augroup END]])
     end
 end
-
-local servers = {"pyright", "vimls", "tsserver", "yamlls", "bashls", "dockerls", "cmake", "clangd"}
+local servers = {
+    "pyright", "vimls", "yamlls", "bashls", "dockerls", "cmake", "clangd", "rust_analyzer",
+}
 lspconfigplus.bulk_setup(servers, {on_attach = on_attach})
-
 lspconfigplus.sumneko_lua.setup {
     settings = {
         Lua = {
@@ -34,29 +33,32 @@ lspconfigplus.sumneko_lua.setup {
         },
     },
 }
-
 lspconfigplus.texlab.setup {
+    on_attach = on_attach,
     capabilities = capabilities,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
     settings = {
-        latex = {
-            build = {onSave = true},
-            forwardSearch = {
-                args = {"--synctex-forward", "%l:1:%f", "%p"},
-                executable = "zathura",
-                onSave = false,
+        texlab = {
+            build = {
+                -- executable = "tectonic",
+                -- args = {"%f", "--synctex", "--keep-logs", "--keep-intermediates"},
+                executable = "latexmk",
+                args = {
+                    "-pdf", "-interaction=nonstopmode", "-pvc", "-synctex=1", "-shell-escape", "%f",
+                },
+                -- isContinuous = true,
             },
-            lint = {onChange = true},
+            forwardSearch = {args = {"--synctex-forward", "%l:1:%f", "%p"}, executable = "zathura"},
+            chktex = {onOpenAndSave = true, onEdit = true},
+            formatterLineLength = 120,
         },
     },
 }
-
 local isort = lspconfigplus.formatters.isort.setup {}
 local yapf = lspconfigplus.formatters.yapf.setup {}
 local lua_format = lspconfigplus.formatters.lua_format.setup {}
 -- local stylua = lspconfigplus.formatters.stylua.setup {}
-
 lspconfigplus.efm.setup {
     on_attach = on_attach,
     init_options = {documentFormatting = true},
@@ -77,4 +79,3 @@ lspconfigplus.efm.setup {
         },
     },
 }
-
