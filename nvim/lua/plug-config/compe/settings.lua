@@ -1,4 +1,4 @@
-require("compe").setup {
+require"compe".setup {
     enabled = true,
     autocomplete = true,
     debug = false,
@@ -18,6 +18,6 @@ require("compe").setup {
         calc = true,
         nvim_lsp = true,
         nvim_lua = true,
-        -- ultisnips = true
+        ultisnips = true,
     },
 }
