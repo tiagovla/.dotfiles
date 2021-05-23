@@ -47,7 +47,7 @@ line-size = 3
 wm-restack = bspwm
 modules-left = round-left bspwm round-right
 modules-center =
-modules-right =  battery backlight pulseaudio temperature cpu mem  wlan round-left time round-right  powermenu
+modules-right =  battery backlight alsa temperature cpu mem  wlan round-left time round-right  powermenu
 font-0 = Hack Nerd Font:style=Bold:pixelsize=13;3
 font-1 = JetBrainsMono Nerd Font:size=18;5
 font-2 = Material Design Icons:style=Bold:size=13;3
@@ -114,6 +114,25 @@ label-urgent = %icon% %name%
 label-urgent-foreground = ${colors.cyan}
 label-urgent-background = ${colors.content-background}
 label-urgent-padding = 1
+
+
+[module/alsa]
+type = internal/alsa
+format-volume = <ramp-volume> <label-volume>
+format-muted = <label-muted>
+label-volume = %percentage%%
+label-muted = " "
+label-volume-foreground = ${colors.foreground}
+format-muted-foreground = ${colors.foreground}
+format-muted-padding = 1
+format-muted-background = ${colors.content-background}
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.cyan}
+ramp-headphones-0 = 
+ramp-headphones-foreground = ${colors.cyan}
+format-padding = 1
 
 [module/pulseaudio]
 type = internal/pulseaudio

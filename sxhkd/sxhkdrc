@@ -3,7 +3,7 @@
 #
 # terminal emulator
 alt + Return
-    alacritty
+    prime-run alacritty
     # alacritty -e "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
     # kitty sh -c "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
 
@@ -126,7 +126,8 @@ super + ctrl + shift + space
 
 # custom
 XF86Audio{Raise,Lower}Volume
-    pamixer -{i,d} 10 --allow-boost && polybar-msg hook mvol 1
+    amixer set Master 5%{+,-}
+    # pamixer -{i,d} 10 --allow-boost && polybar-msg hook mvol 1
 
 XF86AudioMute
     pamixer --toggle-mute && polybar-msg hook mvol 1
