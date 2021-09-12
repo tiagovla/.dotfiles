@@ -1,8 +1,8 @@
 local treesitter = require "nvim-treesitter.configs"
 
 treesitter.setup {
-    ensure_installed = "maintained",
-    highlight = {enable = true},
+    ensure_installed = "all",
+    highlight = {enable = true}
     -- playground = {
     --     enable = true,
     --     disable = {},

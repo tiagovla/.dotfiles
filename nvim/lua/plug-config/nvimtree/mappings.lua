@@ -5,10 +5,13 @@ function _G.nvim_tree_smart_toggle()
     if buftype ~= "NvimTree" then
         vim.cmd("NvimTreeFindFile")
     else
+        vim.cmd("NvimTreeRefresh")
         vim.cmd("NvimTreeToggle")
     end
 end
 
-local nvimtree_mappings = {{"n", "<space>p", ":lua nvim_tree_smart_toggle()<CR>"}}
+local nvimtree_mappings = {
+    {"n", "<space>p", ":lua nvim_tree_smart_toggle()<CR>"}
+}
 
 ezmap.map(nvimtree_mappings, {"noremap", "silent"})

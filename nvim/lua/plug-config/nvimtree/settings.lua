@@ -4,6 +4,7 @@ vim.g.nvim_tree_hide_dotfiles = 1
 vim.g.nvim_tree_indent_markers = 1
 vim.g.nvim_tree_follow = 1
 vim.g.nvim_tree_auto_close = 1
+vim.g.nvim_tree_gitignore = 1
 
 require("nvim-tree.events").on_nvim_tree_ready(function()
     vim.cmd("NvimTreeRefresh")
