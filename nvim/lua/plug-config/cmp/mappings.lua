@@ -1,39 +1,53 @@
 local ezmap = require("ezmap")
+local cmp = require('cmp')
 
--- local compe_mappings = {
---     {"i", "<Tab>", "v:lua.tab_complete()"}, {"s", "<Tab>", "v:lua.tab_complete()"},
---     {"i", "<S-Tab>", "v:lua.s_tab_complete()"}, {"s", "<S-Tab>", "v:lua.s_tab_complete()"},
--- }
--- ezmap.map(compe_mappings, {"expr", "silent"})
--- ezmap.map({{"i", "<CR>", "compe#confirm('<CR>')"}}, {"noremap", "expr", "silent"})
+local mapping = {
+    ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i', 's'}),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true
+    }),
+    ["<C-Space>"] = cmp.mapping(function(fallback)
+        if vim.fn.pumvisible() == 1 then
+            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+                return vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+            end
 
--- local function check_back_space()
---     local col = vim.fn.col(".") - 1
---     if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
---         return true
---     else
---         return false
---     end
--- end
+            vim.fn.feedkeys(t("<C-n>"), "n")
+        elseif check_back_space() then
+            vim.fn.feedkeys(t("<cr>"), "n")
+        else
+            fallback()
+        end
+    end, {"i", "s"}),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+        if vim.fn.complete_info()["selected"] == -1 and
+            vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
+            vim.fn.feedkeys(t("<C-R>=UltiSnips#ExpandSnippet()<CR>"))
+        elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            vim.fn.feedkeys(t("<ESC>:call UltiSnips#JumpForwards()<CR>"))
+        elseif vim.fn.pumvisible() == 1 then
+            vim.fn.feedkeys(t("<C-n>"), "n")
+        elseif check_back_space() then
+            vim.fn.feedkeys(t("<tab>"), "n")
+        else
+            fallback()
+        end
+    end, {"i", "s"}),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+            return vim.fn.feedkeys(t("<C-R>=UltiSnips#JumpBackwards()<CR>"))
+        elseif vim.fn.pumvisible() == 1 then
+            vim.fn.feedkeys(t("<C-p>"), "n")
+        else
+            fallback()
+        end
+    end, {"i", "s"})
+}
 
--- local t = function(str)
---     return vim.api.nvim_replace_termcodes(str, true, true, true)
--- end
+return mapping
 
--- _G.tab_complete = function()
---     if vim.fn.pumvisible() == 1 then
---         return t "<C-n>"
---     elseif check_back_space() then
---         return t "<Tab>"
---     else
---         return vim.fn["compe#complete"]()
---     end
--- end
-
--- _G.s_tab_complete = function()
---     if vim.fn.pumvisible() == 1 then
---         return t "<C-p>"
---     else
---         return t "<S-Tab>"
---     end
--- end
