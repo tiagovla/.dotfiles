@@ -1,4 +1,4 @@
-pcall(require, "plug-config.cmp.mappings")
+-- pcall(require, "plug-config.cmp.mappings")
 local config = {
     event = "InsertEnter",
     config = function() require("plug-config.cmp.settings") end,
