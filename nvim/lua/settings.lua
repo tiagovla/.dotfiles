@@ -14,7 +14,7 @@ function M.setup()
 end
 
 function M.options()
-    g.python3_host_prog = "~/.pyenv/versions/3.9.5/bin/python3"
+    g.python3_host_prog = "$HOME/.pyenv/versions/3.9.5/bin/python3.9"
 
     o.clipboard = "unnamedplus"
     o.cmdheight = 1
@@ -54,8 +54,9 @@ function M.options()
     o.showmode = false
     o.hlsearch = false
     o.mouse = "a"
-    o.listchars = "tab:!·,trail:."
-
+    w.list = true
+    w.listchars = "tab:!·,trail:."
+    o.synmaxcol = 150
     g.tex_conceal = "abdgms"
 
     -- o.backup = true
@@ -84,7 +85,7 @@ end
 
 function M.commands()
     cmd("syntax on")
-    cmd("set cursorline")
+    -- cmd("set cursorline")
     cmd("set t_ZH=^[[3m")
     cmd("set t_ZR=^[[23m")
     cmd(

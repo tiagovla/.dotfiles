@@ -2,12 +2,13 @@ local utils = require("utils.functions")
 
 local function load_plugins(use)
     -- Packer
-    use {"$HOME/github/packer.nvim", opt = true}
-    -- use {"wbthomason/packer.nvim", opt = true}
+    -- use {"$HOME/github/packer.nvim"}
+    use {"wbthomason/packer.nvim", opt = true}
     use "tiagovla/ezmap.nvim"
 
     -- theme
     use {"tiagovla/tokyodark.nvim"}
+
     use {"akinsho/nvim-bufferline.lua", require("plug-config.bufferline")}
     use {"hoob3rt/lualine.nvim", require("plug-config.lualine")}
 
@@ -22,12 +23,16 @@ local function load_plugins(use)
     -- LSP + Git
     use {"onsails/lspkind-nvim", require("plug-config.lspkind")}
     use {"glepnir/lspsaga.nvim", require("plug-config.lspsaga")}
-    use {"hrsh7th/nvim-compe", require("plug-config.compe")}
+    use {"hrsh7th/nvim-cmp", require("plug-config.cmp")}
+
     use {"$HOME/github/lspconfigplus", require("plug-config.lsp")}
-    -- use {"tiagovla/lspconfigplus", require("plug-config.lsp")}
+    use {"ray-x/lsp_signature.nvim"}
 
     use {"lewis6991/gitsigns.nvim", require("plug-config.gitsigns")}
     use {"sindrets/diffview.nvim", require("plug-config.diffview")}
+
+    -- Debug
+    use {"mfussenegger/nvim-dap", require("plug-config.dap")}
 
     -- Syntax
     use {"nvim-treesitter/nvim-treesitter", require("plug-config.treesitter")}
@@ -44,14 +49,18 @@ local function load_plugins(use)
     -- Latex
     use {"iamcco/markdown-preview.nvim", ft = "markdown"}
     use {"tiagovla/tex-conceal.vim", ft = "tex"}
-    -- use {"lervag/vimtex", ft="tex"}
+    use {'christoomey/vim-tmux-navigator'}
+    use {
+        'heavenshell/vim-pydocstring',
+        run = 'make install',
+        ft = 'python',
+        config = function() vim.g.pydocstring_formatter = 'numpy' end
+    }
 end
 
 local install = utils.ensure_packer_installed()
 local packer = require("packer")
-packer.startup(function()
-    load_plugins(utils.packer_use)
-end)
+packer.startup(function() load_plugins(utils.packer_use) end)
 if install then
     -- TODO: call this synchronously
     -- packer.install()
