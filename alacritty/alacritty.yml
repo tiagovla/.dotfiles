@@ -61,4 +61,4 @@ shell:
   args:
     - -l
     - -c
-    - "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+    - "$HOME/scripts/kbd_layout.sh && tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
