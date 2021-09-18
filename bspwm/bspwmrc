@@ -25,7 +25,10 @@ bspc config borderless_monocle true
 bspc config split_ratio 0.50
 bspc config gapless_monocle false
 
-bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc config external_rules_command "${HOME}/.config/bspwm/external_rules"
+bspc rule -a Gimp-2.10 desktop='^8' state=tiled follow=on
+bspc rule -a qBittorrent desktop='^7' state=tiled follow=on
+bspc rule -a Org.gnome.Nautilus desktop='^10' state=pseudo_tiled rectangle=1024x640+0+0 center=on follow=on
 bspc rule -a Zathura state=tiled
 
 # custom configs
@@ -35,4 +38,4 @@ bspc config pointer_action2 resize_side
 bspc config pointer_action2 resize_corner
 bspc config focus_follows_pointer true
 
-xset r rate 200 40
+mpxset r rate 200 40
