@@ -9,10 +9,10 @@ alt + Return
 
 # program launcher
 alt + @space
-    rofi -show drun
+    rofi -terminal alacritty -show drun
 
 shift + alt + @space
-    dmenu
+    rofi -terminal alacritty -show ssh
 
 # make sxhkd reload its configuration files:
 alt + Escape
@@ -51,7 +51,7 @@ alt + {t,shift + t,s,f}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
-alt + ctrl + {m,x,y,z}
+alt + shift + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
 #
@@ -113,8 +113,16 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-# super + alt + {h,j,k,l}
-# 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+super + alt + {h,j,k,l}
+    {bspc node -z right -20 0; \
+    bspc node -z left +20 0, \
+    bspc node -z top 0 -20; \
+    bspc node -z bottom 0 +20, \
+    bspc node -z top 0 +20; \
+    bspc node -z bottom 0 -20, \
+    bspc node -z right +20 0; \
+    bspc node -z left -20 0}
+
 
 # contract a window by moving one of its side inward
 # super + alt + shift + {h,j,k,l}
