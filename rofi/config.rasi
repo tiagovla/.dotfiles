@@ -1,3 +1,4 @@
+/* rofi.terminal: "/usr/bin/alacritty" */
 configuration {
   display-drun: "Applications:";
   display-window: "Windows:";
