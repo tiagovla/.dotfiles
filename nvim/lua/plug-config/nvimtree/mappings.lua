@@ -2,7 +2,9 @@ local ezmap = require("ezmap")
 
 function _G.nvim_tree_smart_toggle()
     local buftype = vim.api.nvim_buf_get_option(0, "filetype")
-    if buftype ~= "NvimTree" then
+    if buftype == "" then
+        vim.cmd("NvimTreeOpen")
+    elseif buftype ~= "NvimTree" then
         vim.cmd("NvimTreeFindFile")
     else
         vim.cmd("NvimTreeRefresh")
