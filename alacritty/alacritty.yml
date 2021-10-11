@@ -12,16 +12,16 @@ scrolling:
 font:
   normal:
     family: MonoLisa Nerd Font
-    style: Medium
+    style:  Medium
   bold:
     family: MonoLisa Nerd Font
-    style: Bold
+    style:  Bold
   italic:
     family: MonoLisa Nerd Font
-    style: Medium Italic
+    style:  MediumItalic
   bold_italic:
     family: MonoLisa Nerd Font
-    style: Bold Italic
+    style: BoldItalic
   size: 10
 
 draw_bold_text_with_bright_colors: true
