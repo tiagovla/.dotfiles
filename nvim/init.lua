@@ -1,6 +1,7 @@
 vim.g.mapleader = "<Space>"
+-- vim.lsp.set_log_level("debug")
 
-require("plugins")
-require("themes")
 require("settings").setup()
 require("mappings").setup()
+require("plugins")
+require("themes")
