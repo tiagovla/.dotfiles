@@ -1,5 +1,4 @@
 local M = {}
-
 local g, cmd = vim.g, vim.cmd
 
 function M.tokyodark()
@@ -7,12 +6,6 @@ function M.tokyodark()
     pcall(cmd, "colorscheme tokyodark")
 end
 
-function M.highlights()
-end
-
-function M.setup()
-    M.tokyodark()
-    M.highlights()
-end
+function M.setup() M.tokyodark() end
 
 M.setup()
