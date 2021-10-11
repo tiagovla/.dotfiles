@@ -5,6 +5,7 @@ wmname LG3D
 export _JAVA_AWT_WM_NONREPARENTING=1
 xsetroot -cursor_name left_ptr &
 
+nm-applet &
 "$HOME/.config/polybar/launch.sh"
 "$HOME/.config/picom/launch.sh"
 dunst &
