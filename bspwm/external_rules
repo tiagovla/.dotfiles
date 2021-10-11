@@ -93,7 +93,7 @@ pinentry_gtk_2() {
 }
 
 spotify() {
-	state=floating
+	state=tiled
 	desktop=^5
 }
 
