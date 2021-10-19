@@ -1,7 +1,3 @@
-vim.g.mapleader = "<Space>"
--- vim.lsp.set_log_level("debug")
+require "tiagovla"
 
-require("settings").setup()
-require("mappings").setup()
-require("plugins")
-require("themes")
+-- vim.lsp.set_log_level("debug")
