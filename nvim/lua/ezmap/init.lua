@@ -1,3 +1,5 @@
+--  "github.com/tiagovla/ezmap.nvim"
+
 local M = {}
 
 local function map_(mappings, bufnr, default_opts)
