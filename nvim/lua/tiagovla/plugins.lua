@@ -3,10 +3,9 @@ local load_cfg = utils.load_cfg
 
 plugins = {
     { "wbthomason/packer.nvim", opt = true },
-    -- { "tiagovla/ezmap.nvim" },
 
-    -- -- Themes
-    { "$HOME/github/tokyodark.nvim" },
+    -- Themes
+    { "tiagovla/tokyodark.nvim" },
     { "akinsho/nvim-bufferline.lua", load_cfg "bufferline" },
     { "hoob3rt/lualine.nvim", load_cfg "lualine" },
 
@@ -21,7 +20,7 @@ plugins = {
     -- LSP + Git
     { "onsails/lspkind-nvim", load_cfg "lspkind" },
     { "hrsh7th/nvim-cmp", load_cfg "cmp" },
-    { "$HOME/github/lspconfigplus", load_cfg "lsp" },
+    { "tiagovla/lspconfigplus", load_cfg "lsp" },
     { "ray-x/lsp_signature.nvim" },
     { "lewis6991/gitsigns.nvim", load_cfg "gitsigns" },
     { "sindrets/diffview.nvim", load_cfg "diffview" },
@@ -41,8 +40,6 @@ plugins = {
 
     -- Lua
     { "sirver/UltiSnips", load_cfg "ultisnips" },
-    --  {"rmagatti/auto-session", require("plug-config.autosession")}
-    --  {"$HOME/github/auto-session", require("plug-config.autosession")}
 
     -- Latex
     { "iamcco/markdown-preview.nvim", load_cfg "markdownpreview" },
