@@ -30,5 +30,7 @@ nvim/autoload/plugged/
 !rofi/*
 !mpv
 !mpv/*
+mpv/watch_later/*
 !picom
 !picom/*
+
