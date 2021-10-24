@@ -7,7 +7,7 @@ local use = function(config)
     end
     packer.use(config)
 end
-local function use_local(config) end
+local function use_local(config) end -- TODO: Impement use_local feature
 
 local load = function(path)
     local ok, res = pcall(require, "plugins.config." .. path)
@@ -58,6 +58,8 @@ packer.startup {
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", ext = load "lspkind", after = "nvim-cmp" }
+        use { "rafamadriz/friendly-snippets", after = "nvim-cmp" }
+        use { "L3MON4D3/LuaSnip", after = "nvim-cmp" }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", ext = load "nvimtree" }
@@ -78,11 +80,11 @@ packer.startup {
         use { "kkoomen/vim-doge", ext = load "vimdoge" }
 
         -- Debug
-        use { "mfussenegger/nvim-dap", ext = load "dap" }
+        use { "mfussenegger/nvim-dap", ext = load "dap", module = "dap" }
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
         -- use { "dstein64/vim-startuptime"}
     end,
-    -- config = {
-    --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    -- },
+    config = {
+        compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    },
 }

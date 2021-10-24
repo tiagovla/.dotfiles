@@ -8,6 +8,5 @@ local lsp_mappings = {
     { "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" },
     { "n", "gR", ":lua vim.lsp.buf.references()<CR>" },
     { "n", "<space>e", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" },
-    { "n", "<space>v", "<cmd> DiffviewOpen <cr>" },
 }
 ezmap.map(lsp_mappings, { "noremap", "silent" })

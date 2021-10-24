@@ -24,14 +24,24 @@ require("lspkind").init {
     },
 }
 
-local cmp = require "cmp"
+local ok, cmp = pcall(require, "cmp")
+if not ok then
+    return
+end
 local lspkind = require "lspkind"
 
 cmp.setup {
     formatting = {
-        format = function(entry, vim_item)
-            vim_item.kind = lspkind.presets.default[vim_item.kind]
-            return vim_item
-        end,
+        format = lspkind.cmp_format {
+            with_text = true,
+            menu = {
+                buffer = "[buf]",
+                nvim_lsp = "[LSP]",
+                nvim_lua = "[LUA]",
+                path = "[path]",
+                luasnip = "[snip]",
+                latex_symbols = "[Latex]",
+            },
+        },
     },
 }

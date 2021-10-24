@@ -1,5 +1,6 @@
 return {
     config = function()
-        require("neogit").setup()
+        require "plugins.config.neogit.settings"
+        require "plugins.config.neogit.autocmds"
     end,
 }

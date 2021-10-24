@@ -1,5 +1,5 @@
-local status, ezmap = pcall(require, "ezmap")
-if not status then
+local ok, ezmap = pcall(require, "ezmap")
+if not ok then
     return
 end
 

@@ -7,6 +7,7 @@ local plug_config = {
         "NvimTreeFindFile",
         "NvimTreeRefresh",
     },
+    module = "nvim-tree",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = function()
         require "plugins.config.nvimtree.settings"
