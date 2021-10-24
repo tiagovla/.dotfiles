@@ -64,12 +64,12 @@ packer.startup {
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", ext = load "nvimtree" }
-        use { "christoomey/vim-tmux-navigator", event = "VimEnter" }
+        use { "christoomey/vim-tmux-navigator", ext = load "vim_tmux_navigator" }
         use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = load "stabilize" }
         use { "akinsho/toggleterm.nvim", ext = load "toggleterm", cmd = "ToggleTerm" }
         use { "sindrets/diffview.nvim", ext = load "diffview" }
         use { "folke/trouble.nvim", cmd = { "Trouble" }, ext = load "trouble", module = "trouble" }
-        use { "folke/which-key.nvim", ext = load "whichkey", event = "VimEnter" }
+        use { "folke/which-key.nvim", ext = load "whichkey" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }
