@@ -1,5 +1,6 @@
 local mapping = require "plugins.config.cmp.mappings"
 local cmp = require "cmp"
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -8,14 +9,17 @@ cmp.setup {
     },
     mapping = mapping,
     sources = {
-        { name = "buffer", keyword_length = 5 },
+        { name = "path" },
+        { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "latex_symbols" },
-        { name = "path" },
+        { name = "buffer", keyword_length = 5 },
     },
     completion = { completeopt = "menu,menuone,noinsert" },
     experimental = {
         native_menu = false,
     },
 }
+
+require("luasnip/loaders/from_vscode").lazy_load()

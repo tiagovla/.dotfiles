@@ -35,12 +35,12 @@ cmp.setup {
         format = lspkind.cmp_format {
             with_text = true,
             menu = {
-                buffer = "[buf]",
+                luasnip = "[SNIP]",
+                buffer = "[BUF]",
                 nvim_lsp = "[LSP]",
                 nvim_lua = "[LUA]",
-                path = "[path]",
-                luasnip = "[snip]",
-                latex_symbols = "[Latex]",
+                path = "[PATH]",
+                latex_symbols = "[LaTeX]",
             },
         },
     },

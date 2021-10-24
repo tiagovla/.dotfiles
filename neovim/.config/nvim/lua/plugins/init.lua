@@ -51,15 +51,16 @@ packer.startup {
         use { "TimUntersberger/neogit", ext = load "neogit", cmd = { "Neogit" } }
 
         -- Auto-complete
-        use { "hrsh7th/nvim-cmp", event = "InsertEnter", ext = load "cmp" }
+        use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
+        use { "hrsh7th/nvim-cmp", after = "friendly-snippets", ext = load "cmp" }
+        use { "L3MON4D3/LuaSnip", wants = "friendly-snippets", after = "nvim-cmp", module = "luasnip" }
+        use { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" }
         use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", ext = load "lspkind", after = "nvim-cmp" }
-        use { "rafamadriz/friendly-snippets", after = "nvim-cmp" }
-        use { "L3MON4D3/LuaSnip", after = "nvim-cmp" }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", ext = load "nvimtree" }
