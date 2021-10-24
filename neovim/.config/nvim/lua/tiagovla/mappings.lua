@@ -26,7 +26,7 @@ function M.movements()
 end
 
 function M.general()
-    vim.g.mapleader = "<Space>"
+    vim.g.mapleader = " "
 end
 
 function M.plugins()

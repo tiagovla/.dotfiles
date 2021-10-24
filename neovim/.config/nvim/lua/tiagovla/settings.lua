@@ -47,7 +47,7 @@ function M.options()
 
     g.showtabline = 2
     o.hidden = true
-    o.shortmess = o.shortmess .. "cA"
+    o.shortmess = o.shortmess .. "cAI"
     o.showmode = false
     o.hlsearch = false
     o.mouse = "a"
@@ -56,6 +56,7 @@ function M.options()
     o.synmaxcol = 150
     g.tex_conceal = "abdgms"
     o.undofile = true
+    o.cursorline = true
 end
 
 function M.window_options()
@@ -84,6 +85,20 @@ function M.commands()
     cmd "set t_ZR=^[[23m"
     cmd ":nmap <F1> <nop>"
     cmd ":imap <F1> <nop>"
+    cmd ":nnoremap Y y$"
+    cmd ":nnoremap n nzzzv"
+    cmd ":nnoremap N Nzzzv"
+    cmd ":nnoremap G Gzzzv"
+    cmd ":nnoremap J mzJ`z"
+
+    cmd ":inoremap , ,<c-g>u"
+    cmd ":inoremap . .<c-g>u"
+    cmd ":inoremap ! !<c-g>u"
+    cmd ":inoremap ? ?<c-g>u"
+
+    cmd ":vnoremap J :m .+1<cr>gv=gv"
+    cmd ":vnoremap K :m .-2<cr>gv=gv"
+
     cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300} ]]
 end
 

@@ -1,7 +1,5 @@
-utils = require "tiagovla.utils.plugins"
-
-utils.prepare_packer()
+-- require("impatient").enable_profile()
+require "tiagovla.themes"
 require "tiagovla.settings"
 require "tiagovla.mappings"
-require "tiagovla.plugins"
-require "tiagovla.themes"
+require "plugins"
