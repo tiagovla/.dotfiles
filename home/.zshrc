@@ -59,9 +59,11 @@ export PATH="/opt/ParaView-5.9.1-MPI-Linux-Python3.8-64bit/bin:$PATH"
 alias nvimp='f(){ poetry run nvim "$@" || nvim;  unset -f f; }; f'
 alias 9gag='f(){ youtube-dl "$@" --recode-video webm || exit 1;  unset -f f; }; f'
 alias fixfan="sudo ${HOME}/scripts/fan_speed.sh"
+alias ls='ls --color=auto'
 #SETTING UP PYENV
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
+eval "$(zoxide init --cmd c zsh)"
 
 $HOME/scripts/kbd_layout.sh
 # bindkey -v
