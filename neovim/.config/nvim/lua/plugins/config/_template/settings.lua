@@ -1,1 +1,1 @@
---plug.setup({})
+-- plug.setup {}

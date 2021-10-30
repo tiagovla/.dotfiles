@@ -32,6 +32,7 @@ packer.startup {
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
         use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
         use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
+        -- use { "$HOME/github/vim-tpipeline" }
 
         -- Telescope
         use { "nvim-telescope/telescope.nvim", ext = load "telescope", module = "telescope" }
@@ -85,7 +86,7 @@ packer.startup {
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
         -- use { "dstein64/vim-startuptime"}
     end,
-    config = {
-        compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    },
+    -- config = {
+    --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    -- },
 }

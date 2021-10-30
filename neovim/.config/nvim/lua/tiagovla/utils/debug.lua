@@ -11,4 +11,10 @@ function M.debug()
     cmd [[nmap <F10> :call SynGroup() <cr>]]
 end
 
+-- for k in pairs(package.loaded) do
+--     if k:match ".*tiagovla.*" then
+--         package.loaded[k] = nil
+--     end
+-- end
+
 return M

@@ -2,11 +2,10 @@ require("toggleterm").setup {
     hide_numbers = true,
     start_in_insert = true,
     insert_mappings = true,
-    open_mapping = [[<F1>]],
     shade_terminals = true,
-    shading_factor = "0",
+    shading_factor = "1",
     persist_size = true,
-    close_on_exit = false,
+    close_on_exit = true,
     direction = "float",
     float_opts = {
         border = "curved",

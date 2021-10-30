@@ -13,9 +13,9 @@ for _, session in pairs(theme.inactive) do
     session.fg = colors.border
 end
 
-require("lualine").setup {
+local default_config = {
     options = {
-        theme = "auto",
+        theme = theme,
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
         icons_enabled = true,
@@ -50,3 +50,9 @@ require("lualine").setup {
     },
     extensions = { { sections = { lualine_b = { "filetype" } }, filetypes = { "NvimTree" } } },
 }
+
+if vim.env["TMUX"] then
+    require("lualine").setup(default_config)
+else
+    require("lualine").setup(default_config)
+end
