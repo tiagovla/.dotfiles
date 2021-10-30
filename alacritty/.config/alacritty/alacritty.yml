@@ -1,7 +1,7 @@
 window:
   padding:
     x: 4
-    y: 4
+    y: 2
   title: Terminal
   class:
     instance: Alacritty
@@ -22,7 +22,7 @@ font:
   bold_italic:
     family: MonoLisa Nerd Font
     style: BoldItalic
-  size: 10
+  size: 10.0
 
 draw_bold_text_with_bright_colors: true
 
