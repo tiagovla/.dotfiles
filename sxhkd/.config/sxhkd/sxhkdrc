@@ -4,8 +4,6 @@
 # terminal emulator
 alt + Return
     alacritty
-    # alacritty -e "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
-    # kitty sh -c "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
 
 # program launcher
 alt + @space
@@ -17,6 +15,10 @@ shift + alt + @space
 # make sxhkd reload its configuration files:
 alt + Escape
     pkill -USR1 -x sxhkd
+
+# open browser
+alt + w
+    brave
 
 #
 # bspwm hotkeys
