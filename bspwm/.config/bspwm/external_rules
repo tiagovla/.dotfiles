@@ -160,7 +160,7 @@ Ranger.Alacritty) ranger ;;
 	;;
 esac
 
-printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
+# printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
 
 printf '%s' \
 	${border:+"border=$border "} \
