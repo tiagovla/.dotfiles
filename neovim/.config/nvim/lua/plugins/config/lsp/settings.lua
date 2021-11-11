@@ -1,12 +1,10 @@
 local lspconfigplus = require "lspconfigplus"
 local efm_cfg = require("lspconfigplus.extra")["efm"]
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local signs = { Error = "", Warning = "", Hint = "", Information = "" }
+local signs = { Error = "", Warn = "", Hint = "", Info = "" }
 
 for type, icon in pairs(signs) do
-    local hl = "LspDiagnosticsSign" .. type
+    local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
 
@@ -76,13 +74,22 @@ lspconfigplus.sumneko_lua.setup {
         },
     },
 }
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 lspconfigplus.texlab.setup {
     on_attach = on_attach,
-    capabilities = capabilities,
+    -- on_attach = function(client)
+    --     client.resolved_capabilities.document_formatting = false
+    --     client.resolved_capabilities.document_range_formatting = false
+    -- end,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
     settings = {
         texlab = {
+            diagnosticsDelay = 50,
+            -- latexFormatter = "texlab",
             build = {
                 executable = "latexmk",
                 args = {
@@ -98,23 +105,22 @@ lspconfigplus.texlab.setup {
                 args = { "--synctex-forward", "%l:1:%f", "%p" },
                 executable = "zathura",
             },
-            chktex = { onOpenAndSave = true, onEdit = true },
+            chktex = { onOpenAndSave = true, onEdit = false },
             formatterLineLength = 120,
         },
     },
 }
 local isort = lspconfigplus.formatters.isort.setup {}
--- local yapf = lspconfigplus.formatters.yapf.setup {}
 local black = lspconfigplus.formatters.black.setup {}
 local shfmt = lspconfigplus.formatters.shfmt.setup {}
 local shellcheck = lspconfigplus.linters.shellcheck.setup {}
-local lua_format = lspconfigplus.formatters.lua_format.setup {}
 local markdownlint = lspconfigplus.linters.markdownlint.setup {}
 local pandoc_markdown = lspconfigplus.formatters.pandoc_markdown.setup {}
 local rst_lint = lspconfigplus.linters.rst_lint.setup {}
 local pandoc_rst = lspconfigplus.formatters.pandoc_rst.setup {}
 -- local cmakelang = lspconfigplus.formatters.cmakelang.setup {}
 local stylua = lspconfigplus.formatters.stylua.setup {}
+
 lspconfigplus.efm.setup {
     on_attach = on_attach,
     init_options = { documentFormatting = true },
@@ -130,6 +136,7 @@ lspconfigplus.efm.setup {
         "vim",
         "markdown",
         "rst",
+        -- "tex",
     },
     settings = {
         rootMarkers = { ".git/" },

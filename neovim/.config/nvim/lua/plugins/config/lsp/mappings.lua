@@ -8,5 +8,8 @@ local lsp_mappings = {
     { "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" },
     { "n", "gR", ":lua vim.lsp.buf.references()<CR>" },
     { "n", "<space>e", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" },
+    { "n", "<space>lb", ":TexlabBuild<CR>" },
+    { "n", "<space>lv", ":TexlabForward<CR>" },
+    { "n", "<space>e", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" },
 }
 ezmap.map(lsp_mappings, { "noremap", "silent" })
