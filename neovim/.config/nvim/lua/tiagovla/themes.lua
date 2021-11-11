@@ -2,7 +2,10 @@ local M = {}
 
 function M.tokyodark()
     vim.g.tokyodark_transparent_background = true
-    require("tokyodark").colorscheme()
+    local ok, tokyodark = pcall(require, "tokyodark")
+    if ok then
+        tokyodark.colorscheme()
+    end
 end
 
 function M.setup()
