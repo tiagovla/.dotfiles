@@ -43,8 +43,6 @@ alias clone="git clone"
 
 # EXPORTS
 export PYENV_ROOT="$HOME/.pyenv"
-export SLEPC_DIR=$HOME/github/UFMG_2021_1_FEM/projeto_final2/code/library/slepc
-export PETSC_DIR=$HOME/github/UFMG_2021_1_FEM/projeto_final2/code/library/petsc
 export PETSC_ARCH=arch-linux-c-debug
 
 ## PATH
@@ -60,6 +58,7 @@ alias nvimp='f(){ poetry run nvim "$@" || nvim;  unset -f f; }; f'
 alias 9gag='f(){ youtube-dl "$@" --recode-video webm || exit 1;  unset -f f; }; f'
 alias fixfan="sudo ${HOME}/scripts/fan_speed.sh"
 alias ls='ls --color=auto'
+alias tvm='mpv --ytdl-format=93 $1'
 #SETTING UP PYENV
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
