@@ -1,224 +1,130 @@
-alacritty-ligatures-git
-alglib
-alsa-utils
-audacity
-autoconf
-automake
-base
-bat
-bc
-binutils
-bison
-bluez-utils
-brave-bin
-brightnessctl
-bspwm
-calibre
-chromium
-clang
-cmake
-code
-cronie
-discord
-dmenu
-dnsmasq
-docker
-docker-compose
-dolphin
-dosfstools
-downgrader-git
-doxygen
-dropbox
-dunst
-e2fsprogs
-efibootmgr
-eigen
-elementary-planner
-eww-git
-fakeroot
-fatresize
-fd
-feh
-file
-findutils
-firefox
-flameshot
-flex
-fltk
-fontforge
-freeimage
-fzf-git
-gawk
-gcc
-gcc-fortran
-geckodriver
-gettext
-gifcast
-gimp
-git
-github-cli
-github-desktop-bin
-gitkraken
-gl2ps
-gobject-introspection
-gord-bin
-gptfdisk
-grep
-groff
-grub
-gzip
-hdf5
-htop
-imath
-inetutils
-inkscape
-iptables-nft
-jre-openjdk
-kitty
-konsole
-lazydocker
-lazygit
-less
-lib32-libcanberra
-libaec
-libraw
-libreoffice-fresh
-libtool
-linux-firmware
-linux-lts
-m4
-make
-man-db
-man-pages
-med
-mesa-demos
-metis
-mpv
-mtools
-nano
-nautilus
-ncdu
-neofetch
-neovim-nightly-bin
-netctl
-network-manager-applet
-networkmanager
-networkmanager-openvpn
-networkmanager-pptp
-networkmanager-vpnc
-nfs-utils
-nibbler-git
-nordvpn-bin
-noto-fonts
-noto-fonts-emoji
-npm
-ntfs-3g
-nvidia-lts
-nvidia-prime
-nvidia-settings
-nvidia-utils
-openbsd-netcat
-opencascade
-openexr
-openmp
-optimus-manager
-os-prober
-pacman
-pamixer
-pasystray
-patch
-pavucontrol
-picom
-pkgconf
-playerctl
-polybar
-pulseaudio
-pulseaudio-alsa
-pulseaudio-bluetooth
-python-dropbox
-python-meshio
-qbittorrent
-qt5-graphicaleffects
-qt5-quickcontrols2
-qutebrowser
-ranger
-redshift
-reflector
-rofi
-rsync
-rust
-sane-airscan
-screencast
-sddm
-sed
-sfnt2woff
-shellcheck
-skypeforlinux-preview-bin
-spotify
-stow
-sudo
-swig
-sxhkd
-sysfsutils
-tbb
-teams-insiders
-telegram-desktop
-texinfo
-texlive-bibtexextra
-texlive-core
-texlive-fontsextra
-texlive-formatsextra
-texlive-games
-texlive-humanities
-texlive-latexextra
-texlive-latexindent-meta
-texlive-music
-texlive-pictures
-texlive-pstricks
-texlive-publishers
-texlive-science
-timeshift
-tk
-tldr
-tmux
-tor
-trash-cli
-ttf-dejavu
-unzip
-usbutils
-valentina-studio
-vde2
-vi
-vim
-vimb
-vlc
-vokoscreen
-wget
-which
-wine-gecko
-wine-mono
-winetricks
-xbanish
-xclip
-xdo-git
-xdotool
-xf86-video-intel
-xorg-server
-xorg-xfontsel
-xorg-xinit
-xorg-xinput
-xorg-xkill
-xorg-xlsfonts
-xorg-xrandr
-xorg-xsetroot
-xorg-xwininfo
-xterm
-yarn
-yay
-youtube-dl
-zathura
-zathura-djvu
-zathura-pdf-mupdf
-zip
-zoxide
-zsh
+alacritty-ligatures-git 0.8.0.1772.g3ed0430-1
+alglib 3.17.0-1
+alsa-utils 1.2.5.1-1
+audacity 1:2.4.1-4
+autoconf 2.71-1
+automake 1.16.5-1
+base 2-2
+bat 0.18.3-1
+bc 1.07.1-4
+bison 3.8.2-1
+bluez-utils 5.62-1
+brave-bin 1:1.31.91-1
+brightnessctl 0.5.1-2
+bspwm 0.9.10-1
+calibre 5.31.1-1
+chromium 95.0.4638.69-2
+cmake 3.21.4-1
+discord 0.0.16-1
+dmenu 5.0-1
+docker 1:20.10.10-1
+docker-compose 2.1.1-1
+doxygen 1.9.2-1
+dropbox 134.4.4115-1
+dunst 1.7.1-1
+eigen 3.4.0-1
+elementary-planner 2.7-2
+fakeroot 1.26-1
+fatresize 1.1.0-1
+fd 8.2.1-1
+firefox 94.0.1-1
+flameshot 0.10.1-1
+flex 2.6.4-3
+fltk 1.3.7-1
+geckodriver 0.30.0-1
+gifcast 0.1.0-1
+gimp 2.10.28-1
+github-cli 2.2.0-1
+gobject-introspection 1.70.0-2
+grub 2:2.06-2
+htop 3.1.1-1
+inetutils 2.2-1
+inkscape 1.1.1-3
+kitty 0.23.1-1
+konsole 21.08.3-1
+lazydocker 0.12-1
+lazygit 0.31.2-1
+lib32-libcanberra 0.30+2+gc0620e4-5
+libreoffice-fresh 7.2.2-2
+make 4.3-3
+man-db 2.9.4-2
+man-pages 5.13-1
+med 4.1.0-5
+mpv 1:0.34.0-2
+nano 5.9-1
+nautilus 41.1-1
+ncdu 1.16-2
+neofetch 7.1.0-2
+neovim-nightly-bin 0.6.0+dev+43+g02bf251bb-1
+netctl 1.26-1
+network-manager-applet 1.24.0-1
+networkmanager-openvpn 1.8.16-1
+networkmanager-pptp 1.2.9dev+10+gb41b0d0-4
+networkmanager-vpnc 1.2.7dev+20+gdca3aea-2
+nfs-utils 2.5.4-1
+nvidia-lts 1:495.44-6
+openbsd-netcat 1.217_2-1
+opencascade 7.5.3-3
+optimus-manager-git 1.4.r2.gcac22a1-1
+pamixer 1.5-1
+pasystray 0.8.0-1
+patch 2.7.6-8
+pkgconf 1.8.0-1
+playerctl 2.4.1-1
+polybar 3.5.7-1
+python-dropbox 11.23.0-1
+python-meshio 5.0.1-1
+qbittorrent 4.3.9-1
+qt5-quickcontrols2 5.15.2+kde+r8-1
+qutebrowser 2.4.0-1
+ranger 1.9.3-3
+redshift 1.12-4
+reflector 2021.7.8-1
+rofi 1.7.0-1
+rust 1:1.56.0-1
+sane-airscan 0.99.27-1
+screencast 1.6.0-1
+sddm 0.19.0-7
+shellcheck 0.7.2-98
+skypeforlinux-preview-bin 8.76.76.70-1
+spotify 1:1.1.68.632-1
+stow 2.3.1-3
+swig 4.0.2-2
+teams-insiders 1.4.00.13653-1
+telegram-desktop 3.2.3-1
+texlive-bibtexextra 2021.58697-1
+texlive-fontsextra 2021.58704-1
+texlive-formatsextra 2021.57972-1
+texlive-games 2021.56833-1
+texlive-humanities 2021.58589-1
+texlive-latexindent-meta 1-1
+texlive-music 2021.58331-1
+texlive-pstricks 2021.58293-1
+texlive-publishers 2021.58683-1
+texlive-science 2021.58667-1
+timeshift 21.09.1-1
+tldr 2.0.0-1
+tor 0.4.6.8-1
+trash-cli 0.21.10.24-1
+unzip 6.0-15
+usbutils 014-1
+valentina-studio 11.4.1-1
+vde2 2.3.2-16
+vi 1:070224-5
+vim 8.2.3582-1
+vimb 3.6.0-1
+vlc 3.0.16-4
+vokoscreen 3.0.9-1
+wget 1.21.2-1
+xbanish 1.7-1
+xorg-xfontsel 1.0.6-3
+xorg-xinit 1.4.1-3
+xorg-xinput 1.6.3-2
+xorg-xkill 1.0.5-2
+xorg-xlsfonts 1.0.6-3
+xorg-xsetroot 1.1.2-2
+yarn 1.22.17-1
+yay 10.3.1-2
+zip 3.0-9
+zoom 5.8.3-1
+zoxide 0.7.9-1
