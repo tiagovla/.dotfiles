@@ -1,0 +1,13 @@
+feh --bg-scale ~/Pictures/av6popo691w71.png
+setxkbmap us_intl
+nm-applet &
+xset r rate 200 100
+
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
+
+xbanish &
+dunst &
+flameshot &
+picom &
