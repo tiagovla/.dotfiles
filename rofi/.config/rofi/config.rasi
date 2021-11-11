@@ -1,98 +1,96 @@
-/* rofi.terminal: "/usr/bin/alacritty" */
 configuration {
-  display-drun: "Applications:";
-  display-window: "Windows:";
-  display-ssh: "SSH";
-  show-icons: true;
-  drun-display-format: "{icon} {name}";
+    modi: "drun";
+    font: "MonoLisa Medium 12";
+    show-icons: true;
+    /* icon-theme: "Reversal-dark"; */
+    display-drun: "";
+    drun-display-format: "{name}";
+    sidebar-mode: false;
 }
 
+@theme "/dev/null"
+
 * {
-  font: "MonoLisa Medium 12";
-  icon-font: "MonoLisa Medium 18";
-  background-color: #11121DEE;
-  foreground-color: #A0A8CD;
-  foreground: transparent;
-  window-bordercolor: #4A5057;
-  color: @foreground;
-  separator-color: @window-bordercolor;
+    bg: #11121D;
+    fg: #A0A8CD;
+    prompt: #21222D;
+    button-selected: #9FBBF3;
+    background-color: @bg;
+    text-color: @fg;
+    border: #4A5057;
 }
 
 window {
-  background-color: @background-color;
-  transparency: "real";
-  height: 53%;
-  width: 40%;
-  border-color: @window-bordercolor;
-  border: 2 ;
-  border-radius: 5px;
-}
-
-mainbox {
-  background-color: transparent;
-  padding: 30px 30px 30px 30px;
-}
-
-inputbar {
-  background-color: transparent;
-  padding: 5px 10px 25px 10px;
+    border-color: @border;
+    border-radius: 7px;
+    border: 2;
+    padding: 32px;
+    width: 50%;
 }
 
 prompt {
-  background-color: transparent;
-  text-color: #FFFFFF;
-  padding: 0px 10px 0px 0px;
+    background-color: @prompt;
+    enabled: true;
+    padding: 0.5% 32px 0% -0.5%;
 }
 
 entry {
-  background-color: transparent;
-  text-color: #FFFFFF;
+    background-color: @prompt;
+    expand: true;
+    padding: 0.15% 0% 0% 0%;
+    placeholder-color: @fg;
+    placeholder: "Search";
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    background-color: @prompt;
+    border-radius: 6px;
+    expand: false;
+    margin: 0%;
+    padding: 10px;
 }
 
 listview {
-  background-color: transparent;
-  padding: 0px 5px 0px 5px;
-  spacing: 0.2em;
-  columns: 1;
-  scrollbar: false;
+    columns: 4;
+    lines: 3;
+    fixed-columns: true;
+    cycle: false;
+    layout: vertical;
+}
+
+mainbox {
+    children: [ inputbar, listview ];
+    padding: 2% 1% 2% 1%;
+    spacing: 2%;
 }
 
 element {
-  background-color: transparent;
-  padding: 5px 2px 5px 2px;
-}
-
-element.normal.normal {
-    background-color: transparent;
-    text-color: @foreground-color;
-}
-element.selected.normal {
-    border-radius: 2px;
-    background-color: #9FBBF3;
-    color: @background-color;
-}
-element.alternate.normal {
-    background-color: transparent;
-    text-color: @foreground-color;
-}
-
-element selected {
-  background-color: #9FBBF3;
-  color: @background-color;
+    orientation: vertical;
+    padding: 2% 0% 2% 0%;
 }
 
 element-icon {
-  size: 35px;
-  border: 0px;
+    horizontal-align: 0.5;
+    size: 48px;
 }
 
 element-text {
-  expand: true;
-  vertical-align: 0.5;
+    expand: true;
+    horizontal-align: 0.5;
+    margin: 0.5% 0.5% -0.5% 0.5%;
+    vertical-align: 0.5;
 }
 
 element-text, element-icon {
     background-color: inherit;
+    text-color: inherit;
+}
+
+element selected {
+    background-color: @button-selected;
+    border-radius: 5px;
+    text-color: @bg;
 }
 
 /* vim: ft=css
