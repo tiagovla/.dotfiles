@@ -28,7 +28,7 @@ packer.startup {
         use { "nvim-lua/popup.nvim" }
 
         -- Themes
-        use { "tiagovla/tokyodark.nvim" }
+        use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
         use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
         use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
@@ -41,7 +41,7 @@ packer.startup {
         use { "$HOME/github/session-lens", after = "telescope.nvim" }
 
         -- Syntax
-        use { "nvim-treesitter/nvim-treesitter", event = "BufRead", ext = load "treesitter" }
+        use { "nvim-treesitter/nvim-treesitter", event = "BufEnter", after = "nvim-tree.lua", ext = load "treesitter" }
 
         -- Lsp
         use { "tiagovla/lspconfigplus", ext = load "lsp", event = "BufReadPre" }
@@ -61,7 +61,7 @@ packer.startup {
         use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
-        use { "onsails/lspkind-nvim", ext = load "lspkind", after = "nvim-cmp" }
+        use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", ext = load "nvimtree" }
