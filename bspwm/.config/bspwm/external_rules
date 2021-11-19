@@ -77,19 +77,18 @@ ranger() {
 	layer=above
 }
 
-mplayer() {
-	state=floating
-	layer=normal
-}
-
 matplotlib() {
 	desktop=^2
 	state=floating
 }
 
-pinentry_gtk_2() {
-	state=floating
-	layer=above
+qbittorrent() {
+	desktop='^7'
+	case $(xprop -id "$id" WM_NAME) in
+	*_"qBittorrent"_*) state=tiled ;;
+	*) state=floating ;;
+	esac
+	follow=on
 }
 
 spotify() {
@@ -101,22 +100,8 @@ telegram_desktop() {
 	desktop=^3
 }
 
-xcalc() {
-	state=floating
-	layer=normal
-}
-
 chromium() {
 	desktop=^2
-}
-
-surf() {
-	desktop=^2
-}
-
-libreoffice() {
-	state=tiled
-	layer=normal
 }
 
 mpv() {
@@ -128,30 +113,12 @@ mpv() {
 	follow=on
 }
 
-stj1() {
-	state=floating
-	layer=above
-	sticky=on
-}
-
-weechat() {
-	desktop=^3
-}
-
-signal() {
-	desktop=^3
-}
-
-remmina() {
-	desktop=^4
-}
-
 case $instance.$class in
 *.discord) discord ;;
+*.qBittorrent) qbittorrent ;;
 *.Matplotlib) matplotlib ;;
 *.Spotify) spotify ;;
 Ranger.Alacritty) ranger ;;
-	# (*.[Ff]irefox) firefox;;
 *.mpv) mpv ;;
 .)
 	case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
