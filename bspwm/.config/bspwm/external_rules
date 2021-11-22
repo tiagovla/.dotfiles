@@ -77,6 +77,11 @@ ranger() {
 	layer=above
 }
 
+teams() {
+	state=tiled
+	desktop=^8
+}
+
 matplotlib() {
 	desktop=^2
 	state=floating
@@ -84,11 +89,11 @@ matplotlib() {
 
 qbittorrent() {
 	desktop='^7'
+	follow=on
 	case $(xprop -id "$id" WM_NAME) in
-	*_"qBittorrent"_*) state=tiled ;;
+	*qBittorrent*) state=tiled ;;
 	*) state=floating ;;
 	esac
-	follow=on
 }
 
 spotify() {
@@ -120,6 +125,7 @@ case $instance.$class in
 *.Spotify) spotify ;;
 Ranger.Alacritty) ranger ;;
 *.mpv) mpv ;;
+*Teams*) teams ;;
 .)
 	case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
 	spotify) spotify ;;
@@ -127,7 +133,7 @@ Ranger.Alacritty) ranger ;;
 	;;
 esac
 
-# printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
+printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
 
 printf '%s' \
 	${border:+"border=$border "} \
