@@ -13,7 +13,7 @@ local mapping = {
         -- if cmp.visible() then
         --     cmp.select_next_item()
         if require("luasnip").jumpable() then
-            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-expand-or-jump", true, true, true), "")
+            vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-next", true, true, true), "")
         else
             fallback()
         end
