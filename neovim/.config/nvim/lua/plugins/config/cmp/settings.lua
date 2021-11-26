@@ -1,6 +1,11 @@
 local mapping = require "plugins.config.cmp.mappings"
 local cmp = require "cmp"
 
+require("luasnip").config.set_config {
+    history = false,
+    updateevents = "VimLeave",
+}
+
 cmp.setup {
     snippet = {
         expand = function(args)
