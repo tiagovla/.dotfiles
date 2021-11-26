@@ -1,12 +1,8 @@
 local lspconfigplus = require "lspconfigplus"
 local efm_cfg = require("lspconfigplus.extra")["efm"]
+local utils = require "plugins.config.lsp.utils"
 
-local signs = { Error = "", Warn = "", Hint = "", Info = "" }
-
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+utils.define_signs { Error = "", Warn = "", Hint = "", Info = "" }
 
 local on_attach = function(client, bufnr)
     local function buf_set_option(...)
@@ -21,6 +17,8 @@ local on_attach = function(client, bufnr)
         vim.cmd [[augroup END]]
     end
 end
+
+-- bulk config
 local servers = {
     "vimls",
     "yamlls",
@@ -30,36 +28,17 @@ local servers = {
     "clangd",
     "rust_analyzer",
 }
-
 lspconfigplus.bulk_setup(servers, { on_attach = on_attach })
 
-local util = require "lspconfig/util"
-local path = util.path
-
-local function get_python_path(workspace)
-    -- Use activated virtualenv.
-    if vim.env.VIRTUAL_ENV then
-        return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
-    end
-
-    -- Find and use virtualenv via poetry in workspace directory.
-    local match = vim.fn.glob(path.join(workspace, "poetry.lock"))
-    if match ~= "" then
-        local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
-        return path.join(venv, "bin", "python")
-    end
-
-    -- Fallback to system Python.
-    return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
-end
-
+-- pyright config
 lspconfigplus.pyright.setup {
     on_attach = on_attach,
     on_init = function(client)
-        client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+        client.config.settings.python.pythonPath = utils.get_python_path(client.config.root_dir)
     end,
 }
 
+-- sumneko_lua config
 lspconfigplus.sumneko_lua.setup {
     settings = {
         Lua = {
@@ -75,21 +54,34 @@ lspconfigplus.sumneko_lua.setup {
     },
 }
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+-- texlab config
 lspconfigplus.texlab.setup {
-    on_attach = on_attach,
-    -- on_attach = function(client)
-    --     client.resolved_capabilities.document_formatting = false
-    --     client.resolved_capabilities.document_range_formatting = false
-    -- end,
+    commands = {
+        TexlabBuild = {
+            function()
+                utils.texlab_buf_build(0)
+            end,
+            description = "Build the current buffer",
+        },
+        TexlabForward = {
+            function()
+                utils.texlab_buf_search(0)
+            end,
+            description = "Forward search from current position",
+        },
+    },
+    flags = {
+        allow_incremental_sync = false,
+    },
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
     settings = {
         texlab = {
             diagnosticsDelay = 50,
-            -- latexFormatter = "texlab",
             build = {
                 executable = "latexmk",
                 args = {
@@ -110,6 +102,8 @@ lspconfigplus.texlab.setup {
         },
     },
 }
+
+-- EFM config
 local isort = lspconfigplus.formatters.isort.setup {}
 local black = lspconfigplus.formatters.black.setup {}
 local shfmt = lspconfigplus.formatters.shfmt.setup {}
@@ -122,6 +116,7 @@ local pandoc_rst = lspconfigplus.formatters.pandoc_rst.setup {}
 local stylua = lspconfigplus.formatters.stylua.setup {}
 
 lspconfigplus.efm.setup {
+    root_dir = require("lspconfig").util.root_pattern { ".git/", "." },
     on_attach = on_attach,
     init_options = { documentFormatting = true },
     filetypes = {
@@ -136,7 +131,7 @@ lspconfigplus.efm.setup {
         "vim",
         "markdown",
         "rst",
-        -- "tex",
+        "tex",
     },
     settings = {
         rootMarkers = { ".git/" },

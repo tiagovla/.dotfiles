@@ -8,5 +8,9 @@ return {
             vim.cmd [[packadd nvim-lspconfig]]
         end
         require "plugins.config.lsp.settings"
+
+        vim.defer_fn(function()
+            vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
+        end, 0)
     end,
 }
