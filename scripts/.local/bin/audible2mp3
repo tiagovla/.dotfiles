@@ -1,0 +1,5 @@
+#! /bin/bash
+url="https://raw.githubusercontent.com/KrumpetPirate/AAXtoMP3/master/AAXtoMP3"
+checksum=$(ffprobe $1 2>&1 | grep 'file checksum' | awk -F ' == ' '{print $2}')
+authcode=$(curl -s "https://aax.api.j-kit.me/api/v1/activation/${checksum}")
+curl -sSL $url | bash -s -- "-A" "$authcode" "$1"
