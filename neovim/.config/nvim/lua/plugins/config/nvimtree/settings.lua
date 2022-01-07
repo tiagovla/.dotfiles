@@ -42,7 +42,6 @@ require("nvim-tree").setup {
     update_cwd = false,
     update_focused_file = {
         enable = false,
-        -- update_cwd = true,
     },
     disable_netrw = true,
     hijack_netrw = true,
