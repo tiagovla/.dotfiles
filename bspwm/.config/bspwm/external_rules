@@ -67,7 +67,7 @@ discord() {
 	follow=off
 
 	bspc config ignore_ewmh_focus true
-	nohup bash -c "sleep 2; bspc config ignore_ewmh_focus false" &
+	nohup bash -c "sleep 5; bspc config ignore_ewmh_focus false" &
 }
 
 ranger() {
@@ -122,6 +122,7 @@ case $instance.$class in
 *.discord) discord ;;
 *.qBittorrent) qbittorrent ;;
 *.Matplotlib) matplotlib ;;
+*.matplotlib) matplotlib ;;
 *.Spotify) spotify ;;
 Ranger.Alacritty) ranger ;;
 *.mpv) mpv ;;
