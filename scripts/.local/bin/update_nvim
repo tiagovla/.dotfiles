@@ -1,0 +1,7 @@
+#! /bin/bash
+
+cd "/home/$USER/github/neovim" || exit
+git clean -dfX
+git pull
+make CMAKE_BUILD_TYPE=RelWithDebInfo
+sudo make install
