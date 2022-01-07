@@ -1,7 +1,11 @@
+
 feh --bg-scale ~/Pictures/av6popo691w71.png
 setxkbmap us_intl
 nm-applet &
-xset r rate 200 100
+#
+"$HOME/.config/polybar/launch.sh"
+xsetroot -cursor_name left_ptr &
+xset r rate 200 120
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -11,3 +15,9 @@ xbanish &
 dunst &
 flameshot &
 picom &
+aw-qt &
+kbd_layout &
+
+# dbus-update-activation-environment --systemd DISPLAY
+# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+# export SSH_AUTH_SOCK
