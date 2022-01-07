@@ -1,15 +1,12 @@
-local ezmap = require "ezmap"
+local keymap = vim.keymap
+local lsp = vim.lsp
 
-local lsp_mappings = {
-    { "n", "gD", ":lua vim.lsp.buf.declaration()<CR>" },
-    { "n", "gd", ":lua vim.lsp.buf.definition()<CR>" },
-    { "n", "gi", ":lua vim.lsp.buf.implementation()<CR>" },
-    { "n", "gr", ":lua vim.lsp.buf.rename()<CR>" },
-    { "n", "<C-k>", ":lua vim.lsp.buf.signature_help()<CR>" },
-    { "n", "gR", ":lua vim.lsp.buf.references()<CR>" },
-    { "n", "<space>e", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" },
-    { "n", "<space>lb", ":TexlabBuild<CR>" },
-    { "n", "<space>lv", ":TexlabForward<CR>" },
-    { "n", "<space>e", ":lua vim.lsp.diagnostic.show_line_diagnostics()<CR>" },
-}
-ezmap.map(lsp_mappings, { "noremap", "silent" })
+keymap.set("n", "gD", lsp.buf.declaration)
+keymap.set("n", "gd", lsp.buf.definition)
+keymap.set("n", "gi", lsp.buf.implementation)
+keymap.set("n", "gr", lsp.buf.rename)
+keymap.set("n", "<C-k>", lsp.buf.signature_help)
+keymap.set("n", "gR", lsp.buf.references)
+keymap.set("n", "<leader>e", lsp.diagnostic.show_line_diagnostics)
+keymap.set("n", "<leader>lb", "<cmd>TexlabBuild<CR>")
+keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>")

@@ -1,19 +1,18 @@
-local ezmap = require "ezmap"
+local keymap = vim.keymap
 
-function _G.nvim_tree_smart_toggle()
+local function nvim_tree_smart_toggle()
     local buftype = vim.api.nvim_buf_get_option(0, "filetype")
-    if buftype == "" then
-        vim.cmd "NvimTreeOpen"
-    elseif buftype ~= "NvimTree" then
-        vim.cmd "NvimTreeFindFile"
+
+    vim.cmd "NvimTreeRefresh"
+    if buftype ~= "NvimTree" then
+        if buftype == "" then
+            vim.cmd "NvimTreeFocus"
+        else
+            vim.cmd "NvimTreeFindFile"
+        end
     else
-        vim.cmd "NvimTreeRefresh"
         vim.cmd "NvimTreeToggle"
     end
 end
 
-local nvimtree_mappings = {
-    { "n", "<space>p", ":lua nvim_tree_smart_toggle()<CR>" },
-}
-
-ezmap.map(nvimtree_mappings, { "noremap", "silent" })
+keymap.set("n", "<space>p", nvim_tree_smart_toggle)

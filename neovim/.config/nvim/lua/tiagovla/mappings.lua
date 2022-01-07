@@ -1,37 +1,34 @@
-local ok, ezmap = pcall(require, "ezmap")
-if not ok then
-    return
-end
-
+local keymap = vim.keymap
 local M = {}
 
 function M.setup()
     M.general()
     M.movements()
-    M.plugins()
-end
-
-function M.movements()
-    local movements_mappings = {
-        { "n", "<C-J>", "<C-W><C-J>" },
-        { "n", "<C-K>", "<C-W><C-K>" },
-        { "n", "<C-L>", "<C-W><C-L>" },
-        { "n", "<c-H>", "<C-W><C-H>" },
-        { "n", "<c-N>", ":bnext<cr>", { "noremap", "silent" } },
-        { "n", "<c-P>", ":bprev<cr>", { "noremap", "silent" } },
-        { "n", "H", "gt" },
-        { "n", "L", "gT" },
-    }
-    ezmap.map(movements_mappings)
 end
 
 function M.general()
     vim.g.mapleader = " "
+    keymap.set("n", "n", "nzzzv")
+    keymap.set("n", "N", "Nzzzv")
+    keymap.set("n", "G", "Gzzzv")
+    keymap.set("n", "J", "mzJ`z")
+    keymap.set("i", ",", ",<c-g>u")
+    keymap.set("i", ".", ".<c-g>u")
+    keymap.set("i", "!", "!<c-g>u")
+    keymap.set("i", "?", "?<c-g>u")
+    keymap.set("v", "J", ":m .+1<cr>gv=gv", { silent = true })
+    keymap.set("v", "K", ":m .-2<cr>gv=gv", { silent = true })
 end
 
-function M.plugins()
-    local plugins_mappings = {}
-    require("ezmap").map(plugins_mappings, { "noremap", "silent" })
+function M.movements()
+    keymap.set("n", "<C-J>", "<C-W><C-J>")
+    keymap.set("n", "<C-K>", "<C-W><C-K>")
+    keymap.set("n", "<C-L>", "<C-W><C-L>")
+    keymap.set("n", "<c-H>", "<C-W><C-H>")
+    keymap.set("n", "<c-N>", ":bnext<cr>", { silent = true })
+    keymap.set("n", "<c-P>", ":bprev<cr>", { silent = true })
+    keymap.set("n", "H", "gt")
+    keymap.set("n", "L", "gT")
 end
 
 M.setup()
