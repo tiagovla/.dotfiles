@@ -1,11 +1,14 @@
 require "plugins.config.lsp.mappings"
 
 return {
-    -- event = "BufReadPre",
-    requires = { { "neovim/nvim-lspconfig", opt = true } },
+    requires = {
+        { "neovim/nvim-lspconfig", opt = true },
+        { "williamboman/nvim-lsp-installer", opt = true },
+    },
     config = function()
         if not _G.packer_plugins["nvim-lspconfig"].loaded then
             vim.cmd [[packadd nvim-lspconfig]]
+            vim.cmd [[packadd nvim-lsp-installer]]
         end
         require "plugins.config.lsp.settings"
 

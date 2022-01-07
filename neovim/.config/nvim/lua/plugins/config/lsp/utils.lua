@@ -1,5 +1,9 @@
 local util = require "lspconfig/util"
 local path = util.path
+local lsp = vim.lsp
+
+local capabilities = lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M = {}
 
@@ -25,79 +29,6 @@ function M.get_python_path(workspace)
 
     -- Fallback to system Python.
     return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
-end
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-local configs = require "lspconfig/configs"
-local lsp = vim.lsp
-
-local texlab_build_status = vim.tbl_add_reverse_lookup {
-    Success = 0,
-    Error = 1,
-    Failure = 2,
-    Cancelled = 3,
-}
-
-local texlab_forward_status = vim.tbl_add_reverse_lookup {
-    Success = 0,
-    Error = 1,
-    Failure = 2,
-    Unconfigured = 3,
-}
-
-function M.texlab_buf_build(bufnr)
-    local texlab_client = nil
-    for _, v in ipairs(vim.lsp.buf_get_clients(0)) do
-        if v.name == "texlab" then
-            texlab_client = v
-        end
-    end
-    if texlab_client then
-        bufnr = util.validate_bufnr(bufnr)
-        local params = {
-            textDocument = { uri = vim.uri_from_bufnr(bufnr) },
-        }
-        texlab_client.request(
-            "textDocument/build",
-            params,
-            util.compat_handler(function(err, result)
-                if err then
-                    error(tostring(err))
-                end
-                print("Build " .. texlab_build_status[result.status])
-            end),
-            bufnr
-        )
-    end
-end
-
-function M.texlab_buf_search(bufnr)
-    local texlab_client = nil
-    for _, v in ipairs(vim.lsp.buf_get_clients(0)) do
-        if v.name == "texlab" then
-            texlab_client = v
-        end
-    end
-    if texlab_client then
-        bufnr = util.validate_bufnr(bufnr)
-        local params = {
-            textDocument = { uri = vim.uri_from_bufnr(bufnr) },
-            position = { line = vim.fn.line "." - 1, character = vim.fn.col "." },
-        }
-        texlab_client.request(
-            "textDocument/forwardSearch",
-            params,
-            util.compat_handler(function(err, result)
-                if err then
-                    error(tostring(err))
-                end
-                print("Search " .. texlab_forward_status[result.status])
-            end),
-            bufnr
-        )
-    end
 end
 
 return M

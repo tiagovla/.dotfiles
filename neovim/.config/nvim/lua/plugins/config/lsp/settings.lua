@@ -1,6 +1,9 @@
 local lspconfigplus = require "lspconfigplus"
 local efm_cfg = require("lspconfigplus.extra")["efm"]
 local utils = require "plugins.config.lsp.utils"
+local lsp_installer = require "nvim-lsp-installer"
+
+local configs = {}
 
 utils.define_signs { Error = "", Warn = "", Hint = "", Info = "" }
 
@@ -8,9 +11,13 @@ local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
+    -- if client.resolved_capabilities.goto_definition == true then
+    --     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
+    -- end
 
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     if client.resolved_capabilities.document_formatting then
+        -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
         vim.cmd [[augroup Format]]
         vim.cmd [[autocmd! * <buffer>]]
         vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]]
@@ -18,28 +25,27 @@ local on_attach = function(client, bufnr)
     end
 end
 
--- bulk config
-local servers = {
-    "vimls",
-    "yamlls",
-    "bashls",
-    "dockerls",
-    "cmake",
-    "clangd",
-    "rust_analyzer",
-}
-lspconfigplus.bulk_setup(servers, { on_attach = on_attach })
-
 -- pyright config
-lspconfigplus.pyright.setup {
+configs.pyright = {
     on_attach = on_attach,
+    before_init = function(_, config)
+        local stub_path = require("lspconfig/util").path.join(
+            vim.fn.stdpath "data",
+            "site",
+            "pack",
+            "packer",
+            "opt",
+            "python-type-stubs"
+        )
+        config.settings.python.analysis.stubPath = stub_path
+    end,
     on_init = function(client)
         client.config.settings.python.pythonPath = utils.get_python_path(client.config.root_dir)
     end,
 }
 
 -- sumneko_lua config
-lspconfigplus.sumneko_lua.setup {
+configs.sumneko_lua = {
     settings = {
         Lua = {
             diagnostics = { globals = { "vim", "use" } },
@@ -55,21 +61,7 @@ lspconfigplus.sumneko_lua.setup {
 }
 
 -- texlab config
-lspconfigplus.texlab.setup {
-    commands = {
-        TexlabBuild = {
-            function()
-                utils.texlab_buf_build(0)
-            end,
-            description = "Build the current buffer",
-        },
-        TexlabForward = {
-            function()
-                utils.texlab_buf_search(0)
-            end,
-            description = "Forward search from current position",
-        },
-    },
+configs.texlab = {
     flags = {
         allow_incremental_sync = false,
     },
@@ -104,6 +96,7 @@ lspconfigplus.texlab.setup {
 }
 
 -- EFM config
+-- TODO: remove lspconfigplus
 local isort = lspconfigplus.formatters.isort.setup {}
 local black = lspconfigplus.formatters.black.setup {}
 local shfmt = lspconfigplus.formatters.shfmt.setup {}
@@ -115,7 +108,7 @@ local pandoc_rst = lspconfigplus.formatters.pandoc_rst.setup {}
 -- local cmakelang = lspconfigplus.formatters.cmakelang.setup {}
 local stylua = lspconfigplus.formatters.stylua.setup {}
 
-lspconfigplus.efm.setup {
+configs.efm = {
     root_dir = require("lspconfig").util.root_pattern { ".git/", "." },
     on_attach = on_attach,
     init_options = { documentFormatting = true },
@@ -123,6 +116,7 @@ lspconfigplus.efm.setup {
         "lua",
         "python",
         "zsh",
+        -- "javascript",
         "sh",
         "json",
         "yaml",
@@ -151,3 +145,8 @@ lspconfigplus.efm.setup {
         },
     },
 }
+
+lsp_installer.on_server_ready(function(server)
+    local opts = configs[server.name] or { on_attach = on_attach }
+    server:setup(opts)
+end)
