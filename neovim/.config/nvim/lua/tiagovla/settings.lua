@@ -7,7 +7,6 @@ function M.setup()
     M.window_options()
     M.buffer_options()
     M.commands()
-    g.doge_doc_standard_python = "numpy"
 end
 
 function M.options()
@@ -46,6 +45,7 @@ function M.options()
     o.expandtab = true
 
     g.showtabline = 2
+
     o.hidden = true
     o.shortmess = o.shortmess .. "cAI"
     o.showmode = false
@@ -80,26 +80,11 @@ function M.buffer_options()
 end
 
 function M.commands()
-    cmd "syntax on"
     cmd "set t_ZH=^[[3m"
     cmd "set t_ZR=^[[23m"
-    cmd ":nmap <F1> <nop>"
-    cmd ":imap <F1> <nop>"
-    cmd ":nnoremap Y y$"
-    cmd ":nnoremap n nzzzv"
-    cmd ":nnoremap N Nzzzv"
-    cmd ":nnoremap G Gzzzv"
-    cmd ":nnoremap J mzJ`z"
-
-    cmd ":inoremap , ,<c-g>u"
-    cmd ":inoremap . .<c-g>u"
-    cmd ":inoremap ! !<c-g>u"
-    cmd ":inoremap ? ?<c-g>u"
-
-    cmd ":vnoremap J :m .+1<cr>gv=gv"
-    cmd ":vnoremap K :m .-2<cr>gv=gv"
-
+    cmd "let g:tex_flavor='latex'"
     cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300} ]]
+    vim.api.nvim_add_user_command("W", ":w", {})
 end
 
 M.setup()
