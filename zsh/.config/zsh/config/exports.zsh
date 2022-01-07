@@ -1,4 +1,5 @@
 #! /bin/bash
+export _JAVA_AWT_WM_NONREPARENTING=1
 
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
@@ -7,6 +8,7 @@ export BROWSER="brave"
 export PYENV_ROOT="$HOME/.pyenv"
 
 # PATH
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
@@ -18,4 +20,4 @@ export PATH="/opt/ParaView-5.9.1-MPI-Linux-Python3.8-64bit/bin:$PATH"
 eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(zoxide init --cmd c zsh)"
-"$HOME/scripts/kbd_layout.sh"
+source "/usr/share/nvm/init-nvm.sh"

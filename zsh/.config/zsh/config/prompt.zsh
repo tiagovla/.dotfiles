@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-xset r rate 200 100
+# xset r rate 200 100
 autoload -Uz vcs_info
 
 autoload -Uz compinit && compinit
