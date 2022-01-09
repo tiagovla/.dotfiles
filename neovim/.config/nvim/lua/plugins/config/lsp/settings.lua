@@ -3,6 +3,8 @@ local efm_cfg = require("lspconfigplus.extra")["efm"]
 local utils = require "plugins.config.lsp.utils"
 local lsp_installer = require "nvim-lsp-installer"
 
+require "plugins.config.lsp.custom_servers"
+
 local configs = {}
 
 utils.define_signs { Error = "", Warn = "", Hint = "", Info = "" }
@@ -11,9 +13,9 @@ local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
-    -- if client.resolved_capabilities.goto_definition == true then
-    --     vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
-    -- end
+    if client.resolved_capabilities.goto_definition == true then
+        vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
+    end
 
     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
     if client.resolved_capabilities.document_formatting then
@@ -25,8 +27,8 @@ local on_attach = function(client, bufnr)
     end
 end
 
--- pyright config
-configs.pyright = {
+-- pylance
+configs.pylance = {
     on_attach = on_attach,
     before_init = function(_, config)
         local stub_path = require("lspconfig/util").path.join(
@@ -96,7 +98,6 @@ configs.texlab = {
 }
 
 -- EFM config
--- TODO: remove lspconfigplus
 local isort = lspconfigplus.formatters.isort.setup {}
 local black = lspconfigplus.formatters.black.setup {}
 local shfmt = lspconfigplus.formatters.shfmt.setup {}

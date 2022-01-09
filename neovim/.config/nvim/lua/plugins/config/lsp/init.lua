@@ -1,6 +1,7 @@
 require "plugins.config.lsp.mappings"
 
 return {
+    -- event = "BufReadPre",
     requires = {
         { "neovim/nvim-lspconfig", opt = true },
         { "williamboman/nvim-lsp-installer", opt = true },
