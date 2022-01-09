@@ -53,10 +53,6 @@ require("nvim-tree").setup {
     },
 }
 
-require("nvim-tree.events").on_nvim_tree_ready(function()
-    vim.cmd "NvimTreeRefresh"
-end)
-
 vim.g.nvim_tree_icons = {
     default = "",
     symlink = "",
