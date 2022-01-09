@@ -1,4 +1,5 @@
 local util = require "lspconfig.util"
+local lsp_util = require "vim.lsp.util"
 local configs = require "lspconfig.configs"
 local servers = require "nvim-lsp-installer.servers"
 local server = require "nvim-lsp-installer.server"
@@ -15,6 +16,34 @@ local root_files = {
     "pyrightconfig.json",
 }
 
+local function extract_method()
+    local range_params = lsp_util.make_given_range_params(nil, nil)
+    local arguments = { vim.uri_from_bufnr(0):gsub("file://", ""), range_params.range }
+    local params = {
+        command = "pylance.extractMethod",
+        arguments = arguments,
+    }
+    vim.lsp.buf.execute_command(params)
+end
+
+local function extract_variable()
+    local range_params = lsp_util.make_given_range_params(nil, nil)
+    local arguments = { vim.uri_from_bufnr(0):gsub("file://", ""), range_params.range }
+    local params = {
+        command = "pylance.extractVarible",
+        arguments = arguments,
+    }
+    vim.lsp.buf.execute_command(params)
+end
+
+local function organize_imports()
+    local params = {
+        command = "pyright.organizeimports",
+        arguments = { vim.uri_from_bufnr(0) },
+    }
+    vim.lsp.buf.execute_command(params)
+end
+
 configs[server_name] = {
     default_config = {
         filetypes = { "python" },
@@ -29,6 +58,20 @@ configs[server_name] = {
                     diagnosticMode = "workspace",
                 },
             },
+        },
+    },
+    commands = {
+        PylanceExtractMethod = {
+            extract_method,
+            description = "Extract Method",
+        },
+        PylanceExtractVarible = {
+            extract_variable,
+            description = "Extract Variable",
+        },
+        PylanceOrganizeImports = {
+            organize_imports,
+            description = "Organize Imports",
         },
     },
 }
