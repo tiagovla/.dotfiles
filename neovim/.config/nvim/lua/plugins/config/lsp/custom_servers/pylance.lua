@@ -4,6 +4,7 @@ local configs = require "lspconfig.configs"
 local servers = require "nvim-lsp-installer.servers"
 local server = require "nvim-lsp-installer.server"
 local path = require "nvim-lsp-installer.path"
+local handlers = require "vim.lsp.handlers"
 
 local server_name = "pylance"
 
@@ -44,11 +45,25 @@ local function organize_imports()
     vim.lsp.buf.execute_command(params)
 end
 
+local function on_workspace_executecommand(err, actions, ctx)
+    if ctx.params.command:match "WithRename" then
+        ctx.params.command = ctx.params.command:gsub("WithRename", "")
+        vim.lsp.buf.execute_command(ctx.params)
+    end
+end
+
+local function on_window_logmessage(err, content, ctx)
+    if content.type == 3 then
+        print(content.message)
+    end
+    handlers[ctx.method](err, content, ctx)
+end
+
 configs[server_name] = {
     default_config = {
         filetypes = { "python" },
         root_dir = util.root_pattern(unpack(root_files)),
-        cmd = { "pye" },
+        cmd = { "py" },
         single_file_support = true,
         settings = {
             python = {
@@ -58,6 +73,10 @@ configs[server_name] = {
                     diagnosticMode = "workspace",
                 },
             },
+        },
+        handlers = {
+            ["workspace/executeCommand"] = on_workspace_executecommand,
+            ["window/logMessage"] = on_window_logmessage,
         },
     },
     commands = {

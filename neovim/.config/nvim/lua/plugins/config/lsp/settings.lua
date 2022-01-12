@@ -30,6 +30,15 @@ end
 -- pylance
 configs.pylance = {
     on_attach = on_attach,
+    settings = {
+        python = {
+            analysis = {
+                typeCheckingMode = "basic",
+                completeFunctionParens = true,
+                indexing = true,
+            },
+        },
+    },
     before_init = function(_, config)
         local stub_path = require("lspconfig/util").path.join(
             vim.fn.stdpath "data",
