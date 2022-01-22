@@ -1,4 +1,5 @@
 require "plugins.config.lsp.mappings"
+require "plugins.config.lsp.handlers"
 
 return {
     -- event = "BufReadPre",

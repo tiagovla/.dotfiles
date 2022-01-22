@@ -1,7 +1,8 @@
 local keymap = vim.keymap
 local lsp = vim.lsp
 
-keymap.set("n", "ga", vim.lsp.buf.code_action)
+keymap.set({ "n" }, "ga", vim.lsp.buf.code_action)
+keymap.set({ "v" }, "ga", ":lua vim.lsp.buf.range_code_action()<cr>")
 keymap.set("n", "gD", lsp.buf.declaration)
 keymap.set("n", "gd", lsp.buf.definition)
 keymap.set("n", "gi", lsp.buf.implementation)

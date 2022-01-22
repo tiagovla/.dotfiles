@@ -52,13 +52,6 @@ local function on_workspace_executecommand(err, actions, ctx)
     end
 end
 
-local function on_window_logmessage(err, content, ctx)
-    if content.type == 3 then
-        print(content.message)
-    end
-    handlers[ctx.method](err, content, ctx)
-end
-
 configs[server_name] = {
     default_config = {
         filetypes = { "python" },
@@ -76,7 +69,6 @@ configs[server_name] = {
         },
         handlers = {
             ["workspace/executeCommand"] = on_workspace_executecommand,
-            ["window/logMessage"] = on_window_logmessage,
         },
     },
     commands = {
