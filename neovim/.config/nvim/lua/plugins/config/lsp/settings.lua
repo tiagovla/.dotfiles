@@ -9,6 +9,15 @@ local configs = {}
 
 utils.define_signs { Error = "", Warn = "", Hint = "", Info = "" }
 
+vim.diagnostic.config {
+    virtual_text = {
+        prefix = "",
+    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+}
+
 local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
@@ -117,6 +126,7 @@ local rst_lint = lspconfigplus.linters.rst_lint.setup {}
 local pandoc_rst = lspconfigplus.formatters.pandoc_rst.setup {}
 -- local cmakelang = lspconfigplus.formatters.cmakelang.setup {}
 local stylua = lspconfigplus.formatters.stylua.setup {}
+local flake8 = lspconfigplus.linters.flake8.setup {}
 
 configs.efm = {
     root_dir = require("lspconfig").util.root_pattern { ".git/", "." },
@@ -141,7 +151,7 @@ configs.efm = {
         rootMarkers = { ".git/" },
         languages = {
             rst = { rst_lint, pandoc_rst },
-            python = { isort, black },
+            python = { flake8, isort, black },
             markdown = { markdownlint, pandoc_markdown },
             lua = { stylua },
             tex = { efm_cfg.latexindent },
@@ -155,6 +165,8 @@ configs.efm = {
         },
     },
 }
+
+configs.ltex = require "plugins.config.lsp.custom_servers.ltex"
 
 lsp_installer.on_server_ready(function(server)
     local opts = configs[server.name] or { on_attach = on_attach }

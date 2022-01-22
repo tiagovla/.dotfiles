@@ -20,6 +20,20 @@ local function config()
                     only_sort_text = true,
                 },
             },
+            layout_config = {
+                prompt_position = "bottom",
+                horizontal = {
+                    preview_width = 0.55,
+                    results_width = 0.8,
+                },
+                vertical = {
+                    mirror = false,
+                },
+                width = 0.87,
+                height = 0.80,
+                preview_cutoff = 120,
+            },
+            scroll_strategy = "cycle",
             vimgrep_arguments = {
                 "rg",
                 "--color=never",
@@ -30,16 +44,10 @@ local function config()
                 "--smart-case",
             },
             prompt_prefix = ">",
+            path_display = { "truncate" },
             selection_strategy = "reset",
             sorting_strategy = "descending",
             layout_strategy = "horizontal",
-            layout_config = {
-                horizontal = { mirror = false },
-                vertical = { mirror = false },
-                prompt_position = "bottom",
-                preview_cutoff = 120,
-                width = 0.75,
-            },
             file_sorter = require("telescope.sorters").get_fuzzy_file,
             file_ignore_patterns = {},
             generic_sorter = require("telescope.sorters").get_generic_fuzzy_sorter,

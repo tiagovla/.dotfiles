@@ -3,7 +3,8 @@ local cmp = require "cmp"
 
 require("luasnip").config.set_config {
     history = false,
-    updateevents = "VimLeave",
+    updateevents = "TextChanged,TextChangedI",
+    region_check_events = "CursorMoved,CursorHold,InsertEnter",
 }
 
 cmp.setup {

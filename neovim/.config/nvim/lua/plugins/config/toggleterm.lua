@@ -1,10 +1,13 @@
 local keymap = vim.keymap
 
 local function mappings()
-    keymap.set("n", "<F1>", "<cmd>ToggleTerm<cr>")
+    keymap.set({ "n", "v" }, "<F1>", "<nop>")
+    keymap.set({ "n", "v" }, "<F1>", "<cmd>:ToggleTerm <cr>")
+    keymap.set({ "n", "v" }, "<C-_>", "<cmd>:ToggleTerm size=12 direction=horizontal <cr>")
 
     function _G.set_terminal_keymaps()
-        keymap.set("t", [[<F1>]], "<cmd>:ToggleTerm <cr>")
+        keymap.set("t", "<F1>", "<cmd>:ToggleTerm <cr>")
+        keymap.set("t", "<C-_>", "<cmd>:ToggleTerm <cr>")
         keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]])
         keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]])
         keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]])
@@ -16,11 +19,12 @@ end
 
 local function config()
     require("toggleterm").setup {
+        size = 20,
         hide_numbers = true,
         start_in_insert = true,
         insert_mappings = true,
         shade_terminals = true,
-        shading_factor = "1",
+        shading_factor = 2,
         persist_size = true,
         close_on_exit = true,
         direction = "float",

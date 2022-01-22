@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-keymap.set("n", "<space>gn", "<cmd>NeoGit<CR>")
+keymap.set("n", "<space>n", "<cmd>Neogit<CR>")
 
 return {
     config = function()

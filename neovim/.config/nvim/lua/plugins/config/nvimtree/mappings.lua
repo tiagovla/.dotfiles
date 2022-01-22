@@ -2,7 +2,6 @@ local keymap = vim.keymap
 
 local function nvim_tree_smart_toggle()
     local buftype = vim.api.nvim_buf_get_option(0, "filetype")
-
     vim.cmd "NvimTreeRefresh"
     if buftype ~= "NvimTree" then
         if buftype == "" then
@@ -15,4 +14,4 @@ local function nvim_tree_smart_toggle()
     end
 end
 
-keymap.set("n", "<space>p", nvim_tree_smart_toggle)
+keymap.set("n", "<leader>p", nvim_tree_smart_toggle)
