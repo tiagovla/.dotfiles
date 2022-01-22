@@ -17,7 +17,6 @@ function M.options()
     o.completeopt = "menuone,noinsert,noselect"
 
     o.history = 1000
-    o.hlsearch = true
     o.inccommand = "split"
     o.incsearch = true
     o.infercase = true
@@ -29,6 +28,7 @@ function M.options()
     o.showbreak = "↳"
     o.smarttab = true
     o.smartcase = true
+    o.ignorecase = true
 
     o.splitright = true
     o.splitbelow = true
@@ -49,10 +49,10 @@ function M.options()
     o.hidden = true
     o.shortmess = o.shortmess .. "cAI"
     o.showmode = false
-    o.hlsearch = false
+    o.hlsearch = true
     o.mouse = "a"
     w.list = true
-    w.listchars = "tab:!·,trail:."
+    w.listchars = "tab:!·,trail:.,eol:↲,nbsp:␣"
     o.synmaxcol = 150
     g.tex_conceal = "abdgms"
     o.undofile = true
@@ -80,6 +80,8 @@ function M.buffer_options()
 end
 
 function M.commands()
+    cmd "set updatetime=1000"
+    cmd [[nnoremap <silent> <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()]]
     cmd "set t_ZH=^[[3m"
     cmd "set t_ZR=^[[23m"
     cmd "let g:tex_flavor='latex'"
@@ -88,3 +90,6 @@ function M.commands()
 end
 
 M.setup()
+
+-- check this
+-- :let @+ = execute('messages')
