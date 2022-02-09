@@ -48,7 +48,7 @@ packer.startup {
         -- use { "neovim/nvim-lspconfig", event = "BufReadPre", ext = load "lsp" }
         -- use { "jose-elias-alvarez/null-ls.nvim", ext = load "null-ls" }
 
-        use { "ray-x/lsp_signature.nvim", after = "lspconfigplus", ext = load "lsp_signature" }
+        -- use { "ray-x/lsp_signature.nvim", after = "lspconfigplus", ext = load "lsp_signature" }
         use { "microsoft/python-type-stubs", opt = true }
 
         -- Git
@@ -70,7 +70,16 @@ packer.startup {
         use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
+        use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
+        use {
+            "theHamsta/nvim-semantic-tokens",
+            config = function()
+                require("nvim-semantic-tokens").setup {
+                    preset = "default",
+                }
+            end,
+        }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = load "nvimtree" }
@@ -90,7 +99,8 @@ packer.startup {
         -- Documents
         use { "tiagovla/tex-conceal.vim", ft = "tex" }
         use { "iamcco/markdown-preview.nvim", ext = load "markdownpreview" }
-        use { "kkoomen/vim-doge", ext = load "vimdoge" }
+        use { "danymat/neogen", ext = load "neogen" }
+        -- use { "kkoomen/vim-doge", ext = load "vimdoge" }
 
         -- Debug
         use { "mfussenegger/nvim-dap", module = "dap", ext = load "dap" }

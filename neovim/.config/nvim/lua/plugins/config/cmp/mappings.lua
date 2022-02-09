@@ -12,6 +12,11 @@ local mapping = {
     ["<Tab>"] = function(fallback)
         if require("luasnip").jumpable() then
             vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-next", true, true, true), "")
+        elseif require("neogen").jumpable() then
+            vim.fn.feedkeys(
+                vim.api.nvim_replace_termcodes("<cmd>lua require('neogen').jump_next()<CR>", true, true, true),
+                ""
+            )
         else
             fallback()
         end
@@ -19,6 +24,11 @@ local mapping = {
     ["<S-Tab>"] = function(fallback)
         if require("luasnip").jumpable(-1) then
             vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<Plug>luasnip-jump-prev", true, true, true), "")
+        elseif require("neogen").jumpable(-1) then
+            vim.fn.feedkeys(
+                vim.api.nvim_replace_termcodes("<cmd>lua require('neogen').jump_prev()<CR>", true, true, true),
+                ""
+            )
         else
             fallback()
         end
