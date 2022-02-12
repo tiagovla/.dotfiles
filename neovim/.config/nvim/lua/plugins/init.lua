@@ -30,6 +30,7 @@ packer.startup {
 
         -- Themes
         use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
+        use { "catppuccin/nvim" }
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
         use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
         use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
@@ -41,15 +42,11 @@ packer.startup {
 
         -- Syntax
         use { "nvim-treesitter/nvim-treesitter", event = "BufRead", ext = load "treesitter" }
+        use { "microsoft/python-type-stubs", opt = true }
 
         -- Lsp
         use { "$HOME/github/lspconfigplus", event = "BufReadPre", ext = load "lsp" }
         use { "kosayoda/nvim-lightbulb", ext = load "nvim-lightbulb" }
-        -- use { "neovim/nvim-lspconfig", event = "BufReadPre", ext = load "lsp" }
-        -- use { "jose-elias-alvarez/null-ls.nvim", ext = load "null-ls" }
-
-        -- use { "ray-x/lsp_signature.nvim", after = "lspconfigplus", ext = load "lsp_signature" }
-        use { "microsoft/python-type-stubs", opt = true }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = load "gitsigns" }
@@ -72,14 +69,6 @@ packer.startup {
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
-        use {
-            "theHamsta/nvim-semantic-tokens",
-            config = function()
-                require("nvim-semantic-tokens").setup {
-                    preset = "default",
-                }
-            end,
-        }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = load "nvimtree" }
@@ -91,6 +80,7 @@ packer.startup {
         use { "rcarriga/nvim-notify", ext = load "nvim-notify" }
         use { "folke/which-key.nvim", lock = true, ext = load "whichkey" }
         use { "andweeb/presence.nvim", ext = load "presence" }
+        -- use { "RRethy/vim-illuminate" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }
@@ -100,13 +90,10 @@ packer.startup {
         use { "tiagovla/tex-conceal.vim", ft = "tex" }
         use { "iamcco/markdown-preview.nvim", ext = load "markdownpreview" }
         use { "danymat/neogen", ext = load "neogen" }
-        -- use { "kkoomen/vim-doge", ext = load "vimdoge" }
 
         -- Debug
         use { "mfussenegger/nvim-dap", module = "dap", ext = load "dap" }
-        -- use { "ActivityWatch/aw-watcher-vim" }
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
-        -- use { "dstein64/vim-startuptime"}
     end,
     -- config = {
     --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
