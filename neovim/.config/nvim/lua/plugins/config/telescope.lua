@@ -7,6 +7,9 @@ local function mappings()
     keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>")
     keymap.set("n", "<leader>tc", "<cmd>Telescope colorscheme<cr>")
     keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>")
+    keymap.set("n", "<leader>tn", function()
+        require("telescope").extensions.notify.notify()
+    end)
 end
 
 local function config()

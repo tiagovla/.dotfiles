@@ -25,11 +25,10 @@ local function config()
             ["n <leader>hS"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
             ["n <leader>hU"] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
         },
-        watch_index = { interval = 1000 },
+        watch_gitdir = { interval = 1000 },
         sign_priority = 6,
         update_debounce = 200,
         status_formatter = nil,
-        use_decoration_api = false,
     }
 end
 

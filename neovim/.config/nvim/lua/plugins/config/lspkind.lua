@@ -1,6 +1,5 @@
 local function config()
     require("lspkind").init {
-        with_text = true,
         symbol_map = {
             Text = "",
             Method = "ƒ",
@@ -34,7 +33,6 @@ local function config()
     cmp.setup {
         formatting = {
             format = lspkind.cmp_format {
-                with_text = true,
                 menu = {
                     luasnip = "[SNIP]",
                     buffer = "[BUF]",
