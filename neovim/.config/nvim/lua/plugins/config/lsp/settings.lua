@@ -22,13 +22,24 @@ local on_attach = function(client, bufnr)
     local function buf_set_option(...)
         vim.api.nvim_buf_set_option(bufnr, ...)
     end
+    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+
     if client.resolved_capabilities.goto_definition == true then
         vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
     end
-
-    buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
+    -- if client.resolved_capabilities.semantic_tokens_full == true then
+    --     vim.cmd [[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.buf.semantic_tokens_full()]]
+    -- end
+    if client.resolved_capabilities.document_highlight then
+        vim.cmd [[
+            augroup Highlight
+                autocmd! * <buffer>
+                autocmd! CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                autocmd! CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+            augroup END
+        ]]
+    end
     if client.resolved_capabilities.document_formatting then
-        -- vim.api.nvim_buf_set_option(bufnr, "formatexpr", "v:lua.vim.lsp.formatexpr()")
         vim.cmd [[augroup Format]]
         vim.cmd [[autocmd! * <buffer>]]
         vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)]]
@@ -36,8 +47,9 @@ local on_attach = function(client, bufnr)
     end
 end
 
--- pylance
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 configs.pylance = {
+    capabilities = capabilities,
     on_attach = on_attach,
     settings = {
         python = {
@@ -126,7 +138,14 @@ local rst_lint = lspconfigplus.linters.rst_lint.setup {}
 local pandoc_rst = lspconfigplus.formatters.pandoc_rst.setup {}
 -- local cmakelang = lspconfigplus.formatters.cmakelang.setup {}
 local stylua = lspconfigplus.formatters.stylua.setup {}
-local flake8 = lspconfigplus.linters.flake8.setup {}
+-- local flake8 = lspconfigplus.linters.flake8.setup {}
+local flake8 = {
+    prefix = "flake8",
+    lintCommand = "flake8 --ignore=E203,F401,F841,W503 --max-line-length 88 --stdin-display-name ${INPUT} -",
+    lintStdin = true,
+    lintFormats = { "%.%#:%l:%c: %t%n %m" },
+    rootMarkers = { "setup.cfg", "tox.ini", ".flake8" },
+}
 
 configs.efm = {
     root_dir = require("lspconfig").util.root_pattern { ".git/", "." },
@@ -166,7 +185,42 @@ configs.efm = {
     },
 }
 
-configs.ltex = require "plugins.config.lsp.custom_servers.ltex"
+configs.diagnosticls = {
+    on_attach = function(client)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+    end,
+    filetypes = { "tex", "markdown" },
+    init_options = {
+        linters = {
+            textidote = {
+                command = "textidote",
+                debounce = 500,
+                args = { "--type", "tex", "--check", "pt_BR", "--output", "singleline", "--no-color" },
+                offsetLine = 0,
+                offsetColumn = 0,
+                sourceName = "textidote",
+                formatLines = 1,
+                formatPattern = {
+                    '\\(L(\\d+)C(\\d+)-L(\\d+)C(\\d+)\\):(.+)".+"$',
+                    {
+                        line = 1,
+                        column = 2,
+                        endLine = 3,
+                        endColumn = 4,
+                        message = 5,
+                    },
+                },
+            },
+        },
+        filetypes = {
+            markdown = "textidote",
+            tex = "textidote",
+        },
+    },
+}
+
+-- configs.ltex = require "plugins.config.lsp.custom_servers.ltex"
 
 lsp_installer.on_server_ready(function(server)
     local opts = configs[server.name] or { on_attach = on_attach }

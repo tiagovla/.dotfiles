@@ -1,3 +1,4 @@
+require "plugins.config.lsp.semantic_tokens"
 require "plugins.config.lsp.mappings"
 require "plugins.config.lsp.handlers"
 
