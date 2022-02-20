@@ -1,9 +1,6 @@
 #!/bin/zsh
 
-# xset r rate 200 100
 autoload -Uz vcs_info
-
-autoload -Uz compinit && compinit
 
 precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
