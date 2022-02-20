@@ -6,7 +6,7 @@ alias fixfan="sudo ${HOME}/scripts/fan_speed.sh"
 
 alias la='ls -a --color=auto'
 alias ll='ls -la --color=auto'
-alias ls='ls --color=auto'
+alias ls='exa --icons --color=auto --time-style=long-iso --group-directories-first --git'
 
 alias du='du --max-depth=1 --si'
 alias rm='trash'
