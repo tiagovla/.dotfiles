@@ -3,6 +3,10 @@ keymap.set("n", "<space>n", "<cmd>Neogit<CR>")
 
 return {
     config = function()
-        require("neogit").setup()
+        require("neogit").setup {
+            integrations = {
+                diffview = true,
+            },
+        }
     end,
 }

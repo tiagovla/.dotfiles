@@ -107,4 +107,5 @@ return {
         "DiffviewRefresh",
     },
     config = config,
+    module = "diffview",
 }
