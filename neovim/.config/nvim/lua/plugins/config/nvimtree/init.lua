@@ -2,10 +2,11 @@ require "plugins.config.nvimtree.mappings"
 
 local plug_config = {
     cmd = {
-        "NvimTreeOpen",
-        "NvimTreeToggle",
         "NvimTreeFindFile",
+        "NvimTreeFocus",
+        "NvimTreeOpen",
         "NvimTreeRefresh",
+        "NvimTreeToggle",
     },
     module = "nvim-tree",
     requires = { "kyazdani42/nvim-web-devicons" },
