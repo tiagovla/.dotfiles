@@ -64,7 +64,7 @@ local function on_workspace_executecommand(err, content, ctx)
     end
 end
 
-return {
+local configs = {
     on_init = function(client)
         client.config.settings.ltex = load_config()
     end,
@@ -73,12 +73,4 @@ return {
     },
 }
 
--- or something like this:
--- require("lspconfig").ltex.setup {
---     on_init = function(client)
---         client.config.settings.ltex = load_config()
---     end,
---     handlers = {
---         ["workspace/executeCommand"] = on_workspace_executecommand,
---     },
--- }
+return configs

@@ -1,5 +1,5 @@
 local handlers = require "vim.lsp.handlers"
-local semantic_tokens = require "plugins.config.lsp.semantic_tokens.core"
+local semantic_tokens = require "lsp.semantic_tokens.core"
 
 handlers["textDocument/semanticTokens/full"] = function(err, result, ctx, config)
     return semantic_tokens.on_full(err, result, ctx, config)

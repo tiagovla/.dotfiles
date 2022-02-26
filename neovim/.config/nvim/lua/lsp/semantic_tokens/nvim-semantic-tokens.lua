@@ -2,9 +2,9 @@
 
 local M = {}
 
-local semantic_tokens = require "plugins.config.lsp.semantic_tokens.core"
+local semantic_tokens = require "lsp.semantic_tokens.core"
 local ns = vim.api.nvim_create_namespace "nvim-semantic-tokens"
-local presets = require "plugins.config.lsp.semantic_tokens.presets"
+local presets = require "lsp.semantic_tokens.presets"
 
 M.token_map = {}
 M.modifiers_map = {}

@@ -15,13 +15,13 @@ end
 
 function buf.semantic_tokens_full()
     local params = { textDocument = util.make_text_document_params() }
-    require("plugins.config.lsp.semantic_tokens.core")._save_tick()
+    require("lsp.semantic_tokens.core")._save_tick()
     return request("textDocument/semanticTokens/full", params)
 end
 
 function buf.semantic_tokens_range()
     local params = util.make_given_range_params(nil, nil)
-    require("plugins.config.lsp.semantic_tokens.core")._save_tick()
+    require("lsp.semantic_tokens.core")._save_tick()
     return request("textDocument/semanticTokens/range", params)
 end
 
@@ -68,8 +68,8 @@ local function make_client_capabilities()
         },
         formats = { "relative" },
         requests = {
-            range = true,
-            full = { delta = true },
+            -- range = false,
+            full = { delta = false },
         },
 
         overlappingTokenSupport = true,
@@ -80,5 +80,5 @@ end
 
 vim.lsp.protocol.make_client_capabilities = make_client_capabilities
 
-require "plugins.config.lsp.semantic_tokens.handlers"
-require("plugins.config.lsp.semantic_tokens.nvim-semantic-tokens").setup()
+require "lsp.semantic_tokens.handlers"
+require("lsp.semantic_tokens.nvim-semantic-tokens").setup()
