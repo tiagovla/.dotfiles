@@ -44,9 +44,9 @@ packer.startup {
         use { "microsoft/python-type-stubs", opt = true }
 
         -- Lsp
-        use { "neovim/nvim-lspconfig", event = "BufReadPre", ext = load "lsp" }
-        use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
-        use { "kosayoda/nvim-lightbulb", ext = load "nvim-lightbulb" }
+        use { "williamboman/nvim-lsp-installer", event = "BufReadPre" }
+        use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = load "lsp" }
+        use { "kosayoda/nvim-lightbulb", after = "nvim-lsp-installer", ext = load "nvim-lightbulb" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = load "gitsigns" }
