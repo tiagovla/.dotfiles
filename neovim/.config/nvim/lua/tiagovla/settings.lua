@@ -43,6 +43,7 @@ function M.options()
     o.smartindent = true
     o.shiftwidth = 4
     o.expandtab = true
+    vim.go.laststatus = 2
 
     g.showtabline = 2
 
