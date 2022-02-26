@@ -7,7 +7,7 @@ local function config()
 end
 
 return {
-    cmd = { "TSUpdate" },
+    cmd = { "TSUpdate", "TSInstallSync" },
     run = ":TSUpdate",
     config = config,
 }
