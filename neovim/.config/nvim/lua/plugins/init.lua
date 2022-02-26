@@ -88,7 +88,7 @@ packer.startup {
         use { "mfussenegger/nvim-dap", module = "dap", ext = load "dap" }
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
     end,
-    config = {
-        compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    },
+    -- config = {
+    --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    -- },
 }
