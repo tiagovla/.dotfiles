@@ -29,8 +29,7 @@ packer.startup {
         use { "nvim-lua/popup.nvim" }
 
         -- Themes
-        use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
-        use { "catppuccin/nvim" }
+        use { "tiagovla/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
         use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
         use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
@@ -45,7 +44,8 @@ packer.startup {
         use { "microsoft/python-type-stubs", opt = true }
 
         -- Lsp
-        use { "$HOME/github/lspconfigplus", event = "BufReadPre", ext = load "lsp" }
+        use { "neovim/nvim-lspconfig", event = "BufReadPre", ext = load "lsp" }
+        use { "williamboman/nvim-lsp-installer", after = "nvim-lspconfig" }
         use { "kosayoda/nvim-lightbulb", ext = load "nvim-lightbulb" }
 
         -- Git
@@ -55,12 +55,7 @@ packer.startup {
         -- Auto-complete
         use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
         use { "hrsh7th/nvim-cmp", after = "friendly-snippets", ext = load "cmp" }
-        use {
-            "L3MON4D3/LuaSnip",
-            wants = "friendly-snippets",
-            after = "nvim-cmp",
-            module = "luasnip",
-        }
+        use { "L3MON4D3/LuaSnip", wants = "friendly-snippets", after = "nvim-cmp", module = "luasnip" }
         use { "saadparwaiz1/cmp_luasnip", after = "LuaSnip" }
         use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
@@ -80,7 +75,6 @@ packer.startup {
         use { "rcarriga/nvim-notify", ext = load "nvim-notify" }
         use { "folke/which-key.nvim", lock = true, ext = load "whichkey" }
         use { "andweeb/presence.nvim", ext = load "presence" }
-        -- use { "RRethy/vim-illuminate" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }
@@ -95,7 +89,7 @@ packer.startup {
         use { "mfussenegger/nvim-dap", module = "dap", ext = load "dap" }
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
     end,
-    -- config = {
-    --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    -- },
+    config = {
+        compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    },
 }
