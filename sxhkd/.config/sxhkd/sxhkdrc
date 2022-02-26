@@ -10,7 +10,7 @@ alt + @space
     rofi -terminal alacritty -show drun
 
 shift + alt + @space
-    rofi -terminal alacritty -show ssh
+    rofi -terminal alacritty -show run -theme dmenu
 
 # make sxhkd reload its configuration files:
 alt + Escape
