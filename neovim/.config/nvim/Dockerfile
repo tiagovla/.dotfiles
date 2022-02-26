@@ -13,10 +13,10 @@ RUN apt update && apt upgrade -y && \
     make CMAKE_INSTALL_PREFIX=/usr/local install && \
     strip /usr/local/bin/nvim
 
-
-
-
 FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs
 COPY --from=builder /usr/local /usr/local/
-
+COPY --from=builder /tmp/.dotfiles/neovim/.config/nvim /root/.config/nvim/
+RUN /root/.config/nvim/install.sh
 CMD ["/usr/local/bin/nvim"]
