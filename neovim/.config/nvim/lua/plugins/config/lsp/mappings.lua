@@ -18,7 +18,7 @@ function mappings.setup(client_name)
     keymap.set("n", "gr", lsp.buf.rename, opt)
     keymap.set("n", "gT", lsp.buf.type_definition, opt)
     keymap.set("n", "K", vim.lsp.buf.hover, opt)
-    keymap.set("n", "<C-k>", lsp.buf.signature_help, opt)
+    -- keymap.set("n", "<leader>gk", lsp.buf.signature_help, opt)
     keymap.set("n", "gR", lsp.buf.references, opt)
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, opt)
     if mappings[client_name] then

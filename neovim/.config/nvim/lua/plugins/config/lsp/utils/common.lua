@@ -14,9 +14,9 @@ M.on_attach = function(client, bufnr)
     if client.resolved_capabilities.goto_definition then
         vim.api.nvim_buf_set_option(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
     end
-    if client.server_capabilities.semanticTokensProvider ~= nil then
-        autocmds.SemanticTokensAU()
-    end
+    -- if client.server_capabilities.semanticTokensProvider ~= nil then
+    --     autocmds.SemanticTokensAU()
+    -- end
 
     if client.resolved_capabilities.document_highlight then
         autocmds.DocumentHighlightAU()
