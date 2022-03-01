@@ -15,7 +15,7 @@ local configs = {
     settings = {
         rootMarkers = { ".git/" },
         languages = {
-            python = { formatters.flake8 },
+            python = { formatters.isort, formatters.black, linters.flake8 },
             lua = { formatters.stylua },
         },
     },

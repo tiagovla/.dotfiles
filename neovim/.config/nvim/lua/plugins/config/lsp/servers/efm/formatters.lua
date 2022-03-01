@@ -7,6 +7,14 @@ F.rustfmt = {
     lintSource = "cargo",
     lintFormats = { "%f:%l:%c: %m" },
 }
+F.isort = {
+    formatCommand = "isort --quiet -",
+    formatStdin = true,
+}
+F.black = {
+    formatCommand = "black --quiet -",
+    formatStdin = true,
+}
 F.stylua = {
     formatCommand = "stylua -s -",
     formatStdin = true,
@@ -20,12 +28,4 @@ F.prettier = {
     formatCommand = "prettier --stdin-filepath ${INPUT}",
     formatStdin = true,
 }
-F.flake8 = {
-    prefix = "flake8",
-    lintCommand = "flake8 --ignore=E203,F401,F841,W503 --max-line-length 88 --stdin-display-name ${INPUT} -",
-    lintStdin = true,
-    lintFormats = { "%.%#:%l:%c: %t%n %m" },
-    rootMarkers = { "setup.cfg", "tox.ini", ".flake8" },
-}
-
 return F
