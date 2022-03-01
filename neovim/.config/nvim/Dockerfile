@@ -12,6 +12,7 @@ RUN apt update && apt upgrade -y && \
     make CMAKE_BUILD_TYPE=Release && \
     make CMAKE_INSTALL_PREFIX=/usr/local install && \
     strip /usr/local/bin/nvim
+RUN git clone https://github.com/tiagovla/.dotfiles.git /tmp/.dotfiles
 
 FROM ubuntu:20.04
 ARG DEBIAN_FRONTEND=noninteractive
@@ -19,4 +20,5 @@ RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python
 COPY --from=builder /usr/local /usr/local/
 COPY --from=builder /tmp/.dotfiles/neovim/.config/nvim /root/.config/nvim/
 RUN /root/.config/nvim/install.sh
+
 CMD ["/usr/local/bin/nvim"]
