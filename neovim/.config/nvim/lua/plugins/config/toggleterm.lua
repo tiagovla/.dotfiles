@@ -1,11 +1,11 @@
 local keymap = vim.keymap
 
 local function mappings()
-    keymap.set({ "n", "v" }, "<F1>", "<nop>")
+    keymap.set({ "n", "v", "t" }, "<F1>", "<nop>")
     keymap.set({ "n", "v" }, "<F1>", "<cmd>:ToggleTerm <cr>")
     keymap.set({ "n", "v" }, "<C-_>", "<cmd>:ToggleTerm size=12 direction=horizontal <cr>")
 
-    function _G.set_terminal_keymaps()
+    local function set_terminal_keymaps()
         keymap.set("t", "<F1>", "<cmd>:ToggleTerm <cr>")
         keymap.set("t", "<C-_>", "<cmd>:ToggleTerm <cr>")
         keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]])
@@ -13,8 +13,7 @@ local function mappings()
         keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]])
         keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]])
     end
-
-    vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
+    vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", callback = set_terminal_keymaps })
 end
 
 local function config()
