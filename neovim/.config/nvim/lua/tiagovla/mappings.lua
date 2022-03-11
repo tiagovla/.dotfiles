@@ -18,8 +18,8 @@ function M.general()
     keymap.set("i", "?", "?<c-g>u")
     keymap.set("v", "J", ":m .+1<cr>gv=gv", { silent = true })
     keymap.set("v", "K", ":m .-2<cr>gv=gv", { silent = true })
-    keymap.set("n", "<leader>bq", ":bd<cr>", { silent = true })
-    keymap.set("n", "<leader>bQ", ":bd<cr>", { silent = true })
+    keymap.set("n", "<leader>q", ":bp | sp | bn | bd<cr>", { silent = true })
+    keymap.set("n", "<leader>Q", ":%bd|e#<cr>", { silent = true })
 end
 
 function M.movements()

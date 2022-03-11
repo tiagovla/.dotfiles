@@ -39,11 +39,18 @@ local function print_summary()
     end
 end
 
+local function on_neogit_refresh()
+    print "hi"
+    vim.cmd [[:NvimTreeRefresh]]
+end
+
 vim.api.nvim_create_augroup("TrackCWD", {})
 vim.api.nvim_create_autocmd("BufEnter", { group = "TrackCWD", callback = on_enter })
 vim.api.nvim_create_autocmd("BufLeave", { group = "TrackCWD", callback = on_leave })
 vim.api.nvim_add_user_command("PWDList", print_summary, {})
-
-vim.cmd [[autocmd User NeogitStatusRefreshed :NvimTreeRefresh<cr>]]
+vim.api.nvim_create_autocmd(
+    "User",
+    { pattern = "NeogitStatusRefreshed", group = "TrackCWD", callback = on_neogit_refresh }
+)
 
 return M

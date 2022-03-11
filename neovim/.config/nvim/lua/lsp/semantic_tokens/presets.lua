@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 M.token_map = {
     namespace = "LspNamespace",

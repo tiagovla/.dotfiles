@@ -74,6 +74,7 @@ packer.startup {
         use { "rcarriga/nvim-notify", ext = load "nvim-notify" }
         use { "folke/which-key.nvim", lock = true, ext = load "whichkey" }
         use { "andweeb/presence.nvim", ext = load "presence" }
+        use { "$HOME/github/scope.nvim", ext = load "scope" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }

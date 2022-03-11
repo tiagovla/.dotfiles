@@ -48,7 +48,7 @@ function M.options()
     g.showtabline = 2
 
     o.hidden = true
-    o.shortmess = o.shortmess .. "cAI"
+    o.shortmess = o.shortmess .. "cAIF"
     o.showmode = false
     o.hlsearch = true
     o.mouse = "a"
