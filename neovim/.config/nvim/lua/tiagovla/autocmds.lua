@@ -17,10 +17,10 @@ local function on_enter()
     end
     local past_path = history[buf]
     if past_path then
-        vim.api.nvim_set_current_dir(past_path)
+        vim.defer_fn(function()
+            vim.api.nvim_set_current_dir(past_path)
+        end, 0)
     end
-    local path = vim.fn.getcwd(-1, -1)
-    require("nvim-tree").change_dir(path)
 end
 
 local function on_leave()
@@ -40,13 +40,17 @@ local function print_summary()
 end
 
 local function on_neogit_refresh()
-    print "hi"
     vim.cmd [[:NvimTreeRefresh]]
 end
 
+local function on_dir_change()
+    local path = vim.fn.getcwd(-1, -1)
+    require("nvim-tree").change_dir(path)
+end
 vim.api.nvim_create_augroup("TrackCWD", {})
 vim.api.nvim_create_autocmd("BufEnter", { group = "TrackCWD", callback = on_enter })
 vim.api.nvim_create_autocmd("BufLeave", { group = "TrackCWD", callback = on_leave })
+vim.api.nvim_create_autocmd("DirChanged", { group = "TrackCWD", callback = on_dir_change })
 vim.api.nvim_add_user_command("PWDList", print_summary, {})
 vim.api.nvim_create_autocmd(
     "User",
