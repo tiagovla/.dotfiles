@@ -13,6 +13,12 @@ for _, session in pairs(theme.inactive) do
     session.fg = colors.border
 end
 
+local custom_components = {
+    pwd = function()
+        return vim.fn.getcwd(-1, -1):gsub(vim.fn.getenv "HOME", "~")
+    end,
+}
+
 local default_config = {
     options = {
         theme = theme,
@@ -23,7 +29,7 @@ local default_config = {
     sections = {
         lualine_a = { { "mode", upper = true } },
         lualine_b = { { "branch", icon = "" } },
-        lualine_c = {},
+        lualine_c = { custom_components.pwd },
         lualine_x = { "filetype" },
         lualine_y = {
             {
@@ -51,8 +57,4 @@ local default_config = {
     extensions = { { sections = { lualine_b = { "filetype" } }, filetypes = { "NvimTree" } } },
 }
 
-if vim.env["TMUX"] then
-    require("lualine").setup(default_config)
-else
-    require("lualine").setup(default_config)
-end
+require("lualine").setup(default_config)
