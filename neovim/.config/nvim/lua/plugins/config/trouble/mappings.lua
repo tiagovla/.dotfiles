@@ -8,6 +8,6 @@ keymap.set("n", "[t", function()
     require("trouble").previous { skip_groups = true, jump = true }
 end)
 
-keymap.set("n", "<space>q", function()
+keymap.set("n", "<space>tt", function()
     require("trouble").toggle { focus = false }
 end)
