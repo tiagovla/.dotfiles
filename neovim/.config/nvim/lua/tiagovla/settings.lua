@@ -10,7 +10,7 @@ function M.setup()
 end
 
 function M.options()
-    g.python3_host_prog = "$HOME/.pyenv/versions/3.9.5/bin/python3.9"
+    g.python3_host_prog = "$HOME/.asdf/shims/python"
     o.sessionoptions = "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
     o.clipboard = "unnamedplus"
     o.cmdheight = 1

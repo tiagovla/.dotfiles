@@ -39,10 +39,6 @@ local function print_summary()
     end
 end
 
-local function on_neogit_refresh()
-    vim.cmd [[:NvimTreeRefresh]]
-end
-
 local function on_dir_change()
     local path = vim.fn.getcwd(-1, -1)
     require("nvim-tree").change_dir(path)
@@ -52,9 +48,5 @@ vim.api.nvim_create_autocmd("BufEnter", { group = "TrackCWD", callback = on_ente
 vim.api.nvim_create_autocmd("BufLeave", { group = "TrackCWD", callback = on_leave })
 vim.api.nvim_create_autocmd("DirChanged", { group = "TrackCWD", callback = on_dir_change })
 vim.api.nvim_add_user_command("PWDList", print_summary, {})
-vim.api.nvim_create_autocmd(
-    "User",
-    { pattern = "NeogitStatusRefreshed", group = "TrackCWD", callback = on_neogit_refresh }
-)
 
 return M
