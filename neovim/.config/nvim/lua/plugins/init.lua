@@ -75,6 +75,7 @@ packer.startup {
         use { "folke/which-key.nvim", lock = true, ext = load "whichkey" }
         use { "andweeb/presence.nvim", ext = load "presence" }
         use { "$HOME/github/scope.nvim", ext = load "scope" }
+        use { "tiagovla/buffercd.nvim", ext = load "buffercd" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }

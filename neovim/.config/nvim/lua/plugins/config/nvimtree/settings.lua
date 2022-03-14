@@ -19,7 +19,7 @@ require("nvim-tree").setup {
         custom = { ".git", "__pycache__" },
     },
     view = {
-        width = 30,
+        width = 25,
         auto_resize = true,
         mappings = { list = nvimtree_keys },
     },
