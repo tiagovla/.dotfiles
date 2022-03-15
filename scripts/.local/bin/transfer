@@ -1,0 +1,7 @@
+#! /bin/bash
+filename=$(basename "$1")
+res=$(
+    curl --progress-bar --upload-file "$1" https://transfer.sh/${filename// /_}
+)
+echo "${res/.sh/.sh/get}" | xclip -selection clipboard -in
+printf "%s\n" "${res/.sh/.sh/get}"
