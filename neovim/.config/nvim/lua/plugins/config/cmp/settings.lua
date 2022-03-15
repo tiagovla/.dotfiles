@@ -16,6 +16,7 @@ cmp.setup {
     mapping = mapping,
     sources = {
         { name = "path" },
+        { name = "zotex" },
         { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },

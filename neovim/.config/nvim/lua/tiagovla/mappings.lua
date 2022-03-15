@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+local utils = require "tiagovla.utils.buffers"
 local M = {}
 
 function M.setup()
@@ -18,7 +19,7 @@ function M.general()
     keymap.set("i", "?", "?<c-g>u")
     keymap.set("v", "J", ":m .+1<cr>gv=gv", { silent = true })
     keymap.set("v", "K", ":m .-2<cr>gv=gv", { silent = true })
-    keymap.set("n", "<leader>q", ":bp | sp | bn | bd<cr>", { silent = true })
+    keymap.set("n", "<leader>q", M.do_close, { silent = true })
     keymap.set("n", "<leader>Q", ":%bd|e#<cr>", { silent = true })
     keymap.set("n", "<Tab>", ":b#<cr>", { silent = true })
 end
@@ -36,6 +37,21 @@ function M.movements()
     keymap.set("n", "<c-P>", "<cmd>BufferLineCyclePrev<cr>")
     keymap.set("n", "H", "gT")
     keymap.set("n", "L", "gt")
+end
+
+function M.do_close()
+    local tabpages = vim.api.nvim_list_tabpages()
+    local buffers = utils.get_valid_buffers()
+    local named_buffers = vim.tbl_filter(utils.has_name, buffers)
+    if #tabpages > 1 and #named_buffers <= 1 then
+        vim.cmd [[:tabclose]]
+    elseif #named_buffers <= 1 then
+        vim.cmd [[:q]]
+    elseif not vim.api.nvim_buf_get_option(0, "modifiable") then
+        vim.cmd [[:bd]]
+    else
+        vim.cmd [[:bp | sp | bn | bd]]
+    end
 end
 
 M.setup()

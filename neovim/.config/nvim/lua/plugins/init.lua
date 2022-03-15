@@ -29,7 +29,7 @@ packer.startup {
         use { "nvim-lua/popup.nvim" }
 
         -- Themes
-        use { "tiagovla/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
+        use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
         use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
         use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
@@ -63,6 +63,8 @@ packer.startup {
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
+        use { "$HOME/github/zotex.nvim", requires = "tami5/sqlite.lua" }
+        -- use { "$HOME/github/zotex" }
 
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = load "nvimtree" }
