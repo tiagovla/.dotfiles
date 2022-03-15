@@ -62,19 +62,23 @@ gimp() {
 	follow=on
 }
 
+zathura() {
+	state=tiled
+}
+
 discord() {
 	desktop=^6
 	follow=off
-
-	bspc config ignore_ewmh_focus true
-	nohup bash -c "sleep 5; bspc config ignore_ewmh_focus false" &
+	state=pseudo_tiled
+	rectangle=1850x1000+0+0
+	bspc config ignore_ewmh_focus true && sleep 0.2
+	echo "sleep 10; bspc config ignore_ewmh_focus false" | at now
 }
 
 ranger() {
-	state=floating
+	state=pseudo_tiled
 	rectangle=1200x800+0+0
 	center=true
-	layer=above
 }
 
 teams() {
@@ -97,8 +101,9 @@ qbittorrent() {
 }
 
 spotify() {
-	state=tiled
 	desktop=^5
+	rectangle=1800x1000+0+0
+	state=pseudo_tiled
 }
 
 telegram_desktop() {
@@ -107,6 +112,10 @@ telegram_desktop() {
 
 chromium() {
 	desktop=^2
+}
+
+matlab() {
+	desktop=^4
 }
 
 mpv() {
@@ -118,15 +127,26 @@ mpv() {
 	follow=on
 }
 
+nautilus() {
+	desktop='^10'
+	state=pseudo_tiled
+	rectangle=1024x640+0+0
+	center=on
+	follow=on
+}
+
 case $instance.$class in
-*.discord) discord ;;
-*.qBittorrent) qbittorrent ;;
+*.MATLAB*) matlab ;;
 *.Matplotlib) matplotlib ;;
-*.matplotlib) matplotlib ;;
+*.Nautilus) nautilus ;;
 *.Spotify) spotify ;;
-Ranger.Alacritty) ranger ;;
+*.Zathura) zathura ;;
+*.discord) discord ;;
+*.matplotlib) matplotlib ;;
 *.mpv) mpv ;;
+*.qBittorrent) qbittorrent ;;
 *Teams*) teams ;;
+Ranger.Alacritty) ranger ;;
 .)
 	case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
 	spotify) spotify ;;
@@ -134,7 +154,7 @@ Ranger.Alacritty) ranger ;;
 	;;
 esac
 
-printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
+# printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
 
 printf '%s' \
 	${border:+"border=$border "} \
