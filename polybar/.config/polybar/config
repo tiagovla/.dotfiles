@@ -42,7 +42,7 @@ line-size = 3
 wm-restack = bspwm
 modules-left = round-left bspwm round-right
 modules-center = spotify-prev spotify spotify-next
-modules-right = filesystem backlight alsa temperature cpu mem  wlan round-left time round-right  powermenu
+modules-right = ping pacman filesystem backlight alsa temperature cpu mem  wlan round-left time round-right  powermenu
 font-0 = Hack Nerd Font:style=Bold:pixelsize=13;3
 font-1 = JetBrainsMono Nerd Font:size=18;5
 font-2 = Material Design Icons:style=Bold:size=13;3
@@ -52,9 +52,9 @@ font-3 = unifont:fontformat=truetype:size=13:antialias=true;
 type = internal/fs
 interval = 180
 mount-0 = /
-label-mounted = %{F#0a81f5}%mountpoint%%{F-} %percentage_used%%
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}%percentage_used%%
 label-unmounted = %mountpoint% not mounted
-label-unmounted-foreground = ${colors.foreground-alt}
+label-unmounted-foreground = ${colors.foreground}
 
 [module/round-left]
 type = custom/text
@@ -174,9 +174,20 @@ label = "%output%GB"
 format-prefix-foreground = ${colors.orange}
 format-padding = 1
 
+[module/pacman]
+type = custom/script
+exec = checkupdates | wc -l | sed -E 's/^0$//g'
+interval = 120
+label = "%output%"
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-prefix = " "
+format-prefix-foreground = ${colors.red}
+format-padding = 1
+
 [module/cpu]
 type = internal/cpu
-interval = 2.5
+interval = 5
 format = <label>
 format-prefix = " "
 label = "%percentage:02%%"
@@ -197,6 +208,16 @@ interval = 10.0
 format-connected = <label-connected>
 label-connected = "󰤪 "
 label-connected-foreground = ${colors.green}
+format-padding = 1
+
+[module/ping]
+type = custom/script
+interval = 5
+exec = ping -W 5 -c 1 8.8.8.8 | tail -1| awk '{print $4}' | cut -d '/' -f 2 | cut -d '.' -f 1
+format = <label>
+format-prefix = "龍 "
+format-prefix-foreground = ${colors.green}
+label = "%output%ms"
 format-padding = 1
 
 [module/battery]
@@ -237,22 +258,22 @@ type = custom/script
 interval = 10
 format-prefix = "♪ "
 format = <label>
-exec = python $HOME/.config/polybar/scripts/spotify_script.py -f '{artist}: {song}'
-click-left = playerctl --player=spotify play-pause
+exec = $HOME/.config/polybar/scripts/spotify.sh
+click-left = $HOME/.config/polybar/scripts/spotify.sh  --toggle 
 
 [module/spotify-prev]
 type = custom/script
 interval = 10
-exec = if pgrep spotify > /dev/null 2>&1; then echo "   "; else echo ""; fi
+exec = if pgrep -x spotify > /dev/null 2>&1; then echo "   "; else echo ""; fi
 format = <label>
-click-left = playerctl previous spotify
+click-left = $HOME/.config/polybar/scripts/spotify.sh  --prev 
 
 [module/spotify-next]
 type = custom/script
 interval = 10
-exec = if pgrep spotify > /dev/null 2>&1; then echo "   "; else echo ""; fi
+exec = if pgrep -x spotify > /dev/null 2>&1; then echo "   "; else echo ""; fi
 format = <label>
-click-left = playerctl next spotify
+click-left = $HOME/.config/polybar/scripts/spotify.sh  --next 
 
 [module/backlight]
 type = internal/backlight
