@@ -7,24 +7,27 @@ local function config()
             topdelete = { hl = "Red", text = "-" },
             changedelete = { hl = "Red", text = "~" },
         },
-        numhl = false,
-        linehl = false,
-        keymaps = {
-            buffer = true,
-            noremap = true,
-            ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns\".next_hunk()<CR>'" },
-            ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns\".prev_hunk()<CR>'" },
-            ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-            ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-            ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-            ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-            ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-            ["n <leader>hR"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-            ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-            ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
-            ["n <leader>hS"] = '<cmd>lua require"gitsigns".stage_buffer()<CR>',
-            ["n <leader>hU"] = '<cmd>lua require"gitsigns".reset_buffer_index()<CR>',
-        },
+        on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+
+            local function map(mode, l, r, opts)
+                opts = opts or {}
+                opts.buffer = bufnr
+                vim.keymap.set(mode, l, r, opts)
+            end
+
+            map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+            map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+            map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
+            map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
+            map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage buffer" })
+            map("n", "<leader>hu", gs.undo_stage_hunk, { desc = "Undo stage hunk" })
+            map("n", "<leader>hR", gs.reset_buffer, { desc = "Reset buffer" })
+            map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview hunk" })
+            map("n", "<leader>hb", gs.toggle_current_line_blame, { desc = "Toggle current line blame" })
+            map("n", "<leader>hd", gs.diffthis, { desc = "Diff this" })
+            map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select hunk" })
+        end,
         watch_gitdir = { interval = 1000 },
         sign_priority = 6,
         update_debounce = 200,

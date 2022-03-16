@@ -1,15 +1,15 @@
 local keymap = vim.keymap
 
 local function mappings()
-    keymap.set("n", "<leader>tf", "<cmd>Telescope find_files<cr>")
-    keymap.set("n", "<leader>tg", "<cmd>Telescope live_grep<cr>")
-    keymap.set("n", "<leader>tb", "<cmd>Telescope buffers<cr>")
-    keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>")
-    keymap.set("n", "<leader>tc", "<cmd>Telescope colorscheme<cr>")
-    keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>")
+    keymap.set("n", "<leader>tf", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
+    keymap.set("n", "<leader>tg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+    keymap.set("n", "<leader>tb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+    keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
+    keymap.set("n", "<leader>tc", "<cmd>Telescope colorscheme<cr>", { desc = "Colorscheme" })
+    keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
     keymap.set("n", "<leader>tn", function()
         require("telescope").extensions.notify.notify()
-    end)
+    end, { desc = "Notifications" })
 end
 
 local function config()

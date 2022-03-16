@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-keymap.set("n", "<space>gd", "<cmd>Neogen<cr>")
+keymap.set("n", "<space>gd", "<cmd>Neogen<cr>", { desc = "Neogen" })
 
 return {
     config = function()

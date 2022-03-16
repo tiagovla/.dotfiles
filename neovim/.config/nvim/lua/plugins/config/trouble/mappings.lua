@@ -2,12 +2,12 @@ local keymap = vim.keymap
 
 keymap.set("n", "]t", function()
     require("trouble").next { skip_groups = true, jump = true }
-end)
+end, { desc = "Next trouble" })
 
 keymap.set("n", "[t", function()
     require("trouble").previous { skip_groups = true, jump = true }
-end)
+end, { desc = "Previous trouble" })
 
 keymap.set("n", "<space>tt", function()
     require("trouble").toggle { focus = false }
-end)
+end, { desc = "Trouble" })

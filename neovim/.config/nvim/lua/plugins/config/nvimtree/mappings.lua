@@ -14,4 +14,4 @@ local function nvim_tree_smart_toggle()
     end
 end
 
-keymap.set("n", "<leader>p", nvim_tree_smart_toggle)
+keymap.set("n", "<leader>p", nvim_tree_smart_toggle, { desc = "Open tree explorer" })

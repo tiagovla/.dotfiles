@@ -2,13 +2,12 @@ local keymap = vim.keymap
 local lsp = vim.lsp
 local mappings = {}
 
-local opt = { buffer = 0 }
-
 mappings.texlab = function()
-    keymap.set("n", "<leader>lb", "<cmd>TexlabBuild<CR>", opt)
-    keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", opt)
+    keymap.set("n", "<leader>lb", "<cmd>TexlabBuild<CR>", { buffer = 0, desc = "Build document" })
+    keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", { buffer = 0, desc = "Forward view" })
 end
 
+local opt = { buffer = 0 }
 function mappings.setup(client_name)
     keymap.set({ "n" }, "ga", vim.lsp.buf.code_action, opt)
     keymap.set({ "v" }, "ga", ":lua vim.lsp.buf.range_code_action()<cr>", opt)
