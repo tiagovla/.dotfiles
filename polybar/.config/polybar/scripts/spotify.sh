@@ -21,7 +21,7 @@ info() {
       --dest=${bus_name} \
       ${object_path} \
       org.freedesktop.DBus.Properties.Get \
-      string:${interface} string:Metadata)
+      string:${interface} string:Metadata 2>&-)
 
   artist=$(echo "$meta" | sed -nr '/xesam:artist"/,+2s/^ +string "(.*)"$/\1/p' | sed -n 2p)
   album=$(echo "$meta" | sed -nr '/xesam:album"/,+1s/^ +variant +string "(.*)"$/\1/p')
