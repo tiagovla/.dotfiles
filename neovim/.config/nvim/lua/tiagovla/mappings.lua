@@ -19,7 +19,7 @@ function M.general()
     keymap.set("i", "?", "?<c-g>u")
     keymap.set("v", "J", ":m .+1<cr>gv=gv", { silent = true })
     keymap.set("v", "K", ":m .-2<cr>gv=gv", { silent = true })
-
+    keymap.set("n", "<leader>s", ":vsplit<cr>", { silent = true, desc = "Vertical split" })
     keymap.set("n", "<leader>q", M.do_close, { desc = "Close buffer" })
     keymap.set("n", "<leader>Q", ":%bd|e#<cr>", { desc = "Close all other buffers" })
     keymap.set("n", "<Tab>", ":b#<cr>", { desc = "Switch buffers" })
