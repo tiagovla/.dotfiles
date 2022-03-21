@@ -146,7 +146,7 @@ case $instance.$class in
 *.mpv) mpv ;;
 *.qBittorrent) qbittorrent ;;
 *Teams*) teams ;;
-Ranger.Alacritty) ranger ;;
+Ranger.Ranger) ranger ;;
 .)
 	case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
 	spotify) spotify ;;
