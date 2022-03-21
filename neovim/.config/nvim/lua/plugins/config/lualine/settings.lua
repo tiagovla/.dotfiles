@@ -15,7 +15,7 @@ end
 
 local custom_components = {
     pwd = function()
-        return vim.fn.getcwd(-1, -1):gsub(vim.fn.getenv "HOME", "~")
+        return vim.fn.fnamemodify(vim.fn.getcwd(-1, -1), ":~")
     end,
 }
 
@@ -25,6 +25,7 @@ local default_config = {
         section_separators = { left = "", right = "" },
         component_separators = { left = "", right = "" },
         icons_enabled = true,
+        globalstatus = true,
     },
     sections = {
         lualine_a = { { "mode", upper = true } },
