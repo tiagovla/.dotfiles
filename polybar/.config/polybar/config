@@ -177,7 +177,7 @@ format-padding = 1
 [module/pacman]
 type = custom/script
 exec = checkupdates | wc -l | sed -E 's/^0$//g'
-interval = 120
+interval = 1200
 label = "%output%"
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -212,7 +212,7 @@ format-padding = 1
 
 [module/ping]
 type = custom/script
-interval = 5
+interval = 10
 exec = ping -W 5 -c 1 8.8.8.8 | tail -1| awk '{print $4}' | cut -d '/' -f 2 | cut -d '.' -f 1
 format = <label>
 format-prefix = "龍 "
