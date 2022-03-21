@@ -26,7 +26,6 @@ packer.startup {
         use { "wbthomason/packer.nvim", opt = true }
         use { "lewis6991/impatient.nvim" }
         use { "nvim-lua/plenary.nvim" }
-        use { "nvim-lua/popup.nvim" }
 
         -- Themes
         use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
@@ -63,8 +62,8 @@ packer.startup {
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
-        use { "$HOME/github/zotex.nvim", requires = "tami5/sqlite.lua" }
-
+        use { "tami5/sqlite.lua", branch = "feat/support_sqlite_open_v2" }
+        use { "$HOME/github/zotex.nvim" }
         -- UI Helpers
         use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = load "nvimtree" }
         use { "christoomey/vim-tmux-navigator", ext = load "vim_tmux_navigator" }
@@ -77,6 +76,7 @@ packer.startup {
         use { "andweeb/presence.nvim", ext = load "presence" }
         use { "$HOME/github/scope.nvim", ext = load "scope" }
         use { "tiagovla/buffercd.nvim", ext = load "buffercd" }
+        use { "simrat39/symbols-outline.nvim" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }
