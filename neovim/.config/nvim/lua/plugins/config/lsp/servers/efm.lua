@@ -11,12 +11,14 @@ local configs = {
     filetypes = {
         "python",
         "lua",
+        "sh",
     },
     settings = {
         rootMarkers = { ".git/" },
         languages = {
             python = { formatters.isort, formatters.black, linters.flake8 },
             lua = { formatters.stylua },
+            sh = { formatters.shfmt },
         },
     },
 }

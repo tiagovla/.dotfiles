@@ -1,5 +1,9 @@
 local F = {}
 
+F.shfmt = {
+    formatCommand = "shfmt -i 4",
+    formatStdin = true,
+}
 F.rustfmt = {
     formatCommand = "rustfmt",
     formatStdin = true,
@@ -28,4 +32,5 @@ F.prettier = {
     formatCommand = "prettier --stdin-filepath ${INPUT}",
     formatStdin = true,
 }
+
 return F
