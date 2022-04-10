@@ -12,13 +12,13 @@ scrolling:
 font:
   normal:
     family: MonoLisa Nerd Font
-    style:  Medium
+    style: Medium
   bold:
     family: MonoLisa Nerd Font
-    style:  Bold
+    style: Bold
   italic:
     family: MonoLisa Nerd Font
-    style:  MediumItalic
+    style: MediumItalic
   bold_italic:
     family: MonoLisa Nerd Font
     style: BoldItalic
@@ -29,7 +29,7 @@ draw_bold_text_with_bright_colors: true
 colors:
   primary:
     background: "#11121D"
-    foreground: "#a9b1d6"
+    foreground: "#a0A8CD"
   normal:
     black: "#32344a"
     red: "#f7768e"
@@ -61,4 +61,7 @@ shell:
   args:
     - -l
     - -c
-    - "$HOME/scripts/kbd_layout.sh && tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+    - "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)"
+
+key_bindings:
+  - { key: I, mods: Control, chars: "\x1b[105;5u" }
