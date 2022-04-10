@@ -21,7 +21,7 @@ alt + w
     prime-run librewolf || librewolf
 
 # open spotify
-alt + s
+alt + S
     if pgrep -x spotify > /dev/null; then bspc desktop -f 5; else spotify &> /dev/null &; fi
 
 # open discord
