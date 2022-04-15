@@ -25,6 +25,7 @@ function M.general()
     keymap.set("n", "<Tab>", ":b#<cr>", { silent = true, desc = "Switch buffers" })
     keymap.set("n", "[q", ":cnext<cr>", { silent = true, desc = "Next item in quickfix list" })
     keymap.set("n", "]q", ":cprev<cr>", { silent = true, desc = "Previous item in quickfix list" })
+    keymap.set("n", "<CR>", [[{-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()]], { silent = true, expr = true })
 end
 
 function M.movements()

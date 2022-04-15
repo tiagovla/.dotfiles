@@ -82,11 +82,9 @@ end
 
 function M.commands()
     cmd "set updatetime=1000"
-    cmd [[nnoremap <silent> <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()]]
     cmd "set t_ZH=^[[3m"
     cmd "set t_ZR=^[[23m"
     cmd "let g:tex_flavor='latex'"
-    cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300} ]]
     cmd [[ :cab W w]]
     cmd [[ :cab Q q]]
 end
