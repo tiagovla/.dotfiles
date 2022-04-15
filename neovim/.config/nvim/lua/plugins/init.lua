@@ -1,24 +1,4 @@
-local packer = require "plugins.packer"
-
-local use = function(config)
-    if config.ext then
-        config = vim.tbl_deep_extend("force", config, config.ext)
-        config.ext = nil
-    end
-    packer.use(config)
-end
-local function use_local(config) end -- TODO: Implement use_local feature
-
-local load = function(path)
-    require("plugins.config." .. path)
-    local ok, res = pcall(require, "plugins.config." .. path)
-    if ok then
-        return res
-    else
-        vim.notify("Could not load " .. path)
-        return {}
-    end
-end
+local packer, use, use_local = unpack(require "plugins.packer")
 
 packer.startup {
     function()
@@ -28,32 +8,33 @@ packer.startup {
         use { "nvim-lua/plenary.nvim" }
 
         -- Themes
-        use { "$HOME/github/tokyodark.nvim" } -- tiagovla/tokyodark.nvim
+        use_local { "tiagovla/tokyodark.nvim" }
         use { "kyazdani42/nvim-web-devicons", after = "tokyodark.nvim" }
-        use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = load "lualine" }
-        use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = load "bufferline" }
+        use { "nvim-lualine/lualine.nvim", after = "nvim-web-devicons", ext = "lualine" }
+        use { "akinsho/nvim-bufferline.lua", after = "nvim-web-devicons", ext = "bufferline" }
 
         -- Telescope
-        use { "nvim-telescope/telescope.nvim", module = "telescope", ext = load "telescope" }
+        use { "nvim-telescope/telescope.nvim", module = "telescope", ext = "telescope" }
         use { "nvim-telescope/telescope-media-files.nvim", after = "telescope.nvim" }
-        use { "tiagovla/telescope-project.nvim", after = "telescope.nvim", ext = load "project" }
+        use { "tiagovla/telescope-project.nvim", after = "telescope.nvim", ext = "project" }
 
         -- Syntax
-        use { "nvim-treesitter/nvim-treesitter", event = "BufRead", ext = load "treesitter" }
+        use { "nvim-treesitter/nvim-treesitter", event = "BufRead", ext = "treesitter" }
+        use { "nvim-treesitter/nvim-treesitter-textobjects" }
         use { "microsoft/python-type-stubs", opt = true }
 
         -- Lsp
         use { "williamboman/nvim-lsp-installer", event = "BufReadPre" }
-        use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = load "lsp" }
+        use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = "lsp" }
 
         -- Git
-        use { "lewis6991/gitsigns.nvim", ext = load "gitsigns" }
-        use { "TimUntersberger/neogit", cmd = { "Neogit" }, ext = load "neogit" }
+        use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
+        use { "TimUntersberger/neogit", cmd = { "Neogit" }, ext = "neogit" }
 
         -- Auto-complete
         use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
         use { "L3MON4D3/LuaSnip", after = "friendly-snippets", module = "luasnip" }
-        use { "hrsh7th/nvim-cmp", after = "LuaSnip", ext = load "cmp" }
+        use { "hrsh7th/nvim-cmp", after = "LuaSnip", ext = "cmp" }
         use { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }
         use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
@@ -61,34 +42,35 @@ packer.startup {
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
-        use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = load "lspkind" }
+        use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = "lspkind" }
         use { "tami5/sqlite.lua", branch = "feat/support_sqlite_open_v2" }
-        use { "$HOME/github/zotex.nvim" }
+        use_local { "tiagovla/zotex.nvim" }
+
         -- UI Helpers
-        use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = load "nvimtree" }
-        use { "christoomey/vim-tmux-navigator", ext = load "vim_tmux_navigator" }
-        use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = load "stabilize" }
-        use { "akinsho/toggleterm.nvim", cmd = "ToggleTerm", ext = load "toggleterm" }
-        use { "sindrets/diffview.nvim", ext = load "diffview" }
-        use { "folke/trouble.nvim", cmd = { "Trouble" }, module = "trouble", ext = load "trouble" }
-        use { "rcarriga/nvim-notify", ext = load "nvim-notify" }
-        use { "xiyaowong/which-key.nvim", lock = true, ext = load "whichkey" }
-        use { "andweeb/presence.nvim", ext = load "presence" }
-        use { "$HOME/github/scope.nvim", ext = load "scope" }
-        use { "tiagovla/buffercd.nvim", ext = load "buffercd" }
+        use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = "nvimtree" }
+        use { "christoomey/vim-tmux-navigator", ext = "vim_tmux_navigator" }
+        use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = "stabilize" }
+        use { "akinsho/toggleterm.nvim", cmd = "ToggleTerm", ext = "toggleterm" }
+        use { "sindrets/diffview.nvim", ext = "diffview" }
+        use { "folke/trouble.nvim", cmd = { "Trouble" }, module = "trouble", ext = "trouble" }
+        use { "rcarriga/nvim-notify", ext = "nvim-notify" }
+        use { "xiyaowong/which-key.nvim", lock = true, ext = "whichkey" }
+        use { "andweeb/presence.nvim", ext = "presence" }
+        use_local { "tiagovla/scope.nvim", ext = "scope" }
+        use { "tiagovla/buffercd.nvim", ext = "buffercd" }
         use { "simrat39/symbols-outline.nvim" }
 
         -- Commenter & Colorizer
-        use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = load "colorizer" }
-        use { "tpope/vim-commentary", event = "BufRead" }
+        use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = "colorizer" }
+        use { "numToStr/Comment.nvim", event = "BufRead", ext = "comment" }
 
         -- Documents
         use { "tiagovla/tex-conceal.vim", ft = "tex" }
-        use { "iamcco/markdown-preview.nvim", ext = load "markdownpreview" }
-        use { "danymat/neogen", ext = load "neogen" }
+        use { "iamcco/markdown-preview.nvim", ext = "markdownpreview" }
+        use { "danymat/neogen", ext = "neogen" }
 
         -- Debug
-        use { "mfussenegger/nvim-dap", module = "dap", ext = load "dap" }
+        use { "mfussenegger/nvim-dap", module = "dap", ext = "dap" }
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
     end,
     -- config = {
