@@ -2,6 +2,16 @@ local keymap = vim.keymap
 local lsp = vim.lsp
 local mappings = {}
 
+vim.api.nvim_add_user_command("FormattingToggle", function()
+    if vim.g.format_on_save then
+        vim.g.format_on_save = false
+        print "Formatting on save disabled"
+    else
+        vim.g.format_on_save = true
+        print "Formatting on save enabled"
+    end
+end, {})
+
 mappings.texlab = function()
     keymap.set("n", "<leader>lb", "<cmd>TexlabBuild<CR>", { buffer = 0, desc = "Build document" })
     keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", { buffer = 0, desc = "Forward view" })
@@ -17,8 +27,10 @@ function mappings.setup(client_name)
     keymap.set("n", "gr", lsp.buf.rename, opt)
     keymap.set("n", "gT", lsp.buf.type_definition, opt)
     keymap.set("n", "K", vim.lsp.buf.hover, opt)
-    -- keymap.set("n", "<leader>gk", lsp.buf.signature_help, opt)
     keymap.set("n", "gR", lsp.buf.references, opt)
+    keymap.set("n", "<leader>gk", lsp.buf.signature_help, opt)
+    keymap.set("n", "<leader>f", vim.lsp.buf.formatting_sync, opt)
+    keymap.set("v", "<leader>f", ":lua vim.lsp.buf.formatting_sync()<cr>", opt)
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, opt)
     if mappings[client_name] then
         mappings[client_name]()

@@ -1,40 +1,51 @@
 local M = {}
 
 M.DocumentHighlightAU = function()
-    vim.cmd [[
-        augroup DocumentHighlight
-        autocmd! * <buffer>
-        autocmd! CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd! CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-        augroup END
-    ]]
+    local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
+    vim.api.nvim_create_autocmd("CursorHold", {
+        group = group,
+        buffer = 0,
+        callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd("CursorMoved", {
+        group = group,
+        buffer = 0,
+        callback = vim.lsp.buf.clear_references,
+    })
 end
 
 M.SemanticTokensAU = function()
-    vim.cmd [[
-        augroup SemanticTokens
-        autocmd! * <buffer>
-        autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.buf.semantic_tokens_full()
-        augroup END
-    ]]
+    local group = vim.api.nvim_create_augroup("SemanticTokens", {})
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+        group = group,
+        buffer = 0,
+        callback = vim.lsp.buf.semantic_tokens_full,
+    })
 end
 
 M.DocumentFormattingAU = function()
-    vim.cmd [[
-        augroup Formatting
-        autocmd! * <buffer>
-        autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 1000)
-        augroup END
-    ]]
+    local group = vim.api.nvim_create_augroup("Formatting", {})
+    vim.api.nvim_create_autocmd("BufWritePre", {
+        group = group,
+        buffer = 0,
+        callback = function()
+            if vim.g.format_on_save then
+                vim.lsp.buf.formatting_sync(nil, 1000)
+            end
+        end,
+    })
 end
 
 M.InlayHintsAU = function()
-    vim.cmd [[
-        augroup InlayHints
-            autocmd! * <buffer>
-            autocmd! CursorMoved,InsertLeave <buffer> lua require"lsp.inlay_hints".inlay_hints({ enabled = { "TypeHint", "ChainingHint", "ParameterHint" } })
-        augroup END
-    ]]
+    local group = vim.api.nvim_create_augroup("InlayHints", {})
+    vim.api.nvim_create_autocmd({ "CursorMoved", "InsertLeave" }, {
+        group = group,
+        buffer = 0,
+        callback = function()
+            local opts = { enabled = { "TypeHint", "ChainingHint", "ParameterHint" } }
+            require("lsp.inlay_hints").inlay_hints(opts)
+        end,
+    })
 end
 
 return M
