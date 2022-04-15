@@ -22,7 +22,9 @@ function M.general()
     keymap.set("n", "<leader>s", ":vsplit<cr>", { silent = true, desc = "Vertical split" })
     keymap.set("n", "<leader>q", M.do_close, { desc = "Close buffer" })
     keymap.set("n", "<leader>Q", ":%bd|e#<cr>", { desc = "Close all other buffers" })
-    keymap.set("n", "<Tab>", ":b#<cr>", { desc = "Switch buffers" })
+    keymap.set("n", "<Tab>", ":b#<cr>", { silent = true, desc = "Switch buffers" })
+    keymap.set("n", "[q", ":cnext<cr>", { silent = true, desc = "Next item in quickfix list" })
+    keymap.set("n", "]q", ":cprev<cr>", { silent = true, desc = "Previous item in quickfix list" })
 end
 
 function M.movements()

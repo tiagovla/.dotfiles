@@ -9,7 +9,6 @@ require("nvim-tree").setup {
     update_cwd = false,
     disable_netrw = true,
     hijack_netrw = true,
-    auto_close = true,
     tree_follow = 1,
     update_focused_file = {
         enable = false,
