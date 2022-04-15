@@ -87,13 +87,8 @@ function M.commands()
     cmd "set t_ZR=^[[23m"
     cmd "let g:tex_flavor='latex'"
     cmd [[ autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=300} ]]
-    -- vim.api.nvim_add_user_command("W", ":w", {})
-    -- vim.api.nvim_add_user_command("Q", ":q", {})
     cmd [[ :cab W w]]
     cmd [[ :cab Q q]]
 end
 
 M.setup()
-
--- check this
--- :let @+ = execute('messages')
