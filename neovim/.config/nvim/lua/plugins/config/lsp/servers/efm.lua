@@ -12,6 +12,7 @@ local configs = {
         "python",
         "lua",
         "sh",
+        "tex",
     },
     settings = {
         rootMarkers = { ".git/" },
@@ -19,6 +20,7 @@ local configs = {
             python = { formatters.isort, formatters.black, linters.flake8 },
             lua = { formatters.stylua },
             sh = { formatters.shfmt },
+            tex = { formatters.latexindent },
         },
     },
 }

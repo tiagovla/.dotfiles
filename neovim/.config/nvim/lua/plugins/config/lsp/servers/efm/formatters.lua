@@ -4,6 +4,10 @@ F.shfmt = {
     formatCommand = "shfmt -i 4",
     formatStdin = true,
 }
+F.latexindent = {
+    formatCommand = [[latexindent -y="defaultIndent: '    '"]],
+    formatStdin = true,
+}
 F.rustfmt = {
     formatCommand = "rustfmt",
     formatStdin = true,
