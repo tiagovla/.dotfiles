@@ -2,7 +2,7 @@ local keymap = vim.keymap
 local lsp = vim.lsp
 local mappings = {}
 
-vim.api.nvim_add_user_command("FormattingToggle", function()
+vim.api.nvim_create_user_command("FormattingToggle", function()
     if vim.g.format_on_save then
         vim.g.format_on_save = false
         print "Formatting on save disabled"
@@ -17,7 +17,7 @@ mappings.texlab = function()
     keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", { buffer = 0, desc = "Forward view" })
 end
 
-local opt = { buffer = 0 }
+local opt = { silent = true, buffer = 0 }
 function mappings.setup(client_name)
     keymap.set({ "n" }, "ga", vim.lsp.buf.code_action, opt)
     keymap.set({ "v" }, "ga", ":lua vim.lsp.buf.range_code_action()<cr>", opt)
@@ -30,7 +30,7 @@ function mappings.setup(client_name)
     keymap.set("n", "gR", lsp.buf.references, opt)
     keymap.set("n", "<leader>gk", lsp.buf.signature_help, opt)
     keymap.set("n", "<leader>f", vim.lsp.buf.formatting_sync, opt)
-    keymap.set("v", "<leader>f", ":lua vim.lsp.buf.formatting_sync()<cr>", opt)
+    keymap.set("v", "<leader>f", ":lua vim.lsp.buf.range_formatting()<cr>", opt)
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, opt)
     if mappings[client_name] then
         mappings[client_name]()

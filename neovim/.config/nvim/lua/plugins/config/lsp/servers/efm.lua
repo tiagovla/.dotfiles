@@ -9,7 +9,7 @@ local configs = {
     root_dir = require("lspconfig").util.root_pattern { ".git/", "." },
     init_options = { documentFormatting = true },
     filetypes = {
-        "python",
+        -- "python",
         "lua",
         "sh",
         "tex",
