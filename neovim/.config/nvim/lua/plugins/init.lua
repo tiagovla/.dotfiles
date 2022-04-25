@@ -17,15 +17,17 @@ packer.startup {
         use { "nvim-telescope/telescope.nvim", module = "telescope", ext = "telescope" }
         use { "nvim-telescope/telescope-media-files.nvim", after = "telescope.nvim" }
         use { "tiagovla/telescope-project.nvim", after = "telescope.nvim", ext = "project" }
+        use { "nvim-telescope/telescope-file-browser.nvim", after = "telescope.nvim" }
+        use { "jvgrootveld/telescope-zoxide", after = "telescope.nvim", ext = "telescope-zoxide" }
 
         -- Syntax
         use { "nvim-treesitter/nvim-treesitter", event = "BufRead", ext = "treesitter" }
-        use { "nvim-treesitter/nvim-treesitter-textobjects" }
-        use { "microsoft/python-type-stubs", opt = true }
+        use { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" }
 
         -- Lsp
         use { "williamboman/nvim-lsp-installer", event = "BufReadPre" }
         use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = "lsp" }
+        use { "microsoft/python-type-stubs", opt = true }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
@@ -44,21 +46,22 @@ packer.startup {
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = "lspkind" }
         use { "tami5/sqlite.lua", branch = "feat/support_sqlite_open_v2" }
-        use_local { "tiagovla/zotex.nvim" }
+        use_local { "tiagovla/zotex.nvim", after = "nvim-cmp" }
 
         -- UI Helpers
+        use { "mbbill/undotree", cmd = "UndotreeToggle" }
         use { "kyazdani42/nvim-tree.lua", wants = { "nvim-treesitter" }, ext = "nvimtree" }
         use { "christoomey/vim-tmux-navigator", ext = "vim_tmux_navigator" }
         use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = "stabilize" }
         use { "akinsho/toggleterm.nvim", cmd = "ToggleTerm", ext = "toggleterm" }
         use { "sindrets/diffview.nvim", ext = "diffview" }
         use { "folke/trouble.nvim", cmd = { "Trouble" }, module = "trouble", ext = "trouble" }
-        use { "rcarriga/nvim-notify", ext = "nvim-notify" }
+        use { "rcarriga/nvim-notify", after = "telescope.nvim", ext = "nvim-notify" }
         use { "xiyaowong/which-key.nvim", lock = true, ext = "whichkey" }
-        use { "andweeb/presence.nvim", ext = "presence" }
-        use_local { "tiagovla/scope.nvim", ext = "scope" }
-        use { "tiagovla/buffercd.nvim", ext = "buffercd" }
-        use { "simrat39/symbols-outline.nvim" }
+        use { "andweeb/presence.nvim", after = "telescope.nvim", ext = "presence" }
+        use_local { "tiagovla/scope.nvim", ext = "scope", event = "BufRead" }
+        use_local { "tiagovla/buffercd.nvim", ext = "buffercd", event = "BufRead" }
+        use { "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline" }
 
         -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = "colorizer" }
@@ -71,9 +74,10 @@ packer.startup {
 
         -- Debug
         use { "mfussenegger/nvim-dap", module = "dap", ext = "dap" }
+        use "folke/lua-dev.nvim"
         -- use { "nvim-treesitter/playground", after = "nvim-treesitter"}
     end,
     -- config = {
-    --     compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    --     compile_path = vim.fn.stdpath "config" .. "/plugin/packer_compiled.lua",
     -- },
 }

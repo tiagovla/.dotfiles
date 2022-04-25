@@ -13,6 +13,16 @@ cmp.setup {
             require("luasnip").lsp_expand(args.body)
         end,
     },
+    window = {
+        documentation = {
+            border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:Visual,Search:None",
+        },
+        completion = {
+            border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:Visual,Search:None",
+        },
+    },
     mapping = mapping,
     sources = {
         { name = "path" },

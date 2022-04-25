@@ -15,6 +15,7 @@ local function config()
             TRACE = "✎",
         },
     }
+    require("telescope").load_extension "notify"
     vim.notify = require "notify"
 end
 

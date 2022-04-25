@@ -1,4 +1,6 @@
 local cmp = require "cmp"
+local mapping = require "cmp.config.mapping"
+local types = require "cmp.types"
 local ls = require "luasnip"
 
 vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
@@ -18,11 +20,10 @@ vim.keymap.set({ "i", "s" }, "<c-j>", function()
     end
 end, { silent = true })
 
-local mapping = {
+local mappings = {
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
@@ -51,6 +52,12 @@ local mapping = {
             fallback()
         end
     end,
+    ["<Down>"] = { i = mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select } },
+    ["<Up>"] = { i = mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select } },
+    ["<C-n>"] = { i = mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert } },
+    ["<C-p>"] = { i = mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert } },
+    ["<C-y>"] = { i = mapping.confirm { select = false } },
+    ["<C-e>"] = { i = mapping.abort() },
 }
 
-return mapping
+return mappings

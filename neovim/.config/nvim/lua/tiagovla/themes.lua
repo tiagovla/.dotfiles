@@ -13,8 +13,7 @@ function M.setup()
 end
 
 local function replace_hl(group, val)
-    local ns = vim.api.nvim_create_namespace "tokyodark"
-    vim.api.nvim_set_hl(ns, group, val)
+    vim.api.nvim_set_hl(0, group, val)
 end
 
 M.setup()

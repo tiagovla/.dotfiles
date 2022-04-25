@@ -9,7 +9,7 @@ require("nvim-tree").setup {
     update_cwd = false,
     disable_netrw = true,
     hijack_netrw = true,
-    tree_follow = 1,
+    -- tree_follow = 1,
     update_focused_file = {
         enable = false,
     },
@@ -19,7 +19,7 @@ require("nvim-tree").setup {
     },
     view = {
         width = 25,
-        auto_resize = true,
+        -- auto_resize = true,
         mappings = { list = nvimtree_keys },
     },
     git = {

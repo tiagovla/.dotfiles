@@ -3,6 +3,15 @@ local utils = require "plugins.config.lsp.utils"
 
 local configs = {}
 local mt = {}
+
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+if ok then
+    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+end
+
+
 function mt:__index(k)
     local ok, res = pcall(require, "plugins.config.lsp.servers." .. k)
 
@@ -13,7 +22,7 @@ function mt:__index(k)
         self[k] = res
         return res
     end
-    return { on_attach = utils.common.on_attach }
+    return { on_attach = utils.common.on_attach, capabilities = capabilities }
 end
 configs = setmetatable(configs, mt)
 

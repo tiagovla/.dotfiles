@@ -18,12 +18,10 @@ local function get_python_path(workspace)
     return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
 local configs = {
     on_attach = function(client, bufnr)
         utils.common.on_attach(client, bufnr)
     end,
-    capabilities = capabilities,
     settings = {
         python = {
             analysis = {
