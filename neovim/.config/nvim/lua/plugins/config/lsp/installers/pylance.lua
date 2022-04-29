@@ -97,7 +97,7 @@ curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms
     -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36' \
     -j -b cookies.txt --compressed --output "ms-python.vscode-pylance-${version}";
 unzip "ms-python.vscode-pylance-$version";
-sed -i "s/\(if(\!process\[[^] ]*\]\[[^] ]*\])return\!0x\)1/\10/" extension/dist/server.bundle.js;
+sed -i "0,/\(if(\!process\[[^] ]*\]\[[^] ]*\])return\!0x\)1/ s//\10/" extension/dist/server.bundle.js;
 rm "ms-python.vscode-pylance-$version";
 ]]
 
