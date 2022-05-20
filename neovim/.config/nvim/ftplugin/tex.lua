@@ -1,4 +1,4 @@
-local call = vim.api.nvim_call_function
+-- local call = vim.api.nvim_call_function
 
 -- call("TexNewMathZone", { "E", "align", 1 })
 -- call("TexNewMathZone", { "F", "alignat", 1 })

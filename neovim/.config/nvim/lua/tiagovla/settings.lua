@@ -1,86 +1,114 @@
 local M = {}
 
-local b, g, o, w, cmd = vim.bo, vim.g, vim.o, vim.wo, vim.cmd
+local g, opt, cmd = vim.g, vim.opt, vim.cmd
 
 function M.setup()
     M.options()
+    M.globals()
     M.window_options()
     M.buffer_options()
     M.commands()
     M.builtins()
 end
 
-function M.options()
+function M.globals()
     g.python3_host_prog = "$HOME/.asdf/shims/python"
     g.format_on_save = true
-    o.sessionoptions = "blank,buffers,curdir,folds,help,options,tabpages,winsize,resize,winpos,terminal"
-    o.clipboard = "unnamedplus"
-    o.cmdheight = 1
-    o.completeopt = "menuone,noinsert,noselect"
-
-    o.history = 1000
-    o.inccommand = "split"
-    o.incsearch = true
-    o.infercase = true
-    o.joinspaces = false
-
-    o.scrolloff = 10
-    o.sidescrolloff = 8
-
-    o.showbreak = "↳"
-    o.smarttab = true
-    o.smartcase = true
-    o.ignorecase = true
-
-    o.splitright = true
-    o.splitbelow = true
-
-    o.termguicolors = true
-    o.wildmode = "list:longest"
-
-    o.shiftwidth = 4
-    o.tabstop = 4
-    o.softtabstop = 0
-    o.expandtab = true
-    o.smartindent = true
-    o.shiftwidth = 4
-    o.expandtab = true
-    vim.go.laststatus = 2
-
-    g.showtabline = 2
-
-    o.hidden = true
-    o.shortmess = o.shortmess .. "cAIF"
-    o.showmode = false
-    o.hlsearch = true
-    o.mouse = "a"
-    w.list = true
-    w.listchars = "tab:!·,trail:.,eol:↲,nbsp:␣"
-    o.synmaxcol = 150
     g.tex_conceal = "abdgms"
-    o.undofile = true
-    o.cursorline = true
+    g.tex_flavor = "latex"
 end
 
-function M.window_options()
-    w.list = true
-    w.number = true
-    w.relativenumber = true
-    w.wrap = false
-    w.colorcolumn = "80"
-    w.conceallevel = 1
+function M.options()
+    opt.sessionoptions = {
+        "blank",
+        "buffers",
+        "curdir",
+        "folds",
+        "help",
+        "options",
+        "tabpages",
+        "winsize",
+        "resize",
+        "winpos",
+        "terminal",
+    }
+    opt.clipboard = "unnamedplus"
+    opt.cmdheight = 1
+    opt.completeopt = { "menuone", "noinsert", "noselect" }
+
+    opt.history = 1000
+    opt.joinspaces = false
+
+    opt.incsearch = true
+    opt.infercase = true
+    opt.inccommand = "split"
+
+    opt.scrolloff = 10
+    opt.sidescrolloff = 10
+
+    opt.showbreak = "↳"
+    opt.smarttab = true
+    opt.wildmode = { list = "longest" }
+
+    opt.termguicolors = true
+
+    opt.shiftwidth = 4
+    opt.tabstop = 4
+    opt.softtabstop = 0
+    opt.expandtab = true
+    opt.smartindent = true
+    opt.shiftwidth = 4
+    opt.expandtab = true
+
+    opt.fillchars = { eob = " " }
+
+    opt.hidden = true
+    opt.ignorecase = true
+    opt.smartcase = true
+    opt.mouse = "a"
+
+    opt.shortmess:append "cAIfs"
+    opt.signcolumn = "yes"
+    opt.splitbelow = true
+    opt.splitright = true
+
+    opt.timeoutlen = 400
+
+    opt.showmode = false
+    opt.hlsearch = true
+    opt.synmaxcol = 150
+    opt.cursorline = true
+    opt.updatetime = 250
+    opt.whichwrap:append "<>[]hl"
+
+    opt.undofile = true
+
+    opt.expandtab = true
+    opt.smartindent = true
+    opt.shiftwidth = 4
+    opt.tabstop = 8
+
+    opt.number = true
+    opt.numberwidth = 2
+    opt.relativenumber = true
+    opt.ruler = false
+
+    opt.wrap = false
+
+    opt.listchars = {
+        tab = "!·",
+        nbsp = "␣",
+        trail = "•",
+        eol = "↲",
+    }
+    opt.list = true
+    opt.colorcolumn = tostring(80)
+    opt.conceallevel = 1
 end
 
-function M.buffer_options()
-    b.undofile = true
-    b.shiftwidth = 4
-    b.tabstop = 4
-    b.softtabstop = 0
-    b.expandtab = true
-    b.smartindent = true
-    b.shiftwidth = 4
-    b.expandtab = true
-end
+function M.window_options() end
+
+function M.buffer_options() end
 
 function M.builtins()
     g.loaded_gzip = 1
@@ -107,12 +135,13 @@ function M.builtins()
 end
 
 function M.commands()
-    cmd "set updatetime=1000"
+    cmd "set fsync"
     cmd "set t_ZH=^[[3m"
     cmd "set t_ZR=^[[23m"
-    cmd "let g:tex_flavor='latex'"
     cmd [[ :cab W w]]
     cmd [[ :cab Q q]]
+    cmd [[nnoremap * :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>]]
+    cmd [[nnoremap # :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>]]
 end
 
 M.setup()

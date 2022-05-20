@@ -1,4 +1,3 @@
-vim.o.makeprg = "./make"
-vim.o.shiftwidth = 2
-vim.o.tabstop = 2
-vim.wo.colorcolumn = "120"
+vim.opt_local.makeprg = "./make"
+vim.opt_local.shiftwidth = 2
+vim.opt_local.colorcolumn = "120"
