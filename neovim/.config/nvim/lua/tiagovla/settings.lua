@@ -33,6 +33,10 @@ function M.options()
         "terminal",
     }
     opt.clipboard = "unnamedplus"
+    opt.backupdir:remove { "." }
+
+    opt.backup = true
+    opt.backupcopy = "yes"
     opt.cmdheight = 1
     opt.completeopt = { "menuone", "noinsert", "noselect" }
 
@@ -98,7 +102,7 @@ function M.options()
     opt.listchars = {
         tab = "!·",
         nbsp = "␣",
-        trail = "•",
+        trail = "·",
         eol = "↲",
     }
     opt.list = true
@@ -132,6 +136,7 @@ function M.builtins()
     g.loaded_netrwPlugin = 1
     g.loaded_netrwSettings = 1
     g.loaded_netrwFileHandlers = 1
+    g.did_load_filetypes = 1
 end
 
 function M.commands()
