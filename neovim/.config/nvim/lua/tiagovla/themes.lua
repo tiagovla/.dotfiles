@@ -1,7 +1,7 @@
 local M = {}
 
 function M.tokyodark()
-    vim.g.tokyodark_transparent_background = true
+    vim.g.tokyodark_transparent_background = false
     local ok, tokyodark = pcall(require, "tokyodark")
     if ok then
         tokyodark.colorscheme()
@@ -20,6 +20,10 @@ M.setup()
 
 replace_hl("LspClass", { link = "TSType" })
 replace_hl("TSVariable", { fg = "#Afa8ea" })
+replace_hl("TelescopeBorder", { link = "TSType" })
+replace_hl("TelescopePromptBorder", { fg = "#4A5057" })
+replace_hl("TelescopePreviewBorder", { fg = "#4A5057" })
+replace_hl("TelescopeResultsBorder", { fg = "#4A5057" })
 
 local semantic_tokens_highlights = {
     LspNamespace = "TSNamespace",
