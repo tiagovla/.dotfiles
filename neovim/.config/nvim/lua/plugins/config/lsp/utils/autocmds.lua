@@ -30,7 +30,7 @@ M.DocumentFormattingAU = function()
         buffer = 0,
         callback = function()
             if vim.g.format_on_save then
-                vim.lsp.buf.formatting_sync(nil, 1000)
+                vim.lsp.buf.format { timeout_ms = 3000 }
             end
         end,
     })

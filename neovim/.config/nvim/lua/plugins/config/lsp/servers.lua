@@ -4,13 +4,11 @@ local utils = require "plugins.config.lsp.utils"
 local configs = {}
 local mt = {}
 
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if ok then
     capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 end
-
 
 function mt:__index(k)
     local ok, res = pcall(require, "plugins.config.lsp.servers." .. k)
@@ -26,7 +24,7 @@ function mt:__index(k)
 end
 configs = setmetatable(configs, mt)
 
-local exclude = { "ltex" }
+local exclude = { "ltex", "black-formatter" }
 
 lsp_installer.on_server_ready(function(server)
     if vim.tbl_contains(exclude, server.name) then

@@ -29,9 +29,11 @@ function mappings.setup(client_name)
     keymap.set("n", "K", vim.lsp.buf.hover, opt)
     keymap.set("n", "gR", lsp.buf.references, opt)
     keymap.set("n", "<leader>gk", lsp.buf.signature_help, opt)
-    keymap.set("n", "<leader>f", vim.lsp.buf.formatting_sync, opt)
     keymap.set("v", "<leader>f", ":lua vim.lsp.buf.range_formatting()<cr>", opt)
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, opt)
+    keymap.set("n", "<leader>f", function()
+        vim.lsp.buf.format { timeout_ms = 3000 }
+    end, opt)
     if mappings[client_name] then
         mappings[client_name]()
     end
