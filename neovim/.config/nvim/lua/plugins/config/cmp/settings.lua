@@ -1,12 +1,6 @@
 local mapping = require "plugins.config.cmp.mappings"
 local cmp = require "cmp"
 
-require("luasnip").config.set_config {
-    history = false,
-    updateevents = "TextChanged,TextChangedI",
-    region_check_events = "CursorMoved,CursorHold,InsertEnter",
-}
-
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -16,11 +10,11 @@ cmp.setup {
     window = {
         documentation = {
             border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
-            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:Visual,Search:None",
+            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
         },
         completion = {
             border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
-            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:Visual,Search:None",
+            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
         },
     },
     mapping = mapping,
@@ -39,6 +33,3 @@ cmp.setup {
         native_menu = false,
     },
 }
-
-require("luasnip/loaders/from_vscode").lazy_load {}
-require("luasnip/loaders/from_vscode").lazy_load { paths = { "./snips" } }
