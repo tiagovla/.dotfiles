@@ -5,7 +5,7 @@ F.shfmt = {
     formatStdin = true,
 }
 F.latexindent = {
-    formatCommand = [[latexindent -y="defaultIndent: '    '"]],
+    formatCommand = [[latexindent -g /dev/null -y="defaultIndent: '    '"]],
     formatStdin = true,
 }
 F.rustfmt = {
@@ -28,9 +28,7 @@ F.stylua = {
     formatStdin = true,
 }
 F.clang_format = { formatCommand = "clang-format", formatStdin = true }
-F.cmake_format = { formatCommand = "cmake-format", formatStdin = true }
-F.isort = { formatCommand = "isort --quiet -", formatStdin = true }
-F.latexindent = { formatCommand = [[latexindent -y="defaultIndent: '    '"]], formatStdin = true }
+F.cmake_format = { formatCommand = "cmake-format -", formatStdin = true }
 F.lua_format = { formatCommand = "lua-format", formatStdin = true }
 F.prettier = {
     formatCommand = "prettier --stdin-filepath ${INPUT}",

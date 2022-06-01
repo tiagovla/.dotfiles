@@ -5,23 +5,29 @@ local configs = {
         allow_incremental_sync = false,
     },
     on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.documentFormattingProvider = false
         utils.common.on_attach(client, bufnr)
     end,
     log_level = vim.lsp.protocol.MessageType.Log,
     message_level = vim.lsp.protocol.MessageType.Log,
     settings = {
         texlab = {
+            auxDirectory = "build",
             diagnosticsDelay = 50,
             build = {
                 executable = "latexmk",
+                -- forwardSearchAfter = true,
+                -- onSave = true,
                 args = {
                     "-pdf",
+                    "-pdflatex=lualatex",
+                    "-quiet",
                     "-interaction=nonstopmode",
-                    "-pvc",
                     "-synctex=1",
                     "-shell-escape",
+                    "-pvc",
+                    "-f",
+                    "-outdir=build",
                     "%f",
                 },
             },
