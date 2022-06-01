@@ -5,12 +5,11 @@ local function config()
             registers = true,
             spelling = {
                 enabled = false,
-                suggestions = 20,
             },
             presets = {
-                operators = true,
-                motions = true,
-                text_objects = true,
+                operators = false,
+                motions = false,
+                text_objects = false,
                 windows = true,
                 nav = true,
                 z = true,
@@ -25,10 +24,11 @@ local function config()
             group = "+",
         },
         window = {
-            border = "none",
+            border = "rounded",
             position = "bottom",
             margin = { 1, 0, 1, 0 },
-            padding = { 2, 2, 2, 2 },
+            padding = { 1, 1, 1, 1 },
+            winblend = 0,
         },
         layout = {
             height = { min = 4, max = 25 },
