@@ -67,6 +67,14 @@ function M.movements()
     map({ "n", "x", "o" }, "k", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
     map("", "<Down>", 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { expr = true })
     map("", "<Up>", 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { expr = true })
+    map("n", "#", M.better_hlsearch)
+    map("n", "*", M.better_hlsearch)
+end
+
+function M.better_hlsearch()
+    local current_word = vim.call("expand", "<cword>")
+    vim.fn.setreg("/", "\\<" .. current_word .. "\\>")
+    vim.api.nvim_command "set hlsearch"
 end
 
 function M.do_close()

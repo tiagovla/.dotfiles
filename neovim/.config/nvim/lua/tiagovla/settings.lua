@@ -145,8 +145,6 @@ function M.commands()
     cmd "set t_ZR=^[[23m"
     cmd [[ :cab W w]]
     cmd [[ :cab Q q]]
-    cmd [[nnoremap * :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>]]
-    cmd [[nnoremap # :let @/ = '\<'.expand('<cword>').'\>'\|set hlsearch<C-M>]]
 end
 
 M.setup()
