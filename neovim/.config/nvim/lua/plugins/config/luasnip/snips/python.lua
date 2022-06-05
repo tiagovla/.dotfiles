@@ -6,11 +6,11 @@ local i = ls.insert_node
 
 ls.add_snippets("python", {
     s("importmatplotlib", {
-        t { "from matplotlib import pyplot as plt" },
+        t { "from matplotlib import pyplot as plt", "" },
         i(0),
     }),
     s("importnumpy", {
-        t { "import numpy as np" },
+        t { "import numpy as np", "" },
         i(0),
     }),
     s("defmain", {
