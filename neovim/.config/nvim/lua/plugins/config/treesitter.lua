@@ -1,10 +1,6 @@
-local function mappings()
+local function setup()
     vim.keymap.set("n", "<leader>o", "<cmd>SymbolsOutline<cr>", { desc = "Symbols Outline" })
 end
-
-vim.g.symbols_outline = {
-    preview_bg_highlight = 'Red',
-}
 
 local function config()
     local treesitter = require "nvim-treesitter.configs"
@@ -86,11 +82,14 @@ local function config()
             },
         },
     }
+    vim.defer_fn(function()
+        vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
+    end, 0)
 end
 
-mappings()
 return {
     cmd = { "TSUpdate", "TSInstallSync" },
     run = ":TSUpdate",
     config = config,
+    setup = setup,
 }
