@@ -1,27 +1,27 @@
 local cmd = vim.api.nvim_command
 local fn = vim.fn
 
-local function ensure_installed()
-    local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
-    local install = false
+local install_path = fn.stdpath "data" .. "/site/pack/packer/opt/packer.nvim"
 
-    if fn.empty(fn.glob(install_path)) > 0 then
-        print "Installing Packer..."
-        fn.delete(vim.fn.stdpath "config" .. "/lua/packer_compiled.lua")
-        fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path }
-        install = true
-    end
-
-    cmd "packadd packer.nvim"
-    return install
+local bootstrap
+if fn.empty(fn.glob(install_path, nil, nil)) > 0 then
+    vim.notify "Installing config..."
+    fn.delete(vim.fn.stdpath "config" .. "/plugin/packer_compiled.lua")
+    bootstrap = fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path }
 end
 
-ensure_installed()
+cmd [[packadd packer.nvim]]
 
 local ok, packer = pcall(require, "packer")
 
 if not ok then
     error "Could not install packer"
+end
+
+local function install_sync()
+    if bootstrap then
+        packer.sync()
+    end
 end
 
 packer.init {
@@ -61,7 +61,7 @@ end
 -- hard coded local plugins path
 local function use_local(config)
     local sp = vim.split(config[1], "/")
-    local repo_path = vim.fn.expand "$HOME/github/" .. sp[#sp]
+    local repo_path = vim.fn.expand("$HOME/github/" .. sp[#sp], nil, nil)
     if vim.fn.isdirectory(repo_path) == 1 then
         config[1] = repo_path
     else
@@ -70,4 +70,4 @@ local function use_local(config)
     use(config)
 end
 
-return { packer, use, use_local }
+return { packer, use, use_local, install_sync }

@@ -20,7 +20,7 @@ function M.general()
     map("v", "J", ":m .+1<cr>gv=gv", { silent = true })
     map("v", "K", ":m .-2<cr>gv=gv", { silent = true })
     map("n", "<leader>s", ":vsplit<cr>", { silent = true, desc = "Vertical split" })
-    map("n", "<leader>q", M.do_close, { desc = "Close buffer" })
+    map("n", "<leader>q", M.better_close, { desc = "Close buffer" })
     map("n", "<leader>Q", ":%bd|e#<cr>", { desc = "Close all other buffers" })
     map("n", "<Tab>", ":b#<cr>", { silent = true, desc = "Switch buffers" })
     map("n", "[q", ":cnext<cr>", { silent = true, desc = "Next item in quickfix list" })
@@ -77,7 +77,7 @@ function M.better_hlsearch()
     vim.api.nvim_command "set hlsearch"
 end
 
-function M.do_close()
+function M.better_close()
     local tabpages = vim.api.nvim_list_tabpages()
     local buffers = utils.get_valid_buffers()
     local named_buffers = vim.tbl_filter(utils.has_name, buffers)
@@ -85,10 +85,9 @@ function M.do_close()
         vim.cmd [[:tabclose]]
     elseif #named_buffers <= 1 then
         vim.cmd [[:q]]
-    elseif not vim.api.nvim_buf_get_option(0, "modifiable") then
-        vim.cmd [[:bd]]
+        vim.cmd [[:q]]
     else
-        vim.cmd [[:bp | sp | bn | bd]]
+        vim.cmd [[:Bdelete]]
     end
 end
 
