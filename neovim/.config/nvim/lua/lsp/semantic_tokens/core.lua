@@ -30,7 +30,6 @@ function buf.semantic_tokens_full_delta()
     local params = { textDocument = util.make_text_document_params() }
     local buf = vim.api.nvim_get_current_buf()
     params.previousResultId = last_result_id[buf]
-    print(vim.inspect(params))
     require("lsp.semantic_tokens.core")._save_tick()
     return request("textDocument/semanticTokens/full/delta", params)
 end
@@ -140,7 +139,6 @@ end
 
 function M.on_full_delta(err, response, ctx, config)
     if response then
-        print(vim.inspect(response))
         local result_id = response.resultId
         last_result_id[ctx.bufnr] = result_id
     end
