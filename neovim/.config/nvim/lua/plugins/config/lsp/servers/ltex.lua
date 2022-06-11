@@ -1,3 +1,4 @@
+local lspconfig = require "lspconfig"
 local util = require "lspconfig.util"
 local handlers = require "vim.lsp.handlers"
 
@@ -64,7 +65,7 @@ local function on_workspace_executecommand(err, content, ctx)
     end
 end
 
-local configs = {
+lspconfig.ltex.setup {
     on_init = function(client)
         client.config.settings.ltex = load_config()
     end,
@@ -72,5 +73,3 @@ local configs = {
         ["workspace/executeCommand"] = on_workspace_executecommand,
     },
 }
-
-return configs

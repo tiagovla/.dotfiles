@@ -1,5 +1,6 @@
 local path = require("lspconfig/util").path
 local utils = require "plugins.config.lsp.utils"
+local lspconfig = require "lspconfig"
 
 local function get_python_path(workspace)
     -- Use activated virtualenv.
@@ -47,4 +48,4 @@ local configs = {
     end,
 }
 
-return configs
+lspconfig.pylance.setup(configs)

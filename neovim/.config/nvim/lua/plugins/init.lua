@@ -25,7 +25,7 @@ packer.startup {
         use { "nvim-treesitter/nvim-treesitter-textobjects", after = "nvim-treesitter" }
 
         -- Lsp
-        use { "williamboman/nvim-lsp-installer", event = "BufReadPre" }
+        use { "williamboman/nvim-lsp-installer", ext = "nvim-lsp-installer" }
         use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = "lsp" }
         use { "microsoft/python-type-stubs", opt = true }
 

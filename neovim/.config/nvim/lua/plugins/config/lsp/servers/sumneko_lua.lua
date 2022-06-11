@@ -1,4 +1,5 @@
 local utils = require "plugins.config.lsp.utils"
+local lspconfig = require "lspconfig"
 
 local configs = {
     on_attach = function(client, bufnr)
@@ -10,4 +11,4 @@ local luadev = require("lua-dev").setup {
     lspconfig = configs,
 }
 
-return luadev
+lspconfig.sumneko_lua.setup(luadev)

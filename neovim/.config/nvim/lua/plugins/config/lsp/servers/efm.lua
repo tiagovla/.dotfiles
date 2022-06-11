@@ -1,8 +1,9 @@
+local lspconfig = require "lspconfig"
 local utils = require "plugins.config.lsp.utils"
 local formatters = require "plugins.config.lsp.servers.efm.formatters"
 local linters = require "plugins.config.lsp.servers.efm.linters"
 
-local configs = {
+lspconfig.efm.setup {
     on_attach = function(client, bufnr)
         utils.common.on_attach(client, bufnr)
     end,
@@ -28,5 +29,3 @@ local configs = {
         },
     },
 }
-
-return configs

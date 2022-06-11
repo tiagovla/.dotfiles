@@ -33,7 +33,7 @@ function mappings.setup(client_name)
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, opt)
     keymap.set("n", "<leader>f", function()
         vim.lsp.buf.format { timeout_ms = 3000 }
-    end, opt)
+    end, { buffer = 0, desc = "Format buffer" })
     if mappings[client_name] then
         mappings[client_name]()
     end

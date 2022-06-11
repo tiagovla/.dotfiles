@@ -1,18 +1,16 @@
+local lspconfig = require "lspconfig"
 local utils = require "plugins.config.lsp.utils"
 
-
-local configs = {
+lspconfig["black-formatter"].setup {
     on_attach = function(client, bufnr)
         utils.common.on_attach(client, bufnr)
     end,
     settings = {
         python = {
             editor = {
-                 defaultFormatter = "ms-python.black-formatter",
-                 formatOnSave= false
-            }
+                defaultFormatter = "ms-python.black-formatter",
+                formatOnSave = false,
+            },
         },
     },
 }
-
-return configs

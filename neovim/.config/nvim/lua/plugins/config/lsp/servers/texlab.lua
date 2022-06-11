@@ -1,6 +1,7 @@
 local utils = require "plugins.config.lsp.utils"
+local lspconfig = require "lspconfig"
 
-local configs = {
+lspconfig.texlab.setup {
     flags = {
         allow_incremental_sync = false,
     },
@@ -40,5 +41,3 @@ local configs = {
         },
     },
 }
-
-return configs
