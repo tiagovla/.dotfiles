@@ -64,6 +64,12 @@ local tex_table = [[
 ls.add_snippets("tex", {
     parse({ trig = "template" }, tex_template),
     parse({ trig = "table" }, tex_table),
+    s({ trig = "frame" }, {
+        t { "\\begin{frame}", "\t" },
+        i(1),
+        t { "", "\\end{frame}", "" },
+        i(0),
+    }),
     s({ trig = "begin" }, {
         t "\\begin{",
         i(1),
@@ -120,4 +126,5 @@ ls.add_snippets("tex", {
     s("bold", { t "\\textbf{", i(1), t "}", i(0) }),
     s("italic", { t "\\textit{", i(1), t "}", i(0) }),
     s("smallcaps", { t "\\textsc{", i(1), t "}", i(0) }),
+    s("reals", { t "\\mathbb{R}", i(0) }),
 }, {})
