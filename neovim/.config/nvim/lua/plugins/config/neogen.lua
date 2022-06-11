@@ -1,7 +1,7 @@
-local keymap = vim.keymap
-keymap.set("n", "<space>gd", "<cmd>Neogen<cr>", { desc = "Neogen" })
-
 return {
+    setup = function()
+        vim.keymap.set("n", "<leader>gd", "<cmd>Neogen<cr>", { desc = "Neogen" })
+    end,
     config = function()
         require("neogen").setup {
             enabled = true,
