@@ -5,6 +5,7 @@ keymap.set("n", "<space>n", function()
 end, { desc = "Neogit commit" })
 
 return {
+    module = "neogit",
     config = function()
         require("neogit").setup {
             disable_commit_confirmation = true,
