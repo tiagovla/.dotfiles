@@ -48,6 +48,9 @@ function M.general()
     map("n", "M", function()
         vim.api.nvim_feedkeys("'", "n", {})
     end)
+    map("n", "gx", function()
+        vim.fn.jobstart({ "xdg-open", vim.fn.expand("<cfile>", nil, nil) }, { detach = true })
+    end, {})
 end
 
 function M.movements()
