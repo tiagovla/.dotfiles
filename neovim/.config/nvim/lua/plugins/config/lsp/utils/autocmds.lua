@@ -37,15 +37,7 @@ M.DocumentFormattingAU = function()
 end
 
 M.InlayHintsAU = function()
-    local group = vim.api.nvim_create_augroup("InlayHints", {})
-    vim.api.nvim_create_autocmd({ "CursorMoved", "InsertLeave" }, {
-        group = group,
-        buffer = 0,
-        callback = function()
-            local opts = { enabled = { "TypeHint", "ChainingHint", "ParameterHint" } }
-            require("lsp.inlay_hints").inlay_hints(opts)
-        end,
-    })
+    require("lsp.inlay_hints").setup_autocmd()
 end
 
 return M

@@ -22,6 +22,7 @@ end
 local configs = {
     on_attach = function(client, bufnr)
         utils.common.on_attach(client, bufnr)
+        utils.autocmds.InlayHintsAU()
     end,
     settings = {
         python = {
@@ -29,6 +30,10 @@ local configs = {
                 typeCheckingMode = "basic",
                 completeFunctionParens = true,
                 indexing = false,
+                inlayHints = {
+                    variableTypes = true,
+                    functionReturnTypes = true,
+                },
             },
         },
     },

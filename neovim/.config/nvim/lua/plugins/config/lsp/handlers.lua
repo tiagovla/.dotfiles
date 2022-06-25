@@ -1,6 +1,6 @@
 local function on_window_logmessage(err, content, ctx)
     if content.type == 3 then
-        print(content.message)
+        vim.notify(content.message)
     end
 end
 
