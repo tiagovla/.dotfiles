@@ -23,7 +23,9 @@ local configs = {
     on_attach = function(client, bufnr)
         utils.common.on_attach(client, bufnr)
         utils.autocmds.InlayHintsAU()
+        utils.autocmds.SemanticTokensAU()
     end,
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
     settings = {
         python = {
             analysis = {
