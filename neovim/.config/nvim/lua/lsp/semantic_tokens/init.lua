@@ -1,32 +1,32 @@
 local util = require "vim.lsp.util"
-local buf = require "vim.lsp.buf"
-local validate = vim.validate
 
 local function request(method, params, handler)
-    validate {
+    vim.validate {
         method = { method, "s" },
         handler = { handler, "f", true },
     }
     return vim.lsp.buf_request(0, method, params, handler)
 end
 
--- vim.lsp._request_name_to_capability["textDocument/semanticTokens/full"] = "semantic_tokens_full"
--- vim.lsp._request_name_to_capability["textDocument/semanticTokens/full/delta"] = "semantic_tokens_full_delta"
-
-function buf.semantic_tokens_full()
+--
+-- vim.lsp._request_name_to_capability["textDocument/semanticTokens/full"] = {"semantic_tokens_full"}
+-- -- vim.lsp._request_name_to_capability["textDocument/semanticTokens/full/delta"] = "semantic_tokens_full_delta"
+--
+function vim.lsp.buf.semantic_tokens_full()
     local params = { textDocument = util.make_text_document_params() }
-    require("lsp.semantic_tokens.core")._save_tick()
+    require("lsp.semantic_tokens.core")._save_tick(vim.api.nvim_get_current_buf())
     return request("textDocument/semanticTokens/full", params)
 end
 
-function buf.semantic_tokens_range()
-    local params = util.make_given_range_params(nil, nil)
-    require("lsp.semantic_tokens.core")._save_tick()
-    return request("textDocument/semanticTokens/range", params)
-end
-
+--
+-- function buf.semantic_tokens_range()
+--     local params = util.make_given_range_params(nil, nil)
+--     require("lsp.semantic_tokens.core")._save_tick()
+--     return request("textDocument/semanticTokens/range", params)
+-- end
+--
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
+--
 local function make_client_capabilities()
     capabilities.textDocument.semanticTokens = {
         dynamicRegistration = false,
