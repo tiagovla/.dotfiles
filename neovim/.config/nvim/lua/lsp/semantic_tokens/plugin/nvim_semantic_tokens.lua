@@ -1,8 +1,7 @@
--- https://github.com/theHamsta/nvim-semantic-tokens/blob/master/lua/nvim-semantic-tokens.lua
 local M = {}
 local highlighters = {}
 
-local semantic_tokens = require "lsp.semantic_tokens.core"
+local semantic_tokens = require "lsp.semantic_tokens.core.semantic_tokens"
 local ns = vim.api.nvim_create_namespace "nvim-semantic-tokens"
 
 local function highlight(ctx, token, hl)
@@ -55,7 +54,7 @@ function M.setup()
         on_token = highlight_token,
         -- on_invalidate_range = clear_highlights,
     })
-    highlighters = { require "lsp.semantic_tokens.table-highlighter" }
+    highlighters = { require "lsp.semantic_tokens.plugin.table-highlighter" }
     for _, h in ipairs(highlighters) do
         if type(h) == "table" and h.reset then
             h.reset()
