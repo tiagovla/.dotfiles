@@ -1,4 +1,5 @@
 local function config()
+    vim.g.tokyodark_transparent_background = true
     local function replace_hl(group, val)
         vim.api.nvim_set_hl(0, group, val)
     end
