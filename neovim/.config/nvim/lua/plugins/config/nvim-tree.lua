@@ -79,7 +79,6 @@ return {
         "NvimTreeRefresh",
         "NvimTreeToggle",
     },
-    module = "nvim-tree",
     requires = { "kyazdani42/nvim-web-devicons" },
     config = config,
     setup = setup,
