@@ -1,18 +1,73 @@
-local function define_signs(signs)
-    for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = nil, texthl = nil, numhl = hl })
-        -- without icon, but with number highlight
-    end
-end
-
-define_signs { Error = "", Warn = "", Hint = "", Info = "" }
-
-vim.diagnostic.config {
-    virtual_text = {
-        prefix = "",
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        "bashls",
+        "html",
+        "pylance",
+        "sumneko_lua",
+        "tsserver",
     },
-    signs = true,
-    underline = true,
-    update_in_insert = false,
+    automatic_installation = false,
 }
+
+require("mason").setup()
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local buffer = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+        if client.server_capabilities.completionProvider then
+            vim.api.nvim_buf_set_option(buffer, "omnifunc", "v:lua.vim.lsp.omnifunc")
+        end
+        if client.server_capabilities.definitionProvider then
+            vim.api.nvim_buf_set_option(buffer, "tagfunc", "v:lua.vim.lsp.tagfunc")
+        end
+        if client.server_capabilities.inlayHintProvider then
+            local group = vim.api.nvim_create_augroup("InlayHints", {})
+            vim.api.nvim_create_autocmd(
+                { "BufEnter", "BufWinEnter", "TabEnter", "BufWritePost", "CursorMoved", "InsertLeave" },
+                {
+                    group = group,
+                    buffer = 0,
+                    callback = function()
+                        require("lsp.inlay_hints").inlay_hints()
+                    end,
+                }
+            )
+        end
+        if client.server_capabilities.documentHighlightProvider then
+            local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
+            vim.api.nvim_create_autocmd("CursorHold", {
+                group = group,
+                buffer = 0,
+                callback = vim.lsp.buf.document_highlight,
+            })
+            vim.api.nvim_create_autocmd("CursorMoved", {
+                group = group,
+                buffer = 0,
+                callback = vim.lsp.buf.clear_references,
+            })
+        end
+        if client.server_capabilities.semanticTokensProvider then
+            local group = vim.api.nvim_create_augroup("SemanticTokens", {})
+            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                group = group,
+                buffer = 0,
+                callback = vim.lsp.buf.semantic_tokens_full,
+            })
+        end
+
+        if client.server_capabilities.documentFormattingProvider then
+            local group = vim.api.nvim_create_augroup("Formatting", {})
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                group = group,
+                buffer = 0,
+                callback = function()
+                    if vim.g.format_on_save then
+                        vim.lsp.buf.format { timeout_ms = 3000 }
+                    end
+                end,
+            })
+        end
+    end,
+})
