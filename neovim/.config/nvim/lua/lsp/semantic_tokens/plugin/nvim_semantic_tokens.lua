@@ -52,7 +52,7 @@ end
 function M.setup()
     vim.lsp.handlers["textDocument/semanticTokens/full"] = vim.lsp.with(semantic_tokens.on_full, {
         on_token = highlight_token,
-        -- on_invalidate_range = clear_highlights,
+        on_invalidate_range = clear_highlights,
     })
     highlighters = { require "lsp.semantic_tokens.plugin.table-highlighter" }
     for _, h in ipairs(highlighters) do

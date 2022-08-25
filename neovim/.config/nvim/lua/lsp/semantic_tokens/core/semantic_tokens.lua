@@ -58,9 +58,6 @@ function M.on_full(err, response, ctx, config)
     if not client then
         return
     end
-    if config and config.on_invalidate_range then
-        config.on_invalidate_range(ctx, 0, -1)
-    end
     -- if tick has changed our response is outdated!
     -- FIXME: this is should be done properly here and in the codelens implementation. Handlers should
     -- not be responsible of checking whether their responses are still valid.
@@ -71,6 +68,10 @@ function M.on_full(err, response, ctx, config)
         or last_tick[ctx.bufnr] ~= vim.api.nvim_buf_get_changedtick(ctx.bufnr)
     then
         return
+    end
+
+    if config and config.on_invalidate_range then
+        config.on_invalidate_range(ctx, 0, -1)
     end
 
     local legend = client.server_capabilities.semanticTokensProvider.legend
