@@ -52,7 +52,7 @@ function M.options()
 
     opt.showbreak = "↳"
     opt.smarttab = true
-    opt.wildmode = { list = "longest" }
+    -- opt.wildmode = { list = "longest" }
 
     opt.termguicolors = true
 
