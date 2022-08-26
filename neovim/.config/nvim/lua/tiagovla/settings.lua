@@ -145,6 +145,8 @@ function M.commands()
     cmd "set t_ZR=^[[23m"
     cmd [[ :cab W w]]
     cmd [[ :cab Q q]]
+    cmd [[ autocmd BufRead * autocmd FileType <buffer> ++once
+      \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
 end
 
 M.setup()
