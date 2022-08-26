@@ -26,8 +26,11 @@ packer.startup {
         use { "JoseConseco/iswap.nvim", after = "nvim-treesitter", ext = "iswap" }
 
         -- Lsp
-        use { "williamboman/nvim-lsp-installer", ext = "nvim-lsp-installer" }
-        use { "neovim/nvim-lspconfig", after = "nvim-lsp-installer", ext = "lsp" }
+        use { "neovim/nvim-lspconfig", ext = "lsp" }
+        use { "williamboman/mason.nvim" }
+        use { "williamboman/mason-lspconfig.nvim" }
+        use { "jose-elias-alvarez/null-ls.nvim" }
+        use { "j-hui/fidget.nvim", ext = "fidget" }
         use { "microsoft/python-type-stubs", opt = true }
 
         -- Git
@@ -46,13 +49,13 @@ packer.startup {
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = "lspkind" }
-        use { "tami5/sqlite.lua", branch = "feat/support_sqlite_open_v2" }
-        -- use_local { "tiagovla/zotex.nvim", after = "nvim-cmp" } -- experimental
+        use_local { "tiagovla/zotex.nvim", after = "nvim-cmp", ext = "zotex" } -- experimental
 
         -- UI Helpers
         use { "mbbill/undotree", cmd = "UndotreeToggle" }
         use { "kyazdani42/nvim-tree.lua", ext = "nvim-tree" }
-        use { "christoomey/vim-tmux-navigator", ext = "vim_tmux_navigator" }
+        use { "aserowy/tmux.nvim", ext = "tmux" }
+
         use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = "stabilize" }
         use { "akinsho/toggleterm.nvim", cmd = "ToggleTerm", ext = "toggleterm" }
         use { "sindrets/diffview.nvim", ext = "diffview" }
@@ -62,8 +65,7 @@ packer.startup {
         use_local { "tiagovla/scope.nvim", ext = "scope", event = "BufRead" }
         use_local { "tiagovla/buffercd.nvim", ext = "buffercd", event = "BufRead" }
         use { "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline" }
-        use { "https://github.com/famiu/bufdelete.nvim" }
-        -- use { "andweeb/presence.nvim", after = "BufRead", ext = "presence" }
+        use { "famiu/bufdelete.nvim" }
 
         -- -- Commenter & Colorizer
         use { "norcalli/nvim-colorizer.lua", event = "BufRead", ext = "colorizer" }
@@ -77,21 +79,14 @@ packer.startup {
         -- -- Debug & Dev
         use { "mfussenegger/nvim-dap", module = "dap", ext = "dap" }
         use { "theHamsta/nvim-dap-virtual-text", ext = "nvim-dap-virtual-text" }
-        use { "rcarriga/nvim-dap-ui", ext = "dapui" }
+        -- use { "rcarriga/nvim-dap-ui", ext = "dapui" }
         use { "Pocco81/DAPInstall.nvim" }
         use { "folke/lua-dev.nvim", module = "lua-dev" }
         use { "nvim-treesitter/playground", after = "nvim-treesitter" }
-        use {
-            "rcarriga/neotest",
-            requires = {
-                "antoinemadec/FixCursorHold.nvim",
-                "https://github.com/rcarriga/neotest-python",
-            },
-            ext = "neotest",
-        }
+        use { "kylechui/nvim-surround", ext = "nvim-surround" }
+        use { "rcarriga/neotest", ext = "neotest" }
+
         install_sync()
     end,
-    config = {
-        -- compile_path = vim.fn.stdpath "cache" .. "/packer_compiled.lua",
-    },
+    config = {},
 }

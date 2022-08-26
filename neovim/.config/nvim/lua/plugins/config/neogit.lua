@@ -1,4 +1,5 @@
 local keymap = vim.keymap
+
 keymap.set("n", "<space>N", "<cmd>Neogit<CR>", { desc = "Neogit" })
 keymap.set("n", "<space>n", function()
     require("neogit").open { "commit" }

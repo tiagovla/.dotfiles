@@ -40,6 +40,7 @@ local function config()
                     nvim_lua = "[LUA]",
                     path = "[PATH]",
                     latex_symbols = "[LaTeX]",
+                    zotex = "[ZoTeX]",
                 },
             },
         },

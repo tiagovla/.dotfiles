@@ -9,7 +9,11 @@ require("mason-lspconfig").setup {
     automatic_installation = false,
 }
 
-require("mason").setup()
+require("mason").setup {
+    ui = {
+        border = "single",
+    },
+}
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)

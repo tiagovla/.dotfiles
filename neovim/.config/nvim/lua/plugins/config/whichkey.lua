@@ -61,7 +61,7 @@ return {
     setup = function()
         vim.defer_fn(function()
             require("packer").loader "which-key.nvim"
-        end, 200)
+        end, 100)
     end,
     config = config,
 }
