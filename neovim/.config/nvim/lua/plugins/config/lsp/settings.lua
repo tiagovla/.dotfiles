@@ -1,3 +1,14 @@
+local win = require "lspconfig.ui.windows"
+local _default_opts = win.default_opts
+
+win.default_opts = function(options)
+    local opts = _default_opts(options)
+    opts.border = "single"
+    return opts
+end
+
+require("lsp-inlayhints").setup {}
+
 require("mason-lspconfig").setup {
     ensure_installed = {
         "bashls",
@@ -27,17 +38,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.api.nvim_buf_set_option(buffer, "tagfunc", "v:lua.vim.lsp.tagfunc")
         end
         if client.server_capabilities.inlayHintProvider then
-            local group = vim.api.nvim_create_augroup("InlayHints", {})
-            vim.api.nvim_create_autocmd(
-                { "BufEnter", "BufWinEnter", "TabEnter", "BufWritePost", "CursorMoved", "InsertLeave" },
-                {
-                    group = group,
-                    buffer = 0,
-                    callback = function()
-                        require("lsp.inlay_hints").inlay_hints()
-                    end,
-                }
-            )
+            require("lsp-inlayhints").on_attach(client, buffer)
         end
         if client.server_capabilities.documentHighlightProvider then
             local group = vim.api.nvim_create_augroup("DocumentHighlight", {})

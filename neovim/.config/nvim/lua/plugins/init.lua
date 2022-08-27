@@ -32,6 +32,7 @@ packer.startup {
         use { "jose-elias-alvarez/null-ls.nvim" }
         use { "j-hui/fidget.nvim", ext = "fidget" }
         use { "microsoft/python-type-stubs", opt = true }
+        use { "lvimuser/lsp-inlayhints.nvim" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
@@ -79,7 +80,7 @@ packer.startup {
         -- -- Debug & Dev
         use { "mfussenegger/nvim-dap", module = "dap", ext = "dap" }
         use { "theHamsta/nvim-dap-virtual-text", ext = "nvim-dap-virtual-text" }
-        -- use { "rcarriga/nvim-dap-ui", ext = "dapui" }
+        use { "rcarriga/nvim-dap-ui", ext = "dapui" }
         use { "Pocco81/DAPInstall.nvim" }
         use { "folke/lua-dev.nvim", module = "lua-dev" }
         use { "nvim-treesitter/playground", after = "nvim-treesitter" }

@@ -36,6 +36,7 @@ local function config()
     local tokyodark = require "tokyodark"
     tokyodark.colorscheme()
 
+    replace_hl("LspInlayHint", { fg = "#a8a8b8" })
     replace_hl("LspClass", { link = "TSType" })
     replace_hl("TSVariable", { fg = "#Afa8ea" })
     replace_hl("TelescopeBorder", { link = "TSType" })
