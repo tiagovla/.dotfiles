@@ -28,8 +28,7 @@ local function config()
 
     dap.adapters.python = {
         type = "executable",
-        command = os.getenv "HOME" .. "/.virtualenvs/debugpy/bin/python",
-        args = { "-m", "debugpy.adapter" },
+        command = "debugpy-adapter",
     }
 
     local get_python_path = function()
@@ -45,7 +44,6 @@ local function config()
             type = "python",
             request = "launch",
             name = "Launch file",
-
             program = "${file}",
             pythonPath = function()
                 local cwd = vim.fn.getcwd()

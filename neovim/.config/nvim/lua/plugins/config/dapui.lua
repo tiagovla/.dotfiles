@@ -7,7 +7,6 @@ local function config()
 
     local dapui = require "dapui"
     dapui.setup {
-
         icons = { expanded = "▾", collapsed = "▸" },
         mappings = {
             -- Use a table to apply multiple mappings
@@ -18,29 +17,29 @@ local function config()
             repl = "r",
             toggle = "t",
         },
-        sidebar = {
-            elements = {
-                {
-                    id = "scopes",
-                    size = 0.25,
+        layouts = {
+            {
+                elements = {
+                    "scopes",
+                    "breakpoints",
+                    "stacks",
+                    "watches",
                 },
-                { id = "breakpoints", size = 0.25 },
-                -- { id = "stacks", size = 0.25 },
-                { id = "watches", size = 00.25 },
+                size = 40,
+                position = "right",
             },
-            size = 50,
-            position = "right", -- Can be "left", "right", "top", "bottom"
-        },
-        tray = {
-            elements = {},
-            -- elements = { "repl" },
-            -- size = 10,
-            -- position = "bottom", -- Can be "left", "right", "top", "bottom"
+            {
+                elements = {
+                    "repl",
+                },
+                size = 10,
+                position = "bottom",
+            },
         },
         floating = {
             max_height = nil,
             max_width = nil,
-            border = "rounded",
+            border = "single",
             mappings = {
                 close = { "q", "<Esc>" },
             },
@@ -48,7 +47,7 @@ local function config()
         windows = { indent = 1 },
     }
 
-    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignWarn", linehl = "", numhl = "" })
 
     dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
