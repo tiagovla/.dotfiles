@@ -15,15 +15,21 @@ null.setup {
         diag.shellcheck,
         format.stylua,
         format.black.with {
-            extra_args = {
-                "--fast",
-                "--quiet",
-                "--target-version",
-                "py310",
-            },
+            extra_args = function(_)
+                return {
+                    "--fast",
+                    "--quiet",
+                    "--target-version",
+                    "py310",
+                    "-l",
+                    vim.opt_local.colorcolumn:get()[1] or "88",
+                }
+            end,
         },
         diag.flake8.with {
-            extra_args = { "--max-line-lenth", "88" },
+            extra_args = function(_)
+                return { "--max-line-lenth", vim.opt_local.colorcolumn:get()[1] or "88" }
+            end,
         },
         completion.spell,
     },
