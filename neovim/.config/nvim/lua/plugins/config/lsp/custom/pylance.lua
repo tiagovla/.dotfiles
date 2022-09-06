@@ -44,13 +44,37 @@ local function organize_imports()
     vim.lsp.buf.execute_command(params)
 end
 
-local function on_workspace_executecommand(err, actions, ctx)
+local function on_workspace_executecommand(err, result, ctx)
     if ctx.params.command:match "WithRename" then
         ctx.params.command = ctx.params.command:gsub("WithRename", "")
         vim.lsp.buf.execute_command(ctx.params)
     end
+    if result then
+        local old_value = result.data.newSymbolName
+        if result.label == "Extract Method" then
+            local file = vim.tbl_keys(result.edits.changes)[1]
+            local range = result.edits.changes[file][1].range.start
+            local params = { textDocument = { uri = file }, position = range }
+            local client = vim.lsp.get_client_by_id(ctx.client_id)
+            local bufnr = ctx.bufnr
+            local prompt_opts = {
+                prompt = "New Method Name: ",
+                default = old_value,
+            }
+            if not old_value:find "new_var" then
+                range.character = range.character + 5
+            end
+            vim.ui.input(prompt_opts, function(input)
+                if not input or #input == 0 then
+                    return
+                end
+                params.newName = input
+                local handler = client.handlers["textDocument/rename"] or vim.lsp.handlers["textDocument/rename"]
+                client.request("textDocument/rename", params, handler, bufnr)
+            end)
+        end
+    end
 end
-
 
 if not configs["pylance"] then
     configs["pylance"] = {
