@@ -50,8 +50,8 @@ local function on_workspace_executecommand(err, result, ctx)
         vim.lsp.buf.execute_command(ctx.params)
     end
     if result then
-        local old_value = result.data.newSymbolName
         if result.label == "Extract Method" then
+            local old_value = result.data.newSymbolName
             local file = vim.tbl_keys(result.edits.changes)[1]
             local range = result.edits.changes[file][1].range.start
             local params = { textDocument = { uri = file }, position = range }

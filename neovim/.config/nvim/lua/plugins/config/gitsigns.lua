@@ -16,8 +16,8 @@ local function config()
                 vim.keymap.set(mode, l, r, opts)
             end
 
-            map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-            map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+            map("n", "]c", gs.next_hunk, { desc = "Next Hunk" })
+            map("n", "[c", gs.prev_hunk, { desc = "Prev Hunk" })
             map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", { desc = "Stage hunk" })
             map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>", { desc = "Reset hunk" })
             map("n", "<leader>hS", gs.stage_buffer, { desc = "Stage buffer" })

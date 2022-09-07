@@ -1,5 +1,10 @@
 local function config()
     require("neotest").setup {
+        status = {
+            enabled = true,
+            signs = true,
+            virtual_text = false,
+        },
         adapters = {
             require "neotest-python" {},
         },
