@@ -123,7 +123,7 @@ end
 
 local function installer(ctx)
     local script = [[
-    curl -s -c cookies.txt 'https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance' &&
+    curl -s -c cookies.txt 'https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance' > /dev/null &&
     curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/latest/vspackage"
          -j -b cookies.txt --compressed --output "pylance.vsix"
     ]]
