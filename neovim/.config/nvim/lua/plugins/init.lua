@@ -33,7 +33,7 @@ packer.startup {
         use { "j-hui/fidget.nvim", ext = "fidget" }
         use { "microsoft/python-type-stubs", opt = true, commit = "d909d42d606982c34dcee86a5c8af30c5e51b535" }
         use { "lvimuser/lsp-inlayhints.nvim" }
-        -- use { rocks = "toml-lua" }
+        use { "theHamsta/nvim-semantic-tokens", ext = "nvim-semantic-tokens" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }

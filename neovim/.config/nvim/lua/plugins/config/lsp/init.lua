@@ -1,6 +1,5 @@
 return {
     config = function()
-        require "lsp.semantic_tokens"
         require "plugins.config.lsp.custom"
         require "plugins.config.lsp.settings"
         require "plugins.config.lsp.mappings"
