@@ -43,6 +43,7 @@ local function config()
     replace_hl("TelescopePromptBorder", { fg = "#4A5057" })
     replace_hl("TelescopePreviewBorder", { fg = "#4A5057" })
     replace_hl("TelescopeResultsBorder", { fg = "#4A5057" })
+    replace_hl("FloatTitle", { link = "Blue" })
 
     for k, v in pairs(semantic_tokens_highlights) do
         replace_hl(k, { link = v })
