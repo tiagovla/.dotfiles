@@ -43,6 +43,27 @@ local function config()
         ["<C-e>"] = { i = mapping.abort() },
     }
 
+    local c_mappings = cmp.mapping.preset.cmdline()
+    c_mappings["<Up>"] = c_mappings["<C-N>"]
+    c_mappings["<Down>"] = c_mappings["<C-P>"]
+    c_mappings["<Tab>"] = { c = mapping.confirm { select = false } }
+
+    cmp.setup.cmdline(":", {
+        mapping = c_mappings,
+        sources = {
+            { name = "path" },
+            { name = "nvim_lua" },
+            { name = "cmdline", keyword_length = 2 },
+        },
+    })
+
+    require("cmp").setup.cmdline("/", {
+        mapping = c_mappings,
+        sources = {
+            { name = "buffer", keyword_length = 5 },
+        },
+    })
+
     cmp.setup {
         snippet = {
             expand = function(args)
@@ -61,6 +82,7 @@ local function config()
         },
         mapping = mappings,
         sources = {
+            { name = "copilot" },
             { name = "path" },
             { name = "zotex" },
             { name = "luasnip" },
