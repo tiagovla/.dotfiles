@@ -76,7 +76,8 @@ function M.options()
     opt.splitbelow = true
     opt.splitright = true
 
-    opt.timeoutlen = 400
+    opt.timeoutlen = 1200
+    opt.spelloptions:append "noplainbuffer"
 
     opt.showmode = false
     opt.hlsearch = true

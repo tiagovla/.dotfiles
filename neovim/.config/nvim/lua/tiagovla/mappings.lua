@@ -45,12 +45,11 @@ function M.general()
     map("n", "<C-Up>", ":resize -2<CR>")
     map("n", "<C-Left>", ":vertical resize -2<CR>")
     map("v", "p", "p:let @+=@0<CR>")
-    map("n", "M", function()
-        vim.api.nvim_feedkeys("'", "n", {})
-    end)
     map("n", "gx", function()
         vim.fn.jobstart({ "xdg-open", vim.fn.expand("<cfile>", nil, nil) }, { detach = true })
     end, {})
+    map("n", "<leader>w", [[call feedkeys("\<c-w>")<cr>]])
+    vim.cmd [[nnoremap <leader>w :call feedkeys("\<lt>c-w>")<cr>]]
 end
 
 function M.movements()
