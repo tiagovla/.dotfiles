@@ -18,10 +18,36 @@ end
 
 local function config()
     local tree_cb = require("nvim-tree.config").nvim_tree_callback
+    local lib = require "nvim-tree.lib"
+    local a = require "plenary.async"
 
     local nvimtree_keys = {
         { key = { "<CR>", "o", "<2-LeftMouse>", "l" }, cb = tree_cb "edit" },
-        { key = { "<BS>", "h" }, cb = tree_cb "close_node" },
+        { key = { "<BS>", "h" }, u = tree_cb "close_node" },
+        {
+            key = { "gs" },
+            cb = function()
+                local node = lib.get_node_at_cursor().absolute_path
+                a.run(function()
+                    require("neogit.lib.git.cli").add.files(node).call()
+                    vim.defer_fn(function()
+                        vim.cmd "NvimTreeRefresh"
+                    end, 50)
+                end)
+            end,
+        },
+        {
+            key = { "gu" },
+            cb = function()
+                local node = lib.get_node_at_cursor().absolute_path
+                a.run(function()
+                    require("neogit.lib.git.cli").reset.files(node).call()
+                    vim.defer_fn(function()
+                        vim.cmd "NvimTreeRefresh"
+                    end, 50)
+                end)
+            end,
+        },
     }
 
     require("nvim-tree").setup {
