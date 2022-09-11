@@ -9,6 +9,7 @@ local function mappings()
     keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
     keymap.set("n", "<leader>tC", "<cmd>Telescope colorscheme<cr>", { desc = "Colorscheme" })
     keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
+    keymap.set("n", "<Leader>td", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
     keymap.set("n", "<Leader>cd", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
     keymap.set("n", "<Leader>tm", "<cmd>Telescope man_pages<cr>", { desc = "Man pages" })
     keymap.set("n", "<Leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
@@ -76,4 +77,5 @@ mappings()
 return {
     cmd = { "Telescope", "SearchSession" },
     config = config,
+    requires = { "nvim-treesitter/nvim-treesitter" },
 }
