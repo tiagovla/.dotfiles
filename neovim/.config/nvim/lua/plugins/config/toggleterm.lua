@@ -7,12 +7,14 @@ local function mappings()
 
     local function set_terminal_keymaps()
         keymap.set("t", "<F1>", "<cmd>:ToggleTerm <cr>")
+        keymap.set("t", "<F2>", "<cmd>:ToggleTerm <cr>")
         keymap.set("t", "<C-_>", "<cmd>:ToggleTerm <cr>")
         keymap.set("t", "<C-h>", [[<C-\><C-n><C-W>h]])
         keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]])
         keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]])
         keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]])
     end
+
     vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", callback = set_terminal_keymaps })
 end
 
@@ -37,5 +39,6 @@ end
 
 mappings()
 return {
+    cmd = { "ToggleExec", "ToggleTerm" },
     config = config,
 }
