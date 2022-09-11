@@ -15,7 +15,7 @@ packer.startup {
 
         -- Telescope
         use { "nvim-telescope/telescope.nvim", module = "telescope", ext = "telescope" }
-        use { "nvim-telescope/telescope-project.nvim", after = "telescope.nvim", ext = "project" }
+        use { "nvim-telescope/telescope-project.nvim", commit = "dc9a197", after = "telescope.nvim", ext = "project" }
         use { "nvim-telescope/telescope-media-files.nvim", after = "telescope.nvim" }
         use { "nvim-telescope/telescope-file-browser.nvim", after = "telescope.nvim" }
         use { "jvgrootveld/telescope-zoxide", after = "telescope.nvim", ext = "telescope-zoxide" }
@@ -26,46 +26,56 @@ packer.startup {
         use { "JoseConseco/iswap.nvim", after = "nvim-treesitter", ext = "iswap" }
 
         -- Lsp
-        use { "neovim/nvim-lspconfig", ext = "lsp" }
+        use { "tiagovla/nvim-lspconfig", branch = "filter_commands", ext = "lsp" }
         use { "williamboman/mason.nvim" }
         use { "williamboman/mason-lspconfig.nvim" }
         use { "jose-elias-alvarez/null-ls.nvim" }
         use { "j-hui/fidget.nvim", ext = "fidget" }
-        use { "microsoft/python-type-stubs", opt = true }
+        use { "microsoft/python-type-stubs", opt = true, commit = "d909d42d606982c34dcee86a5c8af30c5e51b535" }
         use { "lvimuser/lsp-inlayhints.nvim" }
+        -- use { rocks = "toml-lua" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
         use { "TimUntersberger/neogit", cmd = { "Neogit" }, ext = "neogit" }
 
         -- -- Auto-complete
-        use { "rafamadriz/friendly-snippets", event = "InsertEnter" }
+        use { "rafamadriz/friendly-snippets", event = { "InsertEnter", "CmdlineEnter" } }
         use { "L3MON4D3/LuaSnip", after = "friendly-snippets", module = "luasnip", ext = "luasnip" }
         use { "hrsh7th/nvim-cmp", after = "LuaSnip", ext = "cmp" }
         use { "saadparwaiz1/cmp_luasnip", after = "nvim-cmp" }
         use { "hrsh7th/cmp-buffer", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lua", after = "nvim-cmp" }
+        use { "hrsh7th/cmp-cmdline", after = "nvim-cmp" }
         use { "kdheepak/cmp-latex-symbols", after = "nvim-cmp" }
         use { "hrsh7th/cmp-path", after = "nvim-cmp" }
         use { "hrsh7th/cmp-nvim-lsp-signature-help", after = "nvim-cmp" }
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = "lspkind" }
         use_local { "tiagovla/zotex.nvim", after = "nvim-cmp", ext = "zotex" } -- experimental
+        use {
+            "zbirenbaum/copilot.lua",
+            config = function()
+                require("copilot").setup {}
+            end,
+            requires = "zbirenbaum/copilot-cmp",
+        }
+        use { "github/copilot.vim" }
 
         -- UI Helpers
+        use { "stevearc/dressing.nvim", ext = "dressing" }
         use { "mbbill/undotree", cmd = "UndotreeToggle" }
         use { "kyazdani42/nvim-tree.lua", ext = "nvim-tree" }
         use { "aserowy/tmux.nvim", ext = "tmux" }
-
+        use { "krady21/compiler-explorer.nvim" }
         use { "luukvbaal/stabilize.nvim", event = "BufRead", ext = "stabilize" }
         use { "akinsho/toggleterm.nvim", cmd = "ToggleTerm", ext = "toggleterm" }
         use { "sindrets/diffview.nvim", ext = "diffview" }
-        use { "folke/trouble.nvim", cmd = { "Trouble" }, module = "trouble", ext = "trouble" }
         use { "rcarriga/nvim-notify", after = "telescope.nvim", ext = "nvim-notify" }
         use { "folke/which-key.nvim", ext = "whichkey" }
         use_local { "tiagovla/scope.nvim", ext = "scope", event = "BufRead" }
         use_local { "tiagovla/buffercd.nvim", ext = "buffercd", event = "BufRead" }
-        use { "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline" }
+        use { "simrat39/symbols-outline.nvim", cmd = "SymbolsOutline", ext = "symbols-outline" }
         use { "famiu/bufdelete.nvim" }
 
         -- -- Commenter & Colorizer
