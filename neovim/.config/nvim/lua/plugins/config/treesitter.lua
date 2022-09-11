@@ -18,10 +18,9 @@ local function config()
         },
         incremental_selection = {
             enable = true,
-
             keymaps = {
                 init_selection = "gnn",
-                node_incremental = "gnn",
+                node_umental = "gnn",
                 scope_incremental = "gns",
                 node_decremental = "gnp",
             },
@@ -36,48 +35,36 @@ local function config()
                 keymaps = {
                     ["af"] = "@function.outer",
                     ["if"] = "@function.inner",
-                    ["il"] = "@loop.inner",
-                    ["al"] = "@loop.outer",
-                    ["icd"] = "@conditional.inner",
-                    ["acd"] = "@conditional.outer",
-                    ["acm"] = "@comment.outer",
-                    ["ast"] = "@statement.outer",
-                    ["isc"] = "@scopename.inner",
+                    ["ac"] = "@class.outer",
+                    ["ic"] = "@class.inner",
                     ["iB"] = "@block.inner",
                     ["aB"] = "@block.outer",
-                    -- ["p"] = "@parameter.inner",
+                },
+            },
+            swap = {
+                enable = true,
+                disable = { "lua" },
+                swap_next = {
+                    ["<leader>a"] = "@parameter.inner",
+                },
+                swap_previous = {
+                    ["<leader>A"] = "@parameter.inner",
                 },
             },
             move = {
                 enable = true,
-                set_jumps = true,
+                set_jumps = true, -- whether to set jumps in the jumplist
                 goto_next_start = {
-                    ["gnf"] = "@function.outer",
-                    ["gnif"] = "@function.inner",
-                    ["gnp"] = "@parameter.inner",
-                    ["gnc"] = "@call.outer",
-                    ["gnic"] = "@call.inner",
+                    ["]]"] = "@function.outer",
                 },
                 goto_next_end = {
-                    ["gnF"] = "@function.outer",
-                    ["gniF"] = "@function.inner",
-                    ["gnP"] = "@parameter.inner",
-                    ["gnC"] = "@call.outer",
-                    ["gniC"] = "@call.inner",
+                    ["]["] = "@function.outer",
                 },
                 goto_previous_start = {
-                    ["gpf"] = "@function.outer",
-                    ["gpif"] = "@function.inner",
-                    ["gpp"] = "@parameter.inner",
-                    ["gpc"] = "@call.outer",
-                    ["gpic"] = "@call.inner",
+                    ["[["] = "@function.outer",
                 },
                 goto_previous_end = {
-                    ["gpF"] = "@function.outer",
-                    ["gpiF"] = "@function.inner",
-                    ["gpP"] = "@parameter.inner",
-                    ["gpC"] = "@call.outer",
-                    ["gpiC"] = "@call.inner",
+                    ["[]"] = "@function.outer",
                 },
             },
         },
