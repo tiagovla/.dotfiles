@@ -63,5 +63,5 @@ local function config()
 end
 
 return {
-    config = config
+    config = config,
 }
