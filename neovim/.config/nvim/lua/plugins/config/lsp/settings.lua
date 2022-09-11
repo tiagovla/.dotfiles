@@ -16,8 +16,10 @@ require("mason-lspconfig").setup {
         "pylance",
         "sumneko_lua",
         "tsserver",
+        "flake8",
+        "black",
     },
-    automatic_installation = false,
+    automatic_installation = true,
 }
 
 require("mason").setup {
@@ -37,7 +39,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if client.server_capabilities.definitionProvider then
             vim.api.nvim_buf_set_option(buffer, "tagfunc", "v:lua.vim.lsp.tagfunc")
         end
-        if client.server_capabilities.inlayHintProvider then
+        if client.server_capabilities.inlayHintProvider or client.server_capabilities.clangdInlayHintsProvider then
             require("lsp-inlayhints").on_attach(client, buffer)
         end
         if client.server_capabilities.documentHighlightProvider then

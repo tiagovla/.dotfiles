@@ -43,8 +43,23 @@ lspconfig.pylance.setup {
     end,
 }
 
+-- markdown
+-- lspconfig.markdownls.setup {}
+lspconfig.marksman.setup {}
+
+--
+lspconfig.tsserver.setup {}
+
 -- lua
 lspconfig.sumneko_lua.setup(require("lua-dev").setup { lspconfig = {} })
+
+-- cpp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.offsetEncoding = { "utf-16" }
+lspconfig.clangd.setup {
+    cmd = { "clangd", "--inlay-hints=true" },
+    capabilities = capabilities,
+}
 
 -- latex
 lspconfig.texlab.setup {

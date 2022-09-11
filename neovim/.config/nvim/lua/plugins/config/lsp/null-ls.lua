@@ -14,6 +14,9 @@ null.setup {
         actions.shellcheck,
         diag.shellcheck,
         format.stylua,
+        format.shfmt.with {
+            args = { "-s", "-i", "4" },
+        },
         format.black.with {
             extra_args = function(_)
                 return {

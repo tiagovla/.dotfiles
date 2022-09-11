@@ -1,1 +1,1 @@
-require("plugins.config.lsp.custom.pylance")
+require "plugins.config.lsp.custom.pylance"
