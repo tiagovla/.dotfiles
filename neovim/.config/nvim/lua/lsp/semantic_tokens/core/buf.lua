@@ -1,5 +1,5 @@
 local util = require "vim.lsp.util"
-local semantic_tokens = require("lsp.semantic_tokens.core.semantic_tokens")
+local semantic_tokens = require "lsp.semantic_tokens.core.semantic_tokens"
 
 local function request(method, params, handler)
     vim.validate {

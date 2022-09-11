@@ -10,12 +10,8 @@ local function highlight(ctx, token, hl)
     if not ok then
         return
     end
-    local ok, end_byte = pcall(
-        vim.lsp.util._str_byteindex_enc,
-        line_str,
-        token.start_char + token.length,
-        token.offset_encoding
-    )
+    local ok, end_byte =
+        pcall(vim.lsp.util._str_byteindex_enc, line_str, token.start_char + token.length, token.offset_encoding)
     if not ok then
         return
     end
