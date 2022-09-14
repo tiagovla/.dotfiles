@@ -48,8 +48,7 @@ function M.general()
     map("n", "gx", function()
         vim.fn.jobstart({ "xdg-open", vim.fn.expand("<cfile>", nil, nil) }, { detach = true })
     end, {})
-    map("n", "<leader>w", [[call feedkeys("\<c-w>")<cr>]])
-    vim.cmd [[nnoremap <leader>w :call feedkeys("\<lt>c-w>")<cr>]]
+    map("n", "<leader>w", [[:call feedkeys("\<lt>c-w>")<cr>]], { silent = true })
 end
 
 function M.movements()
