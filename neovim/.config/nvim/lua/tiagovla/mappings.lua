@@ -22,6 +22,7 @@ function M.general()
     map("n", "<leader>s", ":vsplit<cr>", { silent = true, desc = "Vertical split" })
     map("n", "<leader>q", M.better_close, { desc = "Close buffer" })
     map("n", "<leader>Q", ":%bd|e#<cr>", { desc = "Close all other buffers" })
+    vim.cmd [[nnoremap <C-i> <C-i>]]
     map("n", "<Tab>", ":b#<cr>", { silent = true, desc = "Switch buffers" })
     map("n", "[q", ":cnext<cr>", { silent = true, desc = "Next item in quickfix list" })
     map("n", "]q", ":cprev<cr>", { silent = true, desc = "Previous item in quickfix list" })
@@ -44,7 +45,7 @@ function M.general()
     map("n", "<C-Down>", ":resize +2<CR>")
     map("n", "<C-Up>", ":resize -2<CR>")
     map("n", "<C-Left>", ":vertical resize -2<CR>")
-    map("v", "p", "p:let @+=@0<CR>")
+    map("v", "p", "P")
     map("n", "gx", function()
         vim.fn.jobstart({ "xdg-open", vim.fn.expand("<cfile>", nil, nil) }, { detach = true })
     end, {})
@@ -85,7 +86,7 @@ function M.better_close()
     if #tabpages > 1 and #named_buffers <= 1 then
         vim.cmd [[:tabclose]]
     elseif #named_buffers <= 1 then
-        vim.cmd [[:q]]
+        vim.cmd [[:Bdelete]]
         vim.cmd [[:q]]
     else
         vim.cmd [[:Bdelete]]
