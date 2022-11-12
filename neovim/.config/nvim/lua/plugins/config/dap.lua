@@ -31,6 +31,12 @@ local function config()
         command = "debugpy-adapter",
     }
 
+    dap.adapters.cppdbg = {
+        id = "cppdbg",
+        type = "executable",
+        command = "OpenDebugAD7",
+    }
+
     local get_python_path = function()
         local venv_path = os.getenv "VIRTUAL_ENV"
         if venv_path then
@@ -38,6 +44,19 @@ local function config()
         end
         return nil
     end
+
+    dap.configurations.cpp = {
+        {
+            name = "Launch file",
+            type = "cppdbg",
+            request = "launch",
+            program = function()
+                return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+            end,
+            cwd = "${workspaceFolder}",
+            stopAtEntry = true,
+        },
+    }
 
     dap.configurations.python = {
         {
