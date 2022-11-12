@@ -18,16 +18,29 @@ local fmta = require("luasnip.extras.fmt").fmta
 local types = require "luasnip.util.types"
 local conds = require "luasnip.extras.expand_conditions"
 
+local function opt(v)
+    return { trig = ("\\?%s"):format(v), regTrig = true }
+end
+
 local function in_mathzone()
     local math_nodes = {
         "displayed_equation",
         "inline_formula",
         "math_environment",
     }
+    local text_commands = {
+        "textrm",
+    }
     local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
     while node do
         if vim.tbl_contains(math_nodes, node:type()) then
             return true
+        end
+        if node:type() == "generic_command" then
+            local command = vim.treesitter.query.get_node_text(node, 0):match "^\\(%w+)"
+            if vim.tbl_contains(text_commands, command) then
+                return false
+            end
         end
         node = node:parent()
     end
@@ -89,15 +102,23 @@ local auto_snippets = {
     s("ooo", { t "\\infty{", i(0) }),
     s(">=", { t "\\ge", i(0) }),
     s("<=", { t "\\le", i(0) }),
-    s("mcal", { t "\\mathcal{", i(1), t "} ", i(0) }),
-    s("msrc", { t "\\mathsrc{", i(1), t "} ", i(0) }),
+    s(opt "mathcal", { t "\\mathcal{", i(1), t "} ", i(0) }),
+    s(opt "mathsrc", { t "\\mathscr{", i(1), t "} ", i(0) }),
+    s(opt "mathscr", { t "\\mathscr{", i(1), t "} ", i(0) }),
+    s(opt "bm", { t "\\bm{", i(1), t "} ", i(0) }),
     s("lll", { t "\\ell", i(0) }),
-    s({ trig = "\\?nabla", regTrig = true }, { t "\\nabla", i(0) }),
-    s("xx", { t "\\times", i(0) }),
-    s({ trig = "\\?cdot", regTrig = true }, { t "\\cdkt", i(0) }),
+    s("xx", { t "\\times ", i(0) }),
+    s(opt "nabla", { t "\\nabla", i(0) }),
+    s(opt "cdot", { t "\\cdot", i(0) }),
     s("<->", { t "\\leftrightarrow", i(0) }),
-    s("dint", { t "\\int_{", i(1), t "}^{", i(2), t "} ", i(0) }),
-    s("->", { t "\\to", i(0) }),
+    s(opt "int", { t "\\int_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "iint", { t "\\iint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "iiint", { t "\\iiint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "iiiint", { t "\\iiiint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "oint", { t "\\oint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "oiint", { t "\\oiint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s(opt "oiiint", { t "\\oiiint_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s("->", { t "\\to ", i(0) }),
     s("!>", { t "\\mapsto", i(0) }),
     s("compl", { t "^{C} ", i(0) }),
     s("\\\\\\", { t "\\setminus ", i(0) }),
@@ -116,21 +137,21 @@ local auto_snippets = {
     s({ trig = "^^", wordTrig = false }, { t "^{", i(1), t "}", i(0) }),
     s({ trig = ">>", wordTrig = false }, { t "\\gg  ", i(0) }),
     s({ trig = "<<", wordTrig = false }, { t "\\ll  ", i(0) }),
-    s({ trig = "..." }, {
-        t "\\ldots",
-    }),
+    s({ trig = "..." }, { t "\\ldots" }),
 }
 
-for _, v in pairs { "bar", "hat", "vec", "tilde" } do
-    auto_snippets[#auto_snippets + 1] = s(
-        { trig = ("\\?%s"):format(v), regTrig = true },
-        { t(("\\%s{"):format(v)), i(1), t "}", i(0) }
-    )
+for _, v in pairs { "bar", "hat", "vec", "tilde", "td", "fd" } do
+    auto_snippets[#auto_snippets + 1] = s(opt(v), { t(("\\%s{"):format(v)), i(1), t "}", i(0) })
     auto_snippets[#auto_snippets + 1] = s({ trig = "([^%s]*)" .. v, regTrig = true }, {
         d(1, function(_, snip, _)
             return sn(nil, { t(("\\%s{%s}"):format(v, snip.captures[1])) }, i(0))
         end),
     })
+end
+
+local greek_letters = { "eta", "omega", "sigma", "alpha", "beta", "gamma", "mu", "epsilon", "pi" }
+for _, v in pairs(greek_letters) do
+    auto_snippets[#auto_snippets + 1] = s(opt(v), { t(("\\%s"):format(v)), i(0) })
 end
 
 add_snippets_in_math_zone("tex", auto_snippets, { type = "autosnippets" })
@@ -142,6 +163,7 @@ local snippets = {
     s("pmat", { t "\\begin{pmatrix} ", i(1), t "\\end{pmatrix} ", i(0) }),
     s("partial", { t { "\\frac{\\partial " }, i(1), t { "}{\\partial " }, i(2), t { "}" }, i(0) }),
     s("integral", { t "\\int_{", i(1), t "}^{", i(2), t "} ", i(0) }),
+    s("text", { t "\\text{", i(1), t "}", i(0) }),
 }
 
 add_snippets_in_math_zone("tex", snippets, {})

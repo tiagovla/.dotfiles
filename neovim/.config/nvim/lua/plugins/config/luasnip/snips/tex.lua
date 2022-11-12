@@ -9,14 +9,30 @@ local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 local events = require "luasnip.util.events"
 
+local function div(tag, stag)
+    return s({ trig = tag }, {
+        t("\\" .. tag .. "{"),
+        i(1),
+        t "}",
+        d(2, function(args)
+            local text
+            if args[1] == "" then
+                text = tag
+            else
+                text = args[1][1]:gsub(" ", "_"):lower()
+            end
+            return sn(nil, { t("\\label{" .. stag .. ":"), i(1, text), t "}", t { "", "" }, i(0) })
+        end, { 1 }),
+    })
+end
+
+-- use mathematica to calculate whatever is written before leaving the snippet
 ls.add_snippets("tex", {
     s({ trig = "math" }, { i(1), t " ", i(0) }, {
         callbacks = {
             [1] = {
                 [events.leave] = function(node)
                     local from_pos, to_pos = node.mark:pos_begin_end_raw()
-                    P(from_pos)
-                    P(to_pos)
                     local lines = vim.api.nvim_buf_get_lines(0, from_pos[1], to_pos[1] + 1, false)
                     local script = ([[!wolframscript -c "ToString@TeXForm[%s]"]]):format(node:get_text()[1])
                     local output = vim.split(vim.api.nvim_exec(script, true), "\n")
@@ -94,49 +110,15 @@ ls.add_snippets("tex", {
         t { "}", "" },
         i(0),
     }),
-    s({ trig = "section" }, {
-        t "\\section{",
-        i(1),
-        t "}",
-        d(2, function(args)
-            local text
-            if args[1] == "" then
-                text = "section"
-            else
-                text = args[1][1]:gsub(" ", "_"):lower()
-            end
-            return sn(nil, { t "\\label{sec:", i(1, text), t "}", t { "", "" }, i(0) })
-        end, { 1 }),
-    }),
-    s({ trig = "chapter" }, {
-        t "\\chapter{",
-        i(1),
-        t "}",
-        d(2, function(args)
-            local text
-            if args[1] == "" then
-                text = "section"
-            else
-                text = args[1][1]:gsub(" ", "_"):lower()
-            end
-            return sn(nil, { t "\\label{chap:", i(1, text), t "}", t { "", "" }, i(0) })
-        end, { 1 }),
-    }),
-    s({ trig = "subsection" }, {
-        t "\\subsection{",
-        i(1),
-        t "}",
-        d(2, function(args)
-            local text
-            if args[1] == "" then
-                text = "section"
-            else
-                text = args[1][1]:gsub(" ", "_"):lower()
-            end
-            return sn(nil, { t "\\label{subsec:", i(1, text), t "}", t { "", "" }, i(0) })
-        end, { 1 }),
-    }),
+    div("chapter", "chap"),
+    div("section", "sec"),
+    div("subsection", "subsec"),
+    div("subsubsection", "subsubsec"),
+    s("superscript", { t "\\textsuperscript{", i(1), t "}", i(0) }),
+    s("subscript", { t "\\subscript{", i(1), t "}", i(0) }),
     s("rm", { t "\\textrm{", i(1), t "}", i(0) }),
+    s("gls", { t "\\gls{", i(1), t "}", i(0) }),
+    s("glspl", { t "\\gls{", i(1), t "}", i(0) }),
     s("bold", { t "\\textbf{", i(1), t "}", i(0) }),
     s("italic", { t "\\textit{", i(1), t "}", i(0) }),
     s("smallcaps", { t "\\textsc{", i(1), t "}", i(0) }),
