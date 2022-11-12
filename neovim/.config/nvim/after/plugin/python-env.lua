@@ -36,7 +36,7 @@ local function env_handler()
     local settings = client.config.settings
     local active = settings.python.pythonPath
     vim.ui.select(vim.tbl_keys(options), {
-        prompt = "Select a Python Enviroment:",
+        prompt = "Select a Python Environment:",
         format_item = function(item)
             if options[item] == active then
                 return item .. " (Active)"

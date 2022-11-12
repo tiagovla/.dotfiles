@@ -1,5 +1,4 @@
 -- Logic to parse pyproject.toml and set colorcolumn
---
 local function file_exists(file)
     local f = io.open(file, "rb")
     if f then

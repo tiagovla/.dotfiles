@@ -78,7 +78,7 @@ lspconfig.sumneko_lua.setup {
                 },
             },
             workspace = {
-                library = function()
+                library = (function()
                     local ret = {}
                     local function add(lib)
                         for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
@@ -95,7 +95,7 @@ lspconfig.sumneko_lua.setup {
                     --     add(site .. "/pack/*/start/*")
                     -- end
                     return ret
-                end,
+                end)(),
             },
         },
     },
