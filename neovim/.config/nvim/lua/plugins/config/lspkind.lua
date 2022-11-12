@@ -21,6 +21,7 @@ local function config()
             EnumMember = "  ",
             Constant = "",
             Struct = "  ",
+            Copilot = "",
         },
     }
 

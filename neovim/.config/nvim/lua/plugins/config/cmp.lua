@@ -82,11 +82,11 @@ local function config()
         },
         mapping = mappings,
         sources = {
-            { name = "copilot" },
             { name = "path" },
             { name = "zotex" },
             { name = "luasnip" },
             { name = "nvim_lsp" },
+            { name = "copilot" },
             { name = "nvim_lsp_signature_help" },
             { name = "nvim_lua" },
             { name = "latex_symbols" },

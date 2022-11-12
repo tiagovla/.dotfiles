@@ -39,6 +39,8 @@ local function config()
                     ["ic"] = "@class.inner",
                     ["iB"] = "@block.inner",
                     ["aB"] = "@block.outer",
+                    ["iF"] = "@frame.inner",
+                    ["aF"] = "@frame.outer",
                 },
             },
             swap = {

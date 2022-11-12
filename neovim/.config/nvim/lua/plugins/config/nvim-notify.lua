@@ -1,11 +1,11 @@
 local function config()
     require("notify").setup {
+        background_colour = "#212234",
         stages = "fade_in_slide_out",
         on_open = nil,
         on_close = nil,
         render = "minimal",
         timeout = 3000,
-        background_colour = "#212234",
         minimum_width = 20,
         icons = {
             ERROR = "",

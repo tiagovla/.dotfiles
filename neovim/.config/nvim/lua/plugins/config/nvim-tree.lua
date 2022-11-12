@@ -98,6 +98,7 @@ local function config()
 end
 
 return {
+    module = "nvim-tree",
     cmd = {
         "NvimTreeFindFile",
         "NvimTreeFocus",
