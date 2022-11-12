@@ -49,7 +49,7 @@ colors:
     cyan: "#0db9d7"
     white: "#acb0d0"
 
-background_opacity: 1.0
+# background_opacity: 1.0
 
 selection:
   save_to_clipboard: false
@@ -65,3 +65,5 @@ shell:
 
 key_bindings:
   - { key: I, mods: Control, chars: "\x1b[105;5u" }
+  - { key: Return, mods: Shift, chars: "\x1b[13;2u" }
+  - { key: Return, mods: Control, chars: "\x1b[13;5u" }
