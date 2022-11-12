@@ -9,11 +9,27 @@ local actions = null.builtins.code_actions
 local completion = null.builtins.completion
 
 null.setup {
+    debug = true,
     sources = {
         actions.gitsigns,
         actions.shellcheck,
         diag.shellcheck,
+        diag.cppcheck,
         format.stylua,
+        format.clang_format,
+        format.prettier,
+        format.cmake_format.with {
+            cmd = "cmake-format",
+        },
+        format.latexindent.with {
+            args = {
+                "-g",
+                "/dev/null",
+                "-y",
+                [[defaultIndent: "    "]],
+            },
+        },
+        format.rustfmt,
         format.shfmt.with {
             args = { "-s", "-i", "4" },
         },

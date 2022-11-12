@@ -17,7 +17,12 @@ mappings.texlab = function()
     keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", { buffer = 0, desc = "Forward view" })
 end
 
+mappings.clangd = function()
+    keymap.set("n", "<leader><Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
+end
+
 function mappings.setup(client_name, buffer)
+    keymap.set("n", "gh", require("lsp-inlayhints").toggle, { buffer = buffer, desc = "Toggle typehints" })
     keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action" })
     keymap.set("v", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action (range)" })
     keymap.set("n", "gD", lsp.buf.declaration, { buffer = buffer, desc = "Go to declaration" })
@@ -25,20 +30,20 @@ function mappings.setup(client_name, buffer)
     keymap.set("n", "gi", lsp.buf.implementation, { buffer = buffer, desc = "Go to inplementation" })
     keymap.set("n", "gr", lsp.buf.rename, { buffer = buffer, desc = "Rename" })
     keymap.set("n", "gT", lsp.buf.type_definition, { buffer = buffer, desc = "Type definition" })
+    keymap.set("n", "gl", vim.diagnostic.setloclist, { buffer = buffer, desc = "Diagnostics in local list" })
     keymap.set("n", "K", vim.lsp.buf.hover, { buffer = buffer, desc = "Hover" })
     keymap.set("n", "gR", lsp.buf.references, { buffer = buffer, desc = "References" })
     keymap.set("n", "<leader>gk", lsp.buf.signature_help, { buffer = buffer, desc = "Signature help" })
     keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = buffer, desc = "Next diagnostic" })
-    keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = buffer, desc = "Next diagnostic" })
-    keymap.set(
-        "v",
-        "<leader>f",
-        ":lua vim.lsp.buf.range_formatting()<cr>",
-        { buffer = buffer, desc = "Format buffer (range)" }
-    )
+    keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = buffer, desc = "Prev diagnostic" })
     keymap.set("n", "<leader>ge", vim.diagnostic.open_float, { buffer = buffer, desc = "Open float diagnostics" })
-    keymap.set("n", "<leader>f", function()
-        vim.lsp.buf.format { timeout_ms = 5000 }
+    keymap.set({ "n", "v" }, "<leader>f", function()
+        vim.lsp.buf.format {
+            timeout_ms = 5000,
+            filter = function(c)
+                return c.name == "null-ls"
+            end,
+        }
     end, { buffer = 0, desc = "Format buffer" })
 
     if mappings[client_name] then

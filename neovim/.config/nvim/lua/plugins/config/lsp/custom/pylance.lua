@@ -85,6 +85,7 @@ if not configs["pylance"] then
             single_file_support = true,
             capabilities = vim.lsp.protocol.make_client_capabilities(),
             settings = {
+                editor = { formatOnType = true },
                 python = {
                     analysis = {
                         autoSearchPaths = true,
