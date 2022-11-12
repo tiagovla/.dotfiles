@@ -51,6 +51,7 @@ function M.options()
     opt.sidescrolloff = 10
 
     opt.showbreak = "↳"
+    -- opt.splitkeep = "topline"
     opt.smarttab = true
     -- opt.wildmode = { list = "longest" }
 
