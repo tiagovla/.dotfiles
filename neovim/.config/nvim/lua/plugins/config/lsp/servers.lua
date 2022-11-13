@@ -1,8 +1,15 @@
 local lspconfig = require "lspconfig"
 local path = require "mason-core.path"
 
-local caps = require("nvim-semantic-tokens").extend_capabilities(vim.lsp.protocol.make_client_capabilities())
-caps = require("cmp_nvim_lsp").default_capabilities(caps)
+local ok_s, semantic_tokens = pcall(require, "nvim-semantic-tokens")
+local ok_c, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not (ok_s and ok_c) then
+    return
+end
+
+local caps = semantic_tokens.extend_capabilities(vim.lsp.protocol.make_client_capabilities())
+caps = cmp_nvim_lsp.default_capabilities(caps)
+
 caps.textDocument.completion.completionItem.snippetSupport = true
 caps.textDocument.onTypeFormatting = { dynamicRegistration = false }
 caps.offsetEncoding = { "utf-16" }
