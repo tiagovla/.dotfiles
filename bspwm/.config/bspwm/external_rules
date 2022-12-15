@@ -30,109 +30,112 @@
 # 		   List the rules.
 
 border='' \
-	center='' \
-	class=${2} \
-	desktop='' \
-	focus='' \
-	follow='' \
-	hidden='' \
-	id=${1?} \
-	instance=${3} \
-	layer='' \
-	locked='' \
-	manage='' \
-	marked='' \
-	misc=${4} \
-	monitor='' \
-	node='' \
-	private='' \
-	rectangle='' \
-	split_dir='' \
-	split_ratio='' \
-	state='' \
-	sticky='' \
-	urgent=''
+    center='' \
+    class=${2} \
+    desktop='' \
+    focus='' \
+    follow='' \
+    hidden='' \
+    id=${1?} \
+    instance=${3} \
+    layer='' \
+    locked='' \
+    manage='' \
+    marked='' \
+    misc=${4} \
+    monitor='' \
+    node='' \
+    private='' \
+    rectangle='' \
+    split_dir='' \
+    split_ratio='' \
+    state='' \
+    sticky='' \
+    urgent=''
 
 firefox() {
-	desktop=^1
+    desktop=^1
 }
 
 gimp() {
-	desktop=^8
-	follow=on
+    desktop=^8
+    follow=on
 }
 
 zathura() {
-	state=tiled
+    state=tiled
 }
 
 discord() {
-	desktop=^6
-	follow=off
-	state=pseudo_tiled
-	rectangle=1850x1000+0+0
-	bspc config ignore_ewmh_focus true && sleep 0.2
-	echo "sleep 10; bspc config ignore_ewmh_focus false" | at now
+    desktop=^6
+    follow=off
+    state=pseudo_tiled
+    rectangle=1850x1000+0+0
+    bspc config ignore_ewmh_focus true
+    (
+        sleep 5
+        bspc config ignore_ewmh_focus false
+    ) &
 }
 
 ranger() {
-	state=pseudo_tiled
-	rectangle=1200x800+0+0
-	center=true
+    state=pseudo_tiled
+    rectangle=1200x800+0+0
+    center=true
 }
 
 teams() {
-	state=tiled
-	desktop=^8
+    state=tiled
+    desktop=^8
 }
 
 matplotlib() {
-	desktop=^2
-	state=floating
+    desktop=^2
+    state=floating
 }
 
 qbittorrent() {
-	desktop='^7'
-	follow=on
-	case $(xprop -id "$id" WM_NAME) in
-	*qBittorrent*) state=tiled ;;
-	*) state=floating ;;
-	esac
+    desktop='^7'
+    follow=on
+    case $(xprop -id "$id" WM_NAME) in
+    *qBittorrent*) state=tiled ;;
+    *) state=floating ;;
+    esac
 }
 
 spotify() {
-	desktop=^5
-	rectangle=1800x1000+0+0
-	state=pseudo_tiled
+    desktop=^5
+    rectangle=1800x1000+0+0
+    state=pseudo_tiled
 }
 
 telegram_desktop() {
-	desktop=^3
+    desktop=^3
 }
 
 chromium() {
-	desktop=^2
+    desktop=^2
 }
 
 matlab() {
-	desktop=^4
+    desktop=^4
 }
 
 mpv() {
-	desktop=^7
-	state=floating
-	layer=normal
-	rectangle=1200x800+0+0
-	center=true
-	follow=on
+    desktop=^7
+    state=floating
+    layer=normal
+    rectangle=1200x800+0+0
+    center=true
+    follow=on
 }
 
 nautilus() {
-	desktop='^10'
-	state=pseudo_tiled
-	rectangle=1024x640+0+0
-	center=on
-	follow=on
+    desktop='^10'
+    state=pseudo_tiled
+    rectangle=1024x640+0+0
+    center=on
+    follow=on
 }
 
 case $instance.$class in
@@ -148,33 +151,33 @@ case $instance.$class in
 *Teams*) teams ;;
 Ranger.Ranger) ranger ;;
 .)
-	case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
-	spotify) spotify ;;
-	esac
-	;;
+    case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
+    spotify) spotify ;;
+    esac
+    ;;
 esac
 
 # printf "id: ${1} class: ${2} instance: ${3} misc: ${4} \n" >>"${HOME}/.config/bspwm/bspwm.log"
 
 printf '%s' \
-	${border:+"border=$border "} \
-	${center:+"center=$center "} \
-	${desktop:+"desktop=$desktop "} \
-	${focus:+"focus=$focus "} \
-	${follow:+"follow=$follow "} \
-	${hidden:+"hidden=$hidden "} \
-	${layer:+"layer=$layer "} \
-	${locked:+"locked=$locked "} \
-	${manage:+"manage=$manage "} \
-	${marked:+"marked=$marked "} \
-	${monitor:+"monitor=$monitor "} \
-	${node:+"node=$node "} \
-	${private:+"private=$private "} \
-	${rectangle:+"rectangle=$rectangle "} \
-	${split_dir:+"split_dir=$split_dir "} \
-	${split_ratio:+"split_ratio=$split_ratio "} \
-	${state:+" state=$state "} \
-	${sticky:+"sticky=$sticky "} \
-	${urgent:+"urgent=$urgent "}
+    ${border:+"border=$border "} \
+    ${center:+"center=$center "} \
+    ${desktop:+"desktop=$desktop "} \
+    ${focus:+"focus=$focus "} \
+    ${follow:+"follow=$follow "} \
+    ${hidden:+"hidden=$hidden "} \
+    ${layer:+"layer=$layer "} \
+    ${locked:+"locked=$locked "} \
+    ${manage:+"manage=$manage "} \
+    ${marked:+"marked=$marked "} \
+    ${monitor:+"monitor=$monitor "} \
+    ${node:+"node=$node "} \
+    ${private:+"private=$private "} \
+    ${rectangle:+"rectangle=$rectangle "} \
+    ${split_dir:+"split_dir=$split_dir "} \
+    ${split_ratio:+"split_ratio=$split_ratio "} \
+    ${state:+" state=$state "} \
+    ${sticky:+"sticky=$sticky "} \
+    ${urgent:+"urgent=$urgent "}
 
 # vim: set ft=sh
