@@ -1,0 +1,1 @@
+SUBSYSTEM=="power_supply", ACTION=="change", RUN+="/home/tiagovla/.local/bin/fan_speed"
