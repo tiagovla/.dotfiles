@@ -3,6 +3,9 @@
 #
 # terminal emulator
 alt + Return
+    prime-run wezterm || wezterm
+
+alt + j
     prime-run alacritty || alacritty
 
 # program launcher
@@ -18,7 +21,7 @@ alt + Escape
 
 # open browser
 alt + w
-    prime-run librewolf || librewolf
+    prime-run brave || brave
 
 # open spotify
 alt + S
@@ -37,7 +40,7 @@ alt + shift + {q,r}
     bspc {quit,wm -r}
 
 # close and kill
-alt + {_,ctrol + }q
+alt + {_,ctrl + }q
     bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
@@ -73,15 +76,15 @@ alt + {_,shift + }{h,j,k,l}
     bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
-super + {p,b,comma,period}
+alt + {p,b,comma,period}
     bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous window in the current desktop
-super + {_,shift + }c
+alt + {_,shift + }c
     bspc node -f {next,prev}.local.!hidden.window
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
+alt + bracket{left,right}
     bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
@@ -89,7 +92,7 @@ alt + {grave,Tab}
     bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
+alt + {o,i}
     bspc wm -h off; \
     bspc node {older,newer} -f; \
     bspc wm -h on
@@ -98,25 +101,8 @@ super + {o,i}
 alt + {_,shift + }{1-9,0}
     bspc {desktop -f,node -d} '^{1-9,10}'
 
-#
-# preselect
-#
-
-# preselect the direction
-super + ctrl + {h,j,k,l}
-    bspc node -p {west,south,north,east}
-
-# preselect the ratio
-super + ctrl + {1-9}
-    bspc node -o 0.{1-9}
-
-# cancel the preselection for the focused node
-super + ctrl + space
-    bspc node -p cancel
-
-# cancel the preselection for the focused desktop
-super + ctrl + shift + space
-    bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+super + {_,shift + }{1}
+    bspc {desktop -f,node -d} 10 
 
 #
 # move/resize
@@ -145,11 +131,17 @@ XF86Audio{Raise,Lower}Volume
 XF86AudioMute
     pamixer --toggle-mute && polybar-msg hook mvol 1
 
+XF86AudioMicMute
+    pamixer --toggle-mute && polybar-msg hook mvol 1
+    # pactl set-source-mute 1 toggle
+
 # increase/decrease brightness
 XF86MonBrightness{Up,Down}
     brightnessctl s 100{+,-} && polybar-msg hook mbrightness 1
 
+
 # screenshot
 {Print, alt + Print}
-    flameshot {gui, full} -p ~/Pictures/Screenshots
+    flameshot {full, gui} -p ~/Pictures/Screenshots --clipboard
 
+# vim:ft=bash
