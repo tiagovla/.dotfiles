@@ -1,0 +1,8 @@
+[Unit]
+Description=Fix keyboard's layout
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+ExecStart= /bin/bash -c "~/.local/bin/kbd_layout"
+StandardOutput=journal

@@ -1,0 +1,8 @@
+[Unit]
+Description=Reload BSPWM
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+ExecStart= /bin/bash -c "bspc wm -r"
+StandardOutput=journal
