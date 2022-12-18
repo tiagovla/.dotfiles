@@ -25,7 +25,7 @@ zle -N zle-line-init
 
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
 
-preexec() { echo -ne '\e[5 q'; } # Use beam shape cursor for each new prompt.
+# preexec() { echo -ne '\e[5 q'; } # Use beam shape cursor for each new prompt.
 
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search

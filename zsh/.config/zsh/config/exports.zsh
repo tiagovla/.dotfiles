@@ -5,18 +5,14 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 export TERMINAL="alacritty"
 export BROWSER="brave"
-export PYENV_ROOT="$HOME/.pyenv"
+export GTK_THEME=Adwaita:dark
+export GTEST_COLOR=1
 
 # PATH
 export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
-export PATH="$PYENV_ROOT/bin:$PATH"
 export PATH="$HOME/.poetry/bin:$PATH"
-export PATH="/usr/local/Polyspace/R2021a/bin:$PATH"
-export PATH="/opt/ParaView-5.9.1-MPI-Linux-Python3.8-64bit/bin:$PATH"
+export PATH="$HOME/.asdf/shims:$PATH"
 
-# tools
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(zoxide init --cmd c zsh)"
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share

@@ -1,43 +1,38 @@
 #! /bin/bash
 alias pacman='sudo pacman'
-
 alias 9gag='f(){ youtube-dl "$@" --recode-video webm || exit 1;  unset -f f; }; f'
-alias fixfan="sudo ${HOME}/scripts/fan_speed.sh"
+alias :q='exit'
+declare BUILD_DIR=$(BUILD)
+declare INSTALL_DIR=$(INSTALL)
+alias cmakehere='cmake -B $BUILD_DIR --install-prefix=$INSTALL_DIR'
 
+alias qq='clear'
+alias Q='exit'
+# alias sudo='doas'
 alias la='ls -a --color=auto'
 alias ll='ls -la --color=auto'
 alias ls='exa --icons --color=auto --time-style=long-iso --group-directories-first --git'
-
 alias du='du --max-depth=1 --si'
 alias rm='trash'
 alias df='df --all --si --print-type'
 alias mkdir='mkdir --parents'
 alias grep="grep --color='auto'"
-alias book="zathura ${HOME}/github/nonlinear/book.pdf"
+alias ncdu="ncdu --color=off"
+alias rc="rclone"
+alias cf='cd $(/bin/fd -d 2 --type directory | fzf --layout=reverse --height=10)'
 
 alias cp='cp --interactive --verbose'
 alias ln='ln --interactive --verbose'
 alias mv='mv --interactive --verbose'
-alias cd='c'
 
 alias ranger='alacritty --class Ranger -e /usr/bin/ranger'
-
 alias n='nvim'
-alias g='git'
-
+alias l='la'
 alias -s pdf="zathura"
-eval "$(thefuck --alias)"
+eval "$(zoxide init --cmd c zsh)"
 
-transfer() {
-	filename=$(basename "$1")
-	res=$(
-		curl --progress-bar --upload-file "$1" https://transfer.sh/${filename// /_}
-	)
-	echo "${res/.sh/.sh/get}" | xclip -selection clipboard -in
-	printf "%s\n" "${res/.sh/.sh/get}"
+alias xcopy='xclip -selection clipboard -in'
+alias clip='xclip -selection clipboard -in'
+alias mixer='ncpamixer'
 
-	# echo $res
-	# echo $res
-}
-
-alias transfer=transfer
+alias g='git'
