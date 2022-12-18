@@ -50,6 +50,7 @@ function M.general()
         vim.fn.jobstart({ "xdg-open", vim.fn.expand("<cfile>", nil, nil) }, { detach = true })
     end, {})
     map("n", "<leader>w", [[<esc><cmd>call feedkeys("\<lt>c-w>")<cr>]], { silent = true })
+    map("n", "<leader><leader>s", ":luafile %<cr>")
 end
 
 function M.movements()
