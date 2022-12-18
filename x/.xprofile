@@ -1,23 +1,11 @@
+#!/bin/bash
 
-feh --bg-scale ~/Pictures/av6popo691w71.png
+xrandr --output eDP-1-1 --mode 1920x1080 --rate 60
+feh --bg-scale ~/Pictures/unknown.png
+tmux has-session -t test || tmux new-session -d -s test &
 setxkbmap us_intl
-nm-applet &
-#
-"$HOME/.config/polybar/launch.sh"
-xsetroot -cursor_name left_ptr &
-xset r rate 200 120
 
+export PATH="$HOME/.local/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
-
-xbanish &
-dunst &
-flameshot &
-picom &
-aw-qt &
-kbd_layout &
-
-# dbus-update-activation-environment --systemd DISPLAY
-# eval $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
-# export SSH_AUTH_SOCK
