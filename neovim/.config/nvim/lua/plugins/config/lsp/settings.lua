@@ -29,18 +29,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end
 
-        if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-            local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
-            vim.api.nvim_create_autocmd({ "TextChanged", "CursorHold", "InsertLeave" }, {
-                group = augroup,
-                buffer = 0,
-                callback = function()
-                    vim.lsp.buf.semantic_tokens_full()
-                end,
-            })
-            vim.lsp.buf.semantic_tokens_full()
-        end
-
         if caps.documentFormattingProvider then
             local group = vim.api.nvim_create_augroup("Formatting", {})
             vim.api.nvim_create_autocmd("BufWritePre", {
