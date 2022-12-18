@@ -1,6 +1,6 @@
 # Basic Settings
 
-set highlight-transparency .1
+set highlight-transparency 0.40
 set zoom-center "true"
 set selection-clipboard clipboard
 set render-loading "false"
@@ -43,8 +43,8 @@ set inputbar-fg                 "#11121D"
 set statusbar-bg                "#7199EE"
 set statusbar-fg                "#ffffff" 
 
-set highlight-color             "#264f78"
-set highlight-active-color      "#dcdcaa"
+set highlight-color             "#98C379"
+set highlight-active-color      "#fe6d85"
 
 set default-bg                  "#11121D"
 set default-fg                  "#A0A8CD"
