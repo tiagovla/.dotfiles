@@ -5,8 +5,8 @@ PROFILE_FILE="$(dirname "$(realpath "$0")")/profile"
 
 modprobe ec_sys write_support=1
 grep 'WEC' "$PROFILE_FILE" | while read -r cmd address value; do
-	echo -n "$value" | xxd -r -p | dd of=$EC_IO_FILE bs=1 seek=$((address)) count=1 conv=notrunc status=none
-	echo "${cmd} - Address ${address} Value $((value))"
+    echo -n "$value" | xxd -r -p | dd of=$EC_IO_FILE bs=1 seek=$((address)) count=1 conv=notrunc status=none
+    echo "${cmd} - Address ${address} Value $((value))"
 done
 
 # sudo od -t x1 $EC_IO_FILE ## debug

@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+export DISPLAY=":0"
+is_external_active=$(xrandr | grep ' connected' | grep 'HDMI' | awk '{print $1}')
+external_monitor=$(xrandr | grep 'HDMI' | awk '{print $1}')
+main_monitor=$(xrandr | grep 'eDP' | awk '{print $1}')
+
+killall -q polybar
+while pgrep -u $UID -x polybar >/dev/null; do sleep 2; done
+if [[ -n $is_external_active ]]; then
+    xrandr --output "$external_monitor" --mode 2560x1080 --rate 75 --primary --right-of "$main_monitor" --output "$main_monitor" --mode 1920x1080
+    MONITOR=$main_monitor polybar --reload tokyodark -c ~/.config/polybar/config.ini </dev/null >/var/tmp/polybar-primary.log 2>&1 200>&- &
+    MONITOR=$external_monitor polybar --reload tokyodark -c ~/.config/polybar/config.ini </dev/null >/var/tmp/polybar-secondary.log 2>&1 200>&- &
+    for desktop in $(bspc query -D --names -m "$main_monitor"); do
+        bspc desktop "$desktop" --to-monitor "$external_monitor"
+    done
+    bspc desktop Desktop --remove 2>/dev/null
+    bspc desktop 10 --to-monitor "$main_monitor"
+    bspc wm -O "$external_monitor" "$main_monitor"
+    bspc monitor "$external_monitor" -o 1 2 3 4 5 6 7 8 9 0 10
+else
+    xrandr --output "$main_monitor" --mode 1920x1080 --rate 60 --output "$external_monitor" --off
+    MONITOR=$main_monitor polybar --reload tokyodark -c ~/.config/polybar/config.ini </dev/null >/var/tmp/polybar-primary.log 2>&1 200>&- &
+    for desktop in $(bspc query -D -m "$external_monitor"); do
+        bspc desktop "$desktop" --to-monitor "$main_monitor"
+    done
+    bspc desktop Desktop --remove 2>/dev/null
+    bspc monitor "$main_monitor" -o 1 2 3 4 5 6 7 8 9 0 10
+    bspc wm -O eDP-1-1
+fi

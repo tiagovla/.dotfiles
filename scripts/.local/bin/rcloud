@@ -1,0 +1,16 @@
+#! /bin/bash
+if [ ! -z $1 ]
+then
+    provider=$1 
+else
+    provider="all"
+fi
+
+case $provider in
+all|dropbox) rclone mount dropbox: ~/cloud/dropbox --daemon;;&
+all|box) rclone mount box: ~/cloud/box --daemon;;&
+all|pcloud) rclone mount pcloud: ~/cloud/pcloud --daemon;;&
+all|mega) rclone mount mega: ~/cloud/mega --daemon;;&
+all|onedrive) rclone mount onedrive: ~/cloud/onedrive --daemon;;&
+all|drive) rclone mount drive: ~/cloud/drive --daemon;;
+esac
