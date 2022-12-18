@@ -11,8 +11,6 @@ local function setup()
         vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-W>j]])
         vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-W>k]])
         vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-W>l]])
-        vim.keymap.set("t", "H", "<cmd>tabprev<cr>")
-        vim.keymap.set("t", "L", "<cmd>tabnext<cr>")
     end
 
     vim.api.nvim_create_autocmd("TermOpen", { pattern = "term://*", callback = set_terminal_keymaps })
