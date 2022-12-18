@@ -1,7 +1,9 @@
 local function config()
     require("dressing").setup {
         input = {
-            winblend = 0,
+            win_options = {
+                winblend = 0,
+            },
         },
         select = {
             backend = { "fzf_lua", "fzf", "builtin", "nui" },
@@ -11,7 +13,9 @@ local function config()
                 },
             },
             builtin = {
-                winblend = 0,
+                win_options = {
+                    winblend = 0,
+                },
             },
         },
     }
