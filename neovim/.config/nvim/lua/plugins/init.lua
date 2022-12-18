@@ -32,7 +32,6 @@ packer.startup {
         use { "j-hui/fidget.nvim", ext = "fidget" }
         use { "microsoft/python-type-stubs", opt = true }
         use { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal", ext = "lsp-inlayhints" }
-        use { "theHamsta/nvim-semantic-tokens", ext = "nvim-semantic-tokens" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
@@ -54,6 +53,7 @@ packer.startup {
         use { "onsails/lspkind-nvim", after = "nvim-cmp", ext = "lspkind" }
         use_local { "tiagovla/zotex.nvim", after = "nvim-cmp", ext = "zotex" } -- experimental
 
+        -- Copilot
         use { "zbirenbaum/copilot.lua", ext = "copilot" }
         use { "zbirenbaum/copilot-cmp", after = { "copilot.lua" }, ext = "copilot-cmp" }
 
