@@ -31,7 +31,7 @@ packer.startup {
         use { "jose-elias-alvarez/null-ls.nvim" }
         use { "j-hui/fidget.nvim", ext = "fidget" }
         use { "microsoft/python-type-stubs", opt = true }
-        use { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal", ext = "lsp-inlayhints" }
+        -- use { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal", ext = "lsp-inlayhints" }
 
         -- Git
         use { "lewis6991/gitsigns.nvim", ext = "gitsigns" }
