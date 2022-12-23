@@ -1,3 +1,8 @@
+local ok, _ = pcall(require, "plenary")
+if not ok then
+    return
+end
+
 local Job = require "plenary.job"
 local Path = require "plenary.path"
 
