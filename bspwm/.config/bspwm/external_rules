@@ -138,9 +138,14 @@ nautilus() {
     follow=on
 }
 
+deno() {
+    state=tiled
+}
+
 case $instance.$class in
 *.MATLAB*) matlab ;;
 *.Matplotlib) matplotlib ;;
+*.Deno) deno ;;
 *.Nautilus) nautilus ;;
 *.Spotify) spotify ;;
 *.Zathura) zathura ;;
