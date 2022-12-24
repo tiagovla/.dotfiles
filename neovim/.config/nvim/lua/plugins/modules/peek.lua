@@ -4,9 +4,8 @@ local M = {
 }
 
 function M.config()
-    -- default config:
     require("peek").setup {
-        theme = "light", -- 'dark' or 'light'
+        theme = "dark",
     }
 end
 
