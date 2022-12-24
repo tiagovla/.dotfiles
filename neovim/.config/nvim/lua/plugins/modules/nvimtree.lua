@@ -12,15 +12,15 @@ local M = {
 function M.init()
     local function nvim_tree_smart_toggle()
         local buftype = vim.api.nvim_buf_get_option(0, "filetype")
-        vim.cmd "NvimTreeRefresh"
+        require("nvim-tree.actions.reloaders.reloaders").reload_explorer()
         if buftype ~= "NvimTree" then
             if buftype == "" then
-                vim.cmd "NvimTreeFocus"
+                require("nvim-tree").focus()
             else
-                vim.cmd "NvimTreeFindFile"
+                vim.cmd [[NvimTreeFindFile]]
             end
         else
-            vim.cmd "NvimTreeToggle"
+            require("nvim-tree").toggle(true, false)
         end
     end
 
@@ -29,37 +29,38 @@ end
 
 function M.config()
     local tree_cb = require("nvim-tree.config").nvim_tree_callback
-    local lib = require "nvim-tree.lib"
-    local a = require "plenary.async"
 
     local nvimtree_keys = {
         { key = { "<CR>", "o", "<2-LeftMouse>", "l" }, cb = tree_cb "edit" },
         { key = { "<BS>", "h" }, u = tree_cb "close_node" },
-        {
-            key = { "gs" },
-            cb = function()
-                local node = lib.get_node_at_cursor().absolute_path
-                a.run(function()
-                    require("neogit.lib.git.cli").add.files(node).call()
-                    vim.defer_fn(function()
-                        vim.cmd "NvimTreeRefresh"
-                    end, 50)
-                end)
-            end,
-        },
-        {
-            key = { "gu" },
-            cb = function()
-                local node = lib.get_node_at_cursor().absolute_path
-                a.run(function()
-                    require("neogit.lib.git.cli").reset.files(node).call()
-                    vim.defer_fn(function()
-                        vim.cmd "NvimTreeRefresh"
-                    end, 50)
-                end)
-            end,
-        },
     }
+
+    local function git_extend_key(keys)
+        local lib = require "nvim-tree.lib"
+        local a = require "plenary.async"
+        local cli = require "neogit.lib.git.cli"
+        local function wrap(action)
+            return function()
+                local node = lib.get_node_at_cursor().absolute_path
+                a.run(function()
+                    cli[action].files(node).call()
+                    vim.defer_fn(function()
+                        require("nvim-tree.actions.reloaders.reloaders").reload_explorer()
+                    end, 50)
+                end)
+            end
+        end
+        keys[#keys + 1] = {
+            key = { "gs" },
+            cb = wrap "add",
+        }
+        keys[#keys + 1] = {
+            key = { "gu" },
+            cb = wrap "reset",
+        }
+    end
+
+    pcall(git_extend_key, nvimtree_keys)
 
     require("nvim-tree").setup {
         update_cwd = true,
@@ -85,25 +86,6 @@ function M.config()
         trash = {
             cmd = "trash",
             require_confirm = true,
-        },
-    }
-
-    vim.g.nvim_tree_icons = {
-        default = "",
-        symlink = "",
-        git = {
-            unstaged = "",
-            staged = "✓",
-            unmerged = "",
-            renamed = "➜",
-            untracked = "✗",
-        },
-        folder = {
-            default = "",
-            open = "",
-            empty = "",
-            empty_open = "",
-            symlink = "",
         },
     }
 end
