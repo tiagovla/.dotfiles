@@ -92,14 +92,17 @@ end
 function M.better_close()
     local tabpages = vim.api.nvim_list_tabpages()
     local buffers = utils.get_valid_buffers()
-    local named_buffers = vim.tbl_filter(utils.has_name, buffers)
+    local named_buffers = vim.tbl_filter(utils.buf_has_name, buffers)
+    if not vim.bo[0].buflisted then
+        vim.api.nvim_win_close(0, false)
+        return
+    end
     if #tabpages > 1 and #named_buffers <= 1 then
-        vim.cmd [[:tabclose]]
-    elseif #named_buffers <= 1 then
-        vim.cmd [[:Bdelete]]
-        vim.cmd [[:q]]
+        vim.cmd.Bdelete()
+    elseif #buffers <= 1 and not utils.buf_has_name(0) then
+        vim.cmd.quit()
     else
-        vim.cmd [[:Bdelete]]
+        vim.cmd.Bdelete()
     end
 end
 

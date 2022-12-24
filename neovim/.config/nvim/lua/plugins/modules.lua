@@ -20,6 +20,6 @@ return {
             require("buffercd").setup {}
         end,
     },
-    { "famiu/bufdelete.nvim", event = "BufRead" },
+    { "famiu/bufdelete.nvim", event = "VeryLazy" },
     { "tiagovla/tex-conceal.vim", ft = "tex" },
 }
