@@ -1,5 +1,5 @@
 local map = vim.keymap.set
-local utils = require "tiagovla.utils.buffers"
+local utils = require "tiagovla.utils"
 local M = {}
 
 function M.setup()
