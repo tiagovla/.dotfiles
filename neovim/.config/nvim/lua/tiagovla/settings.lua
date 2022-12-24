@@ -12,6 +12,7 @@ function M.setup()
 end
 
 function M.globals()
+    g.mapleader = " "
     g.python3_host_prog = "$HOME/.asdf/shims/python"
     g.format_on_save = true
     g.tex_conceal = "abdgms"

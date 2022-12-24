@@ -8,7 +8,6 @@ function M.setup()
 end
 
 function M.general()
-    vim.g.mapleader = " "
     map("n", "n", "nzzzv")
     map("n", "N", "Nzzzv")
     map("n", "G", "Gzzzv")

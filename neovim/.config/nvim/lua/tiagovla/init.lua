@@ -1,7 +1,11 @@
-pcall(require, "impatient") --.enable_profile()
 require "tiagovla.settings"
-require "tiagovla.mappings"
 require "tiagovla.globals"
-require "tiagovla.autocmds"
-require "tiagovla.commands"
-require "plugins"
+
+vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+        require "tiagovla.mappings"
+        require "tiagovla.autocmds"
+        require "tiagovla.commands"
+    end,
+})
