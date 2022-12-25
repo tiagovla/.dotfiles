@@ -1,14 +1,13 @@
-#! /bin/bash
+#!/bin/zsh
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 export LANG=en_US.UTF-8
 export EDITOR='nvim'
-export TERMINAL="alacritty"
+export TERMINAL="wezterm"
 export BROWSER="brave"
 export GTK_THEME=Adwaita:dark
 export GTEST_COLOR=1
 
-# PATH
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="$HOME/.asdf/shims:$PATH"

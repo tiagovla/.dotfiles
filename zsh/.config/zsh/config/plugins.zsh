@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 source "$ZDOTDIR/config/functions.zsh"
 
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
@@ -9,3 +11,5 @@ zsh_add_plugin "Valiev/almostontop"
 export ASDF_ROOT="/opt/.asdf"
 source "/opt/asdf-vm/asdf.sh"
 fpath=(${ASDF_ROOT}/completions $fpath)
+
+eval "$(zoxide init --cmd c zsh)"

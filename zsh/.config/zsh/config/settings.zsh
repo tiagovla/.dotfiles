@@ -1,9 +1,8 @@
-#! /bin/bash
+#!/bin/zsh
 export HISTSIZE=1000000
 export SAVEHIST=1000000
 export HISTFILE="$HOME/.zsh_history"
 
-# history
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS

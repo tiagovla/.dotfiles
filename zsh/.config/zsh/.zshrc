@@ -12,5 +12,3 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh2) ]]; then
 else
   compinit -C
 fi
-
-xset r rate 200 120

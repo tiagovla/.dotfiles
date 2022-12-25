@@ -1,42 +1,40 @@
-#! /bin/zsh
+#!/bin/zsh
 
 function zsh_add_file() {
-	[ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1"
+    [ -f "$ZDOTDIR/$1" ] && source "$ZDOTDIR/$1"
 }
 
 function zsh_add_plugin() {
-	PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
-	if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
-		zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" ||
-			zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
-	else
-		git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
-	fi
+    PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
+    if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+        zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" ||
+            zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh"
+    else
+        git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
+    fi
 }
 
 function zsh_add_completion() {
     PLUGIN_NAME=$(echo $1 | cut -d "/" -f 2)
-    if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then 
-		completion_file_path=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
-		fpath+="$(dirname "${completion_file_path}")"
+    if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
+        completion_file_path=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+        fpath+="$(dirname "${completion_file_path}")"
         zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
     else
         git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
-		fpath+=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+        fpath+=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
         [ -f $ZDOTDIR/.zccompdump ] && $ZDOTDIR/.zccompdump
     fi
-	completion_file="$(basename "${completion_file_path}")"
-	if [ "$2" = true ] && compinit "${completion_file:1}"
+    completion_file="$(basename "${completion_file_path}")"
+    if [ "$2" = true ]; then
+        compinit "${completion_file:1}"
+    fi
 }
 
 function x11-clip-wrap-widgets() {
-    # NB: Assume we are the first wrapper and that we only wrap native widgets
-    # See zsh-autosuggestions.zsh for a more generic and more robust wrapper
     local copy_or_paste=$1
     shift
-
     for widget in $@; do
-        # Ugh, zsh doesn't have closures
         if [[ $copy_or_paste == "copy" ]]; then
             eval "
             function _x11-clip-wrapped-$widget() {
@@ -52,12 +50,9 @@ function x11-clip-wrap-widgets() {
             }
             "
         fi
-
         zle -N $widget _x11-clip-wrapped-$widget
     done
 }
-
-
 local copy_widgets=(
     vi-yank vi-yank-eol vi-delete vi-backward-kill-word vi-change-whole-line
 )
@@ -65,34 +60,5 @@ local paste_widgets=(
     vi-put-{before,after}
 )
 
-# NB: can atm. only wrap native widgets
 x11-clip-wrap-widgets copy $copy_widgets
-x11-clip-wrap-widgets paste  $paste_widgets
-
-gs() {
-    git status -s -b "${@}" && { git ql 2>/dev/null || : }
-}
-gc() {
-    git commit -v "${@}"
-}
-g.() {
-    git add -p "${@}"
-}
-gd() {
-    git diff "${@}"
-}
-gp() {
-    git checkout -p "${@}"
-}
-gr() {
-    git rebase "${@}"
-}
-grc() {
-    git rebase --continue "${@}"
-}
-gar() {
-    git add --all .
-}
-ga() {
-    git commit --amend --reuse-message=HEAD
-}
+x11-clip-wrap-widgets paste $paste_widgets
