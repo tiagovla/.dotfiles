@@ -14,7 +14,7 @@ alias mkdir='mkdir --parents'
 alias grep="grep --color='auto'"
 alias ncdu="ncdu --color=off"
 alias rc="rclone"
-alias cf='cd ${$(/bin/fd -d 2 --type directory | fzf --layout=reverse --height=10):-.}'
+alias cf='cd "$(/bin/fd -d 2 --type directory | fzf --layout=reverse --height=10)"'
 
 alias cp='cp --interactive --verbose'
 alias ln='ln --interactive --verbose'
