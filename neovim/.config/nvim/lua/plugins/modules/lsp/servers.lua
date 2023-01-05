@@ -42,10 +42,7 @@ lspconfig.pylance.setup {
     before_init = function(_, config)
         config.settings.python.analysis.stubPath = path.concat {
             vim.fn.stdpath "data",
-            "site",
-            "pack",
-            "packer",
-            "opt",
+            "lazy",
             "python-type-stubs",
         }
     end,
