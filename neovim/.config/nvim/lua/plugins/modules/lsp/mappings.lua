@@ -16,7 +16,7 @@ mappings.texlab = function()
 end
 
 mappings.clangd = function()
-    keymap.set("n", "<leader><Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
+    vim.keymap.set("n", "<leader><Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
 end
 
 function mappings.setup(client_name, buffer)
