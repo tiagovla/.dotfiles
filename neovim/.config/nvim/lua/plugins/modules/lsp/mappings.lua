@@ -6,7 +6,7 @@ vim.api.nvim_create_user_command("FormattingToggle", function()
         vim.notify "Formatting on save disabled"
     else
         vim.g.format_on_save = true
-        vim.notify(print "Formatting on save enabled")
+        vim.notify "Formatting on save enabled"
     end
 end, {})
 
