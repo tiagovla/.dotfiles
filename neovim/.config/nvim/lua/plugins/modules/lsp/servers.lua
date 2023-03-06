@@ -4,6 +4,7 @@ local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not ok then
     return
 end
+local caps = vim.lsp.protocol.make_client_capabilities()
 caps = cmp_nvim_lsp.default_capabilities(caps)
 
 caps.textDocument.completion.completionItem.snippetSupport = true
@@ -48,6 +49,15 @@ lspconfig.pylance.setup {
     end,
 }
 
+lspconfig.ruff_lsp.setup {
+    capabilities = caps,
+    init_options = {
+        settings = {
+            args = {},
+        },
+    },
+}
+
 -- markdown
 lspconfig.marksman.setup {
     capabilities = caps,
@@ -59,7 +69,7 @@ lspconfig.tsserver.setup {
 }
 
 -- lua
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     settings = {
         Lua = {
             hint = {
@@ -134,7 +144,7 @@ lspconfig.texlab.setup {
             diagnosticsDelay = 50,
             build = {
                 executable = "latexmk",
-                onSave = true,
+                onSave = false,
                 args = {
                     "-pdf",
                     "-pdflua",
@@ -154,6 +164,20 @@ lspconfig.texlab.setup {
             },
             chktex = { onOpenAndSave = true, onEdit = false },
             formatterLineLength = 120,
+        },
+    },
+}
+
+lspconfig.ltex.setup {
+    capabilities = caps,
+    on_attach = function()
+        require("ltex_extra").setup {
+            init_check = true,
+        }
+    end,
+    settings = {
+        ltex = {
+            language = "en-US",
         },
     },
 }

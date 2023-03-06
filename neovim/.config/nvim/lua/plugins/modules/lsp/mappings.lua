@@ -28,7 +28,13 @@ function mappings.setup(client_name, buffer)
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = buffer, desc = "Go to inplementation" })
     vim.keymap.set("n", "gr", vim.lsp.buf.rename, { buffer = buffer, desc = "Rename" })
     vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = buffer, desc = "Type definition" })
-    vim.keymap.set("n", "gl", vim.diagnostic.setloclist, { buffer = buffer, desc = "Diagnostics in local list" })
+    vim.keymap.set(
+        "n",
+        "<leader>lq",
+        vim.diagnostic.setloclist,
+        { buffer = buffer, desc = "Diagnostics in local list" }
+    )
+    vim.keymap.set("n", "<leader>lQ", vim.diagnostic.setqflist, { buffer = buffer, desc = "Diagnostics in quick list" })
     vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = buffer, desc = "Hover" })
     vim.keymap.set("n", "gR", vim.lsp.buf.references, { buffer = buffer, desc = "References" })
     vim.keymap.set("n", "<leader>gk", vim.lsp.buf.signature_help, { buffer = buffer, desc = "Signature help" })

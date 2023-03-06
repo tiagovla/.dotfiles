@@ -17,7 +17,11 @@ null.setup {
         diag.cppcheck,
         format.stylua,
         format.clang_format,
-        format.prettier,
+        format.prettier.with {
+            extra_args = function(_)
+                return vim.bo[0].ft == "css" and { "--parser", "css" }
+            end,
+        },
         format.cmake_format.with {
             cmd = "cmake-format",
         },
@@ -38,16 +42,7 @@ null.setup {
                 return {
                     "--fast",
                     "--quiet",
-                    "--target-version",
-                    "py310",
-                    "-l",
-                    vim.opt_local.colorcolumn:get()[1] or "88",
                 }
-            end,
-        },
-        diag.flake8.with {
-            extra_args = function(_)
-                return { "--max-line-lenth", vim.opt_local.colorcolumn:get()[1] or "88" }
             end,
         },
         completion.spell,

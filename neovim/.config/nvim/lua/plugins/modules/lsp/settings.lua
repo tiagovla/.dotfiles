@@ -14,7 +14,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         vim.bo[buffer].formatexpr = "" --  yikes
 
---        require("lsp-inlayhints").on_attach(client, buffer)
         if caps.documentHighlightProvider then
             local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
             vim.api.nvim_create_autocmd("CursorHold", {

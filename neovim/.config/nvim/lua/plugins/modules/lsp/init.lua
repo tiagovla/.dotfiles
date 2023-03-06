@@ -5,6 +5,7 @@ local M = {
         { "williamboman/mason.nvim" },
         { "microsoft/python-type-stubs" },
         { "j-hui/fidget.nvim" },
+        { "barreiroleo/ltex_extra.nvim" },
     },
     event = "BufReadPre",
 }
