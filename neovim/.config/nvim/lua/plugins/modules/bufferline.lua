@@ -21,6 +21,7 @@ function M.config()
             },
         },
     }
+    vim.cmd.colorscheme "tokyodark" -- there should be a better fix for this
 end
 
 return M
