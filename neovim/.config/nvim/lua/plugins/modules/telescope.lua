@@ -1,6 +1,7 @@
 local M = {
     "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope" },
+    version = false,
+    cmd = "Telescope",
     dependencies = {
         { "nvim-telescope/telescope-project.nvim" },
         { "nvim-telescope/telescope-media-files.nvim" },
@@ -76,6 +77,11 @@ function M.config()
         grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
         qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
         buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker,
+        mappings = {
+            n = {
+                ["<c-d>"] = require("telescope.actions").delete_buffer,
+            },
+        },
     }
     require("telescope").setup {
         defaults = custom_theme,

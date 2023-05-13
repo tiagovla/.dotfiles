@@ -30,4 +30,9 @@ require("lazy").setup("plugins.modules", {
         },
     },
     debug = false,
+    dev = {
+        path = "~/github",
+        pattern = { "tiagovla" },
+        fallback = true,
+    },
 })

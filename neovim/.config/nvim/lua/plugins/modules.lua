@@ -10,8 +10,9 @@ return {
         "tiagovla/scope.nvim",
         event = "BufRead",
         config = function()
-            require("scope").setup {}
+            require("scope").setup { restore_state = true }
         end,
+        dev = true,
     },
     {
         "tiagovla/buffercd.nvim",
@@ -22,4 +23,21 @@ return {
     },
     { "famiu/bufdelete.nvim", event = "VeryLazy" },
     { "tiagovla/tex-conceal.vim", ft = "tex" },
+    {
+        "tzachar/local-highlight.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("local-highlight").setup {
+                file_types = { "python", "cpp", "lua" },
+                hlgroup = "Visual",
+            }
+        end,
+    },
+    -- {
+    --     "echasnovski/mini.pairs",
+    --     event = "VeryLazy",
+    --     config = function()
+    --         require("mini.pairs").setup()
+    --     end,
+    -- },
 }

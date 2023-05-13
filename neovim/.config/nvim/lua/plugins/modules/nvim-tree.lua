@@ -20,7 +20,7 @@ function M.init()
                 vim.cmd.NvimTreeFindFile()
             end
         else
-            require("nvim-tree").toggle(true, false)
+            vim.cmd.NvimTreeToggle()
         end
     end
 

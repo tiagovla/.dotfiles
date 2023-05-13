@@ -1,5 +1,6 @@
 local M = {
     "hrsh7th/nvim-cmp",
+    version = false,
     event = "InsertEnter",
     dependencies = {
         { "hrsh7th/cmp-buffer" },
@@ -18,6 +19,7 @@ local M = {
                 require("zotex").setup {}
             end,
             dependencies = { "kkharji/sqlite.lua" },
+            dev = true,
         },
     },
 }
