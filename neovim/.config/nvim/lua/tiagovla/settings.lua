@@ -19,14 +19,15 @@ function M.options()
         "blank",
         "buffers",
         "curdir",
-        "folds",
-        "help",
-        "options",
+        -- "folds",
+        -- "help",
+        -- "options",
         "tabpages",
         "winsize",
         "resize",
         "winpos",
         "terminal",
+        "globals",
     }
     vim.opt.clipboard = "unnamedplus"
     vim.opt.backupdir:remove { "." }
@@ -35,9 +36,11 @@ function M.options()
     vim.opt.backupcopy = "yes"
     vim.opt.cmdheight = 1
     vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
-
+    vim.opt.smoothscroll = true
+    vim.opt.exrc = true
     vim.opt.history = 1000
     vim.opt.joinspaces = false
+    vim.opt.cinkeys:remove ":"
 
     vim.opt.incsearch = true
     vim.opt.infercase = true
@@ -109,6 +112,7 @@ function M.options()
 end
 
 function M.commands()
+    -- vim.cmd "set iskeyword-=_"
     vim.cmd "set fsync"
     vim.cmd "set t_ZH=^[[3m"
     vim.cmd "set t_ZR=^[[23m"
@@ -116,6 +120,11 @@ function M.commands()
     vim.cmd [[ :cab Q q]]
     vim.cmd [[ autocmd BufRead * autocmd FileType <buffer> ++once
       \ if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]]
+    vim.filetype.add {
+        extension = {
+            rasi = "css",
+        },
+    }
 end
 
 M.setup()
