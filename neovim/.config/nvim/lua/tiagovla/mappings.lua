@@ -10,7 +10,7 @@ end
 function M.general()
     vim.keymap.set("n", "n", "nzzzv")
     vim.keymap.set("n", "N", "Nzzzv")
-    vim.keymap.set("n", "G", "Gzzzv")
+    -- vim.keymap.set("n", "G", "Gzzzv")
     vim.keymap.set("n", "J", "mzJ`z")
     vim.keymap.set("i", ",", ",<c-g>u")
     vim.keymap.set("i", ".", ".<c-g>u")
