@@ -6,6 +6,7 @@ local M = {
         { "microsoft/python-type-stubs" },
         { "j-hui/fidget.nvim" },
         { "barreiroleo/ltex_extra.nvim" },
+        { "lvimuser/lsp-inlayhints.nvim", branch = "anticonceal", config = true },
     },
     event = "BufReadPre",
 }

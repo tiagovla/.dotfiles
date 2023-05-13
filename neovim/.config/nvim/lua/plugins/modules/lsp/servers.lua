@@ -132,6 +132,7 @@ lspconfig.dockerls.setup {
 
 -- latex
 lspconfig.texlab.setup {
+    -- cmd = { "texlab", "-vvvv", "--log-file", "/tmp/texlab.log" },
     capabilities = caps,
     flags = {
         allow_incremental_sync = false,
@@ -144,7 +145,7 @@ lspconfig.texlab.setup {
             diagnosticsDelay = 50,
             build = {
                 executable = "latexmk",
-                onSave = false,
+                onSave = true,
                 args = {
                     "-pdf",
                     "-pdflua",

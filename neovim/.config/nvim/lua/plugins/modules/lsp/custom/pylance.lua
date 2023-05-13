@@ -97,6 +97,8 @@ if not configs["pylance"] then
                         inlayHints = {
                             variableTypes = true,
                             functionReturnTypes = true,
+                            callArgumentNames = true,
+                            pytestParameters = true,
                         },
                     },
                 },
