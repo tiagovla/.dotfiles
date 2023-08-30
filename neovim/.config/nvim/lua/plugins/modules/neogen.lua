@@ -1,12 +1,11 @@
-local M = { "danymat/neogen", cmd="Neogen", dependencies = "nvim-treesitter/nvim-treesitter" }
-
-function M.setup()
-    vim.keymap.set("n", "<leader>gd", "<cmd>Neogen<cr>", { desc = "Neogen" })
-end
-function M.config()
-    require("neogen").setup {
+return {
+    "danymat/neogen",
+    cmd = "Neogen",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    opts = {
         enabled = true,
-    }
-end
-
-return M
+    },
+    keys = {
+        { "<leader>gd", "<cmd>Neogen<cr>", desc = "Neogen" },
+    },
+}

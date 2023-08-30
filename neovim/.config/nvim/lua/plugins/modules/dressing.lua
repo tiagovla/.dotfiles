@@ -1,7 +1,7 @@
-local M = { "stevearc/dressing.nvim", event = "VeryLazy" }
-
-function M.config()
-    require("dressing").setup {
+return {
+    "stevearc/dressing.nvim",
+    event = "VeryLazy",
+    opts = {
         input = {
             win_options = {
                 winblend = 0,
@@ -20,7 +20,5 @@ function M.config()
                 },
             },
         },
-    }
-end
-
-return M
+    },
+}

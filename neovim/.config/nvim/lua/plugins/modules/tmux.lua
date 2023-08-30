@@ -1,7 +1,7 @@
-local M = { "aserowy/tmux.nvim", event = "VeryLazy" }
-
-function M.config()
-    require("tmux").setup {
+return {
+    "aserowy/tmux.nvim",
+    event = "VeryLazy",
+    opts = {
         copy_sync = {
             enable = true,
         },
@@ -11,7 +11,5 @@ function M.config()
         resize = {
             enable_default_keybindings = true,
         },
-    }
-end
-
-return M
+    },
+}

@@ -1,8 +1,12 @@
-local M = { "zbirenbaum/copilot.lua", event = "VeryLazy" }
-
-function M.config()
-    vim.api.nvim_create_user_command("ToggleCopilot", require("copilot.suggestion").toggle_auto_trigger, {})
-    require("copilot").setup {
+return {
+    "zbirenbaum/copilot.lua",
+    event = "VeryLazy",
+    init = function()
+        vim.api.nvim_create_user_command("ToggleCopilot", function()
+            require("copilot.suggestion").toggle_auto_trigger()
+        end, {})
+    end,
+    opts = {
         suggestion = {
             keymap = {
                 next = "C-n",
@@ -11,7 +15,5 @@ function M.config()
                 dismiss = "<C-e>",
             },
         },
-    }
-end
-
-return M
+    },
+}

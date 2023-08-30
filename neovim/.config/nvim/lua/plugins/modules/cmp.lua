@@ -1,7 +1,7 @@
 local M = {
     "hrsh7th/nvim-cmp",
     version = false,
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdlineEnter" },
     dependencies = {
         { "hrsh7th/cmp-buffer" },
         { "hrsh7th/cmp-cmdline" },
@@ -27,12 +27,31 @@ local M = {
 function M.config()
     local cmp = require "cmp"
     local types = require "cmp.types"
-    local mapping = require "cmp.config.mapping"
 
     local mappings = {
+        ["<Up>"] = { i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select } },
+        ["<Down>"] = { i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select } },
+        ["<C-n>"] = { i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert } },
+        ["<C-p>"] = { i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert } },
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<C-y>"] = cmp.mapping(
+            cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
+            { "i", "c" }
+        ),
+        ["<c-space>"] = cmp.mapping {
+            i = cmp.mapping.complete(),
+            c = function(_) -- fallback
+                if cmp.visible() then
+                    if not cmp.confirm { select = true } then
+                        return
+                    end
+                else
+                    cmp.complete()
+                end
+            end,
+        },
         ["<CR>"] = cmp.mapping.confirm {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
@@ -61,21 +80,9 @@ function M.config()
                 fallback()
             end
         end, { "i", "s" }),
-        ["<Down>"] = { i = mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select } },
-        ["<Up>"] = { i = mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select } },
-        ["<C-n>"] = { i = mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert } },
-        ["<C-p>"] = { i = mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert } },
-        ["<C-y>"] = { i = mapping.confirm { select = false } },
-        ["<C-e>"] = { i = mapping.abort() },
     }
 
-    local c_mappings = cmp.mapping.preset.cmdline()
-    c_mappings["<Up>"] = c_mappings["<C-N>"]
-    c_mappings["<Down>"] = c_mappings["<C-P>"]
-    c_mappings["<Tab>"] = { c = mapping.confirm { select = false } }
-
     cmp.setup.cmdline(":", {
-        mapping = c_mappings,
         sources = {
             { name = "path" },
             { name = "nvim_lua" },
@@ -84,7 +91,6 @@ function M.config()
     })
 
     require("cmp").setup.cmdline("/", {
-        mapping = c_mappings,
         sources = {
             { name = "buffer", keyword_length = 5 },
         },
@@ -108,15 +114,37 @@ function M.config()
         },
         mapping = mappings,
         sources = {
-            { name = "path" },
-            { name = "zotex" },
-            { name = "luasnip" },
-            { name = "nvim_lsp" },
-            { name = "copilot" },
-            { name = "nvim_lsp_signature_help" },
             { name = "nvim_lua" },
-            { name = "latex_symbols" },
+            { name = "nvim_lsp" },
+            { name = "luasnip" },
+            { name = "copilot" },
+            { name = "path" },
             { name = "buffer", keyword_length = 5 },
+            { name = "zotex" },
+            { name = "latex_symbols" },
+            { name = "nvim_lsp_signature_help" },
+        },
+        sorting = {
+            comparators = {
+                cmp.config.compare.offset,
+                cmp.config.compare.exact,
+                cmp.config.compare.score,
+                function(entry1, entry2)
+                    local _, entry1_under = entry1.completion_item.label:find "^_+"
+                    local _, entry2_under = entry2.completion_item.label:find "^_+"
+                    entry1_under = entry1_under or 0
+                    entry2_under = entry2_under or 0
+                    if entry1_under > entry2_under then
+                        return false
+                    elseif entry1_under < entry2_under then
+                        return true
+                    end
+                end,
+                cmp.config.compare.kind,
+                cmp.config.compare.sort_text,
+                cmp.config.compare.length,
+                cmp.config.compare.order,
+            },
         },
         completion = { completeopt = "menu,menuone,noinsert" },
         experimental = {

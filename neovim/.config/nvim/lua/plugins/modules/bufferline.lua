@@ -1,7 +1,7 @@
-local M = { "akinsho/nvim-bufferline.lua", lazy = false }
-
-function M.config()
-    require("bufferline").setup {
+return {
+    "akinsho/nvim-bufferline.lua",
+    lazy = false,
+    opts = {
         options = {
             view = "multiwindow",
             numbers = function(opts)
@@ -20,8 +20,5 @@ function M.config()
                 },
             },
         },
-    }
-    vim.cmd.colorscheme "tokyodark" -- there should be a better fix for this
-end
-
-return M
+    },
+}
