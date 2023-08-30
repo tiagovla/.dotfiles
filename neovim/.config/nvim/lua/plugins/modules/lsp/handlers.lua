@@ -1,9 +1,9 @@
 vim.lsp.handlers["window/logMessage"] = function(_, content, _)
-    -- if content.type == 3 then
-    -- if content.message:find "pythonPath" then
-    --     vim.notify(content.message)
-    -- end
-    -- end
+    if content.type == 3 then
+        if content.message:find "pythonPath" then
+            vim.notify(content.message)
+        end
+    end
 end
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

@@ -3,9 +3,6 @@ local configs = require "lspconfig.configs"
 local lsp_util = require "vim.lsp.util"
 local path = require "mason-core.path"
 local util = require "lspconfig.util"
-local index = require "mason-registry.index"
-
-index["pylance"] = "plugins.modules.lsp.custom.pylance"
 
 local root_files = {
     "pyproject.toml",
@@ -90,9 +87,13 @@ if not configs["pylance"] then
                     analysis = {
                         autoSearchPaths = true,
                         useLibraryCodeForTypes = true,
-                        diagnosticMode = "workspace",
+                        diagnosticMode = "workspace", --"workspace",
                         typeCheckingMode = "basic",
                         completeFunctionParens = true,
+                        autoFormatStrings = true,
+                        -- logLevel = "Trace",
+                        -- logTypeEvaluationTime = true,
+                        -- minimumLoggingThreshold = 500,
                         indexing = false,
                         inlayHints = {
                             variableTypes = true,

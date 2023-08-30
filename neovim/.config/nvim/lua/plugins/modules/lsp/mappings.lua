@@ -20,7 +20,9 @@ mappings.clangd = function()
 end
 
 function mappings.setup(client_name, buffer)
-    -- keymap.set("n", "gh", require("lsp-inlayhints").toggle, { buffer = buffer, desc = "Toggle typehints" })
+    vim.keymap.set("n", "gh", function()
+        vim.lsp.buf.inlay_hint(buffer)
+    end, { buffer = buffer, desc = "Toggle typehints" })
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action" })
     vim.keymap.set("v", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action (range)" })
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = buffer, desc = "Go to declaration" })

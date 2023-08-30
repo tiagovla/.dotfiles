@@ -11,8 +11,28 @@ local completion = null.builtins.completion
 null.setup {
     debug = true,
     sources = {
+        -- format.blackd.with { config = {line_length = 88 } },
+        diag.textidote.with {
+            args = {
+                "--read-all",
+                "--output",
+                "singleline",
+                "--no-color",
+                "$FILENAME",
+            },
+            timeout = 20000,
+        },
+        format.black.with {
+            extra_args = function(_)
+                return {
+                    "--fast",
+                    "--quiet",
+                }
+            end,
+        },
         actions.gitsigns,
         actions.shellcheck,
+        format.bibclean,
         diag.shellcheck,
         diag.cppcheck,
         format.stylua,
@@ -36,14 +56,6 @@ null.setup {
         format.rustfmt,
         format.shfmt.with {
             args = { "-s", "-i", "4" },
-        },
-        format.black.with {
-            extra_args = function(_)
-                return {
-                    "--fast",
-                    "--quiet",
-                }
-            end,
         },
         completion.spell,
     },

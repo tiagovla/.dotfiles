@@ -1,4 +1,5 @@
 local lspconfig = require "lspconfig"
+-- local Watcher = require "utils/watcher"
 local path = require "mason-core.path"
 local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not ok then
@@ -7,9 +8,9 @@ end
 local caps = vim.lsp.protocol.make_client_capabilities()
 caps = cmp_nvim_lsp.default_capabilities(caps)
 
-caps.textDocument.completion.completionItem.snippetSupport = true
 caps.textDocument.onTypeFormatting = { dynamicRegistration = false }
 caps.offsetEncoding = { "utf-16" }
+caps.textDocument.completion.completionItem.snippetSupport = true
 
 for type, _ in pairs { Error = "", Warn = "", Hint = "", Info = "" } do
     local hl = "DiagnosticSign" .. type
@@ -17,15 +18,15 @@ for type, _ in pairs { Error = "", Warn = "", Hint = "", Info = "" }
 end
 
 vim.diagnostic.config {
-    virtual_text = {
-        prefix = "",
-    },
+    -- virtual_text = {
+    --     prefix = "",
+    -- },
+    virtual_text = false,
     signs = true,
     underline = true,
     update_in_insert = false,
 }
 
--- python
 lspconfig.pylance.setup {
     capabilities = caps,
     on_init = function(client)
@@ -33,20 +34,21 @@ lspconfig.pylance.setup {
             if vim.env.VIRTUAL_ENV then
                 return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
             end
-            if vim.fn.filereadable(path.concat { workspace, "poetry.lock" }) then
+            local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
+            if vim.fn.filereadable(poetry_lock_path) then
                 local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
                 return path.concat { venv, "bin", "python" }
             end
             return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
         end)(client.config.root_dir)
     end,
-    before_init = function(_, config)
-        config.settings.python.analysis.stubPath = path.concat {
-            vim.fn.stdpath "data",
-            "lazy",
-            "python-type-stubs",
-        }
-    end,
+    -- before_init = function(_, config)
+    --     config.settings.python.analysis.stubPath = path.concat {
+    --         vim.fn.stdpath "data",
+    --         "lazy",
+    --         "python-type-stubs",
+    --     }
+    -- end,
 }
 
 lspconfig.ruff_lsp.setup {
@@ -100,10 +102,10 @@ lspconfig.lua_ls.setup {
                     end
 
                     add "$VIMRUNTIME"
-                    -- for _, site in pairs(vim.split(vim.o.packpath, ",")) do
-                    --     add(site .. "/pack/*/opt/*")
-                    --     add(site .. "/pack/*/start/*")
-                    -- end
+                    for _, site in pairs(vim.split(vim.o.packpath, ",")) do
+                        add(site .. "/pack/*/opt/*")
+                        add(site .. "/pack/*/start/*")
+                    end
                     return ret
                 end)(),
             },
@@ -179,6 +181,20 @@ lspconfig.ltex.setup {
     settings = {
         ltex = {
             language = "en-US",
+            checkFrequency = "save",
         },
     },
 }
+
+lspconfig["matlab_ls"].setup {
+    settings = {
+        matlab = {
+            indexWorkspace = false,
+            installPath = "",
+            matlabConnectionTiming = "onStart",
+            telemetry = true,
+        },
+    },
+}
+
+lspconfig["wolfram_ls"].setup {}
