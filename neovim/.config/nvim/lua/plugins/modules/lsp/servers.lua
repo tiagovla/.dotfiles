@@ -189,8 +189,8 @@ lspconfig.ltex.setup {
 lspconfig["matlab_ls"].setup {
     settings = {
         matlab = {
-            indexWorkspace = false,
-            installPath = "",
+            indexWorkspace = true,
+            installPath = "/usr/local/MATLAB/R2023a",
             matlabConnectionTiming = "onStart",
             telemetry = true,
         },
