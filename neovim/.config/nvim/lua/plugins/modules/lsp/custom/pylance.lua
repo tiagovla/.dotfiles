@@ -128,7 +128,7 @@ end
 local function installer(ctx)
     local script = [[
     curl -s -c cookies.txt 'https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance' > /dev/null &&
-    curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/2023.11.10/vspackage"
+    curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/latest/vspackage"
          -j -b cookies.txt --compressed --output "pylance.vsix"
     ]]
     ctx.receipt:with_primary_source(ctx.receipt.unmanaged)
@@ -137,6 +137,10 @@ local function installer(ctx)
     ctx.spawn.bash {
         "-c",
         [[sed -i "0,/\(if(\!process\[[^] ]*\]\[[^] ]*\])return\!0x\)1/ s//\10/" extension/dist/server.bundle.js]],
+    }
+    ctx.spawn.bash {
+        "-c",
+        [[sed -i -E "s/;_0x[0-9a-f]+\['verifyClie'\+'nt'\]=function\(_0x[0-9a-f]+\)\{/&return;/" extension/dist/server.bundle.js]],
     }
     ctx:link_bin(
         "pylance",
