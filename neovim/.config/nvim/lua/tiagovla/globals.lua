@@ -1,8 +1,3 @@
-P = function(v)
-    vim.pretty_print(v)
-    return v
-end
-
 RELOAD = function(...)
     return require("plenary.reload").reload_module(...)
 end
