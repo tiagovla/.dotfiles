@@ -1,4 +1,4 @@
-local M = { "L3MON4D3/LuaSnip", event = "InsertEnter", dependencies = { { "rafamadriz/friendly-snippets" } } }
+local M = { "L3MON4D3/LuaSnip", lazy = false, dependencies = { { "rafamadriz/friendly-snippets" } } }
 
 function M.init()
     vim.keymap.set("i", "<c-u>", function()
@@ -91,12 +91,12 @@ function M.config()
             return snippet
         end,
     }
-    require "plugins.modules.luasnip.snips.lua"
     require "plugins.modules.luasnip.snips.cmake"
+    require "plugins.modules.luasnip.snips.cpp"
+    require "plugins.modules.luasnip.snips.lua"
     require "plugins.modules.luasnip.snips.python"
     require "plugins.modules.luasnip.snips.tex"
     require "plugins.modules.luasnip.snips.tex_math"
-    require "plugins.modules.luasnip.snips.cpp"
 end
 
 return M

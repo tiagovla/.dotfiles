@@ -54,7 +54,6 @@ ls.add_snippets("tex", {
         t { "", "\\]", "" },
         i(0),
     }),
-    s([["]], fmt([[``{}'']], i(1))),
 }, { type = "autosnippets" })
 
 local tex_template = [[
@@ -92,6 +91,7 @@ local tex_table = [[
 ]]
 
 ls.add_snippets("tex", {
+    s([["]], fmt([[``{}'']], i(1))),
     parse({ trig = "template" }, tex_template),
     parse({ trig = "table" }, tex_table),
     s({ trig = "frame" }, {
