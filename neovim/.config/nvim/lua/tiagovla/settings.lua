@@ -125,6 +125,11 @@ function M.commands()
             rasi = "css",
         },
     }
+    vim.filetype.add {
+        extension = {
+            wl = "wolfram",
+        },
+    }
 end
 
 M.setup()
