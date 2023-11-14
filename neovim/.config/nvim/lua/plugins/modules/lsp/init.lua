@@ -1,7 +1,7 @@
 local M = {
     "neovim/nvim-lspconfig",
     dependencies = {
-        { "tiagovla/null-ls.nvim", dev = true, dependencies = { "nvim-lua/plenary.nvim" } },
+        { "nvimtools/none-ls.nvim" },
         { "williamboman/mason.nvim" },
         { "microsoft/python-type-stubs" },
         { "barreiroleo/ltex_extra.nvim" },

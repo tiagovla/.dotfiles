@@ -42,22 +42,13 @@ lspconfig.pylance.setup {
             return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
         end)(client.config.root_dir)
     end,
-    -- before_init = function(_, config)
-    --     config.settings.python.analysis.stubPath = path.concat {
-    --         vim.fn.stdpath "data",
-    --         "lazy",
-    --         "python-type-stubs",
-    --     }
-    -- end,
-}
-
-lspconfig.ruff_lsp.setup {
-    capabilities = caps,
-    init_options = {
-        settings = {
-            args = {},
-        },
-    },
+    before_init = function(_, config)
+        config.settings.python.analysis.stubPath = path.concat {
+            vim.fn.stdpath "data",
+            "lazy",
+            "python-type-stubs",
+        }
+    end,
 }
 
 -- markdown
@@ -198,3 +189,12 @@ lspconfig["matlab_ls"].setup {
 }
 
 lspconfig["wolfram_ls"].setup {}
+
+-- lspconfig.ruff_lsp.setup {
+--     capabilities = caps,
+--     init_options = {
+--         settings = {
+--             args = {},
+--         },
+--     },
+-- }

@@ -12,16 +12,16 @@ null.setup {
     debug = true,
     sources = {
         -- format.blackd.with { config = {line_length = 88 } },
-        diag.textidote.with {
-            args = {
-                "--read-all",
-                "--output",
-                "singleline",
-                "--no-color",
-                "$FILENAME",
-            },
-            timeout = 20000,
-        },
+        -- diag.textidote.with {
+        --     args = {
+        --         "--read-all",
+        --         "--output",
+        --         "singleline",
+        --         "--no-color",
+        --         "$FILENAME",
+        --     },
+        --     timeout = 20000,
+        -- },
         format.black.with {
             extra_args = function(_)
                 return {
@@ -34,7 +34,7 @@ null.setup {
         actions.shellcheck,
         format.bibclean,
         diag.shellcheck,
-        diag.cppcheck,
+        -- diag.cppcheck,
         format.stylua,
         format.clang_format,
         format.prettier.with {

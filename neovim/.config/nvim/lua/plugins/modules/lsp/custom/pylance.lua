@@ -85,6 +85,7 @@ if not configs["pylance"] then
                 editor = { formatOnType = true },
                 python = {
                     analysis = {
+                        -- ignore = { "*" },
                         autoSearchPaths = true,
                         useLibraryCodeForTypes = true,
                         diagnosticMode = "workspace", --"workspace",
@@ -94,7 +95,7 @@ if not configs["pylance"] then
                         -- logLevel = "Trace",
                         -- logTypeEvaluationTime = true,
                         -- minimumLoggingThreshold = 500,
-                        indexing = false,
+                        indexing = true,
                         inlayHints = {
                             variableTypes = true,
                             functionReturnTypes = true,
