@@ -25,7 +25,7 @@ local function get_root(bufnr, ft)
 end
 
 local function get_black_length(bufnr)
-    local query = vim.treesitter.parse_query(
+    local query = vim.treesitter.query.parse(
         "toml",
         [[
             (table
