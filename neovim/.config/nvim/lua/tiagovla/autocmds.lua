@@ -1,12 +1,14 @@
-local function highlight_on_yank()
-    vim.highlight.on_yank { higroup = "IncSearch", timeout = 300 }
-end
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("HighlightOnYank", {}),
+    callback = function()
+        vim.highlight.on_yank { higroup = "IncSearch", timeout = 300 }
+    end,
+})
 
-vim.api.nvim_create_autocmd("TextYankPost", { callback = highlight_on_yank })
-
+-- scroll off EOF
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
-    group = vim.api.nvim_create_augroup("ScrollEOF", {}),
-    pattern = "*",
+    group = vim.api.nvim_create_augroup("ScrollOffEOF", {}),
     callback = function()
         local win_h = vim.api.nvim_win_get_height(0)
         local off = math.min(vim.o.scrolloff, math.floor(win_h / 2))
@@ -20,10 +22,10 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
     end,
 })
 
+-- change colorcolumn if visual text intersects it
 local cc_default_hi = vim.api.nvim_get_hl_by_name("ColorColumn", true)
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
     group = vim.api.nvim_create_augroup("CCHighlight", {}),
-    pattern = "*",
     callback = function()
         local cc = tonumber(vim.api.nvim_win_get_option(0, "colorcolumn"))
         if cc ~= nil then
@@ -37,6 +39,23 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
             else
                 vim.api.nvim_set_hl(0, "ColorColumn", { bg = cc_default_hi.background + 328968 })
             end
+        end
+    end,
+})
+
+-- keep cursor position after yanking
+local cursor_position
+vim.api.nvim_create_autocmd({ "VimEnter", "CursorMoved" }, {
+    group = vim.api.nvim_create_augroup("RestoreCursor", {}),
+    callback = function()
+        cursor_position = vim.api.nvim_win_get_cursor(0)
+    end,
+})
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = vim.api.nvim_create_augroup("RestoreCursor", { clear = false }),
+    callback = function()
+        if vim.v.event.operator == "y" then
+            vim.api.nvim_win_set_cursor(0, cursor_position)
         end
     end,
 })
