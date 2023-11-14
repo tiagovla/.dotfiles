@@ -52,12 +52,12 @@ function M.config()
     }
     local wk = require "which-key"
     wk.register({
-        d = { "Dap Debugger" },
-        g = { "General" },
-        h = { "Git Signs" },
-        t = { "Telescope" },
+        d = { name = "Dap Debugger" },
+        g = { name = "General" },
+        h = { name = "Git Signs" },
+        t = { name = "Telescope" },
     }, {
-        prefix = "<Space>",
+        prefix = "<leader>",
     })
 end
 

@@ -1,23 +1,38 @@
 return {
-    "rcarriga/nvim-notify",
-    config = function()
-        require("notify").setup {
-            background_colour = "#212234",
-            stages = "fade_in_slide_out",
-            on_open = nil,
-            on_close = nil,
-            render = "minimal",
-            timeout = 3000,
-            minimum_width = 20,
-            icons = {
-                ERROR = "",
-                WARN = "",
-                INFO = "",
-                DEBUG = "",
-                TRACE = "✎",
-            },
-        }
-        require("telescope").load_extension "notify"
-        vim.notify = require "notify"
-    end,
+    -- "rcarriga/nvim-notify",
+    -- keys = {
+    --     {
+    --         "<leader>un",
+    --         function()
+    --             require("notify").dismiss { silent = true, pending = true }
+    --         end,
+    --         desc = "Dismiss all Notifications",
+    --     },
+    -- },
+    -- config = function()
+    --     require("notify").setup {
+    --         background_colour = "None",
+    --         stages = "fade_in_slide_out",
+    --         on_open = nil,
+    --         on_close = nil,
+    --         render = "compact",
+    --         timeout = 1500,
+    --         minimum_width = 20,
+    --         max_height = function()
+    --             return math.floor(vim.o.lines * 0.75)
+    --         end,
+    --         max_width = function()
+    --             return math.floor(vim.o.columns * 0.75)
+    --         end,
+    --         icons = {
+    --             ERROR = "",
+    --             WARN = "",
+    --             INFO = "",
+    --             DEBUG = "",
+    --             TRACE = "✎",
+    --         },
+    --     }
+    --     require("telescope").load_extension "notify"
+    --     -- vim.notify = require "notify"
+    -- end,
 }

@@ -14,6 +14,10 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup("plugins.modules", {
     defaults = { lazy = true },
     install = { colorscheme = { "tokyodark" } },
+    change_detection = {
+        enabled = true,
+        notify = false,
+    },
     checker = { enabled = false },
     performance = {
         rtp = {
@@ -29,6 +33,7 @@ require("lazy").setup("plugins.modules", {
             },
         },
     },
+    git = { timeout = 600 },
     debug = false,
     dev = {
         path = "~/github",

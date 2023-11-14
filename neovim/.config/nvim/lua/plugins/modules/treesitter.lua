@@ -23,6 +23,7 @@ function M.config()
     local treesitter = require "nvim-treesitter.configs"
     treesitter.setup {
         ensure_installed = "all",
+        ignore_install = { "comment" },
         highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,

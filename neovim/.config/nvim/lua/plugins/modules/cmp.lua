@@ -27,15 +27,20 @@ local M = {
 function M.config()
     local cmp = require "cmp"
     local types = require "cmp.types"
-
     local mappings = {
-        ["<Up>"] = { i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select } },
-        ["<Down>"] = { i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select } },
-        ["<C-n>"] = { i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert } },
-        ["<C-p>"] = { i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert } },
+        ["<Up>"] = { i = cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Insert } },
+        ["<Down>"] = { i = cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Insert } },
+        ["<C-n>"] = cmp.mapping(
+            cmp.mapping.select_next_item { behavior = types.cmp.SelectBehavior.Select },
+            { "i", "c" }
+        ),
+        ["<C-p>"] = cmp.mapping(
+            cmp.mapping.select_prev_item { behavior = types.cmp.SelectBehavior.Select },
+            { "i", "c" }
+        ),
         ["<C-d>"] = cmp.mapping.scroll_docs(-4),
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-e>"] = cmp.mapping.abort(),
+        ["<C-e>"] = cmp.mapping(cmp.mapping.abort(), { "i", "c" }),
         ["<C-y>"] = cmp.mapping(
             cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Insert, select = true },
             { "i", "c" }

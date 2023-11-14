@@ -3,10 +3,14 @@ local M = {
     version = false,
     cmd = "Telescope",
     dependencies = {
-        { "nvim-telescope/telescope-project.nvim" },
+        { "tiagovla/telescope-project.nvim", dev = true },
         { "nvim-telescope/telescope-media-files.nvim" },
         { "nvim-telescope/telescope-file-browser.nvim" },
         { "jvgrootveld/telescope-zoxide" },
+        {
+            "nvim-telescope/telescope-file-browser.nvim",
+            dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+        },
     },
 }
 
@@ -15,15 +19,16 @@ function M.init()
     vim.keymap.set("n", "<leader>ts", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "FZF current buffer" })
     vim.keymap.set("n", "<leader>tf", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
     vim.keymap.set("n", "<leader>tg", "<cmd>Telescope live_grep<cr>", { desc = "Live grep" })
+    vim.keymap.set("n", "<leader>tG", "<cmd>Telescope git_files<cr>", { desc = "Git files" })
     vim.keymap.set("n", "<leader>to", "<cmd>Telescope oldfiles<cr>", { desc = "Old files" })
-    vim.keymap.set("n", "<leader>tb", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>tB", "<cmd>Telescope buffers<cr>", { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>tb", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
     vim.keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
     vim.keymap.set("n", "<leader>tC", "<cmd>Telescope colorscheme<cr>", { desc = "Colorscheme" })
     vim.keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
-    vim.keymap.set("n", "<Leader>td", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
-    vim.keymap.set("n", "<Leader>cd", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
-    vim.keymap.set("n", "<Leader>tm", "<cmd>Telescope man_pages<cr>", { desc = "Man pages" })
-    vim.keymap.set("n", "<Leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
+    vim.keymap.set("n", "<leader>td", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
+    vim.keymap.set("n", "<leader>tm", "<cmd>Telescope man_pages<cr>", { desc = "Man pages" })
+    vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
 end
 
 function M.config()
@@ -87,8 +92,8 @@ function M.config()
         defaults = custom_theme,
     }
     require("telescope").load_extension "project"
-
     require("telescope").load_extension "zoxide"
+    require("telescope").load_extension "file_browser"
     local builtin = require "telescope.builtin"
     require("telescope._extensions.zoxide.config").setup {
         mappings = {

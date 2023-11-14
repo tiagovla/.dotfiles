@@ -20,7 +20,7 @@ function M.config()
 
     local custom_components = {
         pwd = function()
-            return vim.fn.fnamemodify(vim.fn.getcwd(-1, -1), ":~")
+            return vim.fn.fnamemodify(vim.fn.getcwd(0, 0), ":~")
         end,
     }
 
