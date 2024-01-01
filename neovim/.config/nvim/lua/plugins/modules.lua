@@ -1,11 +1,3 @@
-vim.api.nvim_create_autocmd("BufEnter", {
-    callback = function()
-        if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match "Trouble" ~= nil then
-            vim.cmd.quit()
-        end
-    end,
-})
-
 return {
     {
         "nvim-tree/nvim-web-devicons",
@@ -43,17 +35,18 @@ return {
     },
     {
         "stevearc/oil.nvim",
-        config = true,
+        config = function()
+            require("oil").setup {}
+            vim.keymap.set("n", "<leader>o", function()
+                if vim.bo.filetype == "oil" then
+                    require("oil").close()
+                else
+                    require("oil").open()
+                end
+            end, { desc = "File navigation" })
+        end,
         lazy = false,
     },
-
-    -- {
-    --     "echasnovski/mini.pairs",
-    --     event = "VeryLazy",
-    --     config = function()
-    --         require("mini.pairs").setup()
-    --     end,
-    -- },
     {
         "jackMort/ChatGPT.nvim",
         event = "VeryLazy",
@@ -127,56 +120,18 @@ return {
         "folke/trouble.nvim",
         event = "VeryLazy",
         dependencies = { "nvim-tree/nvim-web-devicons" },
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        },
         keys = { { "<leader>e", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" } },
+        config = true,
+        init = function()
+            vim.api.nvim_create_autocmd("BufEnter", {
+                callback = function()
+                    if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match "Trouble" ~= nil then
+                        vim.cmd.quit()
+                    end
+                end,
+            })
+        end,
     },
-    -- {
-    --     "folke/flash.nvim",
-    --     event = "VeryLazy",
-    --     opts = {},
-    --     keys = {
-    --         {
-    --             "s",
-    --             mode = { "n", "x", "o" },
-    --             function()
-    --                 -- default options: exact mode, multi window, all directions, with a backdrop
-    --                 require("flash").jump()
-    --             end,
-    --             desc = "Flash",
-    --         },
-    --         {
-    --             "S",
-    --             mode = { "n", "o", "x" },
-    --             function()
-    --                 -- show labeled treesitter nodes around the cursor
-    --                 require("flash").treesitter()
-    --             end,
-    --             desc = "Flash Treesitter",
-    --         },
-    --         {
-    --             "r",
-    --             mode = "o",
-    --             function()
-    --                 -- jump to a remote location to execute the operator
-    --                 require("flash").remote()
-    --             end,
-    --             desc = "Remote Flash",
-    --         },
-    --         {
-    --             "R",
-    --             mode = { "n", "o", "x" },
-    --             function()
-    --                 -- show labeled treesitter nodes around the search matches
-    --                 require("flash").treesitter_search()
-    --             end,
-    --             desc = "Treesitter Search",
-    --         },
-    --     },
-    -- },
     {
         "SmiteshP/nvim-navic",
         lazy = false,
@@ -198,54 +153,16 @@ return {
         version = "*",
         dependencies = {
             "SmiteshP/nvim-navic",
-            "nvim-tree/nvim-web-devicons", -- optional dependency
+            "nvim-tree/nvim-web-devicons",
         },
-        opts = {
-            -- configurations go here
-        },
+        opts = {},
+        lazy = false,
+    },
+    {
+        "ThePrimeagen/harpoon",
         lazy = false,
     },
 }
 
--- vim.api.nvim_create_autocmd("LspAttach", {
---     callback = function(args)
---         local buffer = args.buf
---         local client = vim.lsp.get_client_by_id(args.data.client_id)
---         local caps = client.server_capabilities
---
---         vim.bo[buffer].formatexpr = "" --  yikes
---
---         if caps.documentHighlightProvider then
---             local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
---             vim.api.nvim_create_autocmd("CursorHold", {
---                 group = group,
---                 buffer = 0,
---                 callback = vim.lsp.buf.document_highlight,
---             })
---             vim.api.nvim_create_autocmd("CursorMoved", {
---                 group = group,
---                 buffer = 0,
---                 callback = vim.lsp.buf.clear_references,
---             })
---         end
---
---         if caps.documentFormattingProvider then
---             local group = vim.api.nvim_create_augroup("Formatting", {})
---             vim.api.nvim_create_autocmd("BufWritePre", {
---                 group = group,
---                 buffer = 0,
---                 callback = function()
---                     if vim.g.format_on_save then
---                         require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
---                         vim.lsp.buf.format {
---                             timeout_ms = 3000,
---                             filter = function(c)
---                                 return c.name == "null-ls" or c.name == "matlab_ls"
---                             end,
---                         }
---                     end
---                 end,
---             })
---         end
---     end,
--- })
+-- Add this:
+-- https://github.com/3rd/image.nvim
