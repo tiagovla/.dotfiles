@@ -11,11 +11,10 @@ local M = {
 
 function M.init()
     local function nvim_tree_smart_toggle()
-        local buftype = vim.api.nvim_buf_get_option(0, "filetype")
-        require("nvim-tree.actions.reloaders.reloaders").reload_explorer()
+        local buftype = vim.api.nvim_get_option_value("filetype", { buf = 0 })
         if buftype ~= "NvimTree" then
             if buftype == "" then
-                require("nvim-tree").focus()
+                vim.cmd.NvimTreeFocus()
             else
                 vim.cmd.NvimTreeFindFile()
             end
@@ -23,7 +22,6 @@ function M.init()
             vim.cmd.NvimTreeToggle()
         end
     end
-
     vim.keymap.set("n", "<leader>p", nvim_tree_smart_toggle, { desc = "Open tree explorer" })
 end
 
