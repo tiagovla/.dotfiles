@@ -141,7 +141,7 @@ local function installer(ctx)
     }
     ctx.spawn.bash {
         "-c",
-        [[sed -i -E "s/;_0x[0-9a-f]+\['verifyClie'\+'nt'\]=function\(_0x[0-9a-f]+\)\{/&return;/" extension/dist/server.bundle.js]],
+        [[sed -i -E "s/;_0x[0-9a-f]+\[.*\+'nt'\]=function\(_0x[0-9a-f]+\)\{/&return;/" extension/dist/server.bundle.js]],
     }
     ctx:link_bin(
         "pylance",
