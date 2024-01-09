@@ -1,12 +1,6 @@
 local lspconfig = require "lspconfig"
--- local Watcher = require "utils/watcher"
-local path = require "mason-core.path"
-local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not ok then
-    return
-end
-local caps = vim.lsp.protocol.make_client_capabilities()
-caps = cmp_nvim_lsp.default_capabilities(caps)
+local cmp_nvim_lsp = require "cmp_nvim_lsp"
+local caps = cmp_nvim_lsp.default_capabilities()
 
 caps.textDocument.onTypeFormatting = { dynamicRegistration = false }
 caps.offsetEncoding = { "utf-16" }
@@ -27,27 +21,26 @@ vim.diagnostic.config {
     update_in_insert = false,
 }
 
+-- python
 lspconfig.pylance.setup {
     capabilities = caps,
     on_init = function(client)
         client.config.settings.python.pythonPath = (function(workspace)
             if vim.env.VIRTUAL_ENV then
-                return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
+                return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
             end
-            local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
-            if vim.fn.filereadable(poetry_lock_path) then
-                local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
-                return path.concat { venv, "bin", "python" }
+            if workspace then
+                local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
+                if vim.fn.filereadable(poetry_lock_path) then
+                    local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
+                    return vim.fs.joinpath(venv, "bin", "python")
+                end
             end
             return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
         end)(client.config.root_dir)
     end,
     before_init = function(_, config)
-        config.settings.python.analysis.stubPath = path.concat {
-            vim.fn.stdpath "data",
-            "lazy",
-            "python-type-stubs",
-        }
+        config.settings.python.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath "data", "lazy", "python-type-stubs")
     end,
 }
 
@@ -181,7 +174,7 @@ lspconfig["matlab_ls"].setup {
     settings = {
         matlab = {
             indexWorkspace = true,
-            installPath = "/usr/local/MATLAB/R2023a",
+            installPath = "/usr/local/MATLAB/R2023b",
             matlabConnectionTiming = "onStart",
             telemetry = true,
         },
