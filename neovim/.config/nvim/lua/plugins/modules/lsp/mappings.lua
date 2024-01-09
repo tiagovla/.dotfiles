@@ -21,7 +21,7 @@ end
 
 function mappings.setup(client_name, buffer)
     vim.keymap.set("n", "gh", function()
-        vim.lsp.buf.inlay_hint(buffer)
+        vim.lsp.inlay_hint.enable(buffer, nil)
     end, { buffer = buffer, desc = "Toggle typehints" })
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action" })
     vim.keymap.set("v", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action (range)" })
