@@ -23,6 +23,16 @@ function M.init()
         end
     end
     vim.keymap.set("n", "<leader>p", nvim_tree_smart_toggle, { desc = "Open tree explorer" })
+
+    vim.api.nvim_create_autocmd("BufEnter", {
+        callback = function()
+            if vim.api.nvim_buf_get_name(0):match "NvimTree" ~= nil then
+                if vim.api.nvim_win_get_width(0) == vim.o.columns then
+                    vim.cmd.quit()
+                end
+            end
+        end,
+    })
 end
 
 local function on_attach(bufnr)
@@ -91,40 +101,6 @@ local function on_attach(bufnr)
 end
 
 function M.config()
-    -- local tree_cb = require("nvim-tree.config").nvim_tree_callback
-    --
-    -- local nvimtree_keys = {
-    --     { key = { "<CR>", "o", "<2-LeftMouse>", "l" }, cb = tree_cb "edit" },
-    --     { key = { "<BS>", "h" }, u = tree_cb "close_node" },
-    -- }
-    --
-    -- local function git_extend_key(keys)
-    --     local lib = require "nvim-tree.lib"
-    --     local a = require "plenary.async"
-    --     local cli = require "neogit.lib.git.cli"
-    --     local function wrap(action)
-    --         return function()
-    --             local node = lib.get_node_at_cursor().absolute_path
-    --             a.run(function()
-    --                 cli[action].files(node).call()
-    --                 vim.defer_fn(function()
-    --                     require("nvim-tree.actions.reloaders.reloaders").reload_explorer()
-    --                 end, 50)
-    --             end)
-    --         end
-    --     end
-    --     keys[#keys + 1] = {
-    --         key = { "gs" },
-    --         cb = wrap "add",
-    --     }
-    --     keys[#keys + 1] = {
-    --         key = { "gu" },
-    --         cb = wrap "reset",
-    --     }
-    -- end
-    --
-    -- pcall(git_extend_key, nvimtree_keys)
-
     require("nvim-tree").setup {
         on_attach = on_attach,
         update_cwd = true,
@@ -140,7 +116,6 @@ function M.config()
         view = {
             width = 25,
             adaptive_size = false,
-            -- mappings = { list = nvimtree_keys },
         },
         git = {
             enable = true,

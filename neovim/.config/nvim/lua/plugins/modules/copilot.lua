@@ -7,12 +7,23 @@ return {
         end, {})
     end,
     opts = {
-        suggestion = {
+        panel = {
             keymap = {
-                next = "C-n",
-                prev = "C-p",
-                accept = "<C-]>",
-                dismiss = "<C-e>",
+                jump_next = "<c-n>",
+                jump_prev = "<c-p>",
+                accept = "<CR>",
+                refresh = "r",
+                open = "<S-CR>",
+            },
+        },
+        suggestion = {
+            enable = true,
+            auto_trigger = true,
+            keymap = {
+                next = "<c-n>",
+                prev = "<c-p>",
+                accept = "<C-CR>",
+                dismiss = "<c-e>",
             },
         },
     },
