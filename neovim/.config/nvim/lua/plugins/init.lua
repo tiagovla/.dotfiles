@@ -18,6 +18,7 @@ require("lazy").setup("plugins.modules", {
         enabled = true,
         notify = false,
     },
+    ui = { border = "rounded" },
     checker = { enabled = false },
     performance = {
         rtp = {

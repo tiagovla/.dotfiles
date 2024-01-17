@@ -1,6 +1,6 @@
 local M = {
     "akinsho/nvim-toggleterm.lua",
-    cmd = { "ToggleExec", "ToggleTerm", "Lazygit", "TermFloat", "TermBottom", "TermRight" },
+    lazy = false,
 }
 
 function M.init()
@@ -40,8 +40,65 @@ function M.config()
     }
 
     local Terminal = require("toggleterm.terminal").Terminal
+
     local lazygit = Terminal:new { cmd = "lazygit", hidden = true, direction = "tab" }
-    local term_float = Terminal:new { hidden = true, direction = "float" }
+
+    local running_cmd = false
+    local lines = {}
+
+    local efm = vim.api.nvim_get_option_value("errorformat", {})
+    local on_data = function(_, _, data)
+        for i, line in ipairs(data) do
+            data[i] = string.gsub(line, "\r", "")
+        end
+
+        for k, v in pairs(data) do
+            if v == "async_make_done" then
+                running_cmd = false
+                vim.fn.setqflist({}, " ", {
+                    title = "make",
+                    lines = lines,
+                    efm = efm,
+                })
+                vim.api.nvim_command "doautocmd QuickFixCmdPost"
+                vim.notify "Make command ended"
+            end
+        end
+
+        if running_cmd then
+            vim.list_extend(lines, data)
+        end
+    end
+
+    local on_exit = function()
+        running_cmd = false
+        lines = {}
+    end
+
+    local term_float = Terminal:new {
+        hidden = true,
+        direction = "float",
+        on_stdout = on_data,
+        on_stderr = on_data,
+        on_exit = on_exit,
+    }
+
+    local function make()
+        require "toggleterm.terminal"
+        if not term_float:is_open() then
+            term_float:toggle()
+            term_float:toggle()
+        end
+        running_cmd = true
+        lines = {}
+        term_float:send({ "make; echo async_make_done" }, false)
+        vim.notify "Make command running..."
+    end
+
+    vim.api.nvim_create_user_command("Make", make, {})
+    vim.keymap.set({ "n", "i", "x" }, "<F2>", "<cmd>Make<cr>")
+    vim.keymap.set({ "n", "i", "x" }, "<c-?>", "<cmd>Make<cr>")
+
     local function _smart_toggle(terminal, size, direction)
         if terminal:is_open() and terminal.direction ~= direction then
             terminal:toggle(size, direction)
@@ -53,6 +110,7 @@ function M.config()
             terminal:toggle(size, direction)
         end
     end
+
     local function setup_cmd(cmd, term, size, direction)
         vim.api.nvim_create_user_command(cmd, function()
             _smart_toggle(term, size, direction)

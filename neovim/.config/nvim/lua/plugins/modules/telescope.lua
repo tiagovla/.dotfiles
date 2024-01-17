@@ -3,10 +3,15 @@ local M = {
     version = false,
     cmd = "Telescope",
     dependencies = {
-        { "tiagovla/telescope-project.nvim", dev = true },
+        {
+            "tiagovla/telescope-project.nvim",
+            dev = true,
+            lazy = false,
+        },
         { "nvim-telescope/telescope-media-files.nvim" },
         { "nvim-telescope/telescope-file-browser.nvim" },
         { "jvgrootveld/telescope-zoxide" },
+        { "nvim-telescope/telescope-fzf-native.nvim" },
         {
             "nvim-telescope/telescope-file-browser.nvim",
             dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
@@ -90,10 +95,19 @@ function M.config()
     }
     require("telescope").setup {
         defaults = custom_theme,
+        extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+                case_mode = "smart_case",
+            },
+        },
     }
     require("telescope").load_extension "project"
     require("telescope").load_extension "zoxide"
     require("telescope").load_extension "file_browser"
+    require("telescope").load_extension "fzf"
     local builtin = require "telescope.builtin"
     require("telescope._extensions.zoxide.config").setup {
         mappings = {
