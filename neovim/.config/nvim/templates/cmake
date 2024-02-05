@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.24)
+
+project(project_name)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_executable(project_executable main.cpp)
+target_include_directories(main PUBLIC include)
+
+include(FetchContent)
+FetchContent_Declare(Eigen3
+                     GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git)
+FetchContent_MakeAvailable(Eigen3)
+target_link_libraries(main PUBLIC Eigen3::Eigen)

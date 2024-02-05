@@ -1,0 +1,40 @@
+{
+    "rewrite_academic": {
+        "type": "chat",
+        "opts": {
+          "template": "Rewrite the following text more naturally in academic form keeping the latex syntax. Do not remove cref, gls and cite latex commands. Do use cref instead of ref ommiting Chapter, Figure,... \n\n{{input}}",
+          "strategy": "replace",
+          "params": {
+            "model": "gpt-3.5-turbo",
+            "temperature": 0.5,
+            "frequency_penalty": 0.8
+          }
+    }
+   },
+    "rewrite": {
+        "type": "chat",
+        "opts": {
+          "template": "Rewrite the following text.\n\n{{input}}",
+          "strategy": "replace",
+          "params": {
+            "model": "gpt-3.5-turbo",
+            "temperature": 0.5,
+            "frequency_penalty": 0.8,
+            "max_tokens": 2048
+          }
+    }
+   },
+    "doit": {
+        "type": "chat",
+        "opts": {
+          "template": "{{input}}",
+          "strategy": "replace",
+          "params": {
+            "model": "gpt-3.5-turbo",
+            "temperature": 0.5,
+            "frequency_penalty": 0.8,
+            "max_tokens": 2048
+          }
+        }
+   }
+}

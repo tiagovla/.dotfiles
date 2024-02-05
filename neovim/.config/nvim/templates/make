@@ -1,0 +1,9 @@
+.PHONY: all build clean
+
+all: build clean
+
+build:
+	@echo build
+
+clean:
+	@echo clean

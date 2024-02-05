@@ -38,7 +38,7 @@ function M.config()
             enable = true,
             keymaps = {
                 init_selection = "gnn",
-                node_umental = "gnn",
+                node_incremental = "gnn",
                 scope_incremental = "gns",
                 node_decremental = "gnp",
             },

@@ -59,3 +59,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         end
     end,
 })
+
+-- no comments next line
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+    callback = function()
+        vim.cmd "set formatoptions-=cro"
+    end,
+})
+
+-- templates
+vim.api.nvim_create_autocmd("BufNewFile", {
+    callback = function()
+        local c_path = vim.fn.stdpath "config" .. "/templates/"
+        local fe, ft = vim.fn.expand "%:e", vim.bo.filetype
+        if ft == "make" then
+            vim.cmd("0r " .. c_path .. "make") -- Makefile
+        elseif ft == "cmake" then
+            vim.cmd("0r " .. c_path .. "cmake") -- CMakeLists.txt
+        end
+    end,
+})

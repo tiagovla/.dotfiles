@@ -1,4 +1,5 @@
 -- local call = vim.api.nvim_call_function
+vim.keymap.set("n", "gqq", "mzgqip`z", {})
 
 -- call("TexNewMathZone", { "E", "align", 1 })
 -- call("TexNewMathZone", { "F", "alignat", 1 })

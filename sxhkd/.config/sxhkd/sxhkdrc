@@ -5,15 +5,12 @@
 alt + Return
     prime-run wezterm || wezterm
 
-alt + j
-    prime-run alacritty || alacritty
-
 # program launcher
 alt + @space
-    rofi -terminal alacritty -show drun
+    rofi -terminal wezterm -show drun
 
 shift + alt + @space
-    rofi -terminal alacritty -show run -theme dmenu
+    rofi -terminal wezterm -show run -theme dmenu
 
 # make sxhkd reload its configuration files:
 alt + Escape
@@ -106,7 +103,6 @@ super + {_,shift + }{1}
 
 #
 # move/resize
-#
 
 # expand a window by moving one of its side outward
 ctrl + alt + {h,j,k,l}
@@ -125,20 +121,19 @@ ctrl + alt + {h,j,k,l}
 
 # increase/decrease volume
 XF86Audio{Raise,Lower}Volume
-    amixer set Master 5%{+,-} && polybar-msg hook mvol 1
+    pulsemixer --change-volume {+,-}10
 
 # mute volume
 XF86AudioMute
-    pamixer --toggle-mute && polybar-msg hook mvol 1
+    pulsemixer --toggle-mute && polybar-msg hook mvol 1 # pamixer
 
+# mute mic
 XF86AudioMicMute
-    pamixer --toggle-mute && polybar-msg hook mvol 1
-    # pactl set-source-mute 1 toggle
+    pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # increase/decrease brightness
-XF86MonBrightness{Up,Down}
-    brightnessctl s 100{+,-} && polybar-msg hook mbrightness 1
-
+XF86MonBrightness{Up,Down} 
+    brightnessctl -d intel_backlight set 25{+,-} && polybar-msg hook mbrightness 1
 
 # screenshot
 {Print, alt + Print}

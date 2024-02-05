@@ -31,7 +31,7 @@ function M.options()
     }
     vim.opt.clipboard = "unnamedplus"
     vim.opt.backupdir:remove { "." }
-
+    vim.opt.virtualedit = "block"
     vim.opt.backup = true
     vim.opt.backupcopy = "yes"
     vim.opt.cmdheight = 1
