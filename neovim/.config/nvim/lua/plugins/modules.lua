@@ -63,7 +63,16 @@ return {
             end, opts)
         end,
     },
-}
+    {
+        "lowitea/aw-watcher.nvim",
+        lazy = false,
+        opts = {
+            aw_server = {
+                host = "127.0.0.1",
+                port = 5600,
+            },
+        },
+    },
 
 -- Add this:
 -- https://github.com/3rd/image.nvim
