@@ -5,8 +5,10 @@ bluetooth_print() {
         devices_paired=$(bluetoothctl devices Paired | grep Device | cut -d ' ' -f 2)
         for device in $devices_paired; do
             device_info=$(bluetoothctl info "$device")
-            if echo "$device_info" | grep -q "Connected: yes"; then
-                echo "$device_info" | grep Battery | cut -d ' ' -f 4- | tr -d '()'
+            if echo "$device_info" | grep -q "Audio Sink"; then
+                if echo "$device_info" | grep -q "Connected: yes"; then
+                    echo "$device_info" | grep "Battery Percentage" | cut -d ' ' -f 4- | tr -d '()'
+                fi
             fi
         done
     fi

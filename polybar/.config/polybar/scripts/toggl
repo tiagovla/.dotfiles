@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+
+from datetime import datetime, timezone, timedelta
+import base64, http.client, json, os
+
+TOGGL_ENTRY_URL = "https://api.track.toggl.com/api/v8/time_entries/current"
+TOGGL_PROJECT_URL = "https://api.track.toggl.com/api/v8/projects/"
+
+
+def request(url, auth):
+    url_parts = url.split("/")
+    host, path = url_parts[2], "/" + "/".join(url_parts[3:])
+    auth_bytes = f"{auth[0]}:{auth[1]}".encode("ascii")
+    base64_auth_string = base64.b64encode(auth_bytes).decode("ascii")
+    headers = {"Authorization": f"Basic {base64_auth_string}"}
+    connection = http.client.HTTPSConnection(host)
+    connection.request("GET", path, headers=headers)
+    response = connection.getresponse()
+    response_data = response.read().decode("utf-8")
+    connection.close()
+    return json.loads(response_data)
+
+
+def main():
+    api_token = os.environ.get("TOGGL_API_TOKEN")
+
+    if api_token is None:
+        exit(1)
+
+    response = request(TOGGL_ENTRY_URL, auth=(api_token, "api_token"))
+    current_data = response.get("data")
+
+    if current_data and ("pid" in current_data or "description" in current_data):
+        start_time = datetime.fromisoformat(current_data["start"]).replace(
+            tzinfo=timezone.utc
+        )
+        # start_time = start_time + timedelta(minutes=3)  # HACK: fix offset
+        elapsed_time = datetime.now(timezone.utc) - start_time
+        hours, remainder = divmod(elapsed_time.seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+
+        if "pid" in current_data:
+            project_id = current_data["pid"]
+            project_response = request(
+                f"{TOGGL_PROJECT_URL}{project_id}", auth=(api_token, "api_token")
+            )
+            project_name = project_response.get("data", {}).get("name", "")
+        else:
+            project_name = current_data.get("description", "")
+
+        print(f"{project_name} ({hours:02}:{minutes:02})")
+    else:
+        print("")
+
+
+if __name__ == "__main__":
+    main()
