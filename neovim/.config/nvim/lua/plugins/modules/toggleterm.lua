@@ -1,5 +1,5 @@
 local M = {
-    "akinsho/nvim-toggleterm.lua",
+    "akinsho/toggleterm.nvim",
     lazy = false,
 }
 
@@ -96,7 +96,7 @@ function M.config()
     end
 
     vim.api.nvim_create_user_command("Make", make, {})
-    vim.keymap.set({ "n", "i", "x" }, "<F2>", "<cmd>Make<cr>")
+    vim.keymap.set({ "n", "i", "x", "t" }, "<F2>", "<cmd>Make<cr>")
     vim.keymap.set({ "n", "i", "x" }, "<c-?>", "<cmd>Make<cr>")
 
     local function _smart_toggle(terminal, size, direction)

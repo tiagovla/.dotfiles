@@ -12,7 +12,9 @@ local M = {
 }
 
 function M.init()
-    vim.keymap.set("n", "<leader>D", ":DiffviewToggle<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>dd", ":DiffviewToggle<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>dh", ":DiffviewToggleHistory<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>df", ":DiffviewToggleFiles<cr>", { silent = true })
 end
 
 function M.config()
@@ -24,6 +26,15 @@ function M.config()
             vim.cmd "DiffviewClose"
         else
             vim.cmd("DiffviewOpen " .. e.args)
+        end
+    end, { nargs = "*" })
+
+    vim.api.nvim_create_user_command("DiffviewToggleHistory", function(e)
+        local view = require("diffview.lib").get_current_view()
+        if view then
+            vim.cmd "DiffviewClose"
+        else
+            vim.cmd("DiffviewFileHistory " .. e.args)
         end
     end, { nargs = "*" })
 

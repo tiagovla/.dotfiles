@@ -6,6 +6,7 @@ return {
         { "antoinemadec/FixCursorHold.nvim" },
         { "rcarriga/neotest-python" },
         { "rouge8/neotest-rust" },
+        { "nvim-neotest/nvim-nio" },
     },
     ft = { "python" },
     opts = {

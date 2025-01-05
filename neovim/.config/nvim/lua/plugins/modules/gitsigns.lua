@@ -1,18 +1,18 @@
 local M = {
     "lewis6991/gitsigns.nvim",
-    event = "BufReadPre",
+    event = "VeryLazy",
     dependencies = { "nvim-lua/plenary.nvim" },
 }
 
 function M.config()
     require("gitsigns").setup {
         signs = {
-            add = { hl = "Green", text = "│" },
-            change = { hl = "Blue", text = "│" },
-            delete = { hl = "Red", text = "│" },
-            topdelete = { hl = "Red", text = "-" },
-            changedelete = { hl = "Red", text = "~" },
-            untracked = { hl = "Green", text = "│" },
+            add = { text = "│" },
+            change = { text = "│" },
+            delete = { text = "│" },
+            topdelete = { text = "-" },
+            changedelete = { text = "~" },
+            untracked = { text = "│" },
         },
         on_attach = function(bufnr)
             local gs = package.loaded.gitsigns

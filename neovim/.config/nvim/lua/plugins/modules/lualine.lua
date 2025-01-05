@@ -22,6 +22,15 @@ function M.config()
         pwd = function()
             return vim.fn.fnamemodify(vim.fn.getcwd(0, 0), ":~")
         end,
+        formatting = {
+            function()
+                return "󰉼"
+            end,
+            cond = function()
+                return vim.bo.filetype ~= "" and vim.g.format_on_save
+            end,
+            color = { fg = "#ff9e64" },
+        },
     }
 
     local default_config = {
@@ -42,8 +51,10 @@ function M.config()
                     color = { fg = "#ff9e64" },
                 },
             },
-            lualine_c = { custom_components.pwd },
-            lualine_x = { "filetype" },
+            lualine_c = {
+                { custom_components.pwd },
+            },
+            lualine_x = { custom_components.formatting, "filetype" },
             lualine_y = {
                 {
                     "diff",

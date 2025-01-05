@@ -2,7 +2,15 @@ return {
     "folke/trouble.nvim",
     event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    keys = { { "<leader>e", "<cmd>TroubleToggle<cr>", desc = "Toggle Trouble" } },
+    keys = {
+        {
+            "<leader>e",
+            function()
+                vim.cmd.Trouble "diagnostics toggle"
+            end,
+            desc = "Toggle Trouble",
+        },
+    },
     config = true,
     init = function()
         vim.api.nvim_create_autocmd("BufEnter", {

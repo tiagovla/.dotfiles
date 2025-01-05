@@ -19,16 +19,18 @@ function M.init()
         ["do"] = { "step_over", "Step over" },
         ["du"] = { "step_out", "Step out" },
         ["dp"] = { "pause.toggle", "Pause toggle" },
-        ["dr"] = { "repl.toggle", "REPL toggle" },
+        -- ["dr"] = { "repl.open", "REPL toggle" },
         ["ds"] = { "continue", "Continue" },
         ["dq"] = { "close", "Close" },
     }
-
     for k, v in pairs(keys) do
         vim.keymap.set("n", "<leader>" .. k, function()
             return require("dap")[v[1]]()
         end, { desc = v[2] })
     end
+    vim.keymap.set("n", "<leader>dr", function()
+        return require("dap").repl.toggle()
+    end, { desc = "REPL toggle" })
 end
 
 local function config_dap()

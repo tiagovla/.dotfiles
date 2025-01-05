@@ -21,19 +21,10 @@ function M.config()
                 g = true,
             },
         },
-        operators = { gc = "Comments" },
-        key_labels = {},
         icons = {
             breadcrumb = "»",
             separator = "➜",
             group = "+",
-        },
-        window = {
-            border = "rounded",
-            position = "bottom",
-            margin = { 1, 0, 1, 0 },
-            padding = { 1, 1, 1, 1 },
-            winblend = 0,
         },
         layout = {
             height = { min = 4, max = 25 },
@@ -41,24 +32,14 @@ function M.config()
             spacing = 3,
             align = "left",
         },
-        ignore_missing = false,
-        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
-        show_help = true,
-        triggers = "auto",
-        triggers_blacklist = {
-            i = { "j", "k" },
-            v = { "j", "k" },
-        },
     }
     local wk = require "which-key"
-    wk.register({
-        d = { name = "Dap Debugger" },
-        g = { name = "General" },
-        h = { name = "Git Signs" },
-        t = { name = "Telescope" },
-    }, {
-        prefix = "<leader>",
-    })
+    wk.add({
+        { "<leader>d", group = "Dap Debugger" },
+        { "<leader>g", group = "General" },
+        { "<leader>h", group = "Git Signs" },
+        { "<leader>t", group = "Telescope" },
+    }, {})
 end
 
 return M

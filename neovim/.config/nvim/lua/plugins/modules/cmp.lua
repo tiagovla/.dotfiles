@@ -156,9 +156,9 @@ function M.config()
             native_menu = false,
         },
     }
-    require("copilot_cmp").setup {
-        force_autofmt = true,
-    }
+    -- require("copilot_cmp").setup {
+    --     force_autofmt = true,
+    -- }
 
     local lspkind = require "lspkind"
     lspkind.init {
