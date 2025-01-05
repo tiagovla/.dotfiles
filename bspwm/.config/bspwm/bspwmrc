@@ -1,22 +1,13 @@
 #!/bin/bash
+#
 _run() {
-    pgrep -x "${1}" >/dev/null || "$@" &
+    pgrep -x "${1}" > /dev/null || "$@" &
 }
 
 _run sxhkd
 
-EXTERNAL_MONITOR=$(xrandr | grep 'HDMI' | awk '{print $1}')
-INTERNAL_MONITOR=$(xrandr | grep 'eDP' | awk '{print $1}')
-if [[ $1 == 0 ]]; then
-    if [[ $(xrandr -q | grep "${EXTERNAL_MONITOR} connected") ]]; then
-        bspc monitor "$EXTERNAL_MONITOR" -d 1 2 3 4 5 6 7 8 9 0
-        bspc monitor "$INTERNAL_MONITOR" -d 10
-        bspc wm -O "$EXTERNAL_MONITOR" "$INTERNAL_MONITOR"
-    else
-        bspc monitor "$INTERNAL_MONITOR" -d 1 2 3 4 5 6 7 8 9 0 10
-    fi
-fi
-
+bspc monitor "eDP-1" -d 1 2 3 4 5 6 7 8 9 0 10 11
+bspc monitor "eDP-1-1" -d 1 2 3 4 5 6 7 8 9 0 10 11
 # bspc config border_radius 10
 bspc config border_width 2
 bspc config borderless_monocle true
@@ -26,7 +17,10 @@ bspc config normal_border_color "#282c34"
 bspc config single_monocle false
 bspc config split_ratio 0.50
 bspc config top_padding 20
-bspc config window_gap 8
+bspc config window_gap 4
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+bspc config merge_overlapping_monitors true
 
 bspc config external_rules_command "${HOME}/.config/bspwm/external_rules"
 
@@ -39,16 +33,17 @@ bspc config focus_follows_pointer true
 _run xbanish
 _run dunst
 _run flameshot
+_run copyq
 _run picom
 _run kbd_layout
 _run nm-applet
-_run clipcatd
 _run xsetroot -cursor_name left_ptr
 _run redshift
-(
-    "${HOME}/.local/bin/monitor_setup"
-    "${HOME}/.local/bin/fix_speed"
-    "${HOME}/.local/bin/kbd_layout"
-    feh --bg-scale ~/Pictures/unknown.png
-    xset r rate 200 120
-) &
+_run polybar
+_run solaar --window=hide
+_run localsend --hidden
+_run bitwarden-desktop autostart
+_run aw-qt --no-gui
+_run "${HOME}/.local/bin/kbd_layout"
+_run "${HOME}/.local/bin/mqtt_client"
+# _run "${HOME}/.local/bin/setup_monitor_layout"

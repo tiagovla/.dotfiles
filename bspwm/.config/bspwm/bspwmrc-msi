@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+_run() {
+    pgrep -x "${1}" >/dev/null || "$@" &
+}
+
+_run sxhkd
+
+IS_CONNECTED=$(xrandr | grep ' connected' | grep 'HDMI' | awk '{print $1}')
+EXTERNAL_MONITOR="HDMI-1-1"
+INTERNAL_MONITOR=$(xrandr | grep 'eDP' | awk '{print $1}')
+
+if [[ $1 == 0 ]]; then
+    if [[ -n $IS_CONNECTED ]]; then
+        (
+            sleep 1
+            xrandr --output "$EXTERNAL_MONITOR" --mode 2560x1080 --rate 75 --primary --right-of "$INTERNAL_MONITOR" --output "$main_monitor" --off
+            bspc monitor "$INTERNAL_MONITOR" -d 10
+            bspc monitor "$EXTERNAL_MONITOR" -d 1 2 3 4 5 6 7 8 9 0
+            bspc wm -O "$EXTERNAL_MONITOR" "$INTERNAL_MONITOR"
+            # bspc wm -O "HDMI-1-1" "eDP-1"
+        ) &
+    else
+        bspc monitor "$INTERNAL_MONITOR" -d 1 2 3 4 5 6 7 8 9 0 10
+    fi
+fi
+
+bspc config border_width 2
+bspc config borderless_monocle true
+bspc config focused_border_color "#353b45"
+bspc config gapless_monocle true
+bspc config normal_border_color "#282c34"
+bspc config single_monocle false
+bspc config split_ratio 0.50
+bspc config top_padding 20
+bspc config window_gap 8
+
+bspc config external_rules_command "${HOME}/.config/bspwm/external_rules"
+
+bspc config pointer_modifier mod1
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action2 resize_corner
+bspc config focus_follows_pointer true
+
+_run xbanish
+_run dunst
+_run flameshot
+# _run picom
+_run nm-applet
+_run clipcatd
+_run redshift
+
+(
+    _run kbd_layout
+    _run xsetroot -cursor_name left_ptr
+    _run xset r rate 200 120
+    monitor_setup
+    feh --bg-scale ~/Pictures/wallpaper.png
+) &
+
+if [[ -n $IS_CONNECTED ]]; then
+    bspc monitor "$INTERNAL_MONITOR" -g 1920x1080+0+0
+else
+    bspc monitor "$INTERNAL_MONITOR" -g 1920x1080+0+0
+    bspc monitor "$EXTERNAL_MONITOR" -g 2560x1080+0+0
+fi
