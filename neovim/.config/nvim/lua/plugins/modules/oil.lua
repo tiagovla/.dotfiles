@@ -16,7 +16,7 @@ return {
             if vim.bo.filetype == "oil" then
                 require("oil").close()
             else
-                require("oil").open_float()
+                require("oil").open()
             end
         end, { desc = "File navigation" })
     end,
