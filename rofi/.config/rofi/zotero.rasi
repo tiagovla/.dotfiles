@@ -1,0 +1,85 @@
+@import "colors.rasi" configuration {
+  modi: "zotero";
+  show-icons: false;
+  font: "MonoLisa Medium 14";
+  display-zotero: "";
+  drun-display-format: "{name}";
+  sidebar-mode: false;
+}
+
+window {
+  border-color: @border;
+  border-radius: 7px;
+  border: 2;
+  padding: 12px;
+  width: 60%;
+}
+
+prompt {
+  background-color: @prompt;
+  enabled: true;
+  padding: 0% 0% 0% 1%;
+}
+
+entry {
+  background-color: @prompt;
+  expand: true;
+  padding: 0% 0% 0% 0%;
+  margin: 0% 0% 0% 0%;
+  placeholder-color: @fg;
+  placeholder: "Search";
+}
+
+inputbar {
+  children: [ prompt, entry];
+  background-color: @prompt;
+  border-radius: 6px;
+  expand: false;
+  padding: 10px;
+  border: 1px;
+  border-color: @border;
+}
+
+listview {
+  columns: 1;
+  lines: 10;
+  fixed-columns: true;
+  cycle: false;
+  layout: vertical;
+  margin: 1.5% 0% 0% 0%;
+  scrollbar: true;
+}
+
+scrollbar {
+  width: 30px;
+  handle-width: 8px;
+  handle-color: @button-selected;
+  padding: 0px 0px 0px 2px;
+}
+
+mainbox {
+  children: [ inputbar, listview];
+  padding: 0% 0% 0% 0%;
+  spacing: 0%;
+}
+
+element {
+  orientation: vertical;
+}
+
+element-text {
+  expand: false;
+  horizontal-align: 0;
+  vertical-align: 0.5;
+}
+
+element-text {
+  background-color: inherit;
+  text-color: inherit;
+}
+
+element selected {
+  background-color: @button-selected;
+  border-radius: 5px;
+  text-color: @bg;
+}

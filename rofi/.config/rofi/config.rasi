@@ -2,7 +2,7 @@ configuration {
     modi: "drun";
     font: "MonoLisa Medium 12";
     show-icons: true;
-    icon-theme: "Tela-circle-red";
+    icon-theme: "Papirus-Dark";
     display-drun: "";
     drun-display-format: "{name}";
     sidebar-mode: false;

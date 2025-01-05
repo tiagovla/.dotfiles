@@ -1,0 +1,86 @@
+@import "colors.rasi" configuration {
+  modi: "drun";
+  display-drun: "";
+  drun-display-format: "{name}";
+  font: "MonoLisa Medium 14";
+  icon-theme: "Papirus-Dark";
+  show-icons: true;
+}
+
+window {
+  border-color: @border;
+  border-radius: 10px;
+  border: 2;
+  padding: 16px;
+  width: 50%;
+}
+
+prompt {
+  background-color: @prompt;
+  enabled: true;
+  padding: 0.5% 32px 0% -0.5%;
+}
+
+entry {
+  background-color: @prompt;
+  expand: true;
+  padding: 0.15% 0% 0% 0%;
+  placeholder-color: @fg;
+  placeholder: "Search";
+}
+
+inputbar {
+  children:
+    [ prompt,
+    entry];
+  background-color: @prompt;
+  border-radius: 6px;
+  expand: false;
+  margin: 0%;
+  padding: 10px;
+}
+
+listview {
+  columns: 4;
+  lines: 3;
+  fixed-columns: true;
+  cycle: false;
+  layout: vertical;
+}
+
+mainbox {
+  children:
+    [ inputbar,
+    listview];
+  padding: 2% 1% 2% 1%;
+  spacing: 2%;
+}
+
+element {
+  orientation: vertical;
+  padding: 2% 0% 2% 0%;
+}
+
+element-icon {
+  horizontal-align: 0.5;
+  size: 56px;
+}
+
+element-text {
+  expand: true;
+  horizontal-align: 0.5;
+  vertical-align: 0.5;
+  margin: 0.5% 0.5% -0.5% 0.5%;
+}
+
+element-text,
+element-icon {
+  background-color: inherit;
+  text-color: inherit;
+}
+
+element selected {
+  background-color: @button-selected;
+  border-radius: 5px;
+  text-color: @bg;
+}
