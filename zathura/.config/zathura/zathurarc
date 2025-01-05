@@ -1,9 +1,13 @@
 # Basic Settings
 
+set synctex true
+set synctex-editor-command "texlab inverse-search -i %{input} -l %{line}"
+
 set highlight-transparency 0.40
 set zoom-center "true"
 set selection-clipboard clipboard
 set render-loading "false"
+set zoom-min 10
 
 map <Space> toggle_index
 map K zoom in
@@ -43,8 +47,8 @@ set inputbar-fg                 "#11121D"
 set statusbar-bg                "#7199EE"
 set statusbar-fg                "#ffffff" 
 
-set highlight-color             "#98C379"
-set highlight-active-color      "#fe6d85"
+set highlight-color             rgba(152,195,121,0.4) # #98C379
+set highlight-active-color      rgba(254,109,133,0.4) # #fe6d85
 
 set default-bg                  "#11121D"
 set default-fg                  "#A0A8CD"
@@ -64,3 +68,4 @@ set smooth-scroll "true"
 set recolor-reverse-video "true"
 set scroll-step 50
 set font "MonoLisa-Medium 15"
+
