@@ -86,10 +86,10 @@ if not configs["pylance"] then
                 python = {
                     analysis = {
                         -- ignore = { "*" },
-                        autoSearchPaths = true,
+                        autoSearchPaths = false,
                         useLibraryCodeForTypes = true,
                         diagnosticMode = "workspace", --"workspace",
-                        typeCheckingMode = "basic",
+                        typeCheckingMode = "off", -- "basic",
                         completeFunctionParens = true,
                         autoFormatStrings = true,
                         -- logLevel = "Trace",
@@ -107,6 +107,14 @@ if not configs["pylance"] then
             },
             handlers = {
                 ["workspace/executeCommand"] = on_workspace_executecommand,
+                ["textDocument/hover"] = function(_, result, ctx, config)
+                    config = config or {}
+                    if result.contents then
+                        result.contents.value = result.contents.value:gsub("<!--.*", "")
+                    end
+                    config.border = "single"
+                    vim.lsp.handlers.hover(_, result, ctx, config)
+                end,
             },
         },
         commands = {
@@ -150,6 +158,11 @@ local function installer(ctx)
     ctx.spawn.bash {
         "-c",
         [[sed -i "0,/\(throw new Error(.*);}\)/ s//return;\1/" extension/dist/server.bundle.js]],
+    }
+
+    ctx.spawn.bash {
+        "-c",
+        [[sed -i -E "s/(throw new Error\(_0x[0-9a-f]+\['license)/return;\1/" extension/dist/server.bundle.js]],
     }
 
     ctx:link_bin(
