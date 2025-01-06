@@ -139,7 +139,7 @@ local function config_dap_ui()
         windows = { indent = 1 },
     }
 
-    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignWarn", linehl = "", numhl = "" })
+    -- vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignWarn", linehl = "", numhl = "" })
 
     dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
