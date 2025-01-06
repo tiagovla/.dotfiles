@@ -22,5 +22,19 @@ return {
         integrations = {
             diffview = true,
         },
+        sections = {
+            staged = {
+                folded = false,
+                hidden = false,
+            },
+            untracked = {
+                folded = true,
+                hidden = false,
+            },
+            unstaged = {
+                folded = true,
+                hidden = false,
+            },
+        },
     },
 }
