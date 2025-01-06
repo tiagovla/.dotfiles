@@ -123,15 +123,40 @@ local auto_snippets = {
 }
 
 for _, v in pairs { "bar", "hat", "vec", "tilde", "tdv", "fdv" } do
-    auto_snippets[#auto_snippets + 1] = s(opt(v), { t(("\\%s{"):format(v)), i(1), t "}", i(0) })
-    auto_snippets[#auto_snippets + 1] = s({ trig = "([^%s]*)" .. v, regTrig = true }, {
+    auto_snippets[#auto_snippets + 1] = sm(opt(v), { t(("\\%s{"):format(v)), i(1), t "}", i(0) })
+    auto_snippets[#auto_snippets + 1] = sm({ trig = "([^%s]*)" .. v, regTrig = true }, {
         d(1, function(_, snip, _)
             return sn(nil, { t(("\\%s{%s}"):format(v, snip.captures[1])) }, i(0))
         end),
     })
 end
 
-local greek_letters = { "eta", "omega", "sigma", "alpha", "beta", "gamma", "mu", "epsilon", "pi" }
+local greek_letters = {
+    "alpha",
+    "beta",
+    "chi",
+    "delta",
+    "epsilon",
+    "eta",
+    "gamma",
+    "iota",
+    "kappa",
+    "lambda",
+    "mu",
+    "nu",
+    "omega",
+    "omicron",
+    "phi",
+    "pi",
+    "psi",
+    "rho",
+    "sigma",
+    "tau",
+    "theta",
+    "upsilon",
+    "xi",
+    "zeta",
+}
 for _, v in pairs(greek_letters) do
     auto_snippets[#auto_snippets + 1] = s(opt(v), { t(("\\%s"):format(v)), i(0) })
 end
