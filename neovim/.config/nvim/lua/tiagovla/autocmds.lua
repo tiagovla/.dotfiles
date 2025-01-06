@@ -37,7 +37,7 @@ vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI", "BufEnter" }, {
             if max_col <= cc then
                 vim.api.nvim_set_hl(0, "ColorColumn", cc_default_hi)
             else
-                vim.api.nvim_set_hl(0, "ColorColumn", { bg = cc_default_hi.background + 328968 })
+                vim.api.nvim_set_hl(0, "ColorColumn", { bg = 2697787 })
             end
         end
     end,
