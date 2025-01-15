@@ -153,18 +153,8 @@ local function installer(ctx)
     }
     ctx.spawn.bash {
         "-c",
-        [[sed -i -E "s/;_0x[0-9a-f]+\[.*\+'nt'\]=function\(_0x[0-9a-f]+\)\{/&return;/" extension/dist/server.bundle.js]],
+        [[sed -i 's/\(return;}\)\(throw new Error.*\\x0a\\x0a\)/\1return;\2/' extension/dist/server.bundle.js]],
     }
-    ctx.spawn.bash {
-        "-c",
-        [[sed -i "0,/\(throw new Error(.*);}\)/ s//return;\1/" extension/dist/server.bundle.js]],
-    }
-
-    ctx.spawn.bash {
-        "-c",
-        [[sed -i -E "s/(throw new Error\(_0x[0-9a-f]+\['license)/return;\1/" extension/dist/server.bundle.js]],
-    }
-
     ctx:link_bin(
         "pylance",
         ctx:write_node_exec_wrapper("pylance", path.concat { "extension", "dist", "server.bundle.js" })
