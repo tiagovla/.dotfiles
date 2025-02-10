@@ -3,6 +3,23 @@ local M = {
     lazy = false,
 }
 
+local function slice_from_match(list, match)
+    local function find_index(tbl, element)
+        for i, v in ipairs(tbl) do
+            if v == element then
+                return i
+            end
+        end
+        return nil
+    end
+    local index = find_index(list, match)
+    if index then
+        return { unpack(list, index + 1) }
+    else
+        return list
+    end
+end
+
 function M.init()
     vim.keymap.set({ "n", "i", "v", "t", "x" }, "<F1>", "<nop>")
     vim.keymap.set({ "n", "v" }, "<F1>", "<cmd>TermFloat<cr>")
@@ -43,21 +60,25 @@ function M.config()
 
     local lazygit = Terminal:new { cmd = "lazygit", hidden = true, direction = "tab" }
 
-    local running_cmd = false
     local lines = {}
+    local running_cmd = false
 
-    local efm = vim.api.nvim_get_option_value("errorformat", {})
     local on_data = function(_, _, data)
         for i, line in ipairs(data) do
-            data[i] = string.gsub(line, "\r", "")
+            data[i] = line:gsub("\r", ""):gsub("\27%[[0-9;]*m", "")
         end
-
-        for k, v in pairs(data) do
+        for _, v in pairs(data) do
             if v == "async_make_done" then
                 running_cmd = false
+                local output = slice_from_match(lines, "async_make_start")
+                output = vim.tbl_filter(function(line)
+                    return line ~= ""
+                end, output)
+
+                local efm = vim.api.nvim_get_option_value("errorformat", { buf = 0 })
                 vim.fn.setqflist({}, " ", {
                     title = "make",
-                    lines = lines,
+                    lines = output,
                     efm = efm,
                 })
                 vim.api.nvim_command "doautocmd QuickFixCmdPost"
@@ -89,9 +110,9 @@ function M.config()
             term_float:toggle()
             term_float:toggle()
         end
-        running_cmd = true
         lines = {}
-        term_float:send({ "make; echo async_make_done" }, false)
+        term_float:send({ "echo async_make_start; make; echo async_make_done" }, false)
+        running_cmd = true
         vim.notify "Make command running..."
     end
 
