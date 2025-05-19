@@ -33,6 +33,7 @@ return {
     exit_behavior = "Close",
     force_reverse_video_cursor = true,
     cell_width = 0.85,
+    window_background_opacity = 1.00,
     colors = {
         foreground = "#a0A8CD",
         background = "#11121D",
@@ -48,19 +49,22 @@ return {
         top = 4,
         bottom = 4,
     },
-    default_prog = {
-        "/usr/bin/zsh",
-        "-l",
-        "-c",
-        "tmux attach -t $(bspc query -D -d focused --names) || tmux new-session -A -s $(bspc query -D -d focused --names)",
-    },
+    default_prog = (function()
+        local is_wayland = os.getenv "WAYLAND_DISPLAY"
+        local workspace_cmd = is_wayland and "$(hyprctl monitors | grep 'active workspace' | awk '{print $3}')"
+            or "$(bspc query -D -d focused --names)"
+        local tmux_cmd = string.format("tmux attach -t %s || tmux new -A -s %s", workspace_cmd, workspace_cmd)
+        return { "/usr/bin/zsh", "-l", "-c", tmux_cmd }
+    end)(),
     keys = {
         { key = "i", mods = "CTRL", action = wezterm.action { SendString = "\x1b[105;5u" } },
         { key = "\r", mods = "SHIFT", action = wezterm.action { SendString = "\x1b[13;2u" } },
         { key = "\r", mods = "CTRL", action = wezterm.action { SendString = "\x1b[13;5u" } },
     },
     warn_about_missing_glyphs = false,
-    -- webgpu_preferred_adapter = wezterm.gui.enumerate_gpus()[1],
-    -- front_end = "WebGpu",
+    webgpu_preferred_adapter = wezterm.gui.enumerate_gpus()[2],
+    front_end = "WebGpu",
     debug_key_events = true,
+    max_fps = 120,
+    window_close_confirmation = "NeverPrompt",
 }
