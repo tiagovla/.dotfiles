@@ -1,6 +1,6 @@
 local mappings = {}
 
-vim.api.nvim_create_user_command("FormattingToggle", function()
+vim.api.nvim_create_user_command("ToggleFormatting", function()
     if vim.g.format_on_save then
         vim.g.format_on_save = false
         vim.notify "Formatting on save disabled"
@@ -12,16 +12,19 @@ end, {})
 
 mappings.texlab = function()
     vim.keymap.set("n", "<leader>lb", "<cmd>TexlabBuild<CR>", { buffer = 0, desc = "Build document" })
-    vim.keymap.set("n", "<leader>lv", "<cmd>TexlabForward<CR>", { buffer = 0, desc = "Forward view" })
+    vim.keymap.set("n", "<leader>lv", function()
+        vim.cmd.TexlabForward()
+        vim.cmd [[!sleep 0.3 && bspc node last -f]]
+    end, { buffer = 0, desc = "Forward view" })
 end
 
 mappings.clangd = function()
-    vim.keymap.set("n", "<leader><Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
+    vim.keymap.set("n", "<Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
 end
 
 function mappings.setup(client_name, buffer)
-    vim.keymap.set("n", "gh", function()
-        vim.lsp.inlay_hint.enable(buffer, nil)
+    vim.keymap.set("n", "<leader>o", function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { buffer = buffer, desc = "Toggle typehints" })
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action" })
     vim.keymap.set("v", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action (range)" })
@@ -46,9 +49,9 @@ function mappings.setup(client_name, buffer)
     vim.keymap.set({ "n", "v" }, "<leader>f", function()
         vim.lsp.buf.format {
             timeout_ms = 5000,
-            filter = function(c)
-                return c.name == "null-ls"
-            end,
+            -- filter = function(c)
+            --     return c.name == "null-ls"
+            -- end,
         }
     end, { buffer = 0, desc = "Format buffer" })
 

@@ -1,47 +1,54 @@
 local lspconfig = require "lspconfig"
-local cmp_nvim_lsp = require "cmp_nvim_lsp"
-local caps = cmp_nvim_lsp.default_capabilities()
 
-caps.textDocument.onTypeFormatting = { dynamicRegistration = false }
-caps.offsetEncoding = { "utf-16" }
-caps.textDocument.completion.completionItem.snippetSupport = true
+local caps
+local ok_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 
-for type, _ in pairs { Error = "", Warn = "", Hint = "", Info = "" } do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = nil, texthl = nil, numhl = hl })
+if ok_cmp then
+    caps = cmp_nvim_lsp.default_capabilities()
+else
+    caps = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
 end
 
-vim.diagnostic.config {
-    -- virtual_text = {
-    --     prefix = "",
-    -- },
-    virtual_text = false,
-    signs = true,
-    underline = true,
-    update_in_insert = false,
-}
+caps.offsetEncoding = { "utf-16" }
+caps.textDocument.completion.completionItem.snippetSupport = true
+caps.textDocument.onTypeFormatting = { dynamicRegistration = true }
 
 -- python
-lspconfig.pylance.setup {
+-- lspconfig.pylance.setup {
+--     capabilities = caps,
+--     on_init = function(client)
+--         client.config.settings.python.pythonPath = (function(workspace)
+--             if vim.env.VIRTUAL_ENV then
+--                 return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
+--             end
+--             if workspace then
+--                 local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
+--                 if vim.fn.filereadable(poetry_lock_path) then
+--                     local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
+--                     return vim.fs.joinpath(venv, "bin", "python")
+--                 end
+--             end
+--             return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
+--         end)(client.config.root_dir)
+--     end,
+--     before_init = function(_, config)
+--         config.settings.python.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath "data", "lazy", "python-type-stubs")
+--     end,
+-- }
+
+-- lspconfig.ruff_lsp.setup {
+--     capabilities = caps,
+--     init_options = {
+--         settings = {
+--             args = {},
+--         },
+--     },
+-- }
+
+lspconfig.astro.setup {}
+
+lspconfig.tailwindcss.setup {
     capabilities = caps,
-    on_init = function(client)
-        client.config.settings.python.pythonPath = (function(workspace)
-            if vim.env.VIRTUAL_ENV then
-                return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
-            end
-            if workspace then
-                local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
-                if vim.fn.filereadable(poetry_lock_path) then
-                    local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
-                    return vim.fs.joinpath(venv, "bin", "python")
-                end
-            end
-            return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
-        end)(client.config.root_dir)
-    end,
-    before_init = function(_, config)
-        config.settings.python.analysis.stubPath = vim.fs.joinpath(vim.fn.stdpath "data", "lazy", "python-type-stubs")
-    end,
 }
 
 -- markdown
@@ -50,8 +57,16 @@ lspconfig.marksman.setup {
 }
 
 -- javascript--
-lspconfig.tsserver.setup {
+lspconfig.ts_ls.setup {
     capabilities = caps,
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+    },
 }
 
 -- lua
@@ -100,6 +115,13 @@ lspconfig.lua_ls.setup {
 -- rust
 lspconfig.rust_analyzer.setup {}
 
+-- markdown
+lspconfig.grammarly.setup {
+    cmd = { "grammarly-languageserver", "--stdio" },
+    filetypes = { "markdown" },
+    init_options = { clientId = "client_BaDkMgx4X19X9UxxYRCXZo" },
+}
+
 -- cpp
 lspconfig.cmake.setup {
     capabilities = caps,
@@ -112,9 +134,7 @@ lspconfig.clangd.setup {
 }
 
 -- docker
-lspconfig.dockerls.setup {
-    capabilities = caps,
-}
+lspconfig.dockerls.setup {}
 
 -- latex
 lspconfig.texlab.setup {
@@ -131,10 +151,12 @@ lspconfig.texlab.setup {
             diagnosticsDelay = 50,
             build = {
                 executable = "latexmk",
+                -- executable = "dockerlatexmk",
                 onSave = true,
                 args = {
                     "-pdf",
-                    "-pdflua",
+                    -- "-pdflua",
+                    -- "-xelatex",
                     "-quiet",
                     "-interaction=nonstopmode",
                     "-synctex=1",
@@ -146,29 +168,30 @@ lspconfig.texlab.setup {
                 },
             },
             forwardSearch = {
-                args = { "--synctex-forward", "%l:1:%f", "%p" },
                 executable = "zathura",
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
             },
             chktex = { onOpenAndSave = true, onEdit = false },
             formatterLineLength = 120,
+            latexFormatter = "texlab",
         },
     },
 }
 
-lspconfig.ltex.setup {
-    capabilities = caps,
-    on_attach = function()
-        require("ltex_extra").setup {
-            init_check = true,
-        }
-    end,
-    settings = {
-        ltex = {
-            language = "en-US",
-            checkFrequency = "save",
-        },
-    },
-}
+-- lspconfig.ltex.setup {
+--     capabilities = caps,
+--     on_attach = function()
+--         require("ltex_extra").setup {
+--             init_check = true,
+--         }
+--     end,
+--     settings = {
+--         ltex = {
+--             language = "en-US",
+--             checkFrequency = "save",
+--         },
+--     },
+-- }
 
 lspconfig["matlab_ls"].setup {
     settings = {
@@ -182,12 +205,3 @@ lspconfig["matlab_ls"].setup {
 }
 
 lspconfig["wolfram_ls"].setup {}
-
--- lspconfig.ruff_lsp.setup {
---     capabilities = caps,
---     init_options = {
---         settings = {
---             args = {},
---         },
---     },
--- }

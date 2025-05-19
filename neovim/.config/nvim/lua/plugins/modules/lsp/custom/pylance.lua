@@ -3,7 +3,8 @@ local configs = require "lspconfig.configs"
 local lsp_util = require "vim.lsp.util"
 local path = require "mason-core.path"
 local util = require "lspconfig.util"
-
+--
+--
 local root_files = {
     "pyproject.toml",
     "setup.py",
@@ -161,11 +162,16 @@ local function installer(ctx)
     )
 end
 
-return Pkg.new {
+return {
     name = "pylance",
-    desc = [[Fast, feature-rich language support for Python]],
+    description = [[Fast, feature-rich language support for Python]],
     homepage = "https://github.com/microsoft/pylance",
-    languages = { Pkg.Lang.Python },
-    categories = { Pkg.Cat.LSP },
-    install = installer,
+    licenses = { "MIT" },
+    languages = { "Python" },
+    categories = { "LSP" },
+    source = {
+        id = "pkg:mason/pylance@0.0.1",
+        install = installer,
+    },
 }
+
