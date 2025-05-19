@@ -47,7 +47,7 @@ function M.options()
     vim.opt.inccommand = "split"
 
     vim.opt.scrolloff = 20
-    vim.opt.sidescrolloff = 20
+    vim.opt.sidescrolloff = 15
 
     vim.opt.showbreak = "↳"
     vim.opt.splitkeep = "topline"

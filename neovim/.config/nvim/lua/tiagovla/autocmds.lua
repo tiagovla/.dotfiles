@@ -76,6 +76,8 @@ vim.api.nvim_create_autocmd("BufNewFile", {
             vim.cmd("0r " .. c_path .. "make") -- Makefile
         elseif ft == "cmake" then
             vim.cmd("0r " .. c_path .. "cmake") -- CMakeLists.txt
+        elseif ft == "tex" then
+            vim.cmd("0r " .. c_path .. "tex.tex") -- latex.tex
         end
     end,
 })
