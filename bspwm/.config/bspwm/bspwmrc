@@ -4,11 +4,10 @@ _run() {
     pgrep -x "${1}" > /dev/null || "$@" &
 }
 
+_run dbus-update-activation-environment --all
 _run sxhkd
 
 bspc monitor "eDP-1" -d 1 2 3 4 5 6 7 8 9 0 10 11
-bspc monitor "eDP-1-1" -d 1 2 3 4 5 6 7 8 9 0 10 11
-# bspc config border_radius 10
 bspc config border_width 2
 bspc config borderless_monocle true
 bspc config focused_border_color "#353b45"
@@ -21,29 +20,27 @@ bspc config window_gap 4
 bspc config remove_disabled_monitors true
 bspc config remove_unplugged_monitors true
 bspc config merge_overlapping_monitors true
-
-bspc config external_rules_command "${HOME}/.config/bspwm/external_rules"
-
 bspc config pointer_modifier mod1
 bspc config pointer_action1 move
 bspc config pointer_action2 resize_side
 bspc config pointer_action2 resize_corner
 bspc config focus_follows_pointer true
+bspc config external_rules_command "${HOME}/.config/bspwm/external_rules"
+bspc config pointer_motion_interval 40
 
 _run xbanish
 _run dunst
 _run flameshot
 _run copyq
 _run picom
-_run kbd_layout
 _run nm-applet
 _run xsetroot -cursor_name left_ptr
 _run redshift
-_run polybar
+_run polybar main
 _run solaar --window=hide
 _run localsend --hidden
 _run bitwarden-desktop autostart
 _run aw-qt --no-gui
-_run "${HOME}/.local/bin/kbd_layout"
-_run "${HOME}/.local/bin/mqtt_client"
-# _run "${HOME}/.local/bin/setup_monitor_layout"
+_run feh --bg-scale ~/Pictures/arch.png
+_run autorandr --change
+_run xset r rate 200 200
