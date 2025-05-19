@@ -42,7 +42,7 @@ function M.config()
             map("n", "<leader>hp", gs.preview_hunk, { desc = "Preview hunk" })
             map("n", "<leader>hb", gs.toggle_current_line_blame, { desc = "Toggle current line blame" })
             map("n", "<leader>hd", gs.diffthis, { desc = "Diff this" })
-            map({ "o", "x" }, "<leader>ih", gs.select_hunk, { desc = "Select hunk" })
+            map({ "o", "x" }, "ih", gs.select_hunk, { desc = "Select hunk" })
         end,
         watch_gitdir = { interval = 1000 },
         sign_priority = 6,

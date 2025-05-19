@@ -31,6 +31,20 @@ function M.config()
             end,
             color = { fg = "#ff9e64" },
         },
+        diagnostics = {
+            function()
+                local current = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+                local total = 0
+                for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+                    total = total + #vim.diagnostic.get(bufnr, { severity = vim.diagnostic.severity.ERROR })
+                end
+                if total == 0 then
+                    return ""
+                end
+                return string.format("%%#Red# %d/%d", current, total)
+            end,
+            color = nil,
+        },
     }
 
     local default_config = {
@@ -54,7 +68,7 @@ function M.config()
             lualine_c = {
                 { custom_components.pwd },
             },
-            lualine_x = { custom_components.formatting, "filetype" },
+            lualine_x = { custom_components.diagnostics, custom_components.formatting, "filetype" },
             lualine_y = {
                 {
                     "diff",

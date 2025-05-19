@@ -203,4 +203,132 @@ function M.config()
     }
 end
 
-return M
+local N = {
+    {
+        "saghen/blink.compat",
+        version = "*",
+        lazy = true,
+        opts = {
+            impersonate_nvim_cmp = true,
+            debug = true,
+        },
+    },
+    {
+        "saghen/blink.cmp",
+        version = "v0.10.0",
+        dependencies = {
+            { "rafamadriz/friendly-snippets" },
+            -- { "hrsh7th/cmp-nvim-lsp-signature-help" },
+            -- { "zbirenbaum/copilot-cmp" },
+            { "hrsh7th/cmp-nvim-lua" },
+            { "kdheepak/cmp-latex-symbols" },
+            -- { "onsails/lspkind-nvim" },
+            {
+                "tiagovla/zotex.nvim",
+                config = function()
+                    require("zotex").setup {}
+                end,
+                dependencies = { "kkharji/sqlite.lua" },
+                dev = true,
+            },
+        },
+        opts = {
+            snippets = {
+                preset = "luasnip",
+                expand = function(snippet)
+                    require("luasnip").lsp_expand(snippet)
+                end,
+                active = function(filter)
+                    if filter and filter.direction then
+                        return require("luasnip").jumpable(filter.direction)
+                    end
+                    return require("luasnip").in_snippet()
+                end,
+                jump = function(direction)
+                    require("luasnip").jump(direction)
+                end,
+            },
+            keymap = {
+                preset = "enter",
+                cmdline = {
+                    preset = "default",
+                },
+            },
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = "mono",
+            },
+            sources = {
+                default = { "lsp", "path", "snippets", "buffer", "latex_symbols", "zotex", "nvim_lua" },
+                providers = {
+                    nvim_lua = {
+                        name = "nvim_lua",
+                        module = "blink.compat.source",
+                        score_offset = -3,
+                        opts = {},
+                    },
+                    latex_symbols = {
+                        name = "latex_symbols",
+                        module = "blink.compat.source",
+                        score_offset = -3,
+                        opts = {},
+                    },
+                    zotex = {
+                        name = "zotex",
+                        module = "blink.compat.source",
+                        score_offset = -3,
+                        opts = {},
+                    },
+                },
+                min_keyword_length = function(ctx)
+                    return ctx.trigger.kind == "trigger_character" and 0 or 3
+                end,
+            },
+            completion = {
+
+                accept = {
+                    auto_brackets = {
+                        enabled = true,
+                        override_brackets_for_filetypes = {
+                            tex = { "{", "}" },
+                        },
+                    },
+                },
+                menu = {
+                    min_width = 30,
+                    scrolloff = 2,
+                    border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+                    winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
+                    draw = {
+                        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_icon" } },
+                        components = {
+                            source_icon = {
+                                ellipsis = false,
+                                text = function(ctx)
+                                    if ctx.item.data and ctx.item.data.citation then
+                                        return "[ZoTeX]"
+                                    end
+                                    local map = {
+                                        luasnip = "[SNIP]",
+                                        buffer = "[BUF]",
+                                        lsp = "[LSP]",
+                                        nvim_lua = "[LUA]",
+                                        path = "[PATH]",
+                                        latex_symbols = "[LaTeX]",
+                                        zotex = "[ZoTeX]",
+                                        snippets = "[SNIP]",
+                                    }
+                                    return map[ctx.item.source_id] or ctx.item.source_id
+                                end,
+                                highlight = "BlinkCmpSource",
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        opts_extend = { "sources.default" },
+    },
+}
+
+return N

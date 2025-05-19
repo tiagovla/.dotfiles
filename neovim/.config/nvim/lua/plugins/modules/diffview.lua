@@ -12,7 +12,7 @@ local M = {
 }
 
 function M.init()
-    vim.keymap.set("n", "<leader>dd", ":DiffviewToggle<cr>", { silent = true })
+    vim.keymap.set("n", "<leader>D", ":DiffviewToggle<cr>", { silent = true })
     vim.keymap.set("n", "<leader>dh", ":DiffviewToggleHistory<cr>", { silent = true })
     vim.keymap.set("n", "<leader>df", ":DiffviewToggleFiles<cr>", { silent = true })
 end
