@@ -1,3 +1,15 @@
+local function get_harpoon_mark_from_id(id)
+    local harpoon = require "harpoon"
+    local Path = require "plenary.path"
+    local list = harpoon:list()
+
+    local buf_name = vim.api.nvim_buf_get_name(id)
+    local root_dir = list.config.get_root_dir()
+    local n_path = Path:new(buf_name):make_relative(root_dir)
+    local _, idx = list:get_by_value(n_path)
+    return idx
+end
+
 return {
     "akinsho/nvim-bufferline.lua",
     lazy = false,
@@ -9,10 +21,7 @@ return {
         options = {
             view = "multiwindow",
             numbers = function(opts)
-                local harpoon = require "harpoon.mark"
-                local buf_name = vim.api.nvim_buf_get_name(opts.id)
-                local harpoon_mark = harpoon.get_index_of(buf_name)
-                return harpoon_mark
+                return get_harpoon_mark_from_id(opts.id)
             end,
             modified_icon = "●",
             max_prefix_length = 5,
@@ -28,13 +37,7 @@ return {
             },
             sort_by = function(buffer_a, buffer_b)
                 local function get_local_mark(id)
-                    local harpoon = require "harpoon.mark"
-                    local buf_name = vim.api.nvim_buf_get_name(id)
-                    local harpoon_mark = harpoon.get_index_of(buf_name)
-                    if harpoon_mark == nil then
-                        return 999999
-                    end
-                    return harpoon_mark
+                    return get_harpoon_mark_from_id(id) or 999999
                 end
                 return get_local_mark(buffer_a.id) < get_local_mark(buffer_b.id)
             end,
