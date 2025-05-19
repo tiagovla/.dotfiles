@@ -1,36 +1,34 @@
-#
-# wm independent hotkeys
-#
+## wm independent hotkeys
+
 # terminal emulator
 alt + Return
-    prime-run wezterm || wezterm
+    wezterm
 
 # program launcher
 alt + @space
-    rofi -terminal wezterm -show drun
+    GDK_DPI_SCALE=1.5 QT_SCALE_FACTOR=1.5 GTK_THEME=Adwaita:dark rofi -terminal wezterm -show drun
 
+# program launcher with dmenu style
 shift + alt + @space
-    rofi -terminal wezterm -show run -theme dmenu
+    GDK_DPI_SCALE=1.5 QT_SCALE_FACTOR=1.5 GTK_THEME=Adwaita:dark rofi -terminal wezterm -show run -theme dmenu
 
 # make sxhkd reload its configuration files:
 alt + Escape
     pkill -USR1 -x sxhkd
 
-# open browser
+# open browser - Default profile
 alt + w
-    prime-run brave || brave
+    chrome --profile-directory="Default" 
 
-# open spotify
-alt + S
-    if pgrep -x spotify > /dev/null; then bspc desktop -f 5; else spotify &> /dev/null &; fi
+# open browser - Work profile
+shift + alt + w
+    chrome --profile-directory="Work" 
 
 # open discord
 alt + d
     if pgrep -x Discord > /dev/null; then bspc desktop -f 6; else discord &> /dev/null &; fi
 
-#
 # bspwm hotkeys
-#
 
 # quit/restart bspwm
 alt + shift + {q,r}
@@ -52,9 +50,6 @@ alt + y
 alt + g
     bspc node -s biggest.window
 
-#
-# state/flags
-#
 
 # set the window state
 alt + {t,shift + t,s,f}
@@ -63,10 +58,6 @@ alt + {t,shift + t,s,f}
 # set the node flags
 alt + shift + {m,x,y,z}
     bspc node -g {marked,locked,sticky,private}
-
-#
-# focus/swap
-#
 
 # focus the node in the given direction
 alt + {_,shift + }{h,j,k,l}
@@ -84,9 +75,8 @@ alt + {_,shift + }c
 alt + bracket{left,right}
     bspc desktop -f {prev,next}.local
 
-# focus the last node/desktop
-alt + {grave,Tab}
-    bspc {node,desktop} -f last
+alt + Tab
+    bspc desktop -f last
 
 # focus the older or newer node in the focus history
 alt + {o,i}
@@ -96,15 +86,21 @@ alt + {o,i}
 
 # focus or send to the given desktop
 alt + {_,shift + }{1-9,0}
-    bspc {desktop -f,node -d} '^{1-9,10}'
+    bspc {desktop -f,node -d} '{1-9,0}'
 
-super + {_,shift + }{1}
+alt + {_,shift + }{ minus }
+    bspc {desktop -f,node -d} 11 
+
+alt + {_,shift + }{ grave }
     bspc {desktop -f,node -d} 10 
 
+shift + alt + comma
+    switch_desktops --rotate
 #
-# move/resize
+shift + alt + period
+    switch_desktops --rotate-reverse
 
-# expand a window by moving one of its side outward
+# move/resize
 ctrl + alt + {h,j,k,l}
     {bspc node @parent/second -z left -20 0; \
     bspc node @parent/first -z right -20 0, \
@@ -115,11 +111,12 @@ ctrl + alt + {h,j,k,l}
     bspc node @parent/first -z right +20 0; \
     bspc node @parent/second -z left +20 0}
 
-#
 # custom
 #
-
 # increase/decrease volume
+alt + {Up,Down}
+    pulsemixer --change-volume {+,-}10
+
 XF86Audio{Raise,Lower}Volume
     pulsemixer --change-volume {+,-}10
 
@@ -140,3 +137,4 @@ XF86MonBrightness{Up,Down}
     flameshot {full, gui} -p ~/Pictures/Screenshots --clipboard
 
 # vim:ft=bash
+# check this https://github.com/pigmonkey/dotfiles/blob/master/config/sxhkd/sxhkdrc
