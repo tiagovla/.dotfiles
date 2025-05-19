@@ -1,6 +1,6 @@
 #!/bin/bash
 zmodload zsh/zprof
-for zfile in exports functions prompt settings aliases plugins mappings; do
+for zfile in exports functions prompt settings aliases plugins mappings secrets; do
 # shellcheck disable=SC1090
     source "$ZDOTDIR/config/${zfile}.zsh"
 done
@@ -12,3 +12,6 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh2) ]]; then
 else
   compinit -C
 fi
+
+# export all_proxy="socks5://192.0.0.4:1080"
+eval "$(zoxide init --cmd c zsh)"

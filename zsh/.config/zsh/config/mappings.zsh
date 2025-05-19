@@ -1,9 +1,8 @@
 #!/bin/zsh
 #
 export KEYTIMEOUT=1
-bindkey -v
 bindkey -v '^?' backward-delete-char
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
-bindkey '^P' up-line-or-search
-bindkey '^N' down-line-or-search
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward

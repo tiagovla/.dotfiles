@@ -3,6 +3,10 @@ export HISTSIZE=1000000
 export SAVEHIST=1000000
 export HISTFILE="$HOME/.zsh_history"
 
+xset r rate 200 200
+
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
 setopt EXTENDED_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FIND_NO_DUPS
