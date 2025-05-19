@@ -1,9 +1,8 @@
 #!/bin/bash
 
-xrandr --output eDP-1-1 --mode 1920x1080 --rate 60
-feh --bg-scale ~/Pictures/unknown.png
+/usr/bin/prime-offload
 tmux has-session -t test || tmux new-session -d -s test &
-setxkbmap us_intl
+xset r rate 200 120
 
 export PATH="$HOME/.local/bin:$PATH"
 export XDG_CONFIG_HOME=$HOME/.config
