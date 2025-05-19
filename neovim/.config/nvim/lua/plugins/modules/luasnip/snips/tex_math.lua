@@ -87,7 +87,7 @@ local auto_snippets = {
     sm(opt "mathcal", { t "\\mathcal{", i(1), t "} ", i(0) }),
     sm(opt "mathsrc", { t "\\mathscr{", i(1), t "} ", i(0) }),
     sm(opt "mathscr", { t "\\mathscr{", i(1), t "} ", i(0) }),
-    sm(opt "bm", { t "\\bm{", i(1), t "} ", i(0) }),
+    -- sm(opt "bm", { t "\\bm{", i(1), t "} ", i(0) }),
     sm("lll", { t "\\ell", i(0) }),
     sm("xx", { t "\\times ", i(0) }),
     sm(opt "nabla", { t "\\nabla", i(0) }),

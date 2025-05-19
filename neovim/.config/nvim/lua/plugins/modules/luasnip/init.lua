@@ -1,4 +1,4 @@
-local M = { "L3MON4D3/LuaSnip", lazy = false, dependencies = { { "rafamadriz/friendly-snippets" } } }
+local M = { "L3MON4D3/LuaSnip", version = "v2.*", lazy = false, dependencies = { { "rafamadriz/friendly-snippets" } } }
 
 function M.init()
     vim.keymap.set("i", "<c-u>", function()

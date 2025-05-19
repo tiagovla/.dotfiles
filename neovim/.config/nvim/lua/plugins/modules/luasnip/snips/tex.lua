@@ -5,9 +5,33 @@ local t = ls.text_node
 local i = ls.insert_node
 local d = ls.dynamic_node
 local sn = ls.snippet_node
+local f = ls.function_node
 local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 local events = require "luasnip.util.events"
+
+ls.add_snippets("tex", {
+    s("centered_comment", {
+        f(function(args)
+            local title = args[1][1] or ""
+            local total_length = 80
+            local title_length = #title
+            local padding = math.max(0, total_length - title_length - 2)
+            local left_padding = math.floor(padding / 2)
+            return string.rep("%", left_padding) .. " "
+        end, { 1 }),
+        i(1, "Title"), -- Insert node for the title
+        f(function(args)
+            local title = args[1][1] or ""
+            local total_length = 80
+            local title_length = #title
+            local padding = math.max(0, total_length - title_length - 2)
+            local left_padding = math.floor(padding / 2)
+            local right_padding = padding - left_padding
+            return " " .. string.rep("%", right_padding)
+        end, { 1 }),
+    }),
+})
 
 local function div(tag, stag)
     return s({ trig = tag }, {
