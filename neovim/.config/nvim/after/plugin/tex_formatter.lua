@@ -1,8 +1,9 @@
+local ts_utils = require "nvim-treesitter.ts_utils"
+
 local run_formatter = function(text)
     local result = table.concat(text, " ")
-    vim.pretty_print(result)
+    -- vim.print(result)
     local width = vim.opt.textwidth:get() or "80"
-
     local j = require("plenary.job"):new {
         command = "fmt",
         args = { "-w" .. width, "-u" },
@@ -10,38 +11,94 @@ local run_formatter = function(text)
     }
     return j:sync()
 end
-local function format_block()
-    local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
-    local text_node
-    local type_list = { "text", "inline_formula" }
-    while node do
-        if vim.tbl_contains(type_list, node:type()) then
-            text_node = node
-        end
-        node = node:parent()
+
+-- Get the start and end positions of the given nodes.
+local function get_min_max_range(nodes)
+    local min, max = nodes[1]:start(), nodes[1]:end_()
+    for _, node in ipairs(nodes) do
+        local start = node:start()
+        local end_ = node:end_()
+        min = math.min(min, start)
+        max = math.max(max, end_)
     end
-    if not text_node then
-        return
-    end
-    local prev = text_node
-    while prev:prev_named_sibling() do
-        if not vim.tbl_contains(type_list, prev:prev_named_sibling():type()) then
-            break
-        end
-        prev = prev:prev_named_sibling()
-    end
-    local next = text_node
-    while next:next_named_sibling() do
-        if not vim.tbl_contains(type_list, next:next_named_sibling():type()) then
-            break
-        end
-        next = next:next_named_sibling()
-    end
-    local start, _ = prev:start()
-    local end_, _ = next:end_()
-    local res = vim.api.nvim_buf_get_lines(0, start, end_ + 1, false)
-    local r = run_formatter(res)
-    vim.api.nvim_buf_set_lines(0, start, end_ + 1, false, r)
+    return min, max
 end
 
-vim.keymap.set("n", "gqq", format_block, {})
+-- Get the root node of the tree for a specific filetype.
+local function get_root_node(bufnr, ft)
+    local parser = vim.treesitter.get_parser(bufnr, ft)
+    local tree = parser:parse()[1]
+    return tree:root()
+end
+
+-- Format the lines from `start_line` to `end_line`.
+local function format_lines(start_line, end_line)
+    vim.api.nvim_win_set_cursor(0, { start_line, 0 })
+    vim.cmd "normal! V" -- Enter visual mode
+    vim.api.nvim_win_set_cursor(0, { end_line, 0 }) -- Select lines up to `end_line`
+    vim.cmd "normal! gq" -- Apply formatting
+end
+
+-- Group nodes of specific types ("text" and "inline_formula") and format them.
+local function group_and_format_nodes()
+    local groups = {}
+    local current_group = {}
+    local types_to_group = { "text", "inline_formula", ",", ")" }
+    local root = get_root_node(0, "latex")
+
+    -- Iterate over the root's children and group the nodes
+    for child in root:iter_children() do
+        if child:type() == "generic_environment" then
+            for grandchild in child:iter_children() do
+                if vim.tbl_contains(types_to_group, grandchild:type()) then
+                    table.insert(current_group, grandchild)
+                elseif #current_group > 0 then
+                    table.insert(groups, current_group)
+                    current_group = {} -- Start a new group
+                end
+
+                if grandchild:type() == "section" then
+                    for grandgrandchild in grandchild:iter_children() do
+                        -- vim.print(grandgrandchild:type())
+                        if vim.tbl_contains(types_to_group, grandgrandchild:type()) then
+                            table.insert(current_group, grandgrandchild)
+                        elseif #current_group > 0 then
+                            table.insert(groups, current_group)
+                            current_group = {} -- Start a new group
+                        end
+
+                        if grandgrandchild:type() == "subsection" then
+                            for grandgrandgrandchild in grandgrandchild:iter_children() do
+                                -- vim.print(grandgrandgrandchild:type())
+                                if vim.tbl_contains(types_to_group, grandgrandgrandchild:type()) then
+                                    table.insert(current_group, grandgrandgrandchild)
+                                elseif #current_group > 0 then
+                                    table.insert(groups, current_group)
+                                    current_group = {} -- Start a new group
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+    -- Insert last group if not empty
+    if #current_group > 0 then
+        table.insert(groups, current_group)
+    end
+
+    -- Save current cursor position and format the groups in reverse order
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
+    for i = #groups, 1, -1 do
+        local group = groups[i]
+        local min, max = get_min_max_range(group)
+        -- vim.print { min, max }
+        format_lines(min + 1, max + 1) -- +1 because Lua is 1-indexed
+    end
+    -- Restore the cursor position
+    vim.api.nvim_win_set_cursor(0, cursor_pos)
+end
+
+-- Keymap for formatting the block
+vim.keymap.set("n", "<space><space>q", group_and_format_nodes, {})

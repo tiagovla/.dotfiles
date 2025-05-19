@@ -1,0 +1,3 @@
+-- vim.keymap.set("n", "<cr>", function()
+--     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("o", true, false, true), "n", true)
+-- end, { silent = true })
