@@ -54,26 +54,23 @@ return {
         "nvim-treesitter/nvim-treesitter-context",
         config = function()
             require("treesitter-context").setup {
-                enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-                max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-                min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+                enable = true,
+                max_lines = 0,
+                min_window_height = 0,
                 line_numbers = true,
-                multiline_threshold = 20, -- Maximum number of lines to show for a single context
-                trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-                mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
-                -- Separator between context and content. Should be a single character string, like '-'.
-                -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+                multiline_threshold = 20,
+                trim_scope = "outer",
+                mode = "cursor",
                 separator = nil,
-                zindex = 20, -- The Z-index of the context window
-                on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+                zindex = 20,
+                on_attach = nil,
             }
         end,
     },
     {
         "OXY2DEV/markview.nvim",
         lazy = false,
-        -- ft = "markdown" -- If you decide to lazy-load anyway
-
+        ft = "markdown",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
             "nvim-tree/nvim-web-devicons",
@@ -85,14 +82,10 @@ return {
         config = function()
             require("nvim-ts-autotag").setup {
                 opts = {
-                    -- Defaults
-                    enable_close = true, -- Auto close tags
-                    enable_rename = true, -- Auto rename pairs of tags
-                    enable_close_on_slash = false, -- Auto close on trailing </
+                    enable_close = true,
+                    enable_rename = true,
+                    enable_close_on_slash = false,
                 },
-                -- Also override individual filetype configs, these take priority.
-                -- Empty by default, useful if one of the "opts" global settings
-                -- doesn't work well in a specific filetype
                 per_filetype = {
                     ["html"] = {
                         enable_close = false,
@@ -112,53 +105,15 @@ return {
         },
     },
 
-    -- {
-    --     "nvimdev/lspsaga.nvim",
-    --     event = "VeryLazy",
-    --     config = function()
-    --         require("lspsaga").setup {}
-    --     end,
-    --     dependencies = {
-    --         "nvim-treesitter/nvim-treesitter", -- optional
-    --         "nvim-tree/nvim-web-devicons", -- optional
-    --     },
-    -- },
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         lazy = false,
         dependencies = {
-            { "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
-            { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+            { "zbirenbaum/copilot.lua" },
+            { "nvim-lua/plenary.nvim", branch = "master" },
         },
-        build = "make tiktoken", -- Only on MacOS or Linux
-        opts = {
-            -- See Configuration section for options
-        },
-        -- See Commands section for default commands if you want to lazy load on them
-    },
-    {
-        "nvzone/menu",
-        lazy = true,
-        dependencies = {
-            { "nvzone/volt", lazy = true },
-            {
-                "nvzone/minty",
-                cmd = { "Shades", "Huefy" },
-            },
-        },
-        init = function()
-            vim.keymap.set({ "n", "v" }, "<RightMouse>", function()
-                require("menu.utils").delete_old_menus()
-
-                vim.cmd.exec '"normal! \\<RightMouse>"'
-
-                -- clicked buf
-                local buf = vim.api.nvim_win_get_buf(vim.fn.getmousepos().winid)
-                local options = vim.bo[buf].ft == "NvimTree" and "nvimtree" or "default"
-
-                require("menu").open(options, { mouse = true })
-            end, {})
-        end,
+        build = "make tiktoken",
+        opts = {},
     },
     {
         "folke/snacks.nvim",
@@ -176,14 +131,7 @@ return {
         "yioneko/nvim-type-fmt",
         lazy = false,
         config = function()
-            require("type-fmt").setup {
-                -- buf_filter = function(bufnr)
-                --     return true
-                -- end,
-                -- prefer_client = function(client_a, client_b)
-                --     return client_a or client_b
-                -- end,
-            }
+            require("type-fmt").setup {}
         end,
     },
 
@@ -197,7 +145,7 @@ return {
                 ["cpp"] = { "cppcheck" },
                 ["hpp"] = { "cppcheck" },
             }
-            -- lint.linters.cppcheck.args[#lint.linters.cppcheck.args + 1] = "--inconclusive"
+            lint.linters.cppcheck.args[#lint.linters.cppcheck.args + 1] = "--check-level=exhaustive"
             vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
                 callback = function()
                     require("lint").try_lint()

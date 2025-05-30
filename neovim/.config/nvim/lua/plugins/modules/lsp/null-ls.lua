@@ -37,6 +37,7 @@ null.setup {
         diag.hadolint,
         -- diag.cppcheck,
         format.stylua,
+        format.yamlfmt,
         format.clang_format,
         -- format.prettier.with {
         --     extra_args = function(_)

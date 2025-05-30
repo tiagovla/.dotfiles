@@ -1,6 +1,6 @@
 local M = {
     "nvim-telescope/telescope.nvim",
-    version = false,
+    version = "*",
     cmd = "Telescope",
     dependencies = {
         {
@@ -40,7 +40,8 @@ function M.config()
     local custom_theme = {
         pickers = {
             find_files = {
-                find_command = { "rg", "--type=file", "--hidden", "--smart-case" },
+                find_command = { "rg", "--no-ignore", "--type=file", "--hiden", "--smart-case" },
+                -- find_command = { "rg", "--type=file", "--hidden", "--smart-case" },
             },
             live_grep = {
                 only_sort_text = true,

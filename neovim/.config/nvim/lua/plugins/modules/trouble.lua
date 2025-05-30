@@ -6,9 +6,20 @@ return {
         {
             "<leader>e",
             function()
-                vim.cmd.Trouble "diagnostics toggle"
+                local api = require "trouble.api"
+                if api.is_open() then
+                    api.close()
+                else
+                    vim.cmd.Trouble "diagnostics"
+                end
             end,
             desc = "Toggle Trouble",
+        },
+    },
+    opts = {
+        keys = {
+            ["<c-p>"] = "prev",
+            ["<c-n>"] = "next",
         },
     },
     config = true,

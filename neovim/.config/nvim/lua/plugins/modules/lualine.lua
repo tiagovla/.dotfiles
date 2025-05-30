@@ -59,11 +59,11 @@ function M.config()
             lualine_a = { { "mode", upper = true } },
             lualine_b = {
                 { "branch", icon = "" },
-                {
-                    require("noice").api.status.mode.get,
-                    cond = require("noice").api.status.mode.has,
-                    color = { fg = "#ff9e64" },
-                },
+                -- {
+                -- require("noice").api.status.mode.get,
+                -- cond = require("noice").api.status.mode.has,
+                -- color = { fg = "#ff9e64" },
+                -- },
             },
             lualine_c = {
                 { custom_components.pwd },
@@ -80,11 +80,11 @@ function M.config()
                     },
                     symbols = { added = "+", modified = "~", removed = "-" },
                 },
-                {
-                    require("noice").api.status.search.get,
-                    cond = require("noice").api.status.search.has,
-                    color = { fg = "#ff9e64" },
-                },
+                -- {
+                --     require("noice").api.status.search.get,
+                --     cond = require("noice").api.status.search.has,
+                --     color = { fg = "#ff9e64" },
+                -- },
                 "location",
             },
             lualine_z = {},

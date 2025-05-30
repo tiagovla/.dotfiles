@@ -29,7 +29,16 @@ function mappings.setup(client_name, buffer)
     vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action" })
     vim.keymap.set("v", "ga", vim.lsp.buf.code_action, { buffer = buffer, desc = "Code action (range)" })
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = buffer, desc = "Go to declaration" })
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buffer, desc = "Go to definition" })
+    vim.keymap.set("n", "gd", function()
+        local api = require "trouble.api"
+        if api.is_open() then
+            api.close()
+        end
+        vim.cmd.Trouble "lsp_definitions focus=true auto_close=true"
+    end, { buffer = buffer, desc = "Go to definition" })
+    -- vim.keymap.set("n", "gd", function()
+    --     require("snacks").picker.lsp_definitions {}
+    -- end, { buffer = buffer, desc = "Go to definition" })
     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = buffer, desc = "Go to inplementation" })
     vim.keymap.set("n", "gr", vim.lsp.buf.rename, { buffer = buffer, desc = "Rename" })
     vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = buffer, desc = "Type definition" })
