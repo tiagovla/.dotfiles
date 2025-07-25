@@ -8,7 +8,7 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]; then
     echo "Starting X..."
-    [[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- -ardelay 200 -arinterval 120 vt1 &> /dev/null
+    [[ $(fgconsole 2>/dev/null) == 1 ]] && exec startx -- vt1 -keeptty -ardelay 200 -arinterval 120 vt1 &> /dev/null
 fi
 
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty2 ]]; then

@@ -12,6 +12,3 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh2) ]]; then
 else
   compinit -C
 fi
-
-# export all_proxy="socks5://192.0.0.4:1080"
-eval "$(zoxide init --cmd c zsh)"

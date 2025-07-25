@@ -68,5 +68,5 @@ function set-prompt() {
 setopt no_prompt_{bang,subst} prompt_{cr,percent,sp}
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd set-prompt
-#
+
 #source: https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
