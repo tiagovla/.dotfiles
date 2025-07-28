@@ -27,7 +27,6 @@ alias clip='xclip -selection clipboard -in'
 alias qr='qrencode -t ansiutf8'
 
 # terminal utils / tools
-alias qq='clear'
 alias :q='exit'
 alias Q='exit'
 alias rc='rclone'
@@ -46,6 +45,3 @@ alias cf='cd "$(/bin/fd -d 2 --type directory | fzf --layout=reverse --height=10
 
 # media / youtube
 alias ytd_discord='f(){ yt-dlp "$@" --recode-video webm || exit 1; unset -f f; }; f'
-
-# neovim
-alias n='nvim'

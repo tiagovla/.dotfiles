@@ -1,8 +1,11 @@
 #!/bin/bash
-zmodload zsh/zprof
-for zfile in exports functions prompt settings aliases plugins mappings secrets; do
-# shellcheck disable=SC1090
+
+for zfile in prompt exports functions plugins settings aliases plugins mappings; do
     source "$ZDOTDIR/config/${zfile}.zsh"
+done
+
+for zfile in secrets; do
+    zsh-defer source "$ZDOTDIR/config/${zfile}.zsh"
 done
 
 autoload -Uz compinit

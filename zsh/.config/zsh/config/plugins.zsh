@@ -2,6 +2,7 @@
 
 source "$ZDOTDIR/config/functions.zsh"
 
+zsh_add_plugin "romkatv/zsh-defer"
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
 zsh_add_plugin "Valiev/almostontop"
 zsh_add_plugin "Aloxaf/fzf-tab"
@@ -9,7 +10,7 @@ zsh_add_plugin "MichaelAquilina/zsh-you-should-use"
 
 # zsh_add_plugin "marlonrichert/zsh-autocomplete"
 # zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-zsh_add_plugin "hlissner/zsh-autopair"
+# zsh_add_plugin "hlissner/zsh-autopair"
 
 if [[ ! -v VIRTUAL_ENV ]]; then
     eval "$(mise activate zsh)"

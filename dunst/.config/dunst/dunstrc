@@ -2,7 +2,7 @@
     monitor = 0
     follow = mouse
     width = 400
-    offset = 20x50
+    offset = (20, 50)
     origin = top-right
     progress_bar = true
     progress_bar_height = 10
@@ -21,7 +21,7 @@
     frame_color = "#4A5057"
     separator_color = frame
     sort = yes
-    font = MonoLisa 12
+    font = MonoLisa 18
     line_height = 1
     markup = full
     format = "<b>%a</b>\n%s\n%b"
