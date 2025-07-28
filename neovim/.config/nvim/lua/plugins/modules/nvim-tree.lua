@@ -117,25 +117,25 @@ local function on_attach(bufnr)
     map("J", api.node.navigate.sibling.last, "Last Sibling")
     map("K", api.node.navigate.sibling.first, "First Sibling")
     map("<leader>hs", function()
-        local api = require "nvim-tree.api"
-        local node = api.tree.get_node_under_cursor()
+        local api_ = require "nvim-tree.api"
+        local node = api_.tree.get_node_under_cursor()
         if not node or not node.absolute_path then
             return
         end
 
         vim.system({ "git", "add", node.absolute_path }, {}, function()
-            vim.schedule(api.tree.reload)
+            vim.schedule(api_.tree.reload)
         end)
     end, "Git Stage File")
     map("<leader>hr", function()
-        local api = require "nvim-tree.api"
-        local node = api.tree.get_node_under_cursor()
+        local api_ = require "nvim-tree.api"
+        local node = api_.tree.get_node_under_cursor()
         if not node or not node.absolute_path then
             return
         end
 
         vim.system({ "git", "restore", "--staged", node.absolute_path }, {}, function()
-            vim.schedule(api.tree.reload)
+            vim.schedule(api_.tree.reload)
         end)
     end, "Git Unstage File")
 end
