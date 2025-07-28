@@ -1,9 +1,9 @@
 * {
-  bg: #11121dee;
-  fg: #a0a8cd;
-  prompt: #21222d;
-  button-selected: #9fbbf3;
+  bg: #11121DEE;
+  fg: #A0A8CD;
+  prompt: #21222D;
+  button-selected: #9FBBF3;
+  border: #4A5057;
   background-color: @bg;
   text-color: @fg;
-  border: #4a5057;
 }

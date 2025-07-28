@@ -1,6 +1,8 @@
+@theme "colors"
+
 configuration {
     modi: "drun";
-    font: "MonoLisa Medium 12";
+    font: "MonoLisa Medium 15";
     show-icons: true;
     icon-theme: "Papirus-Dark";
     display-drun: "";
@@ -8,20 +10,8 @@ configuration {
     sidebar-mode: false;
 }
 
-@theme "/dev/null"
-
-* {
-    bg: #11121DEE;
-    fg: #A0A8CD;
-    prompt: #21222D;
-    button-selected: #9FBBF3;
-    background-color: @bg;
-    text-color: @fg;
-    border: #4A5057;
-}
-
 window {
-    /* background-color: @bg; */
+    background-color: @bg;
     border-color: @border;
     border-radius: 7px;
     border: 2;
@@ -73,7 +63,7 @@ element {
 
 element-icon {
     horizontal-align: 0.5;
-    size: 56px;
+    size: 64px;
 }
 
 element-text {

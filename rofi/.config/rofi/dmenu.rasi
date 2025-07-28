@@ -1,35 +1,23 @@
+@theme "colors"
+
 configuration {
     modi: "run";
-    font: "MonoLisa Medium 12";
-    show-icons: false;
-    icon-theme: "Tela-circle-red";
+    font: "MonoLisa Medium 16";
     display-drun: "";
     drun-display-format: "{name}";
-    sidebar-mode: false;
-}
-
-@theme "/dev/null"
-* {
-    bg: #11121DEE;
-    fg: #A0A8CD;
-    prompt: #21222D;
-    text-color: @fg;
-    background-color: @bg;
-    border-color:          #4A5057;
-    button-selected: #9FBBF3;
 }
 
 prompt {
     background-color: @prompt;
     enabled: false;
-    /* padding: 0.5% 32px 0% -0.5%; */
+    padding: 0% 2% 0% 2%;
 }
 
 window {
     anchor:     north;
     location:   north;
     width:      100%;
-    padding:    4px;
+    padding:    5px;
     children:   [ horibox ];
 }
 
@@ -42,20 +30,14 @@ listview {
     layout:     horizontal;
     spacing:    5px;
     lines:      100;
-
-    padding: 0% 2% 0% 2%;
+    padding: 0% 0% 0% 1%;
 }
-
-/* entry { */
-/*     expand:     false; */
-/*     width:      10em; */
-/* } */
 
 entry {
     background-color: @prompt;
     expand: false;
-    padding: 0% 2% 0% 2%;
-    width:      10em;
+    padding: 0% 1% 0% 1%;
+    width: 10em;
     placeholder-color: @fg;
     placeholder: "Search";
 }
@@ -67,13 +49,10 @@ element {
 
 element-icon {
     horizontal-align: 0.5;
-    size: 24px;
+    size: 32px;
 }
 
 element-text {
-    /* expand: true; */
-    /* horizontal-align: 0.5; */
-    /* margin: 0.5% 0.5% -0.5% 0.5%; */
     horizontal-align: 0.5;
 }
 
@@ -84,8 +63,8 @@ element-text, element-icon {
 
 element selected {
     background-color: @button-selected;
-    border-radius: 5px;
     text-color: @bg;
+    border-radius: 5px;
 }
 
 /* vim: ft=css
