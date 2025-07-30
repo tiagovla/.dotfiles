@@ -6,23 +6,26 @@ alt + Return
 
 # program launcher
 alt + @space
-    GDK_DPI_SCALE=1.5 QT_SCALE_FACTOR=1.5 GTK_THEME=Adwaita:dark rofi -terminal wezterm -show drun
+   rofi -terminal wezterm -show drun
 
 # program launcher with dmenu style
 shift + alt + @space
-    GDK_DPI_SCALE=1.5 QT_SCALE_FACTOR=1.5 GTK_THEME=Adwaita:dark rofi -terminal wezterm -show run -theme dmenu
+    rofi -terminal wezterm -show run -theme dmenu
 
 # make sxhkd reload its configuration files:
 alt + Escape
     pkill -USR1 -x sxhkd
 
+super + Return
+    zsh -c 'notify-send "$GTK_THEME"'
+
 # open browser - Default profile
 alt + w
-    chrome --profile-directory="Default" 
+    thorium-browser --profile-directory="Default" 
 
 # open browser - Work profile
 shift + alt + w
-    chrome --profile-directory="Work" 
+    thorium-browser --profile-directory="Work" 
 
 # open discord
 alt + d
