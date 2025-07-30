@@ -1,0 +1,14 @@
+[Unit]
+Description=GNOME Keyring daemon
+
+Requires=gnome-keyring-daemon.socket
+
+[Service]
+Type=simple
+StandardError=journal
+ExecStart=/usr/bin/gnome-keyring-daemon --foreground --components="pkcs11,secrets,gpg" --control-directory=%t/keyring
+Restart=on-failure
+
+[Install]
+Also=gnome-keyring-daemon.socket
+WantedBy=default.target
