@@ -1,0 +1,11 @@
+[Unit]
+Description=MQTT Client Service
+After=network.target
+
+[Service]
+ExecStart=%h/.local/bin/mqtt_client
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=default.target
