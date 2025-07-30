@@ -3,8 +3,6 @@
 /usr/bin/prime-offload
 tmux has-session -t test || tmux new-session -d -s test &
 xset r rate 200 120
+xset s off
+xset s noblank
 
-export PATH="$HOME/.local/bin:$PATH"
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
