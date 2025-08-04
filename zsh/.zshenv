@@ -32,10 +32,13 @@ export QT_SCREEN_SCALE_FACTORS=1.5
 export GTK_THEME=Adwaita:dark
 export GTK_IM_MODULE=cedilla
 export QT_IM_MODULE=cedilla 
-export __NV_PRIME_RENDER_OFFLOAD=1
-export __GLX_VENDOR_LIBRARY_NAM="nvidia"
-export __VK_LAYER_NV_optimus="NVIDIA_only"
+# export __NV_PRIME_RENDER_OFFLOAD=1
+# export __GLX_VENDOR_LIBRARY_NAM="nvidia"
+# export __VK_LAYER_NV_optimus="NVIDIA_only"
 
 # python & cuda config
 export PYTHON_KEYRING_BACKEND="keyring.backends.fail.Keyring"
 export NVCC_PREPEND_FLAGS="-ccbin /opt/cuda/bin"
+
+# fix x compose
+export XCOMPOSEFILE=$HOME/.XCompose
