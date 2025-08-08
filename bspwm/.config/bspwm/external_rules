@@ -127,7 +127,7 @@ zathura() {
 }
 
 discord() {
-    desktop=^6
+    desktop="6"
     follow=off
     state=pseudo_tiled
     rectangle=1850x1000+0+0
