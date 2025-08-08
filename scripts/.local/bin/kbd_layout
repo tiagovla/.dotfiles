@@ -7,8 +7,8 @@ fix_layout() {
                       print substr($0, RSTART+3, RLENGTH-3)\
                    }'
     )
-    for i in $ids; do setxkbmap br -device "$i" >/dev/null 2>&1; done
-    xset r rate 200 120
+    # for i in $ids; do setxkbmap br -device "$i" >/dev/null 2>&1; done
+    # xset r rate 200 120
 }
 
 fix_layout
