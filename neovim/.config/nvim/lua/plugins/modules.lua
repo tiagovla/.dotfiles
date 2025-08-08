@@ -1,13 +1,7 @@
 return {
-    {
-        "nvim-tree/nvim-web-devicons",
-        config = function()
-            require("nvim-web-devicons").setup { default = true }
-        end,
-    },
+    { "nvim-tree/nvim-web-devicons", opts = { default = true } },
     { "famiu/bufdelete.nvim", event = "VeryLazy" },
     { "krady21/compiler-explorer.nvim", event = "VeryLazy" },
-    { "Almo7aya/openingh.nvim", event = "VeryLazy" },
     {
         "tiagovla/scope.nvim",
         event = "BufRead",
@@ -28,86 +22,20 @@ return {
         end,
         dev = true,
     },
-    {
-        "tiagovla/buffercd.nvim",
-        event = "BufRead",
-        config = function()
-            require("buffercd").setup {}
-        end,
-    },
+    { "tiagovla/buffercd.nvim", event = "BufRead", config = true },
     { "tiagovla/tex-conceal.vim", ft = "tex" },
     {
         "tiagovla/projet.nvim",
         config = function()
             require("projet").setup {}
-            vim.keymap.set("n", "<leader>kk", function()
-                require("projet").prompt()
-            end, { desc = "Project files" })
-            vim.keymap.set("n", "<leader>kl", function()
+            vim.keymap.set("n", "<leader>tp", "<cmd>Telescope projet<cr>", { desc = "Projects" })
+            vim.keymap.set("n", "<leader>tP", function()
                 require("projet").toggle_editor()
             end, { desc = "Project files" })
         end,
         dev = true,
         event = "VeryLazy",
     },
-    {
-        "nvim-treesitter/nvim-treesitter-context",
-        config = function()
-            require("treesitter-context").setup {
-                enable = true,
-                max_lines = 0,
-                min_window_height = 0,
-                line_numbers = true,
-                multiline_threshold = 20,
-                trim_scope = "outer",
-                mode = "cursor",
-                separator = nil,
-                zindex = 20,
-                on_attach = nil,
-            }
-        end,
-    },
-    {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
-        ft = "markdown",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons",
-        },
-        opts = {
-            experimental = { check_rtp_message = false },
-        },
-    },
-    {
-        "windwp/nvim-ts-autotag",
-        lazy = false,
-        config = function()
-            require("nvim-ts-autotag").setup {
-                opts = {
-                    enable_close = true,
-                    enable_rename = true,
-                    enable_close_on_slash = false,
-                },
-                per_filetype = {
-                    ["html"] = {
-                        enable_close = false,
-                    },
-                },
-            }
-        end,
-    },
-    {
-        "lowitea/aw-watcher.nvim",
-        lazy = false,
-        opts = {
-            aw_server = {
-                host = "127.0.0.1",
-                port = 5600,
-            },
-        },
-    },
-
     {
         "CopilotC-Nvim/CopilotChat.nvim",
         lazy = false,
@@ -117,18 +45,6 @@ return {
         },
         build = "make tiktoken",
         opts = {},
-    },
-    {
-        "folke/snacks.nvim",
-        priority = 1000,
-        lazy = false,
-        opts = {
-            gitbrowse = { enabled = true },
-            bigfile = { enabled = true },
-            -- notifier = { enabled = true },
-            quickfile = { enabled = true },
-            words = { enabled = true },
-        },
     },
     {
         "yioneko/nvim-type-fmt",

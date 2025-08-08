@@ -13,10 +13,14 @@ end
 return {
     "akinsho/nvim-bufferline.lua",
     lazy = false,
-    init = function()
-        vim.keymap.set("n", "<c-n>", "<cmd>BufferLineCycleNext<cr>")
-        vim.keymap.set("n", "<c-p>", "<cmd>BufferLineCyclePrev<cr>")
-    end,
+    keys = {
+        { "<c-n>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+        {
+            "<c-p>",
+            "<cmd>BufferLineCyclePrev<cr>",
+            desc = "Previous Buffer",
+        },
+    },
     opts = {
         options = {
             view = "multiwindow",

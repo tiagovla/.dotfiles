@@ -30,7 +30,7 @@ function M.init()
     vim.keymap.set("n", "<leader>tb", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
     vim.keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
     vim.keymap.set("n", "<leader>tC", "<cmd>Telescope colorscheme<cr>", { desc = "Colorscheme" })
-    vim.keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
+    -- vim.keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
     vim.keymap.set("n", "<leader>td", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
     vim.keymap.set("n", "<leader>tm", "<cmd>Telescope man_pages<cr>", { desc = "Man pages" })
     vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
@@ -41,7 +41,6 @@ function M.config()
         pickers = {
             find_files = {
                 find_command = { "rg", "--no-ignore", "--type=file", "--hiden", "--smart-case" },
-                -- find_command = { "rg", "--type=file", "--hidden", "--smart-case" },
             },
             live_grep = {
                 only_sort_text = true,
@@ -105,7 +104,6 @@ function M.config()
             },
         },
     }
-    require("telescope").load_extension "project"
     require("telescope").load_extension "zoxide"
     require("telescope").load_extension "file_browser"
     require("telescope").load_extension "fzf"

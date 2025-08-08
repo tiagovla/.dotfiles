@@ -1,7 +1,7 @@
 local M = {
     {
         "saghen/blink.cmp",
-        version = "v1.3.1",
+        version = "*",
         dependencies = {
             { "rafamadriz/friendly-snippets" },
             { "hrsh7th/cmp-nvim-lua" },
@@ -9,7 +9,7 @@ local M = {
             { "onsails/lspkind-nvim" },
             {
                 "saghen/blink.compat",
-                version = "v2.5.0",
+                version = "*",
                 lazy = true,
                 opts = {
                     impersonate_nvim_cmp = true,

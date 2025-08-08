@@ -6,6 +6,6 @@ return {
         "SmiteshP/nvim-navic",
         "nvim-tree/nvim-web-devicons",
     },
-    opts = {},
+    config = true,
     lazy = false,
 }

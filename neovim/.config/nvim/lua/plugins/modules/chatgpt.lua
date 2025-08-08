@@ -1,11 +1,9 @@
 return {
     "jackMort/ChatGPT.nvim",
     event = "VeryLazy",
-    config = function()
-        require("chatgpt").setup {
-            actions_paths = { vim.fs.joinpath(vim.fn.stdpath "config", "actions.json") },
-        }
-    end,
+    opts = {
+        actions_paths = { vim.fs.joinpath(vim.fn.stdpath "config", "actions.json") },
+    },
     init = function()
         vim.keymap.set("n", "<leader>cr", "vip:ChatGPTRun rewrite<cr>", { desc = "chatGPT rewrite" })
         vim.keymap.set("n", "<leader>cR", "vip:ChatGPTRun rewrite_academic<cr>", { desc = "chatGPT rewrite academic" })
