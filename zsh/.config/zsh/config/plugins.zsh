@@ -13,7 +13,9 @@ zsh_add_plugin "MichaelAquilina/zsh-you-should-use"
 # zsh_add_plugin "hlissner/zsh-autopair"
 
 if [[ ! -v VIRTUAL_ENV ]]; then
-    eval "$(mise activate zsh)"
+    if command -v mise >/dev/null 2>&1; then
+        eval "$(mise activate zsh)"
+    fi
 fi
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -22,7 +24,12 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd c zsh)"
+if command -v fzf >/dev/null 2>&1; then
+    eval "$(fzf --zsh)"
+fi
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init --cmd c zsh)"
+fi
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#7f7f7f'
