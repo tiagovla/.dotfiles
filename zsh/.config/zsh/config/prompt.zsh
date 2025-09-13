@@ -42,9 +42,15 @@ function preexec() {
 function set-prompt() {
     emulate -L zsh
     local git_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
-    local top_left="", top_right="", bottom_left="", bottom_right=""
+    local top_left=""
+    local top_right=""
+    local bottom_left=""
+    local bottom_right=""
     git_branch=${git_branch//\%/%%}
-    top_left="%B%F{cyan}%~%f%b "
+    if [ -n "$SSH_CONNECTION" ]; then
+        top_left+="(%n@%m) "
+    fi
+    top_left+="%B%F{cyan}%~%f%b "
     if [ $git_branch ]; then
         top_left+="%F{blue}git:(%f%F{red}${git_branch}%f%F{blue})%f"
     fi
