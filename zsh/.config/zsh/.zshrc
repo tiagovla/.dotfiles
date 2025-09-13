@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for zfile in prompt functions plugins settings aliases plugins mappings; do
+for zfile in prompt functions settings aliases plugins mappings; do
     source "$ZDOTDIR/config/${zfile}.zsh"
 done
 
