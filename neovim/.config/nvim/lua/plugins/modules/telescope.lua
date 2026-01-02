@@ -3,11 +3,6 @@ local M = {
     version = "*",
     cmd = "Telescope",
     dependencies = {
-        {
-            "tiagovla/telescope-project.nvim",
-            dev = true,
-            lazy = false,
-        },
         { "nvim-telescope/telescope-media-files.nvim" },
         { "nvim-telescope/telescope-file-browser.nvim" },
         { "jvgrootveld/telescope-zoxide" },
