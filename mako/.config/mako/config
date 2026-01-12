@@ -1,0 +1,53 @@
+# ======================
+# Mako configuration
+# ======================
+
+# Positioning
+anchor=top-right
+margin=12
+padding=10
+width=360
+border-size=2
+border-radius=6
+
+# Fonts
+font=JetBrains Mono 20
+
+# Colors
+background-color=#1e1e2ecc
+text-color=#cdd6f4
+border-color=#89b4fa
+progress-color=over #89b4fa
+
+# Urgency-specific styles
+[urgency=low]
+border-color=#6c7086
+default-timeout=3000
+on-notify=exec paplay /usr/share/sounds/freedesktop/stereo/dialog-information.oga
+default-timeout=15000
+
+[urgency=normal]
+border-color=#89b4fa
+default-timeout=6000
+on-notify=exec paplay /usr/share/sounds/freedesktop/stereo/dialog-information.oga
+default-timeout=30000
+
+[urgency=critical]
+border-color=#f38ba8
+text-color=#f38ba8
+on-notify=exec paplay /usr/share/sounds/freedesktop/stereo/dialog-information.oga
+default-timeout=0
+
+# Behavior
+icons=1
+icon-path=/usr/share/icons/hicolor:/usr/share/icons/Papirus
+max-icon-size=48
+
+# Interaction
+on-button-left=dismiss
+on-button-right=dismiss-all
+on-touch=dismiss
+
+# Grouping
+group-by=app-name
+
