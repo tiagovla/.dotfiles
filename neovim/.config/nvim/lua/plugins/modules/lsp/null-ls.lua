@@ -39,11 +39,11 @@ null.setup {
         format.stylua,
         format.yamlfmt,
         format.clang_format,
-        -- format.prettier.with {
-        --     extra_args = function(_)
-        --         return vim.bo[0].ft == "css" and { "--parser", "css" }
-        --     end,
-        -- },
+        format.prettier.with {
+            extra_args = function(_)
+                return vim.bo[0].ft == "css" and { "--parser", "css" }
+            end,
+        },
         format.cmake_format.with {
             cmd = "cmake-format",
         },
