@@ -3,11 +3,15 @@ vim.pack.add({
     { src = "https://github.com/epwalsh/obsidian.nvim" },
 }, { confirm = false })
 
-require("obsidian").setup {
-    workspaces = {
-        {
-            name = "tiagovla",
-            path = vim.fn.expand "~/.obsidian/tiagovla",
+local path = vim.fn.expand "~/.obsidian/tiagovla"
+
+if vim.fn.isdirectory(path) == 1 then
+    require("obsidian").setup {
+        workspaces = {
+            {
+                name = "tiagovla",
+                path = path,
+            },
         },
-    },
-}
+    }
+end
