@@ -1,4 +1,4 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/rcarriga/neotest",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-treesitter/nvim-treesitter",
@@ -6,7 +6,7 @@ vim.pack.add {
     "https://github.com/rcarriga/neotest-python",
     "https://github.com/rouge8/neotest-rust",
     "https://github.com/nvim-neotest/nvim-nio",
-}
+}, { confirm = false })
 
 require("neotest").setup {
     status = {

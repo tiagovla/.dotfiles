@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/aserowy/tmux.nvim" }
+vim.pack.add({ "https://github.com/aserowy/tmux.nvim" }, { confirm = false })
 
 require("tmux").setup {
     copy_sync = {

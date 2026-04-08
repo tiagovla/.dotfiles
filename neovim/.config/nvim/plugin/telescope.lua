@@ -1,4 +1,4 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/nvim-telescope/telescope-media-files.nvim",
     "https://github.com/nvim-telescope/telescope-file-browser.nvim",
@@ -6,7 +6,7 @@ vim.pack.add {
     "https://github.com/nvim-telescope/telescope-fzf-native.nvim",
     "https://github.com/nvim-telescope/telescope-file-browser.nvim",
     "https://github.com/nvim-lua/plenary.nvim",
-}
+}, { confirm = false })
 
 vim.keymap.set({ "n", "v" }, "<Leader>tc", "<cmd>Telescope commands<cr>", { desc = "Show Commands" })
 vim.keymap.set("n", "<leader>ts", "<cmd>Telescope current_buffer_fuzzy_find<cr>", { desc = "FZF current buffer" })

@@ -1,7 +1,7 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/folke/trouble.nvim",
-}
+}, { confirm = false })
 
 vim.keymap.set("n", "<leader>e", function()
     local api = require "trouble.api"

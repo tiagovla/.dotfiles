@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/nvim-lualine/lualine.nvim" }
+vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
 vim.cmd "packadd tokyodark.nvim"
 
 local theme = require "lualine.themes.tokyodark"

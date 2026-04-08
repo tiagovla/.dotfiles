@@ -1,1 +1,1 @@
-vim.pack.add { "tiagovla/tex-conceal.vim" }
+vim.pack.add({ "https://github.com/tiagovla/tex-conceal.vim" }, { confirm = false })

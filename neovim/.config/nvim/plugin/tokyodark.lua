@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/tiagovla/tokyodark.nvim" }
+vim.pack.add({ "https://github.com/tiagovla/tokyodark.nvim" }, { confirm = false })
 
 require("tokyodark").setup {
     transparent_background = true,

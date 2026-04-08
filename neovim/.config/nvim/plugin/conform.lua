@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/stevearc/conform.nvim" }
+vim.pack.add({ "https://github.com/stevearc/conform.nvim" }, { confirm = false })
 
 vim.keymap.set({ "n", "v" }, "<space>f", function()
     require("conform").format {}

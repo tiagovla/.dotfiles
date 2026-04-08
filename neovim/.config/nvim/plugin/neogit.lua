@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/nvim-lua/plenary.nvim", "https://github.com/neogitorg/neogit" }
+vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim", "https://github.com/neogitorg/neogit" }, { confirm = false })
 
 require("neogit").setup {
     disable_commit_confirmation = true,

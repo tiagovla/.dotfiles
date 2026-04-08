@@ -1,7 +1,7 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/MunifTanjim/nui.nvim",
     "https://github.com/folke/noice.nvim",
-}
+}, { confirm = false })
 
 local opts = {
     routes = {

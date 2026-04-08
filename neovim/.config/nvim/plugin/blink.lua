@@ -1,10 +1,10 @@
-vim.pack.add {
+vim.pack.add({
     { src = "https://github.com/saghen/blink.cmp", version = "v1.10.1" },
     "https://github.com/hrsh7th/cmp-nvim-lua",
     "https://github.com/kdheepak/cmp-latex-symbols",
     "https://github.com/onsails/lspkind-nvim",
     "https://github.com/saghen/blink.compat",
-}
+}, { confirm = false })
 
 -- require("blink.compat").setup {
 --     impersonate_nvim_cmp = true,

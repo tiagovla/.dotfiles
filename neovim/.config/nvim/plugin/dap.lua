@@ -1,9 +1,9 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/mfussenegger/nvim-dap",
     "https://github.com/theHamsta/nvim-dap-virtual-text",
     "https://github.com/rcarriga/nvim-dap-ui",
     "https://github.com/nvim-neotest/nvim-nio",
-}
+}, { confirm = false })
 
 local keys = {
     ["db"] = { "toggle_breakpoint", "Toggle breakpoint" },

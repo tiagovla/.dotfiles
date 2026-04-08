@@ -1,9 +1,9 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/jackMort/ChatGPT.nvim",
     "https://github.com/MunifTanjim/nui.nvim",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/nvim-telescope/telescope.nvim",
-}
+}, { confirm = false })
 
 require("chatgpt").setup {
     actions_paths = { vim.fs.joinpath(vim.fn.stdpath "config", "actions.json") },

@@ -1,4 +1,7 @@
-vim.pack.add { "https://github.com/tiagovla/scope.nvim", "https://github.com/tiagovla/buffercd.nvim" }
+vim.pack.add(
+    { "https://github.com/tiagovla/scope.nvim", "https://github.com/tiagovla/buffercd.nvim" },
+    { confirm = false }
+)
 require("scope").setup { restore_state = true }
 vim.keymap.set({ "n", "o", "x" }, "<c-w>T", function()
     local old_tab = vim.api.nvim_get_current_tabpage()

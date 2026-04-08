@@ -10,10 +10,10 @@ local function get_harpoon_mark_from_id(id)
     return idx
 end
 
-vim.pack.add {
+vim.pack.add({
     "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/akinsho/bufferline.nvim",
-}
+}, { confirm = false })
 
 vim.keymap.set("n", "<C-n>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 vim.keymap.set("n", "<C-p>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Previous buffer" })

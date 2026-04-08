@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/kyazdani42/nvim-tree.lua" }
+vim.pack.add({ "https://github.com/kyazdani42/nvim-tree.lua" }, { confirm = false })
 
 local function smart_toggle()
     local ft = vim.api.nvim_get_option_value("filetype", { buf = 0 })

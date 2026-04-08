@@ -1,7 +1,7 @@
-vim.pack.add {
+vim.pack.add({
     "https://github.com/utilyre/barbecue.nvim",
     "https://github.com/SmiteshP/nvim-navic",
     "https://github.com/nvim-tree/nvim-web-devicons",
-}
+}, { confirm = false })
 
 require("barbecue").setup()

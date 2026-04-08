@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/SmiteshP/nvim-navic" }
+vim.pack.add({ "https://github.com/SmiteshP/nvim-navic" }, { confirm = false })
 
 vim.g.navic_silence = true
 

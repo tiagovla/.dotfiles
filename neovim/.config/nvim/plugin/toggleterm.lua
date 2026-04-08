@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/akinsho/toggleterm.nvim" }
+vim.pack.add({ "https://github.com/akinsho/toggleterm.nvim" }, { confirm = false })
 
 local function slice_from_match(list, match)
     local function find_index(tbl, element)

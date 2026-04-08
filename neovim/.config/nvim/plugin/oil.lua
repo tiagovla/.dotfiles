@@ -1,4 +1,4 @@
-vim.pack.add { "https://github.com/stevearc/oil.nvim" }
+vim.pack.add({ "https://github.com/stevearc/oil.nvim" }, { confirm = false })
 
 require("oil").setup {
     keymaps = {
