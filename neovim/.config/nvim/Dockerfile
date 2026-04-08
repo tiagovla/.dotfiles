@@ -10,12 +10,12 @@ RUN apt update && apt upgrade -y && \
     make CMAKE_BUILD_TYPE=Release && \
     make CMAKE_INSTALL_PREFIX=/usr/local install && \
     strip /usr/local/bin/nvim
-RUN git clone https://github.com/tiagovla/.dotfiles.git /tmp/.dotfiles --depth=1
+# RUN git clone https://github.com/tiagovla/.dotfiles.git /tmp/.dotfiles --depth=1
 
 FROM ubuntu:22.04
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs
 COPY --from=builder /usr/local /usr/local/
-COPY --from=builder /tmp/.dotfiles/neovim/.config/nvim /root/.config/nvim/
+COPY . /root/.config/nvim/
 
 CMD ["/usr/local/bin/nvim"]

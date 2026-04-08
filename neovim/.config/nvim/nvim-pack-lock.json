@@ -31,7 +31,8 @@
     },
     "blink.compat": {
       "rev": "1454f14a8d855a578ceeba77c62538fa1459a67c",
-      "src": "https://github.com/saghen/blink.compat"
+      "src": "https://github.com/saghen/blink.compat",
+      "version": "'v2.5.0'"
     },
     "bufdelete.nvim": {
       "rev": "f6bcea78afb3060b198125256f897040538bcb81",

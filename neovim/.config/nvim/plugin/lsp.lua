@@ -53,6 +53,7 @@ require("mason").setup {
 }
 
 vim.lsp.config("lua_ls", {
+    capabilities = caps,
     settings = {
         Lua = {
             hint = {
