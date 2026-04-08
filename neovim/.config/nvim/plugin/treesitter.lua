@@ -12,7 +12,9 @@ vim.api.nvim_create_autocmd("PackChanged", {
     end,
 })
 
-require("nvim-treesitter").setup {
+local ts = require "nvim-treesitter"
+
+ts.setup {
     ensure_installed = "all",
     ignore_install = { "comment" },
     highlight = {
@@ -80,3 +82,13 @@ require("nvim-treesitter").setup {
         },
     },
 }
+local ensure_installed = ts.get_available()
+local installed = ts.get_installed()
+
+for i, lang in ipairs(ensure_installed) do
+    if not vim.tbl_contains(installed, lang) then
+        vim.defer_fn(function()
+            ts.install(lang)
+        end, i * 50)
+    end
+end

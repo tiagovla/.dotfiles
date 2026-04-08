@@ -1,6 +1,6 @@
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:26.04 AS builder
 
-ARG BUILD_APT_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip git binutils"
+ARG BUILD_APT_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip git binutils" 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt upgrade -y && \
@@ -12,9 +12,11 @@ RUN apt update && apt upgrade -y && \
     strip /usr/local/bin/nvim
 # RUN git clone https://github.com/tiagovla/.dotfiles.git /tmp/.dotfiles --depth=1
 
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs
+RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs curl libclang-dev clang cargo
+RUN cargo install tree-sitter-cli
+RUN cp /root/.cargo/bin/tree-sitter /usr/local/bin/tree-sitter
 COPY --from=builder /usr/local /usr/local/
 COPY . /root/.config/nvim/
 
