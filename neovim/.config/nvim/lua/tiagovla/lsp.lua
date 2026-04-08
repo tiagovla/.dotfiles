@@ -79,13 +79,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-vim.lsp.handlers["window/logMessage"] = function(_, content, _)
-    if content.type == 3 then
-        if content.message:find "pythonPath" then
-            vim.notify(content.message)
-        end
-    end
-end
+-- vim.lsp.handlers["window/logMessage"] = function(_, content, _)
+--     if content.type == 3 then
+--         if content.message:find "pythonPath" then
+--             vim.notify(content.message)
+--         end
+--     end
+-- end
 
 vim.api.nvim_create_user_command("ToggleFormatting", function()
     vim.g.format_on_save = not vim.g.format_on_save
