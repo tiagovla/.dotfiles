@@ -1,15 +1,8 @@
-vim.pack.add({
-    { src = "https://github.com/saghen/blink.cmp", version = "v1.10.1" },
-    "https://github.com/hrsh7th/cmp-nvim-lua",
-    "https://github.com/kdheepak/cmp-latex-symbols",
+vim.pack.add {
+    { src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
+    { src = "https://github.com/saghen/blink.compat", version = "v2.5.0" },
     "https://github.com/onsails/lspkind-nvim",
-    "https://github.com/saghen/blink.compat",
-}, { confirm = false })
-
--- require("blink.compat").setup {
---     impersonate_nvim_cmp = true,
---     debug = true,
--- }
+}
 
 require("blink.cmp").setup {
     fuzzy = {
@@ -23,9 +16,13 @@ require("blink.cmp").setup {
             and vim.bo.buftype ~= "prompt"
             and vim.b.completion ~= false
     end,
+    keymap = {
+        preset = "default",
+    },
     snippets = {
         preset = "luasnip",
         expand = function(snippet)
+            vim.notify("Expanding snippet: " .. snippet, vim.log.levels.DEBUG)
             require("luasnip").lsp_expand(snippet)
         end,
         active = function(filter)
@@ -61,32 +58,31 @@ require("blink.cmp").setup {
         nerd_font_variant = "mono",
     },
     sources = {
-        default = { "lsp", "path", "snippets", "buffer", "latex_symbols", "nvim_lua" },
-        providers = {
-            nvim_lua = {
-                name = "nvim_lua",
-                module = "blink.compat.source",
-                score_offset = -3,
-                opts = {},
-            },
-            latex_symbols = {
-                name = "latex_symbols",
-                module = "blink.compat.source",
-                score_offset = -3,
-                opts = {},
-            },
-            zotex = {
-                name = "zotex",
-                module = "blink.compat.source",
-                score_offset = -3,
-                opts = {},
-            },
-        },
+        default = { "lsp", "path", "snippets", "buffer" },
+        providers = {},
         min_keyword_length = function(ctx)
             return ctx.trigger.kind == "trigger_character" and 0 or 3
         end,
     },
     completion = {
+        documentation = {
+            auto_show = true,
+            auto_show_delay_ms = 100,
+            treesitter_highlighting = true,
+            window = {
+                min_width = 10,
+                max_width = 80,
+                max_height = 20,
+                border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+                winblend = 0,
+                winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
+                scrollbar = true,
+                direction_priority = {
+                    menu_north = { "e", "w", "n", "s" },
+                    menu_south = { "e", "w", "s", "n" },
+                },
+            },
+        },
         accept = {
             auto_brackets = {
                 enabled = true,
@@ -125,6 +121,30 @@ require("blink.cmp").setup {
                     },
                 },
             },
+        },
+    },
+    signature = {
+        enabled = true,
+        trigger = {
+            enabled = true,
+            show_on_keyword = false,
+            blocked_trigger_characters = {},
+            blocked_retrigger_characters = {},
+            show_on_trigger_character = true,
+            show_on_insert = false,
+            show_on_insert_on_trigger_character = true,
+        },
+        window = {
+            min_width = 1,
+            max_width = 100,
+            max_height = 10,
+            border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
+            winblend = 0,
+            winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
+            scrollbar = false,
+            direction_priority = { "n", "s" },
+            treesitter_highlighting = true,
+            show_documentation = true,
         },
     },
 }
