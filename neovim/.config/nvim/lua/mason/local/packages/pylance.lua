@@ -162,9 +162,12 @@ local function get_latest_version()
 end
 
 local function installer(ctx)
+    local latest =
+        "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/latest/vspackage"
+
     local script = [[
     curl -s -c cookies.txt 'https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance' > /dev/null &&
-    curl -s "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/vscode-pylance/latest/vspackage"
+    curl -s "https://ms-python.gallerycdn.vsassets.io/extensions/ms-python/vscode-pylance/2024.12.1/1733448168292/Microsoft.VisualStudio.Services.VSIXPackage"
          -j -b cookies.txt --compressed --output "pylance.vsix"
     ]]
     ctx.spawn.bash { "-c", script:gsub("\n", " ") }
@@ -195,7 +198,8 @@ return {
     languages = { "Python" },
     categories = { "LSP" },
     source = {
-        id = "pkg:mason/pylance@" .. get_latest_version(),
+        id = "pkg:mason/pylance@2024.12.1",
+        -- id = "pkg:mason/pylance@" .. get_latest_version(),
         install = installer,
     },
 }
