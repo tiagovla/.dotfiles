@@ -97,11 +97,15 @@ function M.better_close()
         return
     end
     if #tabpages > 1 and #named_buffers <= 1 then
-        vim.cmd.Bdelete()
+        (function()
+            Snacks.bufdelete.delete()
+        end)()
     elseif #buffers <= 1 and not utils.buf_has_name(0) then
         vim.cmd.quit()
     else
-        vim.cmd.Bdelete()
+        (function()
+            Snacks.bufdelete.delete()
+        end)()
     end
 end
 

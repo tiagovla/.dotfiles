@@ -1,9 +1,5 @@
 vim.pack.add({ "https://github.com/zbirenbaum/copilot.lua" }, { confirm = false })
 
-vim.api.nvim_create_user_command("ToggleCopilot", function()
-    require("copilot.suggestion").toggle_auto_trigger()
-end, {})
-
 require("copilot").setup {
     panel = {
         keymap = {
@@ -25,3 +21,7 @@ require("copilot").setup {
         },
     },
 }
+
+vim.api.nvim_create_user_command("ToggleCopilot", function()
+    require("copilot.suggestion").toggle_auto_trigger()
+end, {})
