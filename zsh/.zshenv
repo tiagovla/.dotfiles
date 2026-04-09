@@ -25,10 +25,10 @@ export GTEST_COLOR=1
 
 # display settings
 export _JAVA_AWT_WM_NONREPARENTING=1
-export GDK_SCALE=1.5
-export GDK_DPI_SCALE=1.5
-export QT_SCALE_FACTOR=1.5
-export QT_SCREEN_SCALE_FACTORS=1.5
+export GDK_SCALE=1.0
+export GDK_DPI_SCALE=1.0
+export QT_SCALE_FACTOR=1.0
+export QT_SCREEN_SCALE_FACTORS=1.0
 export GTK_THEME=Adwaita:dark
 export GTK_IM_MODULE=cedilla
 export QT_IM_MODULE=cedilla 

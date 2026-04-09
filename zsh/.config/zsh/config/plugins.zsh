@@ -33,3 +33,7 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#7f7f7f'
+
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^x' edit-command-line
