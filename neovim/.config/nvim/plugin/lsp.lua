@@ -300,3 +300,46 @@ vim.api.nvim_create_autocmd("LspAttach", {
         )
     end,
 })
+
+local mr = require "mason-registry"
+
+local ensure_installed = {
+    "clangd",
+    "astro-language-server",
+    "black",
+    "cmake-language-server",
+    "cmakelang",
+    "cmakelint",
+    "cpplint",
+    "cpptools",
+    "docker-compose-language-service",
+    "dockerfile-language-server",
+    "glsl_analyzer",
+    "gofumpt",
+    "golangci-lint",
+    "gopls",
+    "hadolint",
+    "latexindent",
+    "ltex-ls",
+    "lua-language-server",
+    "marksman",
+    "matlab-language-server",
+    "pydocstyle",
+    "pylance",
+    "rust-analyzer",
+    "shellcheck",
+    "stylua",
+    "tailwindcss-language-server",
+    "texlab",
+    "typescript-language-server",
+    "yamlfmt",
+}
+
+mr.refresh(function()
+    for _, name in ipairs(ensure_installed) do
+        local ok_pkg, pkg = pcall(mr.get_package, name)
+        if ok_pkg and not pkg:is_installed() then
+            pkg:install() -- async
+        end
+    end
+end)
