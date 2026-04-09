@@ -16,16 +16,13 @@ shift + alt + @space
 alt + Escape
     pkill -USR1 -x sxhkd
 
-super + Return
-    zsh -c 'notify-send "$GTK_THEME"'
-
 # open browser - Default profile
 alt + w
-    thorium-browser --profile-directory="Default" 
+    GDK_SCALE=1.5 thorium-browser --profile-directory="Default" 
 
 # open browser - Work profile
 shift + alt + w
-    thorium-browser --profile-directory="Work" 
+    GDK_SCALE=1.5 thorium-browser --profile-directory="Work" 
 
 # open discord
 alt + d

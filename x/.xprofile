@@ -5,4 +5,3 @@ tmux has-session -t test || tmux new-session -d -s test &
 xset r rate 200 120
 xset s off
 xset s noblank
-

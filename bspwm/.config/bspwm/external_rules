@@ -183,11 +183,11 @@ matlab() {
 }
 
 steam() {
-    desktop=^7
+    desktop=7
 }
 
 mpv() {
-    desktop=^7
+    desktop=8
     state=floating
     layer=normal
     rectangle=1200x800+0+0

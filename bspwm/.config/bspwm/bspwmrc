@@ -31,7 +31,6 @@ bspc config pointer_motion_interval 40
 _run xbanish
 _run dunst
 _run flameshot
-_run copyq
 _run picom
 _run nm-applet
 _run xsetroot -cursor_name left_ptr
