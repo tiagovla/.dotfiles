@@ -1,41 +1,67 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-DIR="$1"  # left | right
+mod() {
+    n=$1
+    size=$2
+    result=$((n % size))
+    [ $result -lt 0 ] && result=$((result + size))
+    echo $result
+}
 
-# Fixed physical order
-MONS=("DP-1" "HDMI-A-1" "eDP-1")
+find_index() {
+    target=$1
+    shift
+    array="$@"
+    index=0
+    for element in $array; do
+        if [ "$element" = "$target" ]; then
+            echo $index
+            return 0
+        fi
+        index=$((index + 1))
+    done
+    echo -1
+    return 1
+}
 
-FOCUSED=$(hyprctl monitors -j | jq -r '.[] | select(.focused) | .name')
+# Get monitors (IDs and names)
+monitor_ids=($(hyprctl monitors -j | jq -r '.[].id'))
+monitor_names=($(hyprctl monitors -j | jq -r '.[].name'))
 
-# Find focused index
-for i in "${!MONS[@]}"; do
-    [[ "${MONS[$i]}" == "$FOCUSED" ]] && IDX="$i"
-done
+# Current monitor ID
+current_monitor_id=$(hyprctl activeworkspace -j | jq -r '.monitorID')
 
-[[ -z "$IDX" ]] && exit 0
+index=$(find_index "$current_monitor_id" "${monitor_ids[@]}")
+next_index=$(mod $((index + 1)) ${#monitor_ids[@]})
+previous_index=$(mod $((index - 1)) ${#monitor_ids[@]})
 
-if [[ "$DIR" == "left" ]]; then
-    [[ "$IDX" -eq 0 ]] && exit 0
-    TARGET="${MONS[$((IDX-1))]}"
-elif [[ "$DIR" == "right" ]]; then
-    [[ "$IDX" -eq $((${#MONS[@]}-1)) ]] && exit 0
-    TARGET="${MONS[$((IDX+1))]}"
-else
-    exit 1
-fi
+next_monitor_id=${monitor_ids[$next_index]}
+previous_monitor_id=${monitor_ids[$previous_index]}
 
-# Collect workspaces
-WS_FOCUSED=$(hyprctl workspaces -j | jq -r --arg m "$FOCUSED" '.[] | select(.monitor==$m) | .id')
-WS_TARGET=$(hyprctl workspaces -j | jq -r --arg m "$TARGET" '.[] | select(.monitor==$m) | .id')
+# Current workspace info
+current_ws=$(hyprctl activeworkspace -j | jq -r '.name')
 
-# Move target first (important!)
-for ws in $WS_TARGET; do
-    hyprctl dispatch moveworkspacetomonitor "$ws" "$FOCUSED"
-done
+# Focused workspace on other monitors
+prev_ws=$(hyprctl workspaces -j | jq -r ".[] | select(.monitorID==$previous_monitor_id and .focused==true) | .name")
+next_ws=$(hyprctl workspaces -j | jq -r ".[] | select(.monitorID==$next_monitor_id and .focused==true) | .name")
 
-# Move focused to target
-for ws in $WS_FOCUSED; do
-    hyprctl dispatch moveworkspacetomonitor "$ws" "$TARGET"
-done
-
+case "$1" in
+    --rotate-reverse)
+        # Move current workspace to next monitor and swap names
+        hyprctl dispatch moveworkspacetomonitor "$current_ws" "$next_monitor_id"
+        [ -n "$next_ws" ] && hyprctl dispatch renameworkspace "$current_ws" "$next_ws"
+        hyprctl dispatch focusmonitor "$next_monitor_id"
+        hyprctl dispatch workspace "$current_ws"
+        ;;
+    --rotate)
+        hyprctl dispatch moveworkspacetomonitor "$current_ws" "$previous_monitor_id"
+        [ -n "$prev_ws" ] && hyprctl dispatch renameworkspace "$current_ws" "$prev_ws"
+        hyprctl dispatch focusmonitor "$previous_monitor_id"
+        hyprctl dispatch workspace "$current_ws"
+        ;;
+    *)
+        echo "Usage: $0 --rotate|--rotate-reverse" >&2
+        exit 1
+        ;;
+esac
 
