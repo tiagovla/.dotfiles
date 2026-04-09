@@ -92,6 +92,14 @@ function M.better_close()
     local tabpages = vim.api.nvim_list_tabpages()
     local buffers = utils.get_valid_buffers()
     local named_buffers = vim.tbl_filter(utils.buf_has_name, buffers)
+    local ok, diffview = pcall(require, "diffview.lib")
+    if ok then
+        local view = diffview.get_current_view()
+        if view then
+            vim.cmd "DiffviewClose"
+            return
+        end
+    end
     if not vim.bo[0].buflisted then
         vim.api.nvim_win_close(0, false)
         return

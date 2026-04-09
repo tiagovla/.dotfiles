@@ -133,6 +133,7 @@ function M.options()
     vim.opt.whichwrap:append "<>[]hl"
 
     vim.opt.undofile = true
+    vim.opt.diffopt = "internal,filler,closeoff,inline:simple,linematch:40"
 
     vim.opt.expandtab = true
     vim.opt.smartindent = true

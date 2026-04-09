@@ -3,10 +3,10 @@ vim.pack.add({ "https://github.com/zbirenbaum/copilot.lua" }, { confirm = false 
 require("copilot").setup {
     panel = {
         keymap = {
-            -- jump_next = "<c-n>",
-            -- jump_prev = "<c-p>",
-            accept = "<CR>",
+            jump_next = "n",
+            jump_prev = "p",
             refresh = "r",
+            accept = "<CR>",
             open = "<S-CR>",
         },
     },
