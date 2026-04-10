@@ -84,7 +84,6 @@ vim.api.nvim_create_autocmd("BufNewFile", {
 
 vim.api.nvim_create_autocmd("PackChanged", {
     callback = function(ev)
-        vim.print(ev)
         local name, kind = ev.data.spec.name, ev.data.kind
         if name == "markdown-preview.nvim" and (kind == "install" or kind == "update") then
             vim.system({ "yarn", "install" }, { cwd = ev.data.path .. "/app" })
