@@ -97,5 +97,11 @@ vim.api.nvim_create_autocmd("PackChanged", {
         if name == "CopilotChat" and (kind == "install" or kind == "update") then
             vim.system({ "make tiktoken" }, { cwd = ev.data.path })
         end
+        if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
+            if not ev.data.active then
+                vim.cmd.packadd "telescope-fzf-native.nvim"
+            end
+            vim.system({ "make", "-C", ev.data.path }, {}):wait()
+        end
     end,
 })

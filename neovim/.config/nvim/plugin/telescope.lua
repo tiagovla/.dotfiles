@@ -92,7 +92,7 @@ require("telescope").setup {
 }
 require("telescope").load_extension "zoxide"
 require("telescope").load_extension "file_browser"
--- require("telescope").load_extension "fzf"
+require("telescope").load_extension "fzf"
 local builtin = require "telescope.builtin"
 require("telescope._extensions.zoxide.config").setup {
     mappings = {
