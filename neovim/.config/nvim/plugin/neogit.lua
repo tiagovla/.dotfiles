@@ -25,3 +25,13 @@ end, { desc = "Neogit" })
 vim.keymap.set("n", "<space>n", function()
     require("neogit").open { "commit" }
 end, { desc = "Neogit commit" })
+
+vim.api.nvim_create_autocmd("User", {
+    pattern = "NeogitStatusRefreshed",
+    callback = function()
+        local ok, api = pcall(require, "nvim-tree.api")
+        if ok then
+            api.tree.reload()
+        end
+    end,
+})
