@@ -89,10 +89,14 @@ function rs() {
 function burnerfox(){
     xhost +local:docker &&
     docker run --rm \
-    --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=$XAUTHORITY" \
-    --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
-    --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
-    jess/firefox
+        --env="DISPLAY=$DISPLAY" \
+        --env="XAUTHORITY=$XAUTHORITY" \
+        --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" \
+        --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+        --volume="$HOME/.Xauthority:/root/.Xauthority:rw" \
+        --volume="${XDG_RUNTIME_DIR}/pulse/native:${XDG_RUNTIME_DIR}/pulse/native" \
+        --volume="$HOME/.config/pulse/cookie:/root/.config/pulse/cookie" \
+        jess/firefox
 }
 
 local copy_widgets=(
