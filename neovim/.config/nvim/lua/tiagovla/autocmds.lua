@@ -81,27 +81,3 @@ vim.api.nvim_create_autocmd("BufNewFile", {
         end
     end,
 })
-
-vim.api.nvim_create_autocmd("PackChanged", {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-        if name == "markdown-preview.nvim" and (kind == "install" or kind == "update") then
-            vim.system({ "yarn", "install" }, { cwd = ev.data.path .. "/app" })
-        end
-        if name == "nvim-treesitter" and kind == "update" then
-            if not ev.data.active then
-                vim.cmd.packadd "nvim-treesitter"
-            end
-            vim.cmd "TSUpdate"
-        end
-        if name == "CopilotChat" and (kind == "install" or kind == "update") then
-            vim.system({ "make tiktoken" }, { cwd = ev.data.path })
-        end
-        if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
-            if not ev.data.active then
-                vim.cmd.packadd "telescope-fzf-native.nvim"
-            end
-            vim.system({ "make", "-C", ev.data.path }, {}):wait()
-        end
-    end,
-})

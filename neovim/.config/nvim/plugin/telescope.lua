@@ -1,3 +1,15 @@
+vim.api.nvim_create_autocmd("PackChanged", {
+    callback = function(ev)
+        local name, kind = ev.data.spec.name, ev.data.kind
+        if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
+            if not ev.data.active then
+                vim.cmd.packadd "telescope-fzf-native.nvim"
+            end
+            vim.system({ "make", "-C", ev.data.path }, {}):wait()
+        end
+    end,
+})
+
 vim.pack.add({
     "https://github.com/nvim-telescope/telescope.nvim",
     "https://github.com/nvim-telescope/telescope-media-files.nvim",
