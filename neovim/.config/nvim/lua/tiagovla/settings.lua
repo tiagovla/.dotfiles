@@ -80,7 +80,7 @@ function M.options()
     vim.opt.virtualedit = "block"
     vim.opt.backup = true
     vim.opt.backupcopy = "yes"
-    vim.opt.cmdheight = 1
+    vim.opt.cmdheight = 0
     vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
     vim.opt.smoothscroll = true
     vim.opt.exrc = true
@@ -92,8 +92,9 @@ function M.options()
     vim.opt.infercase = true
     vim.opt.inccommand = "split"
 
-    vim.opt.scrolloff = 20
+    vim.opt.scrolloff = 30
     vim.opt.sidescrolloff = 15
+    vim.opt.scrolloffpad = 1
 
     vim.opt.showbreak = "↳"
     vim.opt.splitkeep = "topline"
