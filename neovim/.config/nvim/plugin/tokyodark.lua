@@ -1,9 +1,10 @@
 vim.pack.add({ "https://github.com/tiagovla/tokyodark.nvim" }, { confirm = false })
 
 require("tokyodark").setup {
-    transparent_background = true,
+    transparent_background = false,
     custom_highlights = function(hl, p)
         return {
+            ["NormalNC"] = { bg = "#0e0f18" },
             ["LspInlayHint"] = { bg = "#1C1C2A", fg = "#9AA0A7" },
             -- ["Conceal"] = { bg = "NONE" },
             ["@module"] = { link = "TSType" },
