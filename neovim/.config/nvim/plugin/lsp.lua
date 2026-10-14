@@ -19,6 +19,7 @@ vim.lsp.enable {
     "gopls",
     "cmake",
     "clangd",
+    "qmlls",
 }
 
 local caps = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -62,7 +63,7 @@ vim.lsp.config("lua_ls", {
                 setType = true,
             },
             format = { enable = false },
-            diagnostics = { libraryFiles = "Disable", globals = { "vim" } },
+            diagnostics = { libraryFiles = "Disable", globals = { "vim", "hl" } },
             runtime = {
                 pathStrict = true,
                 version = "LuaJIT",
@@ -88,6 +89,7 @@ vim.lsp.config("lua_ls", {
                         add(site .. "/pack/*/opt/*")
                         add(site .. "/pack/*/start/*")
                     end
+                    add "/usr/share/hypr/stubs"
                     return ret
                 end)(),
             },
@@ -185,6 +187,15 @@ vim.lsp.config("ts_ls", {
         "typescript",
         "typescriptreact",
         "typescript.tsx",
+    },
+})
+
+vim.lsp.config("qmlls", {
+    cmd = {
+        -- vim.fn.stdpath "data" .. "/mason/bin/qmlls",
+        "qmlls",
+        "-I",
+        "/usr/lib/qt6/qml",
     },
 })
 
