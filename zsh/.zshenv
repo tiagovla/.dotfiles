@@ -6,10 +6,11 @@ export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="$PATH:/opt/cuda/bin"
 
 # xdg base directories
+export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CURRENT_DESKTOP="bspwm"
+export XDG_CURRENT_DESKTOP="Hyprland"
 
 # ssh agent
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -35,10 +36,3 @@ export QT_IM_MODULE=cedilla
 # export __NV_PRIME_RENDER_OFFLOAD=1
 # export __GLX_VENDOR_LIBRARY_NAM="nvidia"
 # export __VK_LAYER_NV_optimus="NVIDIA_only"
-
-# python & cuda config
-export PYTHON_KEYRING_BACKEND="keyring.backends.fail.Keyring"
-export NVCC_PREPEND_FLAGS="-ccbin /opt/cuda/bin"
-
-# fix x compose
-export XCOMPOSEFILE=$HOME/.XCompose

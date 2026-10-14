@@ -2,6 +2,11 @@
 
 setopt prompt_subst
 
+autoload -Uz add-zsh-hook vcs_info
+
+zstyle ':vcs_info:git:*' formats '%b'
+zstyle ':vcs_info:*' enable git
+
 function prompt-length() {
     emulate -L zsh
     local -i COLUMNS=${2:-COLUMNS}
@@ -33,6 +38,7 @@ function fill-line() {
         typeset -g REPLY=${1}${pad}${2}
     fi
 }
+
 setopt transientrprompt
 
 function preexec() {
@@ -41,38 +47,44 @@ function preexec() {
 
 function set-prompt() {
     emulate -L zsh
-    local git_branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)"
+
+    local git_branch="$vcs_info_msg_0_"
     local top_left=""
     local top_right=""
     local bottom_left=""
     local bottom_right=""
+
     git_branch=${git_branch//\%/%%}
-    if [ -n "$SSH_CONNECTION" ]; then
+
+    if [[ -n "$SSH_CONNECTION" ]]; then
         top_left+="(%n@%m) "
     fi
+
     top_left+="%B%F{cyan}%~%f%b "
-    if [ $git_branch ]; then
+
+    if [[ -n "$git_branch" ]]; then
         top_left+="%F{blue}git:(%f%F{red}${git_branch}%f%F{blue})%f"
     fi
+
     top_right='%F{yellow}%T%f'
     bottom_left='%B%F{%(?.green.red)}√%f%b '
     bottom_right="%(?.%B%F{green} .%F{red}[%?])%f"
-    if [ $timer ]; then
-        timer_show=$(($SECONDS - $timer))
-        timer_show=$(printf '%.*f\n' 0 $timer_show)
-        if [ ! -a $timer_show != "0" ]; then
-            top_right="%b%F{blue}[${timer_show}s]%F{blue}"
+
+    if [[ -n "$timer" ]]; then
+        local timer_show=$((SECONDS - timer))
+        if (( timer_show > 0 )); then
+            top_right="%b%F{blue}[${timer_show}s]%f"
         fi
         unset timer
     fi
+
     local REPLY
     fill-line "$top_left" "$top_right"
     PROMPT=$REPLY$'\n'$bottom_left
     RPROMPT=$bottom_right
 }
 
-setopt no_prompt_{bang,subst} prompt_{cr,percent,sp}
-autoload -Uz add-zsh-hook
+add-zsh-hook precmd vcs_info
 add-zsh-hook precmd set-prompt
 
-#source: https://gist.github.com/romkatv/2a107ef9314f0d5f76563725b42f7cab
+setopt no_prompt_{bang,subst} prompt_{cr,percent,sp}
