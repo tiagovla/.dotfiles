@@ -16,4 +16,4 @@ vim.keymap.set({ "n", "o", "x" }, "<c-w>T", function()
     end
 end, { desc = "move into new tab", remap = true })
 
-require("buffercd").setup {}
+-- require("buffercd").setup {}
