@@ -1,7 +1,7 @@
 local wezterm = require "wezterm"
 
 return {
-    -- enable_wayland = false,
+    enable_wayland = true,
     font = wezterm.font_with_fallback {
         {
             family = "Monolisa",
@@ -29,7 +29,7 @@ return {
         },
         { family = "JetBrains Mono", weight = 500 },
     },
-    font_size = 17.0,
+    font_size = 16.0,
     cursor_blink_rate = 0,
     exit_behavior = "Close",
     force_reverse_video_cursor = true,
@@ -51,10 +51,9 @@ return {
         bottom = 4,
     },
     default_prog = (function()
-        local is_wayland = os.getenv "WAYLAND_DISPLAY"
-        local workspace_cmd = is_wayland and "$(hyprctl activeworkspace -j | jq '.id')"
-            or "$(bspc query -D -d focused --names)"
-        local tmux_cmd = string.format("tmux attach -t %s || tmux new -A -s %s", workspace_cmd, workspace_cmd)
+        local workspace_cmd = "$(hyprctl activeworkspace -j | jq '.id')"
+        local tmux_cmd =
+            string.format("tmux attach -t %s 2>/dev/null || tmux new -A -s %s", workspace_cmd, workspace_cmd)
         return { "/usr/bin/zsh", "-l", "-c", tmux_cmd }
     end)(),
     keys = {
@@ -63,8 +62,8 @@ return {
         { key = "\r", mods = "CTRL", action = wezterm.action { SendString = "\x1b[13;5u" } },
     },
     warn_about_missing_glyphs = false,
-    -- webgpu_preferred_adapter = wezterm.gui.enumerate_gpus()[2],
-    -- front_end = "WebGpu",
+    webgpu_preferred_adapter = wezterm.gui.enumerate_gpus()[1],
+    front_end = "WebGpu",
     debug_key_events = true,
     max_fps = 120,
     window_close_confirmation = "NeverPrompt",
