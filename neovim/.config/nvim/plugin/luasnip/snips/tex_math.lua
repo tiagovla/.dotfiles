@@ -18,13 +18,13 @@ local function in_mathzone()
     local text_commands = {
         "textrm",
     }
-    local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
+    local node = vim.treesitter.get_node()
     while node do
         if vim.tbl_contains(math_nodes, node:type()) then
             return true
         end
         if node:type() == "generic_command" then
-            local command = vim.treesitter.query.get_node_text(node, 0):match "^\\(%w+)"
+            local command = vim.treesitter.get_node_text(node, 0):match "^\\(%w+)"
             if vim.tbl_contains(text_commands, command) then
                 return false
             end

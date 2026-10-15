@@ -19,6 +19,7 @@ vim.lsp.enable {
     "gopls",
     "cmake",
     "clangd",
+    -- "clice",
     "qmlls",
 }
 
@@ -216,8 +217,12 @@ vim.lsp.config("cmake", {
     capabilities = caps,
 })
 
-vim.lsp.config("clangd", {
-    cmd = { "clangd", "--inlay-hints=true", "--enable-config" },
+-- vim.lsp.config("clangd", {
+--     cmd = { "clangd", "--inlay-hints=true", "--enable-config" },
+--     capabilities = caps,
+-- })
+
+vim.lsp.config("clice", {
     capabilities = caps,
 })
 

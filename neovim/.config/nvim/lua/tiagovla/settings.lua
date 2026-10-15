@@ -47,14 +47,14 @@ function M.options()
                 typed_cmd = "cmd",
             },
             cmd = {
-                height = 0.5,
+                -- height = 0.5,
             },
             dialog = {
                 height = 0.5,
             },
             msg = {
-                height = 0.3,
-                timeout = 5000,
+                -- height = 0.3,
+                -- timeout = 5000,
             },
             pager = {
                 height = 0.5,
