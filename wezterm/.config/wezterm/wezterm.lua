@@ -4,30 +4,44 @@ return {
     enable_wayland = true,
     font = wezterm.font_with_fallback {
         {
-            family = "Monolisa",
-            weight = 500,
-            harfbuzz_features = { -- https://www.monolisa.dev/playground
-                "zero=1", -- slashed zero
-                "ss01=1", -- normal asterisk *
-                "ss02=1", -- script variant
+            family = "MonolisaCode",
+            weight = 600,
+            harfbuzz_features = { -- https://www.monolisa.dev/specimen/code
+                "zero=1", -- slashed zero 0
+                "liga=1", -- ligatures
+                "clig=1", -- coding ligatures
+                "frac=0", -- fractions
+                "ss01=1", -- enable italic
+                "ss02=1", -- i and r
                 "ss03=0", -- alt g
                 "ss04=0", -- alt g
-                "ss05=1", -- alt sharp S
+                "ss05=0", -- alt at @
                 "ss06=0", -- alt at @
-                "ss07=1", -- alt curly bracket
-                "ss08=1", -- alt parenthesis --> (
-                "ss09=0", -- alt greater equal style 1
-                "ss10=1", -- alt greater equal style 2 -> >=
-                "ss11=1", -- hexadecimal -> 0x69
-                "ss12=0", -- thin backslash -> //
-                "ss13=1", -- alt dollar -> $
-                "ss14=0", -- alt &
-                "ss15=0", -- i without serif
-                "ss16=0", -- r without serif
-                "ss17=1", -- alt .= and ..=
+                "ss07=1", -- alt *
+                "ss08=1", -- alt $
+                "ss09=0", -- alt &
+                "ss10=1", -- alt ()
+                "ss11=1", -- alt {}
+                "ss12=0", -- thin double backslash
+                "ss13=0", -- hexadecimal x multiply
+                "ss14=1", -- alt seven
+                "ss15=0", -- plain 0
+                "cv01=1", -- markdown headings
+                "cv02=1", -- less, slash, greater
+                "cv03=1", -- less, bar, greater
+                "cv04=1", -- less, hyphen, greater
+                "cv05=1", -- less, equal, greater
+                "cv06=1", -- alt >= <= liga 1
+                "cv07=1", -- alt >= <= liga 2
+                "cv08=1", -- arrows
+                "cv09=1", -- equal combinations
+                "cv10=1", -- alt .= ...= ligatures
+                "cv11=1", -- tilde combinations
+                "cv12=1", -- ampersand combinations
             },
         },
-        { family = "JetBrains Mono", weight = 500 },
+        { family = "Symbols Nerd Font Mono" },
+        { family = "JetBrainsMono Nerd Font Mono", weight = 500 },
     },
     font_size = 16.0,
     cursor_blink_rate = 0,
