@@ -1,0 +1,15 @@
+# Color cycle
+axes.prop_cycle: cycler("color", ["#1f78b4", "#d73027", "#1b9e77", "#d95f02", "#e6ab02", "#a6761d", "#66a61e", "#666666", "#b2df8a", "#7570b3"])
+# Figure settings
+figure.dpi: 230
+figure.figsize: 3.2, 2.4
+# Font settings
+font.size: 10
+axes.labelsize: 10
+legend.fontsize: 10
+font.family: serif
+# Text and grid settings
+text.usetex: False
+legend.edgecolor: black
+grid.linestyle: --
+grid.color: grey
