@@ -22,7 +22,7 @@ Scope {
             screen: modelData
             visible: shell.activeNotifications.length > 0 && modelData.name === shell.notificationScreenName
             color: shell.style.clear
-            implicitWidth: 380
+            implicitWidth: Math.max(200, Math.min(340, notificationColumn.preferredWidth + 16))
             implicitHeight: Math.max(48, Math.min(notificationFlickable.contentHeight + 16, modelData.height - shell.barHeight - 24))
 
             WlrLayershell.layer: WlrLayer.Overlay
@@ -56,7 +56,19 @@ Scope {
                     width: notificationFlickable.width
                     spacing: 8
 
+                    property real preferredWidth: {
+                        let result = 0;
+                        for (let i = 0; i < notificationRepeater.count; i++) {
+                            const card = notificationRepeater.itemAt(i);
+                            if (card)
+                                result = Math.max(result, card.preferredWidth);
+                        }
+                        return result;
+                    }
+
                     Repeater {
+                        id: notificationRepeater
+
                         model: shell.activeNotifications
 
                         delegate: Rectangle {
@@ -64,12 +76,39 @@ Scope {
 
                             required property var modelData
                             readonly property bool isCritical: modelData.urgency === NotificationUrgency.Critical
+                            readonly property string plainBody: String(modelData.body || "").replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ")
+                            readonly property real titleWidth: Math.max(appNameMetrics.advanceWidth, titleMetrics.advanceWidth) + 110
+                            readonly property real messageWidth: bodyMetrics.advanceWidth + 28
+                            readonly property real preferredWidth: Math.min(324, Math.max(titleWidth, messageWidth))
                             width: notificationColumn.width
-                            height: notificationContent.implicitHeight + 24
-                            radius: 12
+                            height: notificationContent.implicitHeight + 36
+                            radius: 14
                             color: shell.style.panelCard
                             border.color: isCritical ? shell.style.red : shell.style.subtleBorder
                             border.width: 1
+
+                            TextMetrics {
+                                id: appNameMetrics
+                                font.family: shell.style.textFontFamily
+                                font.pixelSize: 13
+                                font.bold: true
+                                text: notificationCard.modelData.appName || "Notification"
+                            }
+
+                            TextMetrics {
+                                id: titleMetrics
+                                font.family: shell.style.textFontFamily
+                                font.pixelSize: 19
+                                font.bold: true
+                                text: notificationCard.modelData.summary
+                            }
+
+                            TextMetrics {
+                                id: bodyMetrics
+                                font.family: shell.style.textFontFamily
+                                font.pixelSize: 16
+                                text: notificationCard.plainBody
+                            }
 
                             MouseArea {
                                 anchors.fill: parent
@@ -81,16 +120,19 @@ Scope {
                                 id: notificationContent
 
                                 anchors.fill: parent
-                                anchors.margins: 12
-                                spacing: 6
+                                anchors.leftMargin: 14
+                                anchors.rightMargin: 14
+                                anchors.topMargin: 18
+                                anchors.bottomMargin: 18
+                                spacing: 8
 
                                 Row {
                                     width: parent.width
                                     spacing: 8
 
                                     Rectangle {
-                                        width: 32
-                                        height: 32
+                                        width: 38
+                                        height: 38
                                         radius: 9
                                         color: shell.style.notificationIconSurface
 
@@ -99,14 +141,14 @@ Scope {
                                             text: ""
                                             color: shell.style.selected
                                             font.family: shell.style.iconFontFamily
-                                            font.pixelSize: 19
+                                            font.pixelSize: 23
                                         }
 
                                         Image {
                                             anchors.fill: parent
                                             anchors.margins: 4
                                             source: shell.trayIconSource(notificationCard.modelData.appIcon)
-                                            sourceSize: Qt.size(24, 24)
+                                            sourceSize: Qt.size(30, 30)
                                             fillMode: Image.PreserveAspectFit
                                             asynchronous: true
                                             visible: notificationCard.modelData.appIcon.length > 0
@@ -114,7 +156,7 @@ Scope {
                                     }
 
                                     Column {
-                                        width: parent.width - 32 - 24 - parent.spacing * 2
+                                        width: parent.width - 38 - 28 - parent.spacing * 2
                                         spacing: 2
 
                                         Text {
@@ -122,7 +164,7 @@ Scope {
                                             text: notificationCard.modelData.appName || "Notification"
                                             color: shell.style.secondaryText
                                             font.family: shell.style.textFontFamily
-                                            font.pixelSize: 11
+                                            font.pixelSize: 13
                                             font.bold: true
                                             elide: Text.ElideRight
                                         }
@@ -132,7 +174,7 @@ Scope {
                                             text: notificationCard.modelData.summary
                                             color: shell.style.foreground
                                             font.family: shell.style.textFontFamily
-                                            font.pixelSize: 16
+                                            font.pixelSize: 19
                                             font.bold: true
                                             wrapMode: Text.Wrap
                                             maximumLineCount: 2
@@ -141,8 +183,8 @@ Scope {
                                     }
 
                                     Rectangle {
-                                        width: 24
-                                        height: 24
+                                        width: 28
+                                        height: 28
                                         radius: 6
                                         color: notificationCloseMouse.containsMouse ? shell.style.hoverSurface : shell.style.clear
                                         anchors.verticalCenter: parent.verticalCenter
@@ -152,7 +194,7 @@ Scope {
                                             text: "×"
                                             color: shell.style.foreground
                                             font.family: shell.style.textFontFamily
-                                            font.pixelSize: 21
+                                            font.pixelSize: 25
                                         }
 
                                         MouseArea {
@@ -171,7 +213,7 @@ Scope {
                                     text: notificationCard.modelData.body
                                     color: shell.style.notificationBody
                                     font.family: shell.style.textFontFamily
-                                    font.pixelSize: 13
+                                    font.pixelSize: 16
                                     textFormat: Text.RichText
                                     wrapMode: Text.Wrap
                                     maximumLineCount: 5
@@ -196,19 +238,19 @@ Scope {
 
                                             required property var modelData
                                             width: Math.min(notificationActionLabel.implicitWidth + 20, notificationActions.width)
-                                            height: 30
+                                            height: 36
                                             radius: 7
                                             color: notificationActionMouse.containsMouse ? shell.style.subtleBorder : shell.style.contentBackground
 
                                             Text {
                                                 id: notificationActionLabel
                                                 anchors.fill: parent
-                                                anchors.leftMargin: 10
-                                                anchors.rightMargin: 10
+                                                anchors.leftMargin: 12
+                                                anchors.rightMargin: 12
                                                 text: notificationActionButton.modelData.text
                                                 color: shell.style.foreground
                                                 font.family: shell.style.textFontFamily
-                                                font.pixelSize: 12
+                                                font.pixelSize: 14
                                                 font.bold: true
                                                 horizontalAlignment: Text.AlignHCenter
                                                 verticalAlignment: Text.AlignVCenter
