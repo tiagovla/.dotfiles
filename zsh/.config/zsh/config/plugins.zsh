@@ -29,7 +29,12 @@ if command -v fzf >/dev/null 2>&1; then
 fi
 
 if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init --cmd c zsh)"
+    eval "$(zoxide init --cmd cd zsh)"
+fi
+
+if command -v direnv >/dev/null 2>&1; then
+export DIRENV_LOG_FORMAT=
+    eval "$(direnv hook zsh)"
 fi
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#7f7f7f'
