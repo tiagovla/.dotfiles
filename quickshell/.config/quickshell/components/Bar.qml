@@ -10,6 +10,8 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 Scope {
+    id: barScope
+
     required property var shell
 
     Variants {
@@ -111,6 +113,8 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 9
 
+                UpdatesWidget { shell: barScope.shell }
+
                 Item {
                     id: cpuWidget
                     width: cpuContent.implicitWidth
@@ -121,16 +125,10 @@ Scope {
                         anchors.centerIn: parent
                         spacing: 4
 
-                        Text {
+                        StatusIcon {
                             text: ""
-                            width: 26
-                            height: 26
                             color: shell.style.orangeAccent
-                            font.family: shell.style.iconFontFamily
-                            font.pixelSize: shell.statusIconSize
-                            font.bold: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                            fontFamily: shell.style.iconFontFamily
                         }
 
                         Text {
@@ -160,16 +158,10 @@ Scope {
                         anchors.centerIn: parent
                         spacing: 4
 
-                        Text {
+                        StatusIcon {
                             text: "󰍛"
-                            width: 26
-                            height: 26
                             color: shell.style.memoryAccent
-                            font.family: shell.style.iconFontFamily
-                            font.pixelSize: 18
-                            font.bold: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                            fontFamily: shell.style.iconFontFamily
                         }
 
                         Text {
@@ -199,16 +191,10 @@ Scope {
                         anchors.centerIn: parent
                         spacing: 4
 
-                        Text {
+                        StatusIcon {
                             text: ""
-                            width: 26
-                            height: 26
                             color: shell.style.diskAccent
-                            font.family: shell.style.iconFontFamily
-                            font.pixelSize: shell.statusIconSize
-                            font.bold: true
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
+                            fontFamily: shell.style.iconFontFamily
                         }
 
                         Text {
@@ -240,11 +226,10 @@ Scope {
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
 
-                    Text {
+                    StatusIcon {
                         anchors.centerIn: parent
+                        visible: !shell.volumeLevelVisible
                         text: {
-                            if (shell.volumeLevelVisible)
-                                return shell.volumePercent + "%";
                             if (shell.audioMuted)
                                 return "󰖁";
 
@@ -256,8 +241,16 @@ Scope {
                             return "󰕾";
                         }
                         color: shell.audioMuted ? shell.style.volumeMuted : shell.style.orangeAccent
+                        fontFamily: shell.style.iconFontFamily
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        visible: shell.volumeLevelVisible
+                        text: shell.volumePercent + "%"
+                        color: shell.audioMuted ? shell.style.volumeMuted : shell.style.orangeAccent
                         font.family: shell.style.iconFontFamily
-                        font.pixelSize: shell.volumeLevelVisible ? 14 : 18
+                        font.pixelSize: 14
                         font.bold: true
                     }
 
@@ -280,15 +273,12 @@ Scope {
                     }
                 }
 
-                Text {
+                StatusIcon {
                     id: microphoneLabel
                     text: shell.microphoneMuted ? "" : ""
                     color: shell.microphoneMuted ? shell.style.microphoneMuted : shell.style.microphoneUnmuted
-                    font.family: shell.style.iconFontFamily
-                    font.pixelSize: shell.statusIconSize
-                    font.bold: true
+                    fontFamily: shell.style.iconFontFamily
                     height: bar.height
-                    verticalAlignment: Text.AlignVCenter
 
                     MouseArea {
                         id: microphoneMouse
