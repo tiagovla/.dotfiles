@@ -18,6 +18,7 @@ Scope {
     id: root
 
     readonly property var style: theme
+    readonly property var packageUpdates: packageUpdatesService
 
     readonly property int barHeight: 40
     readonly property int statusIconSize: 22
@@ -63,6 +64,10 @@ Scope {
 
     Theme {
         id: theme
+    }
+
+    PackageUpdates {
+        id: packageUpdatesService
     }
 
     function workspaceIcon(name: string): string {
