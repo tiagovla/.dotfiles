@@ -38,6 +38,10 @@
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
     },
+    "codediff.nvim": {
+      "rev": "09d9ebef2cc5a5c04db7a349cd6c61bdf84ecc8e",
+      "src": "https://github.com/esmuellert/codediff.nvim"
+    },
     "compiler-explorer.nvim": {
       "rev": "523c6a7a3d8c034b421a71eb20b0da75b0b16f62",
       "src": "https://github.com/krady21/compiler-explorer.nvim"
