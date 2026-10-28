@@ -113,6 +113,8 @@ Scope {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 9
 
+                QuotaWidget { shell: barScope.shell }
+
                 UpdatesWidget { shell: barScope.shell }
 
                 Item {

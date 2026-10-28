@@ -19,6 +19,7 @@ Scope {
 
     readonly property var style: theme
     readonly property var packageUpdates: packageUpdatesService
+    readonly property var providerQuota: providerQuotaService
 
     readonly property int barHeight: 40
     readonly property int statusIconSize: 22
@@ -68,6 +69,10 @@ Scope {
 
     PackageUpdates {
         id: packageUpdatesService
+    }
+
+    ProviderQuota {
+        id: providerQuotaService
     }
 
     function workspaceIcon(name: string): string {
@@ -418,16 +423,7 @@ Scope {
 
         const target = pendingMicrophoneMuteTarget ? "1" : "0";
         pendingMicrophoneMuteUpdate = false;
-        microphoneToggleProcess.command = ["bash", "-lc", `target=${target}
-sources=$(pactl list short sources 2>/dev/null | awk '$2 !~ /\\.monitor$/ { print $2 }')
-if [ -n "$sources" ]; then
-    while IFS= read -r source_name; do
-        [ -n "$source_name" ] && pactl set-source-mute "$source_name" "$target" >/dev/null
-    done <<< "$sources"
-else
-    source=$(wpctl get-volume @DEFAULT_SOURCE@ 2>/dev/null)
-    [ -n "$source" ] && wpctl set-mute @DEFAULT_SOURCE@ "$target"
-fi`];
+        microphoneToggleProcess.command = ["wpctl", "set-mute", "@DEFAULT_SOURCE@", target];
         microphoneToggleProcess.running = true;
     }
 
@@ -579,19 +575,10 @@ printf '%s\\n' "$cpu" "$memory" "$disk"`]
         command: ["bash", "-lc", `sink=$(wpctl get-volume @DEFAULT_SINK@ 2>/dev/null)
 volume=$(printf '%s\\n' "$sink" | awk '{ for (i=1; i<=NF; i++) if ($i == "Volume:") { printf "%d", $(i+1) * 100; exit } }')
 case "$sink" in *MUTED*) sink_muted=1 ;; *) sink_muted=0 ;; esac
-sources=$(pactl list short sources 2>/dev/null | awk '$2 !~ /\\.monitor$/ { print $2 }')
 source_muted=na
-if [ -n "$sources" ]; then
-    source_muted=1
-    while IFS= read -r source_name; do
-        source_state=$(pactl get-source-mute "$source_name" 2>/dev/null)
-        case "$source_state" in *"Mute: no"*) source_muted=0 ;; esac
-    done <<< "$sources"
-else
-    source=$(wpctl get-volume @DEFAULT_SOURCE@ 2>/dev/null)
-    if [ -n "$source" ]; then
-        case "$source" in *MUTED*) source_muted=1 ;; *) source_muted=0 ;; esac
-    fi
+source=$(wpctl get-volume @DEFAULT_SOURCE@ 2>/dev/null)
+if [ -n "$source" ]; then
+    case "$source" in *MUTED*) source_muted=1 ;; *) source_muted=0 ;; esac
 fi
 printf '%s\\n' "$volume" "$sink_muted" "$source_muted"`]
 

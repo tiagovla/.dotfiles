@@ -17,8 +17,10 @@ Item {
         return bounds ? Qt.rect(bounds[0], bounds[1], bounds[2], bounds[3]) : metrics.tightBoundingRect(text);
     }
     readonly property real inkScale: size / Math.max(1, inkBounds.width, inkBounds.height)
+    readonly property real glyphWidth: inkBounds.width * inkScale
 
-    implicitWidth: inkBounds.width * inkScale
+    width: glyphWidth
+    implicitWidth: glyphWidth
     implicitHeight: 26
 
     FontMetrics {
