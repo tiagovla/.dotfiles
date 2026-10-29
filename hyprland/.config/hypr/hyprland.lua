@@ -14,16 +14,11 @@ hl.workspace_rule { workspace = "11", monitor = "DP-1", default = true }
 hl.workspace_rule { workspace = "12", monitor = "eDP-1", default = true }
 
 hl.on("hyprland.start", function()
-    -- hl.exec_cmd "hyprlock"
-    hl.exec_cmd "solaar --window=hide"
-    hl.exec_cmd "mako"
-    -- hl.exec_cmd "flameshot"
+    hl.exec_cmd "qs"
     hl.exec_cmd "copyq"
     hl.exec_cmd "nm-applet --indicator"
     hl.exec_cmd "hyprpaper"
-    hl.exec_cmd "waybar"
     hl.exec_cmd "localsend --hidden"
-    -- hl.exec_cmd "hypridle"
     hl.exec_cmd "wl-clip-persist --clipboard regular"
     hl.exec_cmd "~/.cargo/bin/clip-bridge"
     hl.exec_cmd "wlsunset -l -23.55 -L -46.64 -T 5500 -t 4500"
@@ -116,6 +111,8 @@ hl.config {
         force_default_wallpaper = 0,
         disable_hyprland_logo = true,
         disable_splash_rendering = true,
+    },
+    layers = {
         layers_hog_keyboard_focus = false,
     },
     cursor = {
@@ -153,9 +150,8 @@ hl.bind(
 )
 hl.bind("ALT + E", hl.dsp.exec_cmd "dolphin")
 hl.bind("ALT + S", hl.dsp.window.float { action = "toggle" })
-hl.bind("ALT + SPACE", hl.dsp.exec_cmd "rofi -show drun")
+hl.bind("ALT + SPACE", hl.dsp.exec_cmd "qs ipc call launcher toggle || rofi -show drun")
 -- hl.bind("ALT + P", hl.dsp.window.pseudo())
-
 hl.bind("ALT + h", hl.dsp.focus { direction = "left" })
 hl.bind("ALT + j", hl.dsp.focus { direction = "down" })
 hl.bind("ALT + k", hl.dsp.focus { direction = "up" })
@@ -259,7 +255,7 @@ hl.window_rule {
 hl.window_rule {
     name = "spotify",
     match = {
-        class = "spotify",
+        class = "Spotify",
     },
     workspace = "5 silent",
 }
@@ -280,6 +276,16 @@ hl.window_rule {
     float = true,
     center = true,
     size = "800 600",
+}
+
+hl.window_rule {
+    name = "bitwarden",
+    match = {
+        class = "bitwarden",
+    },
+    float = true,
+    center = true,
+    size = "1200 800",
 }
 
 hl.on("window.active", function(w)
