@@ -71,6 +71,7 @@ return {
         return { "/usr/bin/zsh", "-l", "-c", tmux_cmd }
     end)(),
     keys = {
+        { key = "Tab", mods = "CTRL", action = wezterm.action { SendString = "\x1b[9;5u" } },
         { key = "i", mods = "CTRL", action = wezterm.action { SendString = "\x1b[105;5u" } },
         { key = "\r", mods = "SHIFT", action = wezterm.action { SendString = "\x1b[13;2u" } },
         { key = "\r", mods = "CTRL", action = wezterm.action { SendString = "\x1b[13;5u" } },
