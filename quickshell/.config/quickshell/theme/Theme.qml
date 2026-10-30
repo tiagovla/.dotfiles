@@ -12,6 +12,7 @@ QtObject {
     readonly property color selectedText: "#11121D"
     readonly property color workspaceHover: "#171923"
     readonly property color spotifyGreen: "#1DB954"
+    readonly property color ytMusicRed: "#FF0033"
     readonly property color launcherInset: "#20232F"
     readonly property color subtleSurface: "#21222D"
     readonly property color notificationIconSurface: "#252A36"

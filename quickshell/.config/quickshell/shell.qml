@@ -26,6 +26,9 @@ Scope {
 
     property bool launcherVisible: false
     property string launcherScreenName: ""
+    property bool webSearchVisible: false
+    property string webSearchScreenName: ""
+    property string webSearchText: ""
     property bool calendarVisible: false
     property string calendarScreenName: ""
     property bool trayMenuVisible: false
@@ -100,21 +103,31 @@ Scope {
         return false;
     }
 
-    function focusSpotifyApp(player): void {
+    function isYtMusicPlayer(player): bool {
+        const identifiers = [player.identity, player.desktopEntry, player.dbusName];
+        return identifiers.some(value => value && /ytmdesktop|youtube-music-desktop-app/i.test(String(value)));
+    }
+
+    function activeMusicPlayer(): var {
+        const players = Mpris.players.values.filter(player => isSpotifyPlayer(player) || isYtMusicPlayer(player));
+        return players.find(player => player.isPlaying) || players[0] || null;
+    }
+
+    function focusMusicApp(player, appClass: string): void {
         const toplevels = Hyprland.toplevels.values;
         for (let i = 0; i < toplevels.length; i++) {
             const toplevel = toplevels[i];
             const ipc = toplevel.lastIpcObject || {};
             const identifiers = [ipc.class, ipc.initialClass, ipc.title, ipc.initialTitle, toplevel.title];
-            let isSpotify = false;
+            let isMusicApp = false;
             for (let j = 0; j < identifiers.length; j++) {
-                if (identifiers[j] && String(identifiers[j]).toLowerCase().includes("spotify")) {
-                    isSpotify = true;
+                if (identifiers[j] && String(identifiers[j]).toLowerCase().includes(appClass.toLowerCase())) {
+                    isMusicApp = true;
                     break;
                 }
             }
 
-            if (!isSpotify)
+            if (!isMusicApp)
                 continue;
 
             if (toplevel.workspace)
@@ -123,22 +136,22 @@ Scope {
             return;
         }
 
-        let spotifyApp = null;
+        let musicApp = null;
         const applications = DesktopEntries.applications.values;
         for (let i = 0; i < applications.length; i++) {
             const app = applications[i];
             const name = String(app.name || "").toLowerCase();
             const id = String(app.id || "").toLowerCase();
-            if (name === "spotify" || id.includes("spotify")) {
-                spotifyApp = app;
+            if (name === appClass.toLowerCase() || id.includes(appClass.toLowerCase())) {
+                musicApp = app;
                 break;
             }
         }
 
         if (player.canRaise)
             player.raise();
-        else if (spotifyApp)
-            spotifyApp.execute();
+        else if (musicApp)
+            musicApp.execute();
     }
 
     function focusWorkspace(name: string): void {
@@ -276,6 +289,7 @@ Scope {
 
     function showLauncher(screenName: string): void {
         calendarVisible = false;
+        webSearchVisible = false;
         closeTrayMenu();
         launcherScreenName = screenName;
         searchText = "";
@@ -283,6 +297,7 @@ Scope {
     }
 
     function toggleCalendar(screenName: string): void {
+        webSearchVisible = false;
         if (calendarVisible && calendarScreenName === screenName) {
             calendarVisible = false;
             return;
@@ -315,6 +330,7 @@ Scope {
         closeTrayMenu();
         calendarVisible = false;
         launcherVisible = false;
+        webSearchVisible = false;
         activeTrayItem = item;
         activeTrayMenu = menuRoot; // qmllint disable incompatible-type
         trayMenuScreenName = screenName;
@@ -469,6 +485,71 @@ Scope {
         showLauncher(focusedScreen || fallbackScreen);
     }
 
+    function toggleWebSearch(): void {
+        if (webSearchVisible) {
+            webSearchVisible = false;
+            return;
+        }
+
+        launcherVisible = false;
+        calendarVisible = false;
+        closeTrayMenu();
+        webSearchScreenName = Hyprland.focusedMonitor ? Hyprland.focusedMonitor.name
+            : (Quickshell.screens.length > 0 ? Quickshell.screens[0].name : "");
+        webSearchText = "";
+        webSearchVisible = true;
+    }
+
+    function submitWebSearch(query: string): void {
+        const url = webSearchUrl(query);
+        if (!url || webSearchProcess.running)
+            return;
+
+        webSearchProcess.command = ["bash", "-c", `
+desktop=$(xdg-mime query default x-scheme-handler/https)
+for dir in "$HOME/.local/share/applications" /usr/local/share/applications /usr/share/applications; do
+    if [ -f "$dir/$desktop" ]; then
+        file="$dir/$desktop"
+        break
+    fi
+done
+if [ -n "$file" ]; then
+    class=$(sed -n '/^StartupWMClass=/ {s/^StartupWMClass=//; p; q}' "$file")
+    if [ -z "$class" ]; then
+        executable=$(sed -n '/^Exec=/ {s/^Exec=//; p; q}' "$file" | awk '{print $1}')
+        parent=$(basename "$(dirname "$executable")")
+        if [ "$parent" != bin ] && [ "$parent" != . ]; then class="$parent"; fi
+    fi
+fi
+if [ -z "$class" ]; then class=$(basename "$desktop" .desktop); fi
+case "$class" in
+    *[!a-zA-Z0-9._-]*) class= ;;
+esac
+if [ -n "$class" ]; then
+    hyprctl repl "for _,w in ipairs(hl.get_windows()) do if w.class == \\"$class\\" then hl.dispatch(hl.dsp.focus { workspace = w.workspace.id }); hl.dispatch(hl.dsp.focus { window = w }); break end end"
+fi
+xdg-open "$1"`, "web-search", url];
+        webSearchVisible = false;
+        webSearchProcess.running = true;
+    }
+
+    function webSearchUrl(query: string): string {
+        query = query.trim();
+        const bang = query.match(/(^|\s)!(gpt|gh|reddit)(?=\s|$)/i);
+        if (bang)
+            query = query.replace(bang[0], "").trim();
+        if (!query)
+            return "";
+
+        const encoded = encodeURIComponent(query);
+        switch (bang ? bang[2].toLowerCase() : "") {
+        case "gpt": return "https://chatgpt.com/?q=" + encoded;
+        case "gh": return "https://github.com/search?q=" + encoded;
+        case "reddit": return "https://www.reddit.com/search/?q=" + encoded;
+        default: return "https://www.google.com/search?q=" + encoded;
+        }
+    }
+
     function launchApp(app): void {
         if (!app)
             return;
@@ -493,6 +574,14 @@ Scope {
 
         function toggle(): void {
             root.toggleLauncher();
+        }
+    }
+
+    IpcHandler {
+        target: "websearch"
+
+        function toggle(): void {
+            root.toggleWebSearch();
         }
     }
 
@@ -549,6 +638,10 @@ Scope {
                 return aRecent - bRecent || a.name.localeCompare(b.name);
             });
         }
+    }
+
+    Process {
+        id: webSearchProcess
     }
 
     Process {
@@ -686,6 +779,8 @@ printf '%s\\n' "$volume" "$sink_muted" "$source_muted"`]
     NotificationOverlay { shell: root }
 
     LauncherOverlay { shell: root }
+
+    WebSearchOverlay { shell: root }
 
     TrayMenuOverlay { shell: root }
 

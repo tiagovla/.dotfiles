@@ -412,23 +412,26 @@ Scope {
                 model: Mpris.players
 
                 delegate: Rectangle {
-                    id: spotifyWidget
+                    id: musicWidget
 
                     required property var modelData
                     readonly property bool isSpotify: shell.isSpotifyPlayer(modelData)
+                    readonly property bool isYtMusic: shell.isYtMusicPlayer(modelData)
+                    readonly property bool isMusicPlayer: isSpotify || isYtMusic
+                    readonly property color accent: isYtMusic ? shell.style.ytMusicRed : shell.style.spotifyGreen
                     anchors.centerIn: parent
-                    width: isSpotify ? Math.max(0, Math.min(320, parent.width - workspaceRow.width - statusRow.width - 32)) : 0
+                    width: isMusicPlayer ? Math.max(0, Math.min(320, parent.width - workspaceRow.width - statusRow.width - 32)) : 0
                     height: 32
                     radius: 16
                     color: shell.style.spotifyCard
                     border.color: shell.style.border
-                    border.width: isSpotify ? 1 : 0
-                    visible: isSpotify
+                    border.width: isMusicPlayer ? 1 : 0
+                    visible: isMusicPlayer && shell.activeMusicPlayer() === modelData
                     z: 2
 
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: shell.focusSpotifyApp(spotifyWidget.modelData)
+                        onClicked: shell.focusMusicApp(musicWidget.modelData, musicWidget.isYtMusic ? "youtube-music-desktop-app" : "Spotify")
                     }
 
                     Row {
@@ -437,14 +440,26 @@ Scope {
                         anchors.rightMargin: 10
                         spacing: 8
 
-                        Text {
-                            text: ""
-                            color: shell.style.spotifyGreen
-                            font.family: shell.style.iconFontFamily
-                            font.pixelSize: 22
+                        Item {
                             width: 24
                             height: parent.height
-                            verticalAlignment: Text.AlignVCenter
+
+                            Image {
+                                anchors.centerIn: parent
+                                width: 22
+                                height: 22
+                                source: Quickshell.iconPath("youtube-music-desktop-app")
+                                visible: musicWidget.isYtMusic
+                            }
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: ""
+                                color: musicWidget.accent
+                                font.family: shell.style.iconFontFamily
+                                font.pixelSize: 22
+                                visible: musicWidget.isSpotify
+                            }
                         }
 
                         Column {
@@ -454,7 +469,7 @@ Scope {
 
                             Text {
                                 width: parent.width
-                                text: spotifyWidget.modelData.trackTitle || "Spotify"
+                                text: musicWidget.modelData.trackTitle || (musicWidget.isYtMusic ? "YouTube Music" : "Spotify")
                                 color: shell.style.foreground
                                 font.family: shell.style.textFontFamily
                                 font.pixelSize: 12
@@ -464,7 +479,7 @@ Scope {
 
                             Text {
                                 width: parent.width
-                                text: spotifyWidget.modelData.trackArtist || ""
+                                text: musicWidget.modelData.trackArtist || ""
                                 color: shell.style.secondaryText
                                 font.family: shell.style.textFontFamily
                                 font.pixelSize: 10
@@ -486,7 +501,7 @@ Scope {
                                 Text {
                                     anchors.centerIn: parent
                                     text: "⏮"
-                                    color: spotifyWidget.modelData.canGoPrevious ? shell.style.foreground : shell.style.disabled
+                                    color: musicWidget.modelData.canGoPrevious ? shell.style.foreground : shell.style.disabled
                                     font.family: shell.style.iconFontFamily
                                     font.pixelSize: 18
                                 }
@@ -495,9 +510,9 @@ Scope {
                                     id: spotifyPreviousMouse
                                     anchors.fill: parent
                                     hoverEnabled: true
-                                    enabled: spotifyWidget.modelData.canGoPrevious
+                                    enabled: musicWidget.modelData.canGoPrevious
                                     cursorShape: Qt.PointingHandCursor
-                                    onClicked: spotifyWidget.modelData.previous()
+                                    onClicked: musicWidget.modelData.previous()
                                 }
                             }
 
@@ -509,8 +524,8 @@ Scope {
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text: spotifyWidget.modelData.isPlaying ? "⏸" : "▶"
-                                    color: spotifyWidget.modelData.canTogglePlaying ? shell.style.spotifyGreen : shell.style.disabled
+                                    text: musicWidget.modelData.isPlaying ? "⏸" : "▶"
+                                    color: musicWidget.modelData.canTogglePlaying ? musicWidget.accent : shell.style.disabled
                                     font.family: shell.style.iconFontFamily
                                     font.pixelSize: 18
                                 }
@@ -519,9 +534,9 @@ Scope {
                                     id: spotifyToggleMouse
                                     anchors.fill: parent
                                     hoverEnabled: true
-                                    enabled: spotifyWidget.modelData.canTogglePlaying
+                                    enabled: musicWidget.modelData.canTogglePlaying
                                     cursorShape: Qt.PointingHandCursor
-                                    onClicked: spotifyWidget.modelData.togglePlaying()
+                                    onClicked: musicWidget.modelData.togglePlaying()
                                 }
                             }
 
@@ -534,7 +549,7 @@ Scope {
                                 Text {
                                     anchors.centerIn: parent
                                     text: "⏭"
-                                    color: spotifyWidget.modelData.canGoNext ? shell.style.foreground : shell.style.disabled
+                                    color: musicWidget.modelData.canGoNext ? shell.style.foreground : shell.style.disabled
                                     font.family: shell.style.iconFontFamily
                                     font.pixelSize: 18
                                 }
@@ -543,9 +558,9 @@ Scope {
                                     id: spotifyNextMouse
                                     anchors.fill: parent
                                     hoverEnabled: true
-                                    enabled: spotifyWidget.modelData.canGoNext
+                                    enabled: musicWidget.modelData.canGoNext
                                     cursorShape: Qt.PointingHandCursor
-                                    onClicked: spotifyWidget.modelData.next()
+                                    onClicked: musicWidget.modelData.next()
                                 }
                             }
                         }
