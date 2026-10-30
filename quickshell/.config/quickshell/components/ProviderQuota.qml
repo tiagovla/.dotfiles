@@ -11,12 +11,12 @@ Scope {
     readonly property string label: error ? "Quota !" : quota ? "S " + quota.session.remaining + "% · " + quota.session.reset + "\nW " + quota.weekly.remaining + "% · " + quota.weekly.reset : "S --\nW --"
     readonly property string tooltip: {
         if (error)
-            return "Provider quota unavailable\n" + error + "\nRefreshes every 5 minutes";
+            return "Provider quota unavailable\n" + error + "\nRefreshes every 30 seconds";
         if (!quota)
             return "Fetching provider quota…";
         return "Provider quota remaining\nSession: " + quota.session.remaining + "% left · reset in " + quota.session.reset
             + "\nWeekly: " + quota.weekly.remaining + "% left · reset in " + quota.weekly.reset
-            + "\nRefreshes every 5 minutes";
+            + "\nRefreshes every 30 seconds";
     }
 
     function refresh(): void {
@@ -45,7 +45,7 @@ Scope {
     }
 
     Timer {
-        interval: 5 * 60 * 1000
+        interval: 30 * 1000
         running: true
         repeat: true
         triggeredOnStart: true
