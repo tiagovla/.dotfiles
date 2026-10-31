@@ -151,6 +151,8 @@ hl.bind(
 hl.bind("ALT + E", hl.dsp.exec_cmd "dolphin")
 hl.bind("ALT + S", hl.dsp.window.float { action = "toggle" })
 hl.bind("ALT + SPACE", hl.dsp.exec_cmd "qs ipc call launcher toggle || rofi -show drun")
+hl.bind("ALT + O", hl.dsp.exec_cmd "qs ipc call websearch toggle")
+hl.bind("ALT + TAB", hl.dsp.focus { workspace = "previous" })
 -- hl.bind("ALT + P", hl.dsp.window.pseudo())
 hl.bind("ALT + h", hl.dsp.focus { direction = "left" })
 hl.bind("ALT + j", hl.dsp.focus { direction = "down" })
@@ -261,6 +263,14 @@ hl.window_rule {
 }
 
 hl.window_rule {
+    name = "youtube-music",
+    match = {
+        class = "youtube-music-desktop-app",
+    },
+    workspace = "5 silent",
+}
+
+hl.window_rule {
     name = "jellyfin",
     match = {
         class = "org.jellyfin.JellyfinDesktop",
@@ -289,7 +299,7 @@ hl.window_rule {
 }
 
 hl.on("window.active", function(w)
-    local enabled = w.fullscreen == 0
+    local enabled = not w or w.fullscreen == 0
     mouse_drag:set_enabled(enabled)
     mouse_resize:set_enabled(enabled)
 end)
