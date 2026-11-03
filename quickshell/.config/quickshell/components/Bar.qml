@@ -249,7 +249,10 @@ Scope {
                     Text {
                         anchors.centerIn: parent
                         visible: shell.volumeLevelVisible
-                        text: shell.volumePercent + "%"
+                        text: {
+                            const volume = Number.parseFloat(shell.volumePercent);
+                            return Number.isNaN(volume) ? shell.volumePercent + "%" : Math.round(volume) + "%";
+                        }
                         color: shell.audioMuted ? shell.style.volumeMuted : shell.style.orangeAccent
                         font.family: shell.style.iconFontFamily
                         font.pixelSize: 14
