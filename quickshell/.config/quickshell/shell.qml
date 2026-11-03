@@ -446,9 +446,9 @@ Scope {
     function queueVolumeAdjustment(steps: int): void {
         pendingVolumeSteps += steps;
 
-        const currentVolume = Number.parseInt(volumePercent, 10);
+        const currentVolume = Number.parseFloat(volumePercent);
         if (!Number.isNaN(currentVolume))
-            volumePercent = String(Math.max(0, currentVolume + steps * 5));
+            volumePercent = String(Math.max(0, currentVolume + steps * 0.5));
 
         runVolumeAdjustment();
     }
@@ -457,7 +457,7 @@ Scope {
         if (audioVolumeProcess.running || pendingVolumeSteps === 0)
             return;
 
-        const change = pendingVolumeSteps * 5;
+        const change = pendingVolumeSteps * 0.5;
         pendingVolumeSteps = 0;
         audioVolumeProcess.command = ["wpctl", "set-volume", "@DEFAULT_SINK@", Math.abs(change) + "%" + (change > 0 ? "+" : "-")];
         audioVolumeProcess.running = true;
@@ -666,7 +666,7 @@ printf '%s\\n' "$cpu" "$memory" "$disk"`]
         id: audioMetricsProcess
 
         command: ["bash", "-lc", `sink=$(wpctl get-volume @DEFAULT_SINK@ 2>/dev/null)
-volume=$(printf '%s\\n' "$sink" | awk '{ for (i=1; i<=NF; i++) if ($i == "Volume:") { printf "%d", $(i+1) * 100; exit } }')
+volume=$(printf '%s\\n' "$sink" | awk '{ for (i=1; i<=NF; i++) if ($i == "Volume:") { printf "%.1f", $(i+1) * 100; exit } }')
 case "$sink" in *MUTED*) sink_muted=1 ;; *) sink_muted=0 ;; esac
 source_muted=na
 source=$(wpctl get-volume @DEFAULT_SOURCE@ 2>/dev/null)
