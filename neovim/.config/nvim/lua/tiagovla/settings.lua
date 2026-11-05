@@ -104,12 +104,10 @@ function M.options()
     vim.opt.termguicolors = true
 
     vim.opt.shiftwidth = 4
-    vim.opt.tabstop = 4
     vim.opt.softtabstop = 0
     vim.opt.expandtab = true
     vim.opt.smartindent = true
-    vim.opt.shiftwidth = 4
-    vim.opt.expandtab = true
+    vim.opt.tabstop = 8
 
     vim.opt.fillchars = { eob = " " }
 
@@ -135,11 +133,6 @@ function M.options()
 
     vim.opt.undofile = true
     vim.opt.diffopt = "internal,filler,closeoff,inline:simple,linematch:40"
-
-    vim.opt.expandtab = true
-    vim.opt.smartindent = true
-    vim.opt.shiftwidth = 4
-    vim.opt.tabstop = 8
 
     vim.opt.number = true
     vim.opt.numberwidth = 2
