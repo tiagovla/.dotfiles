@@ -11,6 +11,10 @@ local function better_close()
     local buffers = utils.get_valid_buffers()
     local named_buffers = vim.tbl_filter(utils.buf_has_name, buffers)
     local ok, diffview = pcall(require, "diffview.lib")
+    if vim.wo.diff then
+        vim.api.nvim_win_close(0, false)
+        return
+    end
     if ok then
         local view = diffview.get_current_view()
         if view then
