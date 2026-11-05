@@ -38,7 +38,7 @@ vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notific
 local custom_theme = {
     pickers = {
         find_files = {
-            find_command = { "rg", "--no-ignore", "--type=file", "--hiden", "--smart-case" },
+            find_command = { "rg", "--files", "--no-ignore", "--hidden", "--smart-case" },
         },
         live_grep = {
             only_sort_text = true,
