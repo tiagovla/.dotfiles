@@ -58,6 +58,10 @@
       "rev": "9c8b172570105d31ff707cb0d62897f79c2ddb1f",
       "src": "https://github.com/zbirenbaum/copilot.lua"
     },
+    "diffview-plus.nvim": {
+      "rev": "fae72d6c981075dce2e0f946f002382ce0cb44e1",
+      "src": "https://github.com/dlyongemallo/diffview-plus.nvim"
+    },
     "diffview.nvim": {
       "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
       "src": "https://github.com/sindrets/diffview.nvim"
