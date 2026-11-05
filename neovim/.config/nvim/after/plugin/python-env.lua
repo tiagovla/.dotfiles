@@ -1,16 +1,24 @@
+local utils = require "tiagovla.utils"
+
 local function get_std_envs()
     local envs = {}
     if vim.env.VIRTUAL_ENV then
         envs["VIRTUAL_ENV"] = table.concat({ vim.env.VIRTUAL_ENV, "bin", "python" }, "/")
     end
-    local sys = vim.fn.exepath "python3" or vim.fn.exepath "python" or "/bin/python"
+    local sys = utils.get_python_executable() or "/bin/python"
     envs["System"] = sys
     return envs
 end
 
-local function get_poetry_envs()
+local function get_poetry_envs(workspace)
     local envs = {}
-    local venv = vim.fn.trim(vim.fn.system "poetry env list --full-path")
+    local ok, result = pcall(function()
+        return vim.system({ "poetry", "env", "list", "--full-path" }, { cwd = workspace, text = true }):wait()
+    end)
+    if not ok or result.code ~= 0 then
+        return envs
+    end
+    local venv = result.stdout
     for match in string.gmatch(venv, "[%w%/%.%-]*virtualenv[%w%/%.%-]*") do
         local split = vim.fn.split(match, "/")
         envs["Poetry: " .. split[#split]] = table.concat({ match, "bin", "python" }, "/")
@@ -19,20 +27,18 @@ local function get_poetry_envs()
 end
 
 local function get_python_client()
-    local pylance = vim.lsp.get_active_clients { name = "pylance" }
-    local pyright = vim.lsp.get_active_clients { name = "pyright" }
-    local clients = vim.tbl_extend("force", pylance, pyright)
-    if #clients > 0 then
-        return clients[1]
-    end
+    local pylance = vim.lsp.get_clients { bufnr = 0, name = "pylance" }
+    local pyright = vim.lsp.get_clients { bufnr = 0, name = "pyright" }
+    return pylance[1] or pyright[1]
 end
 
 local function env_handler()
     local client = get_python_client()
     if not client then
         vim.notify "No python clients found"
+        return
     end
-    local options = vim.tbl_extend("force", get_std_envs(), get_poetry_envs())
+    local options = vim.tbl_extend("force", get_std_envs(), get_poetry_envs(client.config.root_dir))
     local settings = client.config.settings
     local active = settings.python.pythonPath
     vim.ui.select(vim.tbl_keys(options), {
