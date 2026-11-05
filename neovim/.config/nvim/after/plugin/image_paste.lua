@@ -25,6 +25,14 @@ local function get_info(targets)
 end
 
 local function save_image(folder, target, filename, extension)
+    filename = vim.fs.basename(filename) or ""
+    if filename == "" then
+        return nil
+    end
+    extension = (extension or ""):gsub("[^%w_+%-]", "")
+    if extension == "" then
+        return nil
+    end
     local image = ("%s.%s"):format(filename, extension)
     local path = Path:new(folder)
     path:mkdir { parents = true }
@@ -34,8 +42,20 @@ local function save_image(folder, target, filename, extension)
         path = path:parent():joinpath(("%s_%d.%s"):format(filename, i, extension))
         i = i + 1
     end
-    local cmd = [[xclip -selection clipboard -t %s -o > %s]]
-    vim.fn.system(cmd:format(target, path))
+    local ok, result = pcall(function()
+        return vim.system({ "xclip", "-selection", "clipboard", "-t", target, "-o" }):wait()
+    end)
+    if not ok then
+        vim.notify(tostring(result), vim.log.levels.ERROR)
+        return nil
+    end
+    if result.code ~= 0 then
+        vim.notify(result.stderr ~= "" and result.stderr or "xclip failed", vim.log.levels.ERROR)
+        return nil
+    end
+    if vim.fn.writefile(result.stdout, tostring(path), "b") ~= 0 then
+        return nil
+    end
     return path
 end
 
@@ -54,6 +74,9 @@ local function image_paste(func)
             return
         end
         local path = save_image("images", target, filename, extension)
+        if not path then
+            return
+        end
         path = path:make_relative()
         if func then
             func(path)
