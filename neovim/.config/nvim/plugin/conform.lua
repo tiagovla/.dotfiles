@@ -44,6 +44,13 @@ end, { desc = "Format buffer" })
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
     callback = function(args)
-        require("conform").format { bufnr = args.buf }
+        if vim.g.format_on_save then
+            require("luasnip").session.current_nodes[args.buf] = nil
+            require("conform").format {
+                bufnr = args.buf,
+                timeout_ms = 3000,
+                lsp_format = "fallback",
+            }
+        end
     end,
 })
