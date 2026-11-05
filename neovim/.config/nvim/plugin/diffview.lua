@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/sindrets/diffview.nvim" }, { confirm = false })
+vim.pack.add({ "https://github.com/dlyongemallo/diffview-plus.nvim" }, { confirm = false })
 
 vim.keymap.set("n", "<leader>D", ":DiffviewToggle<cr>", { silent = true })
 vim.keymap.set("n", "<leader>dh", ":DiffviewToggleHistory<cr>", { silent = true })
