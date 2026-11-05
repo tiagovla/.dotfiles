@@ -1,4 +1,3 @@
 -- vim.lsp.set_log_level "debug"
--- vim.deprecate = function() end -- YOLO
-vim.loader.enable(true)
+vim.loader.enable()
 require "tiagovla"
