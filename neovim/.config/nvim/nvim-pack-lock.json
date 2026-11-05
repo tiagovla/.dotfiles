@@ -236,7 +236,7 @@
       "src": "https://github.com/tiagovla/tex-conceal.vim"
     },
     "tmux.nvim": {
-      "rev": "8d79b15bc8f115c956f467788db58b827afd0764",
+      "rev": "5971292e1322c1ae1c305bd6df58e6d1bf7527bb",
       "src": "https://github.com/aserowy/tmux.nvim"
     },
     "toggleterm.nvim": {
