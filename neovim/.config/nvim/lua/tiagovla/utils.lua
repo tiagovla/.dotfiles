@@ -23,6 +23,33 @@ function U.buf_has_name(buf)
     return vim.api.nvim_buf_get_name(buf) ~= ""
 end
 
+function U.get_python_executable()
+    local python = vim.fn.exepath "python3"
+    if python == "" then
+        python = vim.fn.exepath "python"
+    end
+    return python ~= "" and python or nil
+end
+
+function U.get_poetry_python(workspace)
+    if not workspace then
+        return nil
+    end
+
+    local ok, result = pcall(function()
+        return vim.system({ "poetry", "env", "info", "-p" }, { cwd = workspace, text = true }):wait()
+    end)
+    if not ok or result.code ~= 0 then
+        return nil
+    end
+
+    local venv = vim.trim(result.stdout)
+    if venv == "" then
+        return nil
+    end
+    return vim.fs.joinpath(venv, "bin", "python")
+end
+
 -- function U.debug()
 --     vim.cmd [[
 --                 function! SynGroup()
