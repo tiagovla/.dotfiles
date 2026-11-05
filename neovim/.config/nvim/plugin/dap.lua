@@ -5,6 +5,8 @@ vim.pack.add({
     "https://github.com/nvim-neotest/nvim-nio",
 }, { confirm = false })
 
+local utils = require "tiagovla.utils"
+
 local keys = {
     ["db"] = { "toggle_breakpoint", "Toggle breakpoint" },
     ["dB"] = { "step_back", "Step back" },
@@ -73,9 +75,11 @@ dap.configurations.python = {
         program = "${file}",
         pythonPath = function()
             local cwd = vim.fn.getcwd()
-            if vim.fn.glob(cwd .. "/poetry.lock") then
-                local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
-                return venv .. "/bin" .. "/python"
+            if vim.fn.filereadable(vim.fs.joinpath(cwd, "poetry.lock")) == 1 then
+                local python = utils.get_poetry_python(cwd)
+                if python then
+                    return python
+                end
             end
             if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
                 return cwd .. "/venv/bin/python"
