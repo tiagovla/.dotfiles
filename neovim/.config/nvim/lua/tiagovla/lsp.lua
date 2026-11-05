@@ -50,22 +50,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
                 callback = vim.lsp.buf.clear_references,
             })
         end
-
-        if client.server_capabilities.documentFormattingProvider then
-            local group = vim.api.nvim_create_augroup("Formatting", {})
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                group = group,
-                buffer = 0,
-                callback = function()
-                    if vim.g.format_on_save then
-                        require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()] = nil
-                        vim.lsp.buf.format {
-                            timeout_ms = 3000,
-                        }
-                    end
-                end,
-            })
-        end
     end,
 })
 
