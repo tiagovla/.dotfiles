@@ -1,3 +1,5 @@
+local utils = require "tiagovla.utils"
+
 local function set_python_path(command)
     local path = command.args
     local clients = vim.lsp.get_clients {
@@ -21,6 +23,7 @@ return {
     filetypes = { "python" },
     root_markers = {
         "pylanceconfig.json",
+        "uv.lock",
         "pyproject.toml",
         "setup.py",
         "setup.cfg",
@@ -76,11 +79,18 @@ return {
             if workspace then
                 local poetry_lock_path = vim.fs.joinpath(workspace, "poetry.lock")
                 if vim.fn.filereadable(poetry_lock_path) then
-                    local venv = vim.fn.trim(vim.fn.system "poetry env info -p")
-                    return vim.fs.joinpath(venv, "bin", "python")
+                    local python = utils.get_poetry_python(workspace)
+                    if python then
+                        return python
+                    end
+                end
+                local uv_lock_path = vim.fs.joinpath(workspace, "uv.lock")
+                local uv_python = vim.fs.joinpath(workspace, ".venv", "bin", "python")
+                if vim.fn.filereadable(uv_lock_path) and vim.fn.executable(uv_python) == 1 then
+                    return uv_python
                 end
             end
-            return vim.fn.exepath "python3" or vim.fn.exepath "python" or "python"
+            return utils.get_python_executable() or "python"
         end)(client.config.root_dir)
     end,
 }
