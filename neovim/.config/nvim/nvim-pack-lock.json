@@ -208,7 +208,7 @@
       "src": "https://github.com/microsoft/python-type-stubs"
     },
     "scope.nvim": {
-      "rev": "228aabdb1b9cc74f0c0ccec88e79873857236e49",
+      "rev": "8ddc482ecd9c32a781b9a2e57e800aed50d96f19",
       "src": "https://github.com/tiagovla/scope.nvim"
     },
     "snacks.nvim": {
@@ -248,7 +248,7 @@
       "src": "https://github.com/akinsho/toggleterm.nvim"
     },
     "tokyodark.nvim": {
-      "rev": "659aff3c73dc2e0159314050a81671f0b2eaad01",
+      "rev": "61116fee230b523e19aab0561c7dd3ad2ad7d169",
       "src": "https://github.com/tiagovla/tokyodark.nvim"
     },
     "trouble.nvim": {
