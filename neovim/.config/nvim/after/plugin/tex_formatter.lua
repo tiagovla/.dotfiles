@@ -1,17 +1,3 @@
--- local ts_utils = require "nvim-treesitter.ts_utils"
-
-local run_formatter = function(text)
-    local result = table.concat(text, " ")
-    -- vim.print(result)
-    local width = vim.opt.textwidth:get() or "80"
-    local j = require("plenary.job"):new {
-        command = "fmt",
-        args = { "-w" .. width, "-u" },
-        writer = { result },
-    }
-    return j:sync()
-end
-
 -- Get the start and end positions of the given nodes.
 local function get_min_max_range(nodes)
     local min, max = nodes[1]:start(), nodes[1]:end_()
@@ -100,5 +86,12 @@ local function group_and_format_nodes()
     vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 
--- Keymap for formatting the block
-vim.keymap.set("n", "<space><space>q", group_and_format_nodes, {})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "tex",
+    callback = function(ev)
+        vim.keymap.set("n", "<space><space>q", group_and_format_nodes, {
+            buffer = ev.buf,
+            desc = "Format TeX paragraphs",
+        })
+    end,
+})
