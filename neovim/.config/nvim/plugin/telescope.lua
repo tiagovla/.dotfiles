@@ -30,20 +30,11 @@ vim.keymap.set("n", "<leader>tb", "<cmd>Telescope buffers<cr>", { desc = "Buffer
 vim.keymap.set("n", "<leader>tB", "<cmd>Telescope file_browser<cr>", { desc = "File Browser" })
 vim.keymap.set("n", "<leader>th", "<cmd>Telescope help_tags<cr>", { desc = "Help tags" })
 vim.keymap.set("n", "<leader>tC", "<cmd>Telescope colorscheme<cr>", { desc = "Colorscheme" })
--- vim.keymap.set("n", "<leader>tp", "<cmd>Telescope project<cr>", { desc = "Project" })
 vim.keymap.set("n", "<leader>td", "<cmd>Telescope zoxide list<cr>", { desc = "Zoxide" })
 vim.keymap.set("n", "<leader>tm", "<cmd>Telescope man_pages<cr>", { desc = "Man pages" })
 vim.keymap.set("n", "<leader>tn", "<cmd>Telescope notify<cr>", { desc = "Notifications" })
 
 local custom_theme = {
-    pickers = {
-        find_files = {
-            find_command = { "rg", "--files", "--no-ignore", "--hidden", "--smart-case" },
-        },
-        live_grep = {
-            only_sort_text = true,
-        },
-    },
     layout_config = {
         prompt_position = "bottom",
         horizontal = {
@@ -93,6 +84,22 @@ local custom_theme = {
 }
 require("telescope").setup {
     defaults = custom_theme,
+    pickers = {
+        find_files = {
+            find_command = {
+                "rg",
+                "--files",
+                "--no-ignore",
+                "--hidden",
+                "--glob=!.git",
+                "--glob=!.cache",
+                "--smart-case",
+            },
+        },
+        live_grep = {
+            only_sort_text = true,
+        },
+    },
     extensions = {
         fzf = {
             fuzzy = true,
