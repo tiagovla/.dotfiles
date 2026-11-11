@@ -38,6 +38,10 @@
       "rev": "655133c3b4c3e5e05ec549b9f8cc2894ac6f51b3",
       "src": "https://github.com/akinsho/bufferline.nvim"
     },
+    "cmake-tools.nvim": {
+      "rev": "782a254c62a61af1d4febddd0d6dbc5ea414a027",
+      "src": "https://github.com/civitasv/cmake-tools.nvim"
+    },
     "codecompanion.nvim": {
       "rev": "052ad5ade662ea3e3a6b99bc39a6bf3ce1c42892",
       "src": "https://github.com/olimorris/codecompanion.nvim"
@@ -73,6 +77,10 @@
     "friendly-snippets": {
       "rev": "b4d01b0fdf3c9a549961c2f9ffe8dc09be166219",
       "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "git-conflict.nvim": {
+      "rev": "a1badcd070d176172940eb55d9d59029dad1c5a6",
+      "src": "https://github.com/akinsho/git-conflict.nvim"
     },
     "gitsigns.nvim": {
       "rev": "851a051e2bd2caba97e23314c68d69f1b1cf5d19",
@@ -122,6 +130,10 @@
     "neotest": {
       "rev": "27bf921498043f7ecd821d6db68d05de244bbd02",
       "src": "https://github.com/rcarriga/neotest"
+    },
+    "neotest-gtest": {
+      "rev": "9e8031a8751e0ecd7d673a7abc48671b66e3be85",
+      "src": "file:///home/tiagovla/git/neotest-gtest"
     },
     "neotest-python": {
       "rev": "1b56ca4ba51c6014f986d6548ee629bdc95589d1",

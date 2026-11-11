@@ -1,8 +1,13 @@
-vim.pack.add({ "https://github.com/dlyongemallo/diffview-plus.nvim" }, { confirm = false })
+vim.pack.add(
+    { "https://github.com/dlyongemallo/diffview-plus.nvim", "https://github.com/akinsho/git-conflict.nvim" },
+    { confirm = false }
+)
 
 vim.keymap.set("n", "<leader>D", ":DiffviewToggle<cr>", { silent = true })
 vim.keymap.set("n", "<leader>dh", ":DiffviewToggleHistory<cr>", { silent = true })
 vim.keymap.set("n", "<leader>df", ":DiffviewToggleFiles<cr>", { silent = true })
+
+require("git-conflict").setup()
 
 local actions = require "diffview.actions"
 
@@ -177,3 +182,73 @@ require("diffview").setup {
         },
     },
 }
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "DiffviewFiles",
+    callback = function(event)
+        require("which-key").add {
+            buffer = event.buf,
+            { "<leader>D", desc = "Toggle Diffview" },
+            { "<leader>d", group = "Diffview" },
+            { "<leader>dh", desc = "Toggle file history" },
+            { "<leader>df", desc = "Toggle files" },
+            { "<leader>b", desc = "Toggle file panel" },
+            { "<leader>e", desc = "Focus file panel" },
+            { "j", desc = "Next entry" },
+            { "<down>", desc = "Next entry" },
+            { "k", desc = "Previous entry" },
+            { "<up>", desc = "Previous entry" },
+            { "<cr>", desc = "Open selected entry" },
+            { "o", desc = "Open selected entry" },
+            { "-", desc = "Stage or unstage entry" },
+            { "S", desc = "Stage all entries" },
+            { "U", desc = "Unstage all entries" },
+            { "X", desc = "Restore entry" },
+            { "R", desc = "Refresh file list" },
+            { "l", desc = "Open commit log" },
+            { "<c-b>", desc = "Scroll view up" },
+            { "<c-f>", desc = "Scroll view down" },
+            { "<tab>", desc = "Select next entry" },
+            { "<s-tab>", desc = "Select previous entry" },
+            { "gf", desc = "Open file" },
+            { "<C-w><C-f>", desc = "Open file in split" },
+            { "<C-w>gf", desc = "Open file in new tab" },
+            { "i", desc = "Toggle listing style" },
+            { "f", desc = "Toggle directory flattening" },
+            { "g<C-x>", desc = "Cycle diff layout" },
+            { "[x", desc = "Previous conflict" },
+            { "]x", desc = "Next conflict" },
+        }
+    end,
+})
+
+local diffview = require "diffview"
+local diffview_lib = require "diffview.lib"
+
+vim.api.nvim_create_autocmd("WinClosed", {
+    pattern = "*",
+    callback = function(event)
+        local winid = tonumber(event.file)
+        if not winid then
+            return
+        end
+
+        vim.schedule(function()
+            for _, view in ipairs(diffview_lib.views) do
+                local owns_window = false
+
+                for _, win in ipairs(view.cur_layout and view.cur_layout.windows or {}) do
+                    if win.id == winid then
+                        owns_window = true
+                        break
+                    end
+                end
+
+                if owns_window and not view.closing:check() then
+                    diffview.close(view.tabpage, { force = false })
+                    return
+                end
+            end
+        end)
+    end,
+})
