@@ -34,5 +34,6 @@ wk.add({
     { "<leader>d", group = "Dap Debugger" },
     { "<leader>g", group = "General" },
     { "<leader>h", group = "Git Signs" },
+    { "<leader>r", group = "Neotest" },
     { "<leader>t", group = "Telescope" },
 }, {})
