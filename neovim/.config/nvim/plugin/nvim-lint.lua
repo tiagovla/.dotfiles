@@ -6,6 +6,7 @@ lint.linters_by_ft = {
     ["hpp"] = { "cppcheck" },
 }
 lint.linters.cppcheck.args[#lint.linters.cppcheck.args + 1] = "--check-level=exhaustive"
+lint.linters.cppcheck.args[#lint.linters.cppcheck.args + 1] = "--library=googletest"
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter" }, {
     callback = function()
         require("lint").try_lint()
