@@ -52,7 +52,7 @@ local function env_handler()
     }, function(selected)
         if selected then
             settings.python.pythonPath = options[selected]
-            client.notify("workspace/didChangeConfiguration", { settings = settings })
+            client:notify("workspace/didChangeConfiguration", { settings = settings })
         end
     end)
 end

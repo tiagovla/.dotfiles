@@ -59,7 +59,7 @@ ls.add_snippets("tex", {
                     local from_pos, to_pos = node.mark:pos_begin_end_raw()
                     local lines = vim.api.nvim_buf_get_lines(0, from_pos[1], to_pos[1] + 1, false)
                     local script = ([[!wolframscript -c "ToString@TeXForm[%s]"]]):format(node:get_text()[1])
-                    local output = vim.split(vim.api.nvim_exec(script, true), "\n")
+                    local output = vim.split(vim.api.nvim_exec2(script, { output = true }).output, "\n")
                     output = output[#output - 1]
                     if #lines == 1 then
                         vim.api.nvim_buf_set_text(0, from_pos[1], from_pos[2], to_pos[1], to_pos[2], { output })

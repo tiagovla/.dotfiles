@@ -17,8 +17,8 @@ local function toggle_win_zoom()
     else
         local old_config = vim.api.nvim_win_get_config(0)
         local config = vim.deepcopy(old_config)
-        config.width = vim.api.nvim_get_option "columns"
-        config.height = vim.api.nvim_get_option "lines"
+        config.width = vim.api.nvim_get_option_value("columns", { scope = "global" })
+        config.height = vim.api.nvim_get_option_value("lines", { scope = "global" })
         if old_config.height ~= config.height or old_config.width ~= config.width then
             vim.api.nvim_win_set_var(0, "zoomed_win", layout)
             vim.api.nvim_win_set_config(0, config)
