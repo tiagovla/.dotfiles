@@ -11,7 +11,7 @@ vim.pack.add({
 }, { confirm = false })
 
 local neotest = require "neotest"
-neotest.setup {
+local config = {
     status = {
         enabled = true,
         signs = true,
@@ -28,6 +28,7 @@ neotest.setup {
         },
     },
 }
+neotest.setup(config)
 
 vim.keymap.set("n", "<leader>ra", function()
     neotest.run.attach()
