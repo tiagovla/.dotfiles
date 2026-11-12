@@ -43,7 +43,6 @@ local auto_snippets = {
             if selected then
                 return sn(nil, { t "\\frac{", t(selected), t "}{", i(1), t "}" })
             end
-            P(snip.captures[1])
             if snip.captures[1] == " " then
                 return sn(nil, { t "\\frac{", i(1), t "}{", i(2), t "}" })
             end
