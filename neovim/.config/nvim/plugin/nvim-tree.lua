@@ -67,11 +67,11 @@ local function on_attach(bufnr)
     map("p", api.fs.paste, "Paste")
 
     -- Filters and toggles
-    map("H", api.tree.toggle_hidden_filter, "Toggle Dotfiles")
-    map("I", api.tree.toggle_gitignore_filter, "Toggle Git Ignore")
-    map("B", api.tree.toggle_no_buffer_filter, "Toggle No Buffer")
-    map("C", api.tree.toggle_git_clean_filter, "Toggle Git Clean")
-    map("U", api.tree.toggle_custom_filter, "Toggle Hidden")
+    map("H", api.filter.dotfiles.toggle, "Toggle Dotfiles")
+    map("I", api.filter.git.ignored.toggle, "Toggle Git Ignore")
+    map("B", api.filter.no_buffer.toggle, "Toggle No Buffer")
+    map("C", api.filter.git.clean.toggle, "Toggle Git Clean")
+    map("U", api.filter.custom.toggle, "Toggle Hidden")
 
     -- Git
     map("]c", api.node.navigate.git.next, "Next Git")
@@ -86,8 +86,8 @@ local function on_attach(bufnr)
     map("bmv", api.marks.bulk.move, "Move Bookmarked")
 
     -- Search and filter
-    map("f", api.live_filter.start, "Filter")
-    map("F", api.live_filter.clear, "Clean Filter")
+    map("f", api.filter.live.start, "Filter")
+    map("F", api.filter.live.clear, "Clean Filter")
     map("S", api.tree.search_node, "Search")
 
     -- Misc
