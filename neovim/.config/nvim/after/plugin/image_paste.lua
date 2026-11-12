@@ -60,9 +60,9 @@ local function save_image(folder, target, filename, extension)
 end
 
 local function image_paste(func)
-    local targets = get_targets()
-    if #targets == 0 then
-        return true
+    local ok, targets = pcall(get_targets)
+    if not ok or #targets == 0 then
+        return false
     end
     local target, extension = unpack(get_info(targets))
     local prompt_opts = {
@@ -82,28 +82,36 @@ local function image_paste(func)
             func(path)
         end
     end)
+    return true
 end
 
 local function image_paste_tex()
+    local buffer = vim.api.nvim_get_current_buf()
+    local row = vim.api.nvim_win_get_cursor(0)[1]
     local function func(path)
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        vim.api.nvim_buf_set_lines(0, cursor[1] - 1, cursor[1], false, {
+        if not vim.api.nvim_buf_is_loaded(buffer) then
+            vim.notify("Image saved, but the original buffer is no longer loaded", vim.log.levels.WARN)
+            return
+        end
+        vim.api.nvim_buf_set_lines(buffer, row, row, false, {
             "\\begin{figure}[h]",
             "    \\centering",
             "    \\includegraphics[]{" .. path .. "}",
             "\\end{figure}",
         })
     end
-    image_paste(func)
+    return image_paste(func)
 end
 
 vim.paste = (function(overridden)
+    local pasting_image = false
     return function(lines, phase)
-        local reg = vim.fn.getreg "+"
-        if reg == "" and vim.bo[0].ft == "tex" then
-            image_paste_tex()
-        else
-            overridden(lines, phase)
+        if phase == -1 or phase == 1 then
+            pasting_image = vim.bo.filetype == "tex" and vim.fn.getreg "+" == "" and image_paste_tex()
         end
+        if pasting_image then
+            return true
+        end
+        return overridden(lines, phase)
     end
 end)(vim.paste)
