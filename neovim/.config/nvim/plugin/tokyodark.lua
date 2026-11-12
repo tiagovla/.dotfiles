@@ -12,8 +12,4 @@ require("tokyodark").setup {
         }
     end,
 }
-require("tokyodark").colorscheme()
-
-vim.defer_fn(function()
-    vim.cmd.colorscheme "tokyodark"
-end, 200)
+vim.cmd.colorscheme "tokyodark"
