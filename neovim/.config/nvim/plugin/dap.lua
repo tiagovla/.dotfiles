@@ -78,12 +78,10 @@ dap.configurations.python = {
 }
 
 -- config DAP UI
-local dap = require "dap"
 local dapui = require "dapui"
-dapui.setup {
-    icons = { expanded = "▾", collapsed = "▸" },
+local dapui_config = {
+    icons = { expanded = "▾", collapsed = "▸", current_frame = "" },
     mappings = {
-        -- Use a table to apply multiple mappings
         expand = { "<CR>", "<2-LeftMouse>" },
         open = "o",
         remove = "d",
@@ -120,6 +118,7 @@ dapui.setup {
     },
     windows = { indent = 1 },
 }
+dapui.setup(dapui_config)
 
 vim.keymap.set({ "n", "x" }, "<leader>de", function()
     dapui.eval()
@@ -135,5 +134,4 @@ dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
 end
 
--- config DAP virtual text
-require("nvim-dap-virtual-text").setup()
+require("nvim-dap-virtual-text").setup {}
