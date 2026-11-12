@@ -1,6 +1,17 @@
 vim.pack.add({ "https://github.com/stevearc/conform.nvim" }, { confirm = false })
 
 require("conform").setup {
+    format_on_save = function(bufnr)
+        if vim.g.format_on_save then
+            vim.api.nvim_buf_call(bufnr, function()
+                local luasnip = require "luasnip"
+                if luasnip.in_snippet() then
+                    luasnip.unlink_current()
+                end
+            end)
+            return { timeout_ms = 3000, lsp_format = "fallback" }
+        end
+    end,
     formatters_by_ft = {
         python = { "black" },
         bib = { "bibclean" },
@@ -40,17 +51,3 @@ require("conform").setup {
 vim.keymap.set({ "n", "v" }, "<space>f", function()
     require("conform").format {}
 end, { desc = "Format buffer" })
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*",
-    callback = function(args)
-        if vim.g.format_on_save then
-            require("luasnip").session.current_nodes[args.buf] = nil
-            require("conform").format {
-                bufnr = args.buf,
-                timeout_ms = 3000,
-                lsp_format = "fallback",
-            }
-        end
-    end,
-})
