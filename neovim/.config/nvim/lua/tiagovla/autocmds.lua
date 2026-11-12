@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 vim.api.nvim_create_autocmd("BufNewFile", {
     callback = function()
         local c_path = vim.fn.stdpath "config" .. "/templates/"
-        local fe, ft = vim.fn.expand "%:e", vim.bo.filetype
+        local _, ft = vim.fn.expand "%:e", vim.bo.filetype
         if ft == "make" then
             vim.cmd("0r " .. c_path .. "make") -- Makefile
         elseif ft == "cmake" then
