@@ -23,6 +23,7 @@ vim.lsp.enable {
     "matlab_ls",
     "rust_analyzer",
     "qmlls",
+    "wolfram_ls",
 }
 
 local caps = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())

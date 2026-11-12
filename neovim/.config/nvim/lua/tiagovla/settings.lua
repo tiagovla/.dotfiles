@@ -167,9 +167,7 @@ function M.commands()
         },
     }
     vim.filetype.add {
-        extension = {
-            wl = "wolfram",
-        },
+        extension = {},
     }
 end
 
