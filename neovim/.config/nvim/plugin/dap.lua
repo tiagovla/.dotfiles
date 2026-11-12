@@ -121,10 +121,12 @@ dapui.setup {
     windows = { indent = 1 },
 }
 
+vim.keymap.set({ "n", "x" }, "<leader>de", function()
+    dapui.eval()
+end, { desc = "Evaluate expression" })
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
     dapui.open()
-    vim.keymap.set("v", "K", [[<Cmd>lua require("dapui").eval()<CR>]], { buffer = 0 })
-    vim.keymap.set("n", "K", [[<Cmd>lua require("dapui").eval()<CR>]], { buffer = 0 })
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
     dapui.close()
