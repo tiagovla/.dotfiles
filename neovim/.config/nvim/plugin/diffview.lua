@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>D", ":DiffviewToggle<cr>", { silent = true })
 vim.keymap.set("n", "<leader>dh", ":DiffviewToggleHistory<cr>", { silent = true })
 vim.keymap.set("n", "<leader>df", ":DiffviewToggleFiles<cr>", { silent = true })
 
-require("git-conflict").setup()
+require("git-conflict").setup {}
 
 local actions = require "diffview.actions"
 
@@ -224,6 +224,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local diffview = require "diffview"
 local diffview_lib = require "diffview.lib"
+local StandardView = require("diffview.scene.views.standard.standard_view").StandardView
 
 vim.api.nvim_create_autocmd("WinClosed", {
     pattern = "*",
@@ -235,18 +236,21 @@ vim.api.nvim_create_autocmd("WinClosed", {
 
         vim.schedule(function()
             for _, view in ipairs(diffview_lib.views) do
-                local owns_window = false
+                if view:instanceof(StandardView) then
+                    ---@cast view StandardView
+                    local owns_window = false
 
-                for _, win in ipairs(view.cur_layout and view.cur_layout.windows or {}) do
-                    if win.id == winid then
-                        owns_window = true
-                        break
+                    for _, win in ipairs(view.cur_layout and view.cur_layout.windows or {}) do
+                        if win.id == winid then
+                            owns_window = true
+                            break
+                        end
                     end
-                end
 
-                if owns_window and not view.closing:check() then
-                    diffview.close(view.tabpage, { force = false })
-                    return
+                    if owns_window and not view.closing:check() then
+                        diffview.close(view.tabpage, { force = false })
+                        return
+                    end
                 end
             end
         end)
