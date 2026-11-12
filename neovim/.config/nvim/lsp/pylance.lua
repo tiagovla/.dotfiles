@@ -43,7 +43,7 @@ return {
         vim.api.nvim_buf_create_user_command(bufnr, "LspPylanceOrganizeImports", function()
             local params = {
                 command = "pylance.organizeimports",
-                arguments = { vim.uri_from_bufnr(bufnr) },
+                arguments = { vim.uri.from_buf(bufnr) },
             }
             client:request("workspace/executeCommand", params, nil, bufnr)
         end, {
