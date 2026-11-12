@@ -17,7 +17,7 @@ local get_targets = function()
 end
 
 local function get_info(targets)
-    if not vim.tbl_contains(targets, "image/png") then
+    if vim.tbl_contains(targets, "image/png") then
         return { "image/png", "png" }
     else
         return { targets[1], vim.split(targets[1], "/")[2] }
