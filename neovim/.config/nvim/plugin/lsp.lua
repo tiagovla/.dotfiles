@@ -22,7 +22,7 @@ vim.lsp.enable {
     "matlab_ls",
     "rust_analyzer",
     "qmlls",
-    "wolfram_ls",
+    "wolfram_lsp",
 }
 
 local caps = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -236,8 +236,6 @@ vim.lsp.config("matlab_ls", {
         },
     },
 })
-
-vim.lsp.config("wolfram_ls", {})
 
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
