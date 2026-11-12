@@ -1,4 +1,3 @@
-require "tiagovla.pack"
 require "tiagovla.settings"
 require "tiagovla.globals"
 require "tiagovla.mappings"
