@@ -1,6 +1,6 @@
 vim.pack.add({
     "https://github.com/rafamadriz/friendly-snippets",
-    { src = "https://github.com/L3MON4D3/LuaSnip", version = "v2.4.1" },
+    "https://github.com/L3MON4D3/LuaSnip",
 }, { confirm = false })
 
 vim.keymap.set("i", "<c-u>", function()

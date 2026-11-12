@@ -1,15 +1,13 @@
 vim.pack.add({
+    "https://github.com/saghen/blink.lib",
     "https://github.com/saghen/blink.cmp",
     "https://github.com/saghen/blink.compat",
     "https://github.com/onsails/lspkind-nvim",
 }, { confirm = false })
 
-require("blink.cmp").setup {
-    fuzzy = {
-        prebuilt_binaries = {
-            download = true,
-        },
-    },
+local blink = require "blink.cmp"
+blink.build():pwait()
+blink.setup {
     enabled = function()
         return not vim.list_contains({ "DressingInput" }, vim.bo.filetype)
             and vim.bo.buftype ~= "prompt"
@@ -31,7 +29,7 @@ require("blink.cmp").setup {
             return require("luasnip").in_snippet()
         end,
         jump = function(direction)
-            require("luasnip").jump(direction)
+            return require("luasnip").jump(direction)
         end,
     },
     cmdline = {
@@ -41,9 +39,11 @@ require("blink.cmp").setup {
             ["<S-Tab>"] = { "show_and_insert", "select_prev" },
             ["<CR>"] = { "accept_and_enter", "fallback" },
         },
-        sources = function()
-            return vim.fn.getcmdtype() == ":" and { "cmdline" } or {}
-        end,
+        sources = {
+            default = function()
+                return vim.fn.getcmdtype() == ":" and { "cmdline" } or {}
+            end,
+        },
         completion = {
             menu = {
                 auto_show = function(ctx)
