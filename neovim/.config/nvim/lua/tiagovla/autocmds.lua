@@ -9,18 +9,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- keep cursor position after yanking
-local cursor_position
-vim.api.nvim_create_autocmd({ "VimEnter", "CursorMoved" }, {
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufEnter", "CursorMoved" }, {
     group = vim.api.nvim_create_augroup("RestoreCursor", {}),
     callback = function()
-        cursor_position = vim.api.nvim_win_get_cursor(0)
+        vim.w.yank_restore_cursor = {
+            bufnr = vim.api.nvim_get_current_buf(),
+            position = vim.api.nvim_win_get_cursor(0),
+        }
     end,
 })
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = vim.api.nvim_create_augroup("RestoreCursor", { clear = false }),
     callback = function()
-        if vim.v.event.operator == "y" then
-            vim.api.nvim_win_set_cursor(0, cursor_position)
+        local saved = vim.w.yank_restore_cursor
+        local bufnr = vim.api.nvim_get_current_buf()
+        if vim.v.event.operator == "y" and saved and saved.bufnr == bufnr then
+            local row = math.min(saved.position[1], vim.api.nvim_buf_line_count(bufnr))
+            local line = vim.api.nvim_buf_get_lines(bufnr, row - 1, row, false)[1] or ""
+            vim.api.nvim_win_set_cursor(0, { row, math.min(saved.position[2], #line) })
         end
     end,
 })
