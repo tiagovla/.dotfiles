@@ -10,8 +10,6 @@ vim.pack.add({
     "https://github.com/tiagovla/neotest-gtest",
 }, { confirm = false })
 
-vim.opt.rtp:prepend(vim.fn.expand "~/git/neotest-gtest")
-
 local neotest = require "neotest"
 neotest.setup {
     status = {
