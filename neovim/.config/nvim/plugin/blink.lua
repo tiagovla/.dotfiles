@@ -15,6 +15,7 @@ blink.setup {
     end,
     keymap = {
         preset = "default",
+        ["<C-CR>"] = { "accept", "fallback" },
     },
     snippets = {
         preset = "luasnip",
@@ -37,7 +38,7 @@ blink.setup {
             preset = "enter",
             ["<Tab>"] = { "show_and_insert", "select_next" },
             ["<S-Tab>"] = { "show_and_insert", "select_prev" },
-            ["<CR>"] = { "accept_and_enter", "fallback" },
+            ["<CR>"] = { "accept", "fallback" },
         },
         sources = {
             default = function()
@@ -96,6 +97,7 @@ blink.setup {
             border = { "┌", "─", "┐", "│", "┘", "─", "└", "│" },
             winhighlight = "Normal:Normal,FloatBorder:VertSplit,CursorLine:FocusedSymbol,Search:None",
             draw = {
+                padding = 1,
                 columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "source_icon" } },
                 components = {
                     source_icon = {
