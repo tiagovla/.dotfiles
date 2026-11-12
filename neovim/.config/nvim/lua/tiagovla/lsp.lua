@@ -26,6 +26,8 @@ vim.diagnostic.config {
     float = { border = "rounded", scope = "line", header = "" },
 }
 
+local highlight_group = vim.api.nvim_create_augroup("DocumentHighlight", {})
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local buffer = args.buf
@@ -38,15 +40,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.bo[buffer].formatexpr = "" --  yikes
 
         if client.server_capabilities.documentHighlightProvider then
-            local group = vim.api.nvim_create_augroup("DocumentHighlight", {})
+            vim.api.nvim_clear_autocmds { group = highlight_group, buffer = buffer }
             vim.api.nvim_create_autocmd("CursorHold", {
-                group = group,
-                buffer = 0,
+                group = highlight_group,
+                buffer = buffer,
                 callback = vim.lsp.buf.document_highlight,
             })
             vim.api.nvim_create_autocmd("CursorMoved", {
-                group = group,
-                buffer = 0,
+                group = highlight_group,
+                buffer = buffer,
                 callback = vim.lsp.buf.clear_references,
             })
         end
