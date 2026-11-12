@@ -1,4 +1,17 @@
 local U = {}
+local python_paths = {}
+
+U.python_root_markers = {
+    "pylanceconfig.json",
+    "uv.lock",
+    "poetry.lock",
+    "pyproject.toml",
+    "setup.py",
+    "setup.cfg",
+    "requirements.txt",
+    "Pipfile",
+    ".git",
+}
 
 function U.buf_is_valid(buf_num)
     if not buf_num or buf_num < 1 then
@@ -32,7 +45,7 @@ function U.get_python_executable()
 end
 
 function U.get_poetry_python(workspace)
-    if not workspace then
+    if not workspace or vim.fn.filereadable(vim.fs.joinpath(workspace, "poetry.lock")) ~= 1 then
         return nil
     end
 
@@ -47,7 +60,43 @@ function U.get_poetry_python(workspace)
     if venv == "" then
         return nil
     end
-    return vim.fs.joinpath(venv, "bin", "python")
+    local python = vim.fs.joinpath(venv, "bin", "python")
+    return vim.fn.executable(python) == 1 and python or nil
+end
+
+function U.get_python_path(workspace)
+    workspace = vim.fs.normalize(workspace or vim.fs.root(0, U.python_root_markers) or vim.fn.getcwd())
+    if python_paths[workspace] and vim.fn.executable(python_paths[workspace]) == 1 then
+        return python_paths[workspace]
+    end
+    if vim.env.VIRTUAL_ENV then
+        local python = vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
+        if vim.fn.executable(python) == 1 then
+            return python
+        end
+    end
+    for _, name in ipairs { ".venv", "venv" } do
+        local python = vim.fs.joinpath(workspace, name, "bin", "python")
+        if vim.fn.executable(python) == 1 then
+            return python
+        end
+    end
+    return U.get_poetry_python(workspace) or U.get_python_executable() or "python"
+end
+
+function U.set_python_path(client, path)
+    local python = vim.fn.exepath(vim.fn.expand(path))
+    if python == "" then
+        vim.notify("Python executable not found: " .. path, vim.log.levels.ERROR)
+        return
+    end
+    local workspace = vim.fs.normalize(client.config.root_dir or vim.fn.getcwd())
+    python_paths[workspace] = python
+    client.settings = client.settings or client.config.settings or {}
+    client.settings.python = client.settings.python or {}
+    client.settings.python.pythonPath = python
+    client.config.settings = client.settings
+    client:notify("workspace/didChangeConfiguration", { settings = client.settings })
 end
 
 -- function U.debug()
