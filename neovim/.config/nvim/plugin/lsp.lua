@@ -15,7 +15,7 @@ vim.lsp.enable {
     "tailwindcss",
     "marksman",
     "ts_ls",
-    "ruff_lsp",
+    "ruff",
     "gopls",
     "cmake",
     "clangd",
@@ -80,7 +80,7 @@ vim.lsp.config("lua_ls", {
                     local ret = {}
                     local function add(lib)
                         for _, p in pairs(vim.fn.expand(lib .. "/lua", false, true)) do
-                            p = vim.fn.fnamemodify(vim.loop.fs_realpath(p), ":h")
+                            p = vim.fn.fnamemodify(vim.uv.fs_realpath(p), ":h")
                             if p ~= "." then
                                 table.insert(ret, p)
                             end
@@ -148,13 +148,10 @@ vim.lsp.config("pylance", {
     end,
 })
 
-vim.lsp.config("ruff_lsp", {
+vim.lsp.config("ruff", {
     capabilities = caps,
-    init_options = {
-        settings = {
-            args = {},
-        },
-    },
+    cmd = { "ruff", "server" },
+    settings = {},
 })
 
 vim.lsp.config("astro", {})
@@ -330,6 +327,7 @@ local ensure_installed = {
     "matlab-language-server",
     "pydocstyle",
     "pylance",
+    "ruff",
     "rust-analyzer",
     "shellcheck",
     "stylua",
