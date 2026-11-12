@@ -66,22 +66,13 @@ dap.configurations.python = {
         name = "Launch file",
         program = "${file}",
         pythonPath = function()
-            local cwd = vim.fn.getcwd()
-            if vim.fn.filereadable(vim.fs.joinpath(cwd, "poetry.lock")) == 1 then
-                local python = utils.get_poetry_python(cwd)
-                if python then
-                    return python
+            local clients = vim.lsp.get_clients { bufnr = 0 }
+            for _, client in ipairs(clients) do
+                if client.name == "pylance" or client.name == "pyright" then
+                    return utils.get_python_path(client.config.root_dir)
                 end
             end
-            if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-                return cwd .. "/venv/bin/python"
-            elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-                return cwd .. "/.venv/bin/python"
-            elseif vim.env.VIRTUAL_ENV then
-                return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
-            else
-                return utils.get_python_executable() or "python"
-            end
+            return utils.get_python_path()
         end,
     },
 }
