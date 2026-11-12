@@ -1,5 +1,4 @@
 vim.pack.add({
-    "https://github.com/saghen/blink.cmp",
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/williamboman/mason.nvim",
     "https://github.com/microsoft/python-type-stubs",

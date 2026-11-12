@@ -1,13 +1,12 @@
 vim.pack.add({
-    { src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
-    { src = "https://github.com/saghen/blink.compat", version = "v2.5.0" },
+    "https://github.com/saghen/blink.cmp",
+    "https://github.com/saghen/blink.compat",
     "https://github.com/onsails/lspkind-nvim",
 }, { confirm = false })
 
 require("blink.cmp").setup {
     fuzzy = {
         prebuilt_binaries = {
-            force_version = "v1.*",
             download = true,
         },
     },

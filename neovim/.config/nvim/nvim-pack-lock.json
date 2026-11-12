@@ -27,8 +27,7 @@
     },
     "blink.compat": {
       "rev": "2ed6d9a28b07fa6f3bface818470605f8896408c",
-      "src": "https://github.com/saghen/blink.compat",
-      "version": "'v2.5.0'"
+      "src": "https://github.com/saghen/blink.compat"
     },
     "buffercd.nvim": {
       "rev": "3177d71c54fe0dcecfefe7a8dfe39e77a6d29ed5",
@@ -133,7 +132,7 @@
     },
     "neotest-gtest": {
       "rev": "9e8031a8751e0ecd7d673a7abc48671b66e3be85",
-      "src": "file:///home/tiagovla/git/neotest-gtest"
+      "src": "https://github.com/tiagovla/neotest-gtest"
     },
     "neotest-python": {
       "rev": "1b56ca4ba51c6014f986d6548ee629bdc95589d1",
