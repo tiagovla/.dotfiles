@@ -17,7 +17,7 @@ local keys = {
     ["di"] = { "step_into", "Setep into" },
     ["do"] = { "step_over", "Step over" },
     ["du"] = { "step_out", "Step out" },
-    ["dp"] = { "pause.toggle", "Pause toggle" },
+    ["dp"] = { "pause", "Pause" },
     -- ["dr"] = { "repl.open", "REPL toggle" },
     ["ds"] = { "continue", "Continue" },
     ["dq"] = { "close", "Close" },
@@ -45,14 +45,6 @@ dap.adapters.cppdbg = {
     type = "executable",
     command = "OpenDebugAD7",
 }
-
-local get_python_path = function()
-    local venv_path = os.getenv "VIRTUAL_ENV"
-    if venv_path then
-        return venv_path .. "/bin/python"
-    end
-    return nil
-end
 
 dap.configurations.cpp = {
     {
@@ -85,10 +77,10 @@ dap.configurations.python = {
                 return cwd .. "/venv/bin/python"
             elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
                 return cwd .. "/.venv/bin/python"
-            elseif vim.fn.exists "$VIRTUAL_ENV" then
-                return get_python_path()
+            elseif vim.env.VIRTUAL_ENV then
+                return vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
             else
-                return "/usr/bin/python"
+                return utils.get_python_executable() or "python"
             end
         end,
     },
