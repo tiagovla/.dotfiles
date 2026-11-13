@@ -1,23 +1,15 @@
-FROM ubuntu:26.04 AS builder
-
-ARG BUILD_APT_DEPS="ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip git binutils" 
-ARG DEBIAN_FRONTEND=noninteractive
-
-RUN apt update && apt upgrade -y && \
-    apt install -y ${BUILD_APT_DEPS} && \
-    git clone https://github.com/neovim/neovim.git /tmp/neovim --depth=1 && \
-    cd /tmp/neovim && \
-    make CMAKE_BUILD_TYPE=Release && \
-    make CMAKE_INSTALL_PREFIX=/usr/local install && \
-    strip /usr/local/bin/nvim
-# RUN git clone https://github.com/tiagovla/.dotfiles.git /tmp/.dotfiles --depth=1
-
 FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs curl libclang-dev clang cargo
+RUN apt update && apt upgrade -y && apt install -y gcc g++ unzip wget git python3 nodejs curl ca-certificates libclang-dev clang cargo
+RUN nvim_arch="$(dpkg --print-architecture | sed 's/amd64/x86_64/')" && \
+    curl -fsSL "https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-${nvim_arch}.appimage" -o /tmp/nvim.appimage && \
+    chmod +x /tmp/nvim.appimage && \
+    cd /tmp && ./nvim.appimage --appimage-extract && \
+    mv squashfs-root /opt/nvim && \
+    ln -s /opt/nvim/usr/bin/nvim /usr/local/bin/nvim && \
+    rm /tmp/nvim.appimage
 RUN cargo install tree-sitter-cli
 RUN cp /root/.cargo/bin/tree-sitter /usr/local/bin/tree-sitter
-COPY --from=builder /usr/local /usr/local/
 COPY . /root/.config/nvim/
 
 CMD ["/usr/local/bin/nvim"]
