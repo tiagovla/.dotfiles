@@ -18,7 +18,11 @@ local config = {
         virtual_text = false,
     },
     adapters = {
-        require "neotest-python",
+        require "neotest-python" {
+            python = function(root)
+                return { require("tiagovla.utils").get_python_path(root) }
+            end,
+        },
         require "neotest-rust" {
             args = { "--no-capture" },
             dap_adapter = "cppdbg",
