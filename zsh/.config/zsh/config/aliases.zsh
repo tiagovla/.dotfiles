@@ -34,7 +34,6 @@ alias ranger='alacritty --class Ranger -e /usr/bin/ranger'
 
 # python / poetry / devtools
 alias ppy='poetry run python'
-alias g='git'
 
 # docker aliases
 alias dr='docker run --rm -it'
