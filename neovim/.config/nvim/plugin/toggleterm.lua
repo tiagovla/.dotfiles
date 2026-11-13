@@ -56,12 +56,17 @@ local lazygit = Terminal:new { cmd = "lazygit", hidden = true, direction = "tab"
 
 local lines = {}
 local running_cmd = false
+local pending_line = ""
+local make_errorformat
 
 local on_data = function(_, _, data)
-    for i, line in ipairs(data) do
-        data[i] = line:gsub("\r", ""):gsub("\27%[[0-9;]*m", "")
+    if not running_cmd then
+        return
     end
-    for _, v in pairs(data) do
+    data[1] = pending_line .. data[1]
+    pending_line = table.remove(data)
+    for _, line in ipairs(data) do
+        local v = line:gsub("\r", ""):gsub("\27%[[0-9;]*m", "")
         if v == "async_make_done" then
             running_cmd = false
             local output = slice_from_match(lines, "async_make_start")
@@ -69,19 +74,17 @@ local on_data = function(_, _, data)
                 return line ~= ""
             end, output)
 
-            local efm = vim.api.nvim_get_option_value("errorformat", { buf = 0 })
             vim.fn.setqflist({}, " ", {
                 title = "make",
                 lines = output,
-                efm = efm,
+                efm = make_errorformat,
             })
             vim.api.nvim_command "doautocmd QuickFixCmdPost"
             vim.notify "Make command ended"
+            break
+        else
+            lines[#lines + 1] = v
         end
-    end
-
-    if running_cmd then
-        vim.list_extend(lines, data)
     end
 end
 
@@ -100,13 +103,15 @@ local term_float = Terminal:new {
 
 local function make()
     require "toggleterm.terminal"
+    make_errorformat = vim.o.errorformat
     if not term_float:is_open() then
         term_float:toggle()
         term_float:toggle()
     end
     lines = {}
-    term_float:send({ "echo async_make_start; make; echo async_make_done" }, false)
+    pending_line = ""
     running_cmd = true
+    term_float:send({ "echo async_make_start; make; echo async_make_done" }, false)
     vim.notify "Make command running..."
 end
 
