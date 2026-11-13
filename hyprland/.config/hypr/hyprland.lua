@@ -111,6 +111,7 @@ hl.config {
         force_default_wallpaper = 0,
         disable_hyprland_logo = true,
         disable_splash_rendering = true,
+        focus_on_activate = true,
     },
     layers = {
         layers_hog_keyboard_focus = false,
@@ -209,8 +210,8 @@ hl.bind(
     hl.dsp.exec_cmd "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
     { locked = true, repeating = true }
 )
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd "brightnessctl -e4 -n2 set 5%+", { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd "brightnessctl -e4 -n2 set 5%-", { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%+", { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%-", { locked = true, repeating = true })
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd "playerctl next", { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd "playerctl play-pause", { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd "playerctl play-pause", { locked = true })
