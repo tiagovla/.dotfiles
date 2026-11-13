@@ -19,7 +19,7 @@ function M.options()
         enable = true,
         msg = {
             targets = {
-                [""] = "msg",
+                default = "msg",
                 empty = "cmd",
                 bufwrite = "msg",
                 confirm = "cmd",
@@ -46,15 +46,11 @@ function M.options()
                 wmsg = "msg",
                 typed_cmd = "cmd",
             },
-            cmd = {
-                -- height = 0.5,
-            },
             dialog = {
                 height = 0.5,
             },
             msg = {
-                -- height = 0.3,
-                -- timeout = 5000,
+                height = 0.3,
             },
             pager = {
                 height = 0.5,
@@ -81,6 +77,7 @@ function M.options()
     vim.opt.backup = true
     vim.opt.backupcopy = "yes"
     vim.opt.cmdheight = 0
+    -- vim.opt.messagesopt:append { "maxheight:50", "timeout:5000" }
     vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
     vim.opt.smoothscroll = true
     vim.opt.exrc = true
