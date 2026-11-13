@@ -335,11 +335,13 @@ local ensure_installed = {
     "yamlfmt",
 }
 
-mr.refresh(function()
-    for _, name in ipairs(ensure_installed) do
-        local ok_pkg, pkg = pcall(mr.get_package, name)
-        if ok_pkg and not pkg:is_installed() then
-            pkg:install() -- async
+vim.api.nvim_create_user_command("MasonInstallAll", function()
+    mr.refresh(function()
+        for _, name in ipairs(ensure_installed) do
+            local ok_pkg, pkg = pcall(mr.get_package, name)
+            if ok_pkg and not pkg:is_installed() then
+                pkg:install() -- async
+            end
         end
-    end
-end)
+    end)
+end, { desc = "Install missing configured Mason tools" })
