@@ -53,11 +53,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
         if vim.bo[buffer].ft ~= "python" then
             return
         end
-        local file_name = "pyproject.toml"
-        local tmp_buf = vim.api.nvim_create_buf(false, true)
-        vim.api.nvim_buf_set_lines(tmp_buf, 0, -1, false, lines_from(file_name))
-        local length = get_black_length(tmp_buf)
-        vim.opt_local.colorcolumn = tostring(length or "88")
-        vim.api.nvim_buf_delete(tmp_buf, {})
+        local root = vim.fs.root(buffer, "pyproject.toml")
+        local length
+        if root then
+            local tmp_buf = vim.api.nvim_create_buf(false, true)
+            local ok, result = pcall(function()
+                vim.api.nvim_buf_set_lines(tmp_buf, 0, -1, false, lines_from(vim.fs.joinpath(root, "pyproject.toml")))
+                return get_black_length(tmp_buf)
+            end)
+            vim.api.nvim_buf_delete(tmp_buf, {})
+            if ok then
+                length = result
+            end
+        end
+        for _, win in ipairs(vim.fn.win_findbuf(buffer)) do
+            vim.wo[win].colorcolumn = tostring(length or "88")
+        end
     end,
 })
