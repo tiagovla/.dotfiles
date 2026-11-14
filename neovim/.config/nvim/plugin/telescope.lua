@@ -89,7 +89,6 @@ require("telescope").setup {
             find_command = {
                 "rg",
                 "--files",
-                "--no-ignore",
                 "--hidden",
                 "--glob=!.git",
                 "--glob=!.cache",
