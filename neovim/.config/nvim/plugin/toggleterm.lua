@@ -103,6 +103,7 @@ local term_float = Terminal:new {
 
 local function make()
     require "toggleterm.terminal"
+    local makeprg = vim.o.makeprg
     make_errorformat = vim.o.errorformat
     if not term_float:is_open() then
         term_float:toggle()
@@ -111,7 +112,7 @@ local function make()
     lines = {}
     pending_line = ""
     running_cmd = true
-    term_float:send({ "echo async_make_start; make; echo async_make_done" }, false)
+    term_float:send({ "echo async_make_start; " .. makeprg .. "; echo async_make_done" }, false)
     vim.notify "Make command running..."
 end
 
