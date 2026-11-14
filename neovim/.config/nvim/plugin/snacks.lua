@@ -4,5 +4,4 @@ require("snacks").setup {
     gitbrowse = { enabled = true },
     bigfile = { enabled = true },
     quickfile = { enabled = true },
-    words = { enabled = true },
 }
