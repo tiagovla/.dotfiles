@@ -58,11 +58,26 @@ ls.add_snippets("tex", {
                 [events.leave] = function(node)
                     local from_pos, to_pos = node.mark:pos_begin_end_raw()
                     local lines = vim.api.nvim_buf_get_lines(0, from_pos[1], to_pos[1] + 1, false)
-                    local script = ([[!wolframscript -c "ToString@TeXForm[%s]"]]):format(node:get_text()[1])
-                    local output = vim.split(vim.api.nvim_exec2(script, { output = true }).output, "\n")
-                    output = output[#output - 1]
+                    local result = vim.system({
+                        "wolframscript",
+                        "-c",
+                        "ToString@TeXForm[" .. node:get_text()[1] .. "]",
+                    }, { text = true }):wait()
+                    if result.code ~= 0 then
+                        local message = result.stderr ~= "" and result.stderr or "wolframscript failed"
+                        vim.notify(vim.trim(message), vim.log.levels.ERROR)
+                        return
+                    end
+                    local output = result.stdout:gsub("\n$", "")
                     if #lines == 1 then
-                        vim.api.nvim_buf_set_text(0, from_pos[1], from_pos[2], to_pos[1], to_pos[2], { output })
+                        vim.api.nvim_buf_set_text(
+                            0,
+                            from_pos[1],
+                            from_pos[2],
+                            to_pos[1],
+                            to_pos[2],
+                            vim.split(output, "\n", { plain = true })
+                        )
                     end
                 end,
             },
