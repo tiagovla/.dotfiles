@@ -216,6 +216,8 @@ Scope {
                     }
                 }
 
+                BatteryWidget { shell: barScope.shell }
+
                 Row {
                     id: volumeMicRow
                     height: bar.height
