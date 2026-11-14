@@ -15,7 +15,7 @@ local function reload_luasnip_config()
         end
     end
 end
-vim.keymap.set("n", "<space>rs", function()
+vim.keymap.set("n", "<space>R", function()
     reload_luasnip_config()
 end, { desc = "Reload snippets" })
 
