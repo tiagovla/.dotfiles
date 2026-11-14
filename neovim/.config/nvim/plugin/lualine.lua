@@ -1,5 +1,7 @@
-vim.pack.add({ "https://github.com/nvim-lualine/lualine.nvim" }, { confirm = false })
-vim.cmd "packadd tokyodark.nvim"
+vim.pack.add({
+    "https://github.com/tiagovla/tokyodark.nvim",
+    "https://github.com/nvim-lualine/lualine.nvim",
+}, { confirm = false })
 
 local theme = require "lualine.themes.tokyodark"
 local ok, p = pcall(require, "tokyodark.palette")
