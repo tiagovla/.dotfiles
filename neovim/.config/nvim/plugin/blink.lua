@@ -1,8 +1,6 @@
 vim.pack.add({
     "https://github.com/saghen/blink.lib",
     "https://github.com/saghen/blink.cmp",
-    "https://github.com/saghen/blink.compat",
-    "https://github.com/onsails/lspkind-nvim",
 }, { confirm = false })
 
 local blink = require "blink.cmp"
