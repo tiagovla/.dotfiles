@@ -27,6 +27,18 @@ QtObject {
     readonly property color secondaryText: "#858DA5"
     readonly property color mutedText: "#888E96"
     readonly property color workspaceInactive: "#9098B0"
+    readonly property var workspaceIconColors: ({
+        "1": "#FF9B93",
+        "2": "#4BB1A7",
+        "3": "#4BB1A7",
+        "4": "#4BB1A7",
+        "5": "#A3BE8C",
+        "6": "#81A1C1",
+        "7": "#72C7D1",
+        "8": "#B888E2",
+        "9": "#C7C18B",
+        "10": "#AE8785"
+    })
     readonly property color scrim: "#99090B12"
     readonly property color microphoneUnmuted: "#9ECE6A"
     readonly property color notificationBody: "#C0C5D4"
