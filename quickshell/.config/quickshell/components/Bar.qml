@@ -60,6 +60,7 @@ Scope {
 
                         readonly property bool belongsHere: modelData.monitor && modelData.monitor.name === bar.screen.name
                         readonly property bool isActive: modelData.active
+                        readonly property color foregroundColor: hovered && !isActive ? shell.style.workspaceHover : (shell.style.workspaceIconColors[modelData.name] || shell.style.foreground)
                         visible: belongsHere && modelData.id > 0
                         width: workspaceContent.implicitWidth + 22
                         height: 32
@@ -75,7 +76,7 @@ Scope {
 
                             Text {
                                 text: workspaceButton.modelData.name
-                                color: workspaceButton.isActive ? shell.style.foreground : workspaceButton.hovered ? shell.style.workspaceHover : shell.style.workspaceInactive
+                                color: workspaceButton.foregroundColor
                                 font.family: shell.style.iconFontFamily
                                 font.pixelSize: 16
                                 font.bold: true
@@ -85,7 +86,7 @@ Scope {
 
                             Text {
                                 text: shell.workspaceIcon(workspaceButton.modelData.name)
-                                color: workspaceButton.isActive ? shell.style.foreground : workspaceButton.hovered ? shell.style.workspaceHover : shell.style.foreground
+                                color: workspaceButton.foregroundColor
                                 font.family: shell.style.iconFontFamily
                                 font.pixelSize: workspaceButton.modelData.name === "1" ? 17 : 23
                                 height: 28
