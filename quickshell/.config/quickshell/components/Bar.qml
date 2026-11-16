@@ -222,16 +222,17 @@ Scope {
                 Row {
                     id: volumeMicRow
                     height: bar.height
-                    spacing: 3
+                    spacing: statusRow.spacing
                     anchors.verticalCenter: parent.verticalCenter
 
                 Item {
                     id: volumeWidget
-                    width: shell.volumeLevelVisible ? 54 : 38
+                    width: shell.volumeLevelVisible ? 54 : volumeIcon.implicitWidth
                     height: 30
                     anchors.verticalCenter: parent.verticalCenter
 
                     StatusIcon {
+                        id: volumeIcon
                         anchors.centerIn: parent
                         visible: !shell.volumeLevelVisible
                         text: {
@@ -302,7 +303,7 @@ Scope {
                     id: trayRow
                     height: bar.height
                     anchors.verticalCenter: parent.verticalCenter
-                    spacing: 10
+                    spacing: 0
 
                     Repeater {
                         model: SystemTray.items
@@ -311,16 +312,16 @@ Scope {
                             id: trayDelegate
 
                             required property var modelData
-                            width: 22
+                            width: 26
                             height: bar.height
                             visible: modelData.status !== 0
 
                             Image {
                                 anchors.centerIn: parent
-                                width: 22
-                                height: 22
+                                width: 20
+                                height: 20
                                 source: shell.trayIconSource(trayDelegate.modelData.icon)
-                                sourceSize: Qt.size(22, 22)
+                                sourceSize: Qt.size(20, 20)
                                 fillMode: Image.PreserveAspectFit
                                 asynchronous: true
                             }
