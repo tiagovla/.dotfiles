@@ -264,6 +264,14 @@ hl.window_rule {
 }
 
 hl.window_rule {
+    name = "zapzap",
+    match = {
+        class = "^com\\.rtosta\\.zapzap$",
+    },
+    workspace = "10 silent",
+}
+
+hl.window_rule {
     name = "spotify",
     match = {
         class = "Spotify",
