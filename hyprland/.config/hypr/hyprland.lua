@@ -280,6 +280,14 @@ hl.window_rule {
 }
 
 hl.window_rule {
+    name = "pix",
+    match = { class = "(?i)^pix$" },
+    float = true,
+    center = true,
+    size = "1400 900",
+}
+
+hl.window_rule {
     name = "pavucontrol",
     match = {
         class = "org.pulseaudio.pavucontrol",
