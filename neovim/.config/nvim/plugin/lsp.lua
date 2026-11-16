@@ -2,7 +2,6 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
     "https://github.com/williamboman/mason.nvim",
     "https://github.com/microsoft/python-type-stubs",
-    "https://github.com/barreiroleo/ltex_extra.nvim",
 }, { confirm = false })
 
 vim.lsp.enable {
@@ -16,9 +15,9 @@ vim.lsp.enable {
     "ts_ls",
     "ruff",
     "gopls",
-    "cmake",
+    "neocmake",
     "clangd",
-    "ltex",
+    "harper_ls",
     "matlab_ls",
     "rust_analyzer",
     "qmlls",
@@ -198,32 +197,17 @@ vim.lsp.config("gopls", {
     },
 })
 
-vim.lsp.config("cmake", {
+vim.lsp.config("clangd", {
+    cmd = { "clangd", "--inlay-hints=true", "--enable-config" },
     capabilities = caps,
 })
 
--- vim.lsp.config("clangd", {
---     cmd = { "clangd", "--inlay-hints=true", "--enable-config" },
---     capabilities = caps,
--- })
-
-vim.lsp.config("clice", {
+vim.lsp.config("neocmake", {
     capabilities = caps,
 })
 
-vim.lsp.config("ltex", {
+vim.lsp.config("harper_ls", {
     capabilities = caps,
-    on_attach = function()
-        require("ltex_extra").setup {
-            init_check = true,
-        }
-    end,
-    settings = {
-        ltex = {
-            language = "en-US",
-            checkFrequency = "save",
-        },
-    },
 })
 
 vim.lsp.config("matlab_ls", {
@@ -306,7 +290,7 @@ local ensure_installed = {
     "clangd",
     "astro-language-server",
     "black",
-    "cmake-language-server",
+    "neocmakelsp",
     "cmakelang",
     "cmakelint",
     "cpplint",
@@ -319,7 +303,7 @@ local ensure_installed = {
     "gopls",
     "hadolint",
     "latexindent",
-    "ltex-ls",
+    "harper-ls",
     "lua-language-server",
     "marksman",
     "matlab-language-server",
