@@ -1,5 +1,6 @@
 local U = {}
 local python_paths = {}
+local poetry_paths = {}
 
 U.python_root_markers = {
     "pylanceconfig.json",
@@ -48,9 +49,12 @@ function U.get_poetry_python(workspace)
     if not workspace or vim.fn.filereadable(vim.fs.joinpath(workspace, "poetry.lock")) ~= 1 then
         return nil
     end
+    if poetry_paths[workspace] and vim.fn.executable(poetry_paths[workspace]) == 1 then
+        return poetry_paths[workspace]
+    end
 
     local ok, result = pcall(function()
-        return vim.system({ "poetry", "env", "info", "-p" }, { cwd = workspace, text = true }):wait()
+        return vim.system({ "poetry", "env", "info", "-p" }, { cwd = workspace, text = true }):wait(2000)
     end)
     if not ok or result.code ~= 0 then
         return nil
@@ -61,7 +65,10 @@ function U.get_poetry_python(workspace)
         return nil
     end
     local python = vim.fs.joinpath(venv, "bin", "python")
-    return vim.fn.executable(python) == 1 and python or nil
+    if vim.fn.executable(python) == 1 then
+        poetry_paths[workspace] = python
+        return python
+    end
 end
 
 function U.get_python_path(workspace)

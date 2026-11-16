@@ -18,25 +18,36 @@ local function get_std_envs(workspace)
     return envs
 end
 
-local function get_poetry_envs(workspace)
+local function get_poetry_envs(workspace, callback)
     local envs = {}
     if not workspace or vim.fn.filereadable(vim.fs.joinpath(workspace, "poetry.lock")) ~= 1 then
-        return envs
+        callback(envs)
+        return
     end
-    local ok, result = pcall(function()
-        return vim.system({ "poetry", "env", "list", "--full-path" }, { cwd = workspace, text = true }):wait()
-    end)
-    if not ok or result.code ~= 0 then
-        return envs
+    local ok = pcall(
+        vim.system,
+        { "poetry", "env", "list", "--full-path" },
+        {
+            cwd = workspace,
+            text = true,
+            timeout = 2000,
+        },
+        vim.schedule_wrap(function(result)
+            if result.code == 0 then
+                for _, line in ipairs(vim.split(result.stdout, "\n", { trimempty = true })) do
+                    local venv = line:gsub("%s+%(Activated%)$", "")
+                    local python = vim.fs.joinpath(venv, "bin", "python")
+                    if vim.fn.executable(python) == 1 then
+                        envs["Poetry: " .. vim.fs.basename(venv)] = python
+                    end
+                end
+            end
+            callback(envs)
+        end)
+    )
+    if not ok then
+        callback(envs)
     end
-    for _, line in ipairs(vim.split(result.stdout, "\n", { trimempty = true })) do
-        local venv = line:gsub("%s+%(Activated%)$", "")
-        local python = vim.fs.joinpath(venv, "bin", "python")
-        if vim.fn.executable(python) == 1 then
-            envs["Poetry: " .. vim.fs.basename(venv)] = python
-        end
-    end
-    return envs
 end
 
 local function get_python_client()
@@ -52,20 +63,25 @@ local function env_handler()
         return
     end
     local workspace = client.config.root_dir
-    local options = vim.tbl_extend("force", get_std_envs(workspace), get_poetry_envs(workspace))
-    local active = utils.get_python_path(workspace)
-    vim.ui.select(vim.tbl_keys(options), {
-        prompt = "Select a Python Environment:",
-        format_item = function(item)
-            if options[item] == active then
-                return item .. " (Active)"
-            end
-            return item
-        end,
-    }, function(selected)
-        if selected then
-            utils.set_python_path(client, options[selected])
+    get_poetry_envs(workspace, function(poetry_envs)
+        if client:is_stopped() then
+            return
         end
+        local options = vim.tbl_extend("force", get_std_envs(workspace), poetry_envs)
+        local active = ((client.config.settings or {}).python or {}).pythonPath
+        vim.ui.select(vim.tbl_keys(options), {
+            prompt = "Select a Python Environment:",
+            format_item = function(item)
+                if options[item] == active then
+                    return item .. " (Active)"
+                end
+                return item
+            end,
+        }, function(selected)
+            if selected then
+                utils.set_python_path(client, options[selected])
+            end
+        end)
     end)
 end
 
