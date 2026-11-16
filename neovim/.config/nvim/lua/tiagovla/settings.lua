@@ -8,7 +8,6 @@ end
 
 function M.globals()
     vim.g.mapleader = " "
-    vim.g.python3_host_prog = "$HOME/.asdf/shims/python"
     vim.g.format_on_save = true
     vim.g.tex_conceal = "abdgms"
     vim.g.tex_flavor = "latex"
