@@ -13,7 +13,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CURRENT_DESKTOP="Hyprland"
 
 # ssh agent
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
 
 # locale & environment
 export LANG="en_US.UTF-8"
@@ -33,6 +33,6 @@ export QT_SCREEN_SCALE_FACTORS=1.0
 export GTK_THEME=Adwaita:dark
 export GTK_IM_MODULE=cedilla
 export QT_IM_MODULE=cedilla 
-export __NV_PRIME_RENDER_OFFLOAD=1
-export __GLX_VENDOR_LIBRARY_NAME="nvidia"
-export __VK_LAYER_NV_optimus="NVIDIA_only"
+# export __NV_PRIME_RENDER_OFFLOAD=1
+# export __GLX_VENDOR_LIBRARY_NAME="nvidia"
+# export __VK_LAYER_NV_optimus="NVIDIA_only"
