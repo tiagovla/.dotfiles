@@ -9,7 +9,17 @@ Item {
     readonly property bool available: !!battery && battery.ready && battery.isPresent
     readonly property real level: available ? Math.max(0, Math.min(1, battery.percentage)) : 0
     readonly property bool charging: available && battery.state === UPowerDeviceState.Charging
-    readonly property bool low: available && !charging && battery.state === UPowerDeviceState.Discharging && level < 0.2
+    readonly property bool discharging: available && battery.state === UPowerDeviceState.Discharging
+    readonly property bool low: discharging && level < 0.2
+    readonly property string remainingTime: {
+        const seconds = discharging ? battery.timeToEmpty : 0;
+        if (!Number.isFinite(seconds) || seconds <= 0)
+            return "--:--";
+
+        const minutes = Math.ceil(seconds / 60);
+        const hours = Math.floor(minutes / 60);
+        return (hours > 0 ? hours + "h " : "") + (minutes % 60) + "m";
+    }
 
     width: available ? content.implicitWidth : 0
     height: root.shell.barHeight
@@ -34,7 +44,7 @@ Item {
                 color: "transparent"
                 border.color: root.shell.style.foreground
                 border.width: 1.5
-                opacity: mouse.containsMouse ? 0.2 : 1
+                opacity: mouse.containsMouse && !root.discharging ? 0.2 : 1
 
                 Rectangle {
                     x: 2
@@ -56,7 +66,7 @@ Item {
                 height: 6
                 radius: 1
                 color: root.shell.style.foreground
-                opacity: mouse.containsMouse ? 0.2 : 1
+                opacity: mouse.containsMouse && !root.discharging ? 0.2 : 1
             }
 
             Text {
@@ -85,21 +95,28 @@ Item {
                 font.bold: true
                 style: Text.Outline
                 styleColor: root.shell.style.selectedText
-                visible: mouse.containsMouse
+                visible: mouse.containsMouse && !root.discharging
             }
         }
 
         Text {
+            id: percentageLabel
             objectName: "percentageLabel"
-            text: Math.round(root.level * 100) + "%"
+            text: mouse.containsMouse ? root.remainingTime : percentageMetrics.text
+            width: Math.max(implicitWidth, percentageMetrics.advanceWidth)
             color: root.shell.style.foreground
             font.family: root.shell.style.iconFontFamily
             font.pixelSize: 17
             font.bold: true
             anchors.verticalCenter: parent.verticalCenter
-            visible: root.level < 0.7
-            opacity: mouse.containsMouse ? 0 : 1
+            visible: root.discharging
         }
+    }
+
+    TextMetrics {
+        id: percentageMetrics
+        font: percentageLabel.font
+        text: Math.round(root.level * 100) + "%"
     }
 
     MouseArea {
