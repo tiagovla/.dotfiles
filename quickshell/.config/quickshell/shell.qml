@@ -78,6 +78,8 @@ Scope {
         id: providerQuotaService
     }
 
+    PowerController {}
+
     function workspaceIcon(name: string): string {
         switch (name) {
         case "1": return "";
