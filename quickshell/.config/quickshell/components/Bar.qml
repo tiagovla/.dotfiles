@@ -417,26 +417,6 @@ Scope {
                         onClicked: shell.toggleCalendar(bar.screen.name)
                     }
                 }
-                Text {
-                    id: launcherButton
-                    text: "⏻"
-                    color: shell.style.red
-                    font.family: shell.style.iconFontFamily
-                    font.pixelSize: 27
-                    font.bold: true
-                    height: bar.height
-                    verticalAlignment: Text.AlignVCenter
-                    leftPadding: 12
-                    rightPadding: 12
-
-                    MouseArea {
-                        id: launcherMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: shell.showLauncher(bar.screen.name)
-                    }
-                }
             }
 
             Repeater {
