@@ -4,7 +4,7 @@ Item {
     id: root
 
     required property var shell
-    property bool percentagesOnly: false
+    property bool percentagesOnly: true
     property real rightSpacing: 6
     width: shell.providerQuota.quota && !shell.providerQuota.error
         ? (percentagesOnly ? compactLabel.implicitWidth : content.implicitWidth) + rightSpacing
