@@ -1,6 +1,7 @@
 local wezterm = require "wezterm"
 
 return {
+    mux_enable_ssh_agent = false,
     enable_wayland = true,
     font = wezterm.font_with_fallback {
         {
@@ -43,7 +44,7 @@ return {
         { family = "Symbols Nerd Font Mono" },
         { family = "JetBrainsMono Nerd Font Mono", weight = 500 },
     },
-    font_size = 16.0,
+    font_size = 17.0,
     cursor_blink_rate = 0,
     exit_behavior = "Close",
     force_reverse_video_cursor = true,
