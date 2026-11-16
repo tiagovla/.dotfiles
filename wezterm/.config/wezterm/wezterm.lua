@@ -44,7 +44,7 @@ return {
         { family = "Symbols Nerd Font Mono" },
         { family = "JetBrainsMono Nerd Font Mono", weight = 500 },
     },
-    font_size = 17.0,
+    font_size = 16.25,
     cursor_blink_rate = 0,
     exit_behavior = "Close",
     force_reverse_video_cursor = true,
@@ -62,8 +62,8 @@ return {
     window_padding = {
         left = 4,
         right = 4,
-        top = 4,
-        bottom = 4,
+        top = 10,
+        bottom = 0,
     },
     default_prog = (function()
         local workspace_cmd = "$(hyprctl activeworkspace -j | jq '.id')"
