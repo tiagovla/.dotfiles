@@ -49,8 +49,8 @@ hl.config {
     decoration = {
         rounding = 10,
         rounding_power = 2,
-        active_opacity = 0.99,
-        inactive_opacity = 1.0,
+        active_opacity = 1.00,
+        inactive_opacity = 0.99,
         shadow = {
             enabled = true,
             range = 4,
@@ -93,7 +93,7 @@ hl.animation { leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "al
 hl.animation { leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" }
 hl.animation { leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" }
 
---config
+--configuration
 hl.config {
     master = {
         new_status = "slave",
@@ -210,8 +210,16 @@ hl.bind(
     hl.dsp.exec_cmd "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
     { locked = true, repeating = true }
 )
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%+", { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%-", { locked = true, repeating = true })
+hl.bind(
+    "XF86MonBrightnessUp",
+    hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%+",
+    { locked = true, repeating = true }
+)
+hl.bind(
+    "XF86MonBrightnessDown",
+    hl.dsp.exec_cmd "brightnessctl -d intel_backlight -n2 set 10%-",
+    { locked = true, repeating = true }
+)
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd "playerctl next", { locked = true })
 hl.bind("XF86AudioPause", hl.dsp.exec_cmd "playerctl play-pause", { locked = true })
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd "playerctl play-pause", { locked = true })
