@@ -82,6 +82,8 @@ Scope {
 
     function workspaceIcon(name: string): string {
         switch (name) {
+        case "0":
+        case "11": return "󰍹";
         case "1": return "";
         case "2":
         case "3":

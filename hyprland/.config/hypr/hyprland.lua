@@ -10,8 +10,8 @@ for i = 1, 10 do
         default = (i == 1),
     }
 end
-hl.workspace_rule { workspace = "11", monitor = "DP-1", default = true }
-hl.workspace_rule { workspace = "12", monitor = "eDP-1", default = true }
+hl.workspace_rule { workspace = "11", monitor = "DP-1", default = true, default_name = "0" }
+hl.workspace_rule { workspace = "12", monitor = "eDP-1", default = true, default_name = "11" }
 
 hl.on("hyprland.start", function()
     hl.exec_cmd "qs"

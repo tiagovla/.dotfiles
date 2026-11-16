@@ -51,7 +51,7 @@ Scope {
                 spacing: 4
 
                 Repeater {
-                    model: Hyprland.workspaces
+                    model: Hyprland.workspaces.values.slice().sort((a, b) => (a.name === "0" ? 0 : a.id) - (b.name === "0" ? 0 : b.id))
 
                     delegate: Rectangle {
                         id: workspaceButton
@@ -100,7 +100,7 @@ Scope {
                             cursorShape: Qt.PointingHandCursor
                             onEntered: workspaceButton.hovered = true
                             onExited: workspaceButton.hovered = false
-                            onClicked: shell.focusWorkspace(workspaceButton.modelData.name)
+                            onClicked: shell.focusWorkspace(String(workspaceButton.modelData.id))
                         }
                     }
                 }
