@@ -368,20 +368,45 @@ Scope {
 
                 Rectangle {
                     id: clockPill
-                    width: clockLabel.implicitWidth + 36
+
+                    readonly property bool calendarOpen: shell.calendarVisible && shell.calendarScreenName === bar.screen.name
+
+                    width: clockContent.implicitWidth + 20
                     height: 32
-                    radius: 16
-                    color: shell.style.contentBackground
+                    radius: 10
+                    color: calendarOpen ? shell.style.launcherInset : clockMouse.containsMouse ? shell.style.subtleSurface : shell.style.clear
+                    border.color: calendarOpen ? shell.style.selected : shell.style.clear
+                    border.width: 1
                     anchors.verticalCenter: parent.verticalCenter
 
-                    Text {
-                        id: clockLabel
+                    Behavior on color { ColorAnimation { duration: 150 } }
+                    Behavior on border.color { ColorAnimation { duration: 150 } }
+
+                    Row {
+                        id: clockContent
                         anchors.centerIn: parent
-                        text: "󰥔 " + Qt.formatTime(shell.currentTime, "hh:mm")
-                        color: shell.style.mutedText
-                        font.family: shell.style.iconFontFamily
-                        font.pixelSize: 20
-                        font.bold: true
+                        spacing: 6
+
+                        Text {
+                            text: "󰥔"
+                            color: shell.style.selected
+                            font.family: shell.style.iconFontFamily
+                            font.pixelSize: 18
+                            width: 20
+                            height: 26
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
+
+                        Text {
+                            text: Qt.formatTime(shell.currentTime, "hh:mm")
+                            color: clockPill.calendarOpen ? shell.style.selected : shell.style.foreground
+                            font.family: shell.style.iconFontFamily
+                            font.pixelSize: 17
+                            font.bold: true
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
 
                     MouseArea {
@@ -392,7 +417,6 @@ Scope {
                         onClicked: shell.toggleCalendar(bar.screen.name)
                     }
                 }
-
                 Text {
                     id: launcherButton
                     text: "⏻"
