@@ -36,6 +36,12 @@ return function(direction)
     end
 
     local source_id, target_id = source.id, target.id
+    local rename_sessions = string.format(
+        "%q '%s' '%s'",
+        os.getenv("HOME") .. "/.config/hypr/scripts/swap-tmux-workspace-sessions.sh",
+        source.name:gsub("'", "'\\''"),
+        target.name:gsub("'", "'\\''")
+    )
     local focused_window = hl.get_active_window()
     -- Snapshot both sets before moving; pinned windows stay on their monitor.
     local source_windows = hl.get_windows { workspace = source, mapped = true }
@@ -54,4 +60,6 @@ return function(direction)
     if focused_window and focused_window.workspace and focused_window.workspace.id == target_id then
         hl.dispatch(hl.dsp.focus { window = focused_window })
     end
+    -- Hyprland reaps child processes, so os.execute() can report failure after the command succeeds.
+    hl.exec_cmd(rename_sessions)
 end

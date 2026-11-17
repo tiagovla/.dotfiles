@@ -66,9 +66,8 @@ return {
         bottom = 0,
     },
     default_prog = (function()
-        local workspace_cmd = "$(hyprctl activeworkspace -j | jq '.id')"
-        local tmux_cmd =
-            string.format("tmux attach -t %s 2>/dev/null || tmux new -A -s %s", workspace_cmd, workspace_cmd)
+        local workspace_cmd = [["$(hyprctl activeworkspace -j | jq -er '.name')"]]
+        local tmux_cmd = string.format("exec tmux new-session -A -s %s", workspace_cmd)
         return { "/usr/bin/zsh", "-l", "-c", tmux_cmd }
     end)(),
     keys = {
