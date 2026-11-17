@@ -174,6 +174,14 @@ hl.bind("ALT + A", hl.dsp.workspace.toggle_special "magic")
 hl.bind("ALT + SHIFT + A", hl.dsp.window.move { workspace = "special:magic" })
 hl.bind("ALT + mouse_down", hl.dsp.focus { workspace = "e+1" })
 hl.bind("ALT + mouse_up", hl.dsp.focus { workspace = "e-1" })
+
+local rotate_workspace_windows = dofile(os.getenv("HOME") .. "/.config/hypr/scripts/rotate-workspace-windows.lua")
+-- Physical comma/period keys, with or without Shift for < and >.
+for _, modifiers in ipairs { "ALT", "ALT + SHIFT" } do
+    hl.bind(modifiers .. " + code:59", function() rotate_workspace_windows(-1) end)
+    hl.bind(modifiers .. " + code:60", function() rotate_workspace_windows(1) end)
+end
+
 hl.bind("ALT + M", hl.dsp.window.fullscreen { mode = 1 })
 hl.bind("ALT + SHIFT + Y", hl.dsp.window.pin { action = "toggle" })
 hl.bind("ALT + SHIFT + M", hl.dsp.window.fullscreen { mode = 0 })
