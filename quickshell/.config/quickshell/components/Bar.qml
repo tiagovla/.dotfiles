@@ -14,6 +14,21 @@ Scope {
 
     required property var shell
 
+    Component.onCompleted: Hyprland.refreshMonitors()
+
+    Connections {
+        target: Hyprland
+
+        function onRawEvent(event) {
+            if (event.name === "moveworkspacev2" || event.name === "monitoraddedv2" || event.name === "monitorremoved") {
+                Hyprland.refreshWorkspaces();
+                Hyprland.refreshMonitors();
+            } else if (event.name === "workspacev2" || event.name === "focusedmon") {
+                Hyprland.refreshMonitors();
+            }
+        }
+    }
+
     Variants {
         model: Quickshell.screens
 
@@ -22,6 +37,7 @@ Scope {
 
             required property var modelData
             screen: modelData
+            readonly property var hyprlandMonitor: Hyprland.monitorFor(screen)
             implicitHeight: shell.barHeight
             color: shell.style.clear
 
@@ -58,8 +74,9 @@ Scope {
 
                         required property var modelData
 
-                        readonly property bool belongsHere: modelData.monitor && modelData.monitor.name === bar.screen.name
-                        readonly property bool isActive: modelData.active
+                        // Quickshell's cached monitor object can disagree with Hyprland's workspace data.
+                        readonly property bool belongsHere: modelData.lastIpcObject.monitor === bar.screen.name
+                        readonly property bool isActive: bar.hyprlandMonitor?.lastIpcObject.activeWorkspace?.id === modelData.id
                         readonly property color foregroundColor: hovered && !isActive ? shell.style.workspaceHover : (shell.style.workspaceIconColors[modelData.name] || shell.style.foreground)
                         visible: belongsHere && modelData.id > 0
                         width: workspaceContent.implicitWidth + 22
