@@ -143,7 +143,16 @@ hl.gesture {
 
 -- binds
 hl.bind("ALT + W", hl.dsp.exec_cmd "firefox-nightly")
-hl.bind("ALT + RETURN", hl.dsp.exec_cmd "wezterm")
+hl.bind("ALT + RETURN", function()
+    local workspace = hl.get_active_workspace()
+    for _, window in ipairs(hl.get_windows { workspace = workspace, mapped = true }) do
+        if window.initial_class == "org.wezfurlong.wezterm" then
+            hl.dispatch(hl.dsp.focus { window = window })
+            return
+        end
+    end
+    hl.exec_cmd "wezterm"
+end)
 hl.bind("ALT + Q", hl.dsp.window.close())
 hl.bind(
     "SHIFT + ALT + Q",
