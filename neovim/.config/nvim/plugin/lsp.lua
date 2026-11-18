@@ -235,7 +235,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
 
         if client_name == "clangd" then
-            vim.keymap.set("n", "<Tab>", "<cmd>ClangdSwitchSourceHeader<CR>", { buffer = 0, desc = "Build document" })
+            vim.keymap.set(
+                "n",
+                "<Tab>",
+                "<cmd>LspClangdSwitchSourceHeader<CR>",
+                { buffer = 0, desc = "Build document" }
+            )
         end
 
         vim.keymap.set("n", "<leader>o", function()
