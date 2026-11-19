@@ -26,4 +26,4 @@ local function toggle_win_zoom()
     end
 end
 
-vim.keymap.set("n", "<leader>z", toggle_win_zoom, { desc = "Zoom in window", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>zw", toggle_win_zoom, { desc = "Zoom in window", noremap = true, silent = true })
