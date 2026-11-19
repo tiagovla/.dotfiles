@@ -21,3 +21,14 @@ end
 
 vim.api.nvim_create_user_command("NumpyArray", to_numpy_array, { range = true })
 vim.api.nvim_create_user_command("Redir", redir, { nargs = "+", complete = "command" })
+
+vim.api.nvim_create_user_command("Bdelete", function(args)
+    local buf = vim.fn.bufnr(tonumber(args.args) or args.args)
+    if buf == -1 then
+        vim.notify("Buffer not found: " .. args.args, vim.log.levels.ERROR)
+        return
+    end
+    Snacks.bufdelete.delete { buf = buf, force = args.bang }
+end, { nargs = "?", bang = true, complete = "buffer", desc = "Delete a buffer and keep its windows" })
+
+vim.cmd [[cnoreabbrev <expr> bd getcmdtype() == ':' && getcmdline() ==# 'bd' ? 'Bdelete' : 'bd']]

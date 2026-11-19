@@ -62,3 +62,31 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end
     end,
 })
+
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    group = vim.api.nvim_create_augroup("RemoveStartupBuffer", { clear = true }),
+    callback = function(event)
+        local first = 1
+        if event.buf == first or not vim.bo[event.buf].buflisted then
+            return
+        end
+
+        vim.schedule(function()
+            if not vim.api.nvim_buf_is_valid(event.buf)
+                or not vim.bo[event.buf].buflisted
+                or not vim.api.nvim_buf_is_loaded(first)
+                or not vim.bo[first].buflisted
+                or vim.bo[first].buftype ~= ""
+                or vim.bo[first].modified
+                or vim.api.nvim_buf_get_name(first) ~= ""
+                or vim.api.nvim_buf_line_count(first) ~= 1
+                or vim.api.nvim_buf_get_lines(first, 0, 1, false)[1] ~= ""
+            then
+                return
+            end
+
+            Snacks.bufdelete.delete { buf = first, wipe = true }
+            vim.api.nvim_del_autocmd(event.id)
+        end)
+    end,
+})
