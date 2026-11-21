@@ -66,6 +66,6 @@ set adjust-open "best-fit"
 set smooth-scroll "true"
 # set recolor true
 set recolor-reverse-video "true"
-set scroll-step 50
+set scroll-step 30
 set font "MonoLisa-Medium 15"
 
