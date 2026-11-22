@@ -168,6 +168,8 @@ hl.bind("ALT + h", hl.dsp.focus { direction = "left" })
 hl.bind("ALT + j", hl.dsp.focus { direction = "down" })
 hl.bind("ALT + k", hl.dsp.focus { direction = "up" })
 hl.bind("ALT + l", hl.dsp.focus { direction = "right" })
+hl.bind("ALT + SHIFT + code:26", hl.dsp.exec_cmd "hyprctl dispatch swapwindow l")
+hl.bind("ALT + SHIFT + code:27", hl.dsp.exec_cmd "hyprctl dispatch swapwindow r")
 
 for i = 1, 10 do
     local key = i % 10
