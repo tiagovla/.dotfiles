@@ -22,7 +22,7 @@ Scope {
             screen: modelData
             visible: shell.activeNotifications.length > 0 && modelData.name === shell.notificationScreenName
             color: shell.style.clear
-            implicitWidth: Math.max(200, Math.min(340, notificationColumn.preferredWidth + 16))
+            implicitWidth: Math.max(260, Math.min(440, notificationColumn.preferredWidth + 16))
             implicitHeight: Math.max(48, Math.min(notificationFlickable.contentHeight + 16, modelData.height - shell.barHeight - 24))
 
             WlrLayershell.layer: WlrLayer.Overlay
@@ -79,7 +79,7 @@ Scope {
                             readonly property string plainBody: String(modelData.body || "").replace(/<[^>]*>/g, " ").replace(/&nbsp;/g, " ")
                             readonly property real titleWidth: Math.max(appNameMetrics.advanceWidth, titleMetrics.advanceWidth) + 110
                             readonly property real messageWidth: bodyMetrics.advanceWidth + 28
-                            readonly property real preferredWidth: Math.min(324, Math.max(titleWidth, messageWidth))
+                            readonly property real preferredWidth: Math.max(titleWidth, messageWidth, notificationActions.preferredWidth + 28)
                             width: notificationColumn.width
                             height: notificationContent.implicitHeight + 36
                             radius: 14
@@ -228,6 +228,16 @@ Scope {
                                     spacing: 6
                                     visible: notificationActionRepeater.count > 0
 
+                                    readonly property real preferredWidth: {
+                                        let result = Math.max(0, notificationActionRepeater.count - 1) * spacing;
+                                        for (let i = 0; i < notificationActionRepeater.count; i++) {
+                                            const button = notificationActionRepeater.itemAt(i);
+                                            if (button)
+                                                result += button.implicitWidth;
+                                        }
+                                        return result;
+                                    }
+
                                     Repeater {
                                         id: notificationActionRepeater
 
@@ -237,7 +247,8 @@ Scope {
                                             id: notificationActionButton
 
                                             required property var modelData
-                                            width: Math.min(notificationActionLabel.implicitWidth + 20, notificationActions.width)
+                                            implicitWidth: Math.ceil(notificationActionLabel.implicitWidth)
+                                            width: Math.min(implicitWidth, notificationActions.width)
                                             height: 36
                                             radius: 7
                                             color: notificationActionMouse.containsMouse ? shell.style.subtleBorder : shell.style.contentBackground
@@ -245,8 +256,8 @@ Scope {
                                             Text {
                                                 id: notificationActionLabel
                                                 anchors.fill: parent
-                                                anchors.leftMargin: 12
-                                                anchors.rightMargin: 12
+                                                leftPadding: 12
+                                                rightPadding: 12
                                                 text: notificationActionButton.modelData.text
                                                 color: shell.style.foreground
                                                 font.family: shell.style.textFontFamily
